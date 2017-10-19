@@ -1,0 +1,29 @@
+﻿@using CloudBust.Common.ViewModels;
+@model FaviconSettingsViewModel
+
+<fieldset>
+    <legend>@T("Favicon")</legend>
+    <div>
+        <label for="FaviconUrl">@T("Favicon URL")</label>
+        @Html.TextBoxFor(m => m.FaviconUrl, new { @class = "textMedium inline" })
+        @if (!String.IsNullOrWhiteSpace(Model.FaviconUrl)) {
+            <img class="icon settings" src="@Model.FaviconUrl" alt="The current favicon"/>
+        }
+        @Html.ValidationMessage("FaviconUrl", "*")
+        @if (Model.FaviconUrlSuggestions != null &&
+            Model.FaviconUrlSuggestions.Any()) {
+            <label>Suggested Icons, click to select:</label>
+            <ul>
+            @foreach (var suggestion in Model.FaviconUrlSuggestions) {
+                <li style="float:left;margin:3px"
+                    onclick="document.getElementById('@Html.FieldIdFor(m => m.FaviconUrl)').value='@suggestion'">
+                    <img class="icon settings preview" src="@suggestion" alt="@suggestion"/>
+                </li>
+            }
+            </ul>
+        }
+        else {
+            <span class="hint">@T("Upload favicon files into a favicon folder in the Media module.")</span>
+        }
+    </div>
+</fieldset>

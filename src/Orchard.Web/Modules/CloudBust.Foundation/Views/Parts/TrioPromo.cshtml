@@ -1,0 +1,136 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Core.Title.Models;
+@{
+    //Model.Metadata.Wrappers.Remove("Widget_Wrapper");
+    var title = Model.ContentItem.WidgetPart.Title;
+    var showtitle = Model.ContentItem.WidgetPart.RenderTitle;
+    var body = Model.ContentPart.Text;
+}
+
+<style type="text/css" >
+    .trio-promo a.click-block h3 {
+        font-size: 1.8em;
+    }
+    .trio-promo a.click-block, .trio-promo div.text-center  {
+        display: block;
+        color: #333;
+        font-weight: normal;
+    }
+    .trio-promo a.click-block span strong {
+        display: block;
+    }
+    .trio-promo a.click-block span.normal-text, .trio-promo div.text-center span.normal-text {
+        display: block;
+        font-size: 0.875em;
+        margin-bottom: 30px;
+        line-height: 21px;
+    }
+    .trio-promo img {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .trio-promo a img {
+        border: none;
+    }
+    .trio-promo img, .trio-promo object, .trio-promo embed {
+        max-width: 100%;
+        height: auto;
+    }
+    .trio-promo .promolink.first {
+        @if (!string.IsNullOrWhiteSpace(Model.ContentPart.FirstLinkColor))
+        {
+            @Html.Raw("color: " + @Model.ContentPart.FirstLinkColor + ";");
+        }
+    }
+    .trio-promo .promolink.second {
+        @if (!string.IsNullOrWhiteSpace(Model.ContentPart.SecondLinkColor))
+        {
+            @Html.Raw("color: " + @Model.ContentPart.SecondLinkColor + ";");
+        }
+    }
+    .trio-promo .promolink.third {
+        @if (!string.IsNullOrWhiteSpace(Model.ContentPart.ThirdLinkColor))
+        {
+            @Html.Raw("color: " + @Model.ContentPart.ThirdLinkColor + ";");
+        }
+    }
+    }
+</style>
+
+<div class="trio-promo">
+
+    <div class="row">
+        <div class="large-12 columns">
+@if (showtitle)
+{
+            <h2 class="centered-text light smaller bump-60 bottom-add">@title</h2>
+}
+            <div class="centered-text">
+                @Html.Raw(body)
+            </div>
+        </div>
+    </div>
+
+    <div class="row bump-25">
+        <div class="large-4 medium-4 columns">
+            @if (string.IsNullOrWhiteSpace(Model.ContentPart.FirstLinkUrl))
+            {
+                <div class="text-center">
+                    <img src="@Model.ContentPart.FirstImage">
+                    <h3 class="title light">@Html.Raw(Model.ContentPart.FirstTitle)</h3>
+                    <span class="normal-text">@Html.Raw(Model.ContentPart.FirstPromoText)</span>
+                    <span class="normal-text"><strong class="promolink first">@Html.Raw(Model.ContentPart.FirstLinkText)</strong></span>
+                </div>
+            }
+            else
+            {
+                <a href="@Model.ContentPart.FirstLinkUrl" class="centered-text click-block">
+                    <img src="@Model.ContentPart.FirstImage">
+                    <h3 class="title light">@Html.Raw(Model.ContentPart.FirstTitle)</h3>
+                    <span class="normal-text">@Html.Raw(Model.ContentPart.FirstPromoText)</span>
+                    <span class="normal-text"><strong class="promolink first">@Html.Raw(Model.ContentPart.FirstLinkText)</strong></span>
+                </a>
+            }
+        </div>
+        <div class="large-4 medium-4 columns">
+            @if (string.IsNullOrWhiteSpace(Model.ContentPart.SecondLinkUrl))
+            {
+                <div class="text-center">
+                    <img src="@Model.ContentPart.SecondImage">
+                    <h3 class="title light">@Html.Raw(Model.ContentPart.SecondTitle)</h3>
+                    <span class="normal-text">@Html.Raw(Model.ContentPart.SecondPromoText)</span>
+                    <span class="normal-text"><strong class="promolink second">@Html.Raw(Model.ContentPart.SecondLinkText)</strong></span>
+                </div>
+            }
+            else
+            {
+                <a href="@Model.ContentPart.SecondLinkUrl" class="centered-text click-block">
+                    <img src="@Model.ContentPart.SecondImage">
+                    <h3 class="title light">@Html.Raw(Model.ContentPart.SecondTitle)</h3>
+                    <span class="normal-text">@Html.Raw(Model.ContentPart.SecondPromoText)</span>
+                    <span class="normal-text"><strong class="promolink second">@Html.Raw(Model.ContentPart.SecondLinkText)</strong></span>
+                </a>
+            }
+        </div>
+        <div class="large-4 medium-4 columns">
+            @if (string.IsNullOrWhiteSpace(Model.ContentPart.ThirdLinkUrl))
+            {
+                <div class="text-center">
+                    <img src="@Model.ContentPart.ThirdImage">
+                    <h3 class="title light">@Html.Raw(Model.ContentPart.ThirdTitle)</h3>
+                    <span class="normal-text">@Html.Raw(Model.ContentPart.ThirdPromoText)</span>
+                    <span class="normal-text"><strong class="promolink third">@Html.Raw(Model.ContentPart.ThirdLinkText)</strong></span>
+                </div>
+            }
+            else
+            {
+                <a href="@Model.ContentPart.ThirdLinkUrl" class="centered-text click-block">
+                    <img src="@Model.ContentPart.ThirdImage">
+                    <h3 class="title light">@Html.Raw(Model.ContentPart.ThirdTitle)</h3>
+                    <span class="normal-text">@Html.Raw(Model.ContentPart.ThirdPromoText)</span>
+                    <span class="normal-text"><strong class="promolink third">@Html.Raw(Model.ContentPart.ThirdLinkText)</strong></span>
+                </a>
+            }
+        </div>
+    </div>
+</div>

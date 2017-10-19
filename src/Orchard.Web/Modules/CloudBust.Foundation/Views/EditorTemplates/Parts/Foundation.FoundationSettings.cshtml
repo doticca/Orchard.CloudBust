@@ -1,0 +1,45 @@
+﻿@using CloudBust.Foundation.ViewModels;
+@model FoundationSettingsViewModel
+
+<fieldset class="foundationsettings row">
+    <legend>@T("ZURB Foundation")</legend>
+    <span class="hint">Your version of Foundation is 6.2.1 visit <a href="http://foundation.zurb.com/sites/docs">http://foundation.zurb.com/sites/docs</a> for Documentation and Examples</span>
+
+    <div class="columns">
+        <div>
+            @Html.EditorFor(m => m.AutoEnableAdmin)
+            <label class="forcheckbox" for="FoundationSettings_AutoEnableAdmin">@T("Auto Enable Admin")</label>
+            <span class="hint">@T("it enables foundation scripts & css on admin pages.")</span>
+        </div>
+        <div>
+            @Html.EditorFor(m => m.DoNotEnableFrontEnd)
+            <label class="forcheckbox" for="FoundationSettings_DoNotEnableFrontEnd">@T("Do Not Enable FrontEnd")</label>
+            <span class="hint">@T("it disables foundation theme for frontend.")</span>
+        </div>
+        <div>
+            @Html.EditorFor(m => m.UseSelect)
+            <label class="forcheckbox" for="FoundationSettings_UseSelect">@T("Include Foundation Select")</label>
+            <span class="hint">@T("it enables foundation scripts & css for select tags.")</span>
+        </div>
+        <div>
+            @Html.EditorFor(m => m.UseDatePicker)
+            <label class="forcheckbox" for="FoundationSettings_UseDatePicker">@T("Include Foundation Datepicker")</label>
+            <span class="hint">@T("it enables foundation scripts & css for datetime input.")</span>
+        </div>
+        <div>
+            @Html.EditorFor(m => m.UseIcons)
+            <label class="forcheckbox" for="FoundationSettings_UseIcons">@T("Include Foundation Icons")</label>
+            <span class="hint">@T("it enables foundation fonts and css for icons.")</span>
+        </div>
+        <div>
+            @Html.EditorFor(m => m.UsePlaceholder)
+            <label class="forcheckbox" for="FoundationSettings_UsePlaceholder">@T("Include Placeholder")</label>
+            <span class="hint">@T("it enables placeholder.js.")</span>
+        </div>
+        <div>
+            @Html.EditorFor(m => m.UseNicescroll)
+            <label class="forcheckbox" for="FoundationSettings_UseNicescroll">@T("Include Nicescroll")</label>
+            <span class="hint">@T("it enables nicescroll.js.")</span>
+        </div>
+    </div>
+</fieldset>

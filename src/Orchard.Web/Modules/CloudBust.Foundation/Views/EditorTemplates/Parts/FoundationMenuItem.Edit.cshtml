@@ -1,0 +1,26 @@
+﻿@model FoundationMenuItemPart
+@using CloudBust.Foundation.Models;
+
+<fieldset>
+    <legend>@T("Foundation Settings")</legend>
+    <div>
+        @Html.EditorFor(m => m.DisplayAsButton)
+        <label class="forcheckbox" for="FoundationMenuItemPart_DisplayAsButton">@T("Display As Button")</label>
+        <span class="hint">@T("it will make the menu item look like a button.")</span>
+    </div>
+    <div>
+        @Html.EditorFor(m => m.isRoot)
+        <label class="forcheckbox" for="FoundationMenuItemPart_isRoot">@T("Root of Sub Menu")</label>
+        <span class="hint">@T("it will make this menu item the root of a Sub Menu part.")</span>
+    </div>
+    <div>
+        @Html.EditorFor(m => m.LeftSide)
+        <label class="forcheckbox" for="FoundationMenuItemPart_LeftSide">@T("Render on Left Side")</label>
+        <span class="hint">@T("it will make this menu item appear on the left side of the menu bar.")</span>
+    </div>
+    <div>
+        @Html.EditorFor(m => m.Divider)
+        <label class="forcheckbox" for="FoundationMenuItemPart_Divider">@T("Use a Divider")</label>
+        <span class="hint">@T("it will make this menu item show a divider before the text of the menu.")</span>
+    </div>
+</fieldset>

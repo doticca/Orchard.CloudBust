@@ -1,0 +1,126 @@
+﻿@model QuadPromoPart
+@using CloudBust.Foundation.Models;
+@{
+    Script.Require("jQueryUI").AtHead();
+    Style.Require("jQueryUI_Orchard").AtHead();
+}
+<fieldset>
+    <div id="quadpromotabs">
+        <ul>
+            <li><a href="#quadfirst">First</a></li>
+            <li><a href="#quadsecond">Second</a></li>
+            <li><a href="#quadthird">Third</a></li>
+            <li><a href="#quadfourth">Fourth</a></li>
+        </ul>
+        <div id="quadfirst">
+            @Html.LabelFor(m => m.FirstImage, T("Image Url"))
+            @Html.TextBoxFor(m => m.FirstImage, new { @class = "text large" })
+            <span class="hint">@T("A valid image url, i.e. /media/default/image.png")</span>
+
+            @Html.LabelFor(m => m.FirstTitle, T("Promo Title"))
+            @Html.TextBoxFor(m => m.FirstTitle, new { @class = "textMedium" })
+            <span class="hint">@T("Enter the Title of your promo box")</span>
+
+            @Html.LabelFor(m => m.FirstPromoText, T("Promo Text"))
+            @Html.TextBoxFor(m => m.FirstPromoText, new { @class = "text large" })
+            <span class="hint">@T("Enter the Text of your promo box")</span>
+
+            @Html.LabelFor(m => m.FirstLinkText, T("Link Text"))
+            @Html.TextBoxFor(m => m.FirstLinkText, new { @class = "textMedium" })
+            <span class="hint">@T("The text that should appear in the link.")</span>
+
+            @Html.LabelFor(m => m.FirstLinkUrl, T("Link Url"))
+            @Html.TextBoxFor(m => m.FirstLinkUrl, new { @class = "text large" })
+            <span class="hint">@T("A valid url, i.e. ~/my-page, http://orchardproject.net, /content/file.pdf, ...")</span>
+
+            @Html.LabelFor(m => m.FirstLinkColor, T("Link Color"))
+            @Html.TextBoxFor(m => m.FirstLinkColor, new { @class = "textSmall" })
+            <span class="hint">@T("The color of the link text")</span>
+        </div>
+        <div id="quadsecond">
+            @Html.LabelFor(m => m.SecondImage, T("Image Url"))
+            @Html.TextBoxFor(m => m.SecondImage, new { @class = "text large" })
+            <span class="hint">@T("A valid image url, i.e. /media/default/image.png")</span>
+
+            @Html.LabelFor(m => m.SecondTitle, T("Promo Title"))
+            @Html.TextBoxFor(m => m.SecondTitle, new { @class = "textMedium" })
+            <span class="hint">@T("Enter the Title of your promo box")</span>
+
+            @Html.LabelFor(m => m.SecondPromoText, T("Promo Text"))
+            @Html.TextBoxFor(m => m.SecondPromoText, new { @class = "text large" })
+            <span class="hint">@T("Enter the Text of your promo box")</span>
+
+            @Html.LabelFor(m => m.SecondLinkText, T("Link Text"))
+            @Html.TextBoxFor(m => m.SecondLinkText, new { @class = "textMedium" })
+            <span class="hint">@T("The text that should appear in the link.")</span>
+
+            @Html.LabelFor(m => m.SecondLinkUrl, T("Link Url"))
+            @Html.TextBoxFor(m => m.SecondLinkUrl, new { @class = "text large" })
+            <span class="hint">@T("A valid url, i.e. ~/my-page, http://orchardproject.net, /content/file.pdf, ...")</span>
+
+            @Html.LabelFor(m => m.SecondLinkColor, T("Link Color"))
+            @Html.TextBoxFor(m => m.SecondLinkColor, new { @class = "textSmall" })
+            <span class="hint">@T("The color of the link text")</span>
+        </div>
+        <div id="quadthird">
+            @Html.LabelFor(m => m.ThirdImage, T("Image Url"))
+            @Html.TextBoxFor(m => m.ThirdImage, new { @class = "text large" })
+            <span class="hint">@T("A valid image url, i.e. /media/default/image.png")</span>
+
+            @Html.LabelFor(m => m.ThirdTitle, T("Promo Title"))
+            @Html.TextBoxFor(m => m.ThirdTitle, new { @class = "textMedium" })
+            <span class="hint">@T("Enter the Title of your promo box")</span>
+
+            @Html.LabelFor(m => m.ThirdPromoText, T("Promo Text"))
+            @Html.TextBoxFor(m => m.ThirdPromoText, new { @class = "text large" })
+            <span class="hint">@T("Enter the Text of your promo box")</span>
+
+            @Html.LabelFor(m => m.ThirdLinkText, T("Link Text"))
+            @Html.TextBoxFor(m => m.ThirdLinkText, new { @class = "textMedium" })
+            <span class="hint">@T("The text that should appear in the link.")</span>
+
+            @Html.LabelFor(m => m.ThirdLinkUrl, T("Link Url"))
+            @Html.TextBoxFor(m => m.ThirdLinkUrl, new { @class = "text large" })
+            <span class="hint">@T("A valid url, i.e. ~/my-page, http://orchardproject.net, /content/file.pdf, ...")</span>
+
+            @Html.LabelFor(m => m.ThirdLinkColor, T("Link Color"))
+            @Html.TextBoxFor(m => m.ThirdLinkColor, new { @class = "textSmall" })
+            <span class="hint">@T("The color of the link text")</span>
+        </div>
+        <div id="quadfourth">
+            @Html.LabelFor(m => m.FourthImage, T("Image Url"))
+            @Html.TextBoxFor(m => m.FourthImage, new { @class = "text large" })
+            <span class="hint">@T("A valid image url, i.e. /media/default/image.png")</span>
+
+            @Html.LabelFor(m => m.FourthTitle, T("Promo Title"))
+            @Html.TextBoxFor(m => m.FourthTitle, new { @class = "textMedium" })
+            <span class="hint">@T("Enter the Title of your promo box")</span>
+
+            @Html.LabelFor(m => m.FourthPromoText, T("Promo Text"))
+            @Html.TextBoxFor(m => m.FourthPromoText, new { @class = "text large" })
+            <span class="hint">@T("Enter the Text of your promo box")</span>
+
+            @Html.LabelFor(m => m.FourthLinkText, T("Link Text"))
+            @Html.TextBoxFor(m => m.FourthLinkText, new { @class = "textMedium" })
+            <span class="hint">@T("The text that should appear in the link.")</span>
+
+            @Html.LabelFor(m => m.FourthLinkUrl, T("Link Url"))
+            @Html.TextBoxFor(m => m.FourthLinkUrl, new { @class = "text large" })
+            <span class="hint">@T("A valid url, i.e. ~/my-page, http://orchardproject.net, /content/file.pdf, ...")</span>
+
+            @Html.LabelFor(m => m.FourthLinkColor, T("Link Color"))
+            @Html.TextBoxFor(m => m.FourthLinkColor, new { @class = "textSmall" })
+            <span class="hint">@T("The color of the link text")</span>
+        </div>
+    </div>
+
+</fieldset>
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#quadpromotabs").tabs();
+        });
+    </script>
+}

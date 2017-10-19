@@ -1,0 +1,31 @@
+﻿Name: Commons
+Path: CloudBust.Common
+AntiForgery: enabled
+Author: Team Grapto @teamgrapto
+Website: http://www.grapto.com
+Version: 1.10.0
+OrchardVersion: 1.10
+Description: OData Dependencies, Models, Extensions and Services
+Dependencies: Orchard.MediaLibrary, Orchard.Themes, Orchard.Widgets, Orchard.Alias
+Category: CloudBust
+Features:
+	CloudBust.Common.SEO:
+		Name: SEO Features
+		Description: Activate robots.txt, Define content metatags.
+		Category: CloudBust
+		Dependencies: CloudBust.Common
+	CloudBust.Common.CustomCode:
+		Name: Custom Code (header/footer)
+		Description: Enables Script / meta / style or any custom code insertion in page head and foot.
+		Category: CloudBust
+		Dependencies: CloudBust.Resources.Ace, CloudBust.Common
+	CloudBust.Common.ThemePicker:
+		Name: Theme Picker
+		Description: Ruleset for theme selection
+		Category: CloudBust
+		Dependencies: CloudBust.Common
+	CloudBust.Common.FavIcon:
+		Name: Fav Icon
+		Description: Set the website favicon
+		Category: CloudBust
+		Dependencies: CloudBust.Common

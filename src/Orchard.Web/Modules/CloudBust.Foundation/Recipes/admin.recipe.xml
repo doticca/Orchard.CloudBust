@@ -1,0 +1,59 @@
+﻿<?xml version="1.0"?>
+<Orchard>
+  <Recipe>
+    <Name>Foundation Admin Theme</Name>
+    <Description>The default recipe to activate the full features of the foundation administrator theme.</Description>
+    <Author>Team Grapto @teamgrapto</Author>
+    <Tags>CloudBust</Tags>
+    <Version>1.0</Version>
+  </Recipe>
+
+  <Feature enable="CloudBust.Resources.Underscore,CloudBust.Resources.Ace, 
+                   CloudBust.Common.ThemePicker, CloudBust.Foundation,                   
+                   TheAdminFoundation" />
+
+  <Migration features="*" />
+
+  <ContentDefinition>
+    <Types>
+      <Page ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True" ContentTypeSettings.Draftable="True" TypeIndexing.Indexes="Search" DisplayName="Page">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-page&quot;,&quot;Culture&quot;:&quot;en-US&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
+        <BodyPart BodyTypePartSettings.Flavor="Tabbed" />
+        <CommonPart DateEditorSettings.ShowDateEditor="True" OwnerEditorSettings.ShowOwnerEditor="True" />
+        <CssPart />
+        <JsPart />
+        <LayoutPart LayoutTypePartSettings.IsTemplate="False" />
+        <LocalizationPart />
+        <MenuPart />
+        <PublishLaterPart />
+        <TagsPart />
+        <TitlePart />
+      </Page>
+    </Types>
+    <Parts>
+      <AutoroutePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Adds advanced url configuration options to your content type to completely customize the url pattern for a content item." />
+      <BodyPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Allows the editing of text using an editor provided by the configured flavor (e.g. html, text, markdown)." ContentPartLayoutSettings.Placeable="True" BodyPartSettings.FlavorDefault="html" />
+      <CommonPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides common information about a content item, such as Owner, Date Created, Date Published and Date Modified." ContentPartLayoutSettings.Placeable="True" />
+      <CssPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Allows the inline editing of Css using Ace editor." />
+      <JsPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Allows the inline editing of Javascript using Ace editor." />
+      <LayoutPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Adds a layout designer to your content type." />
+      <LocalizationPart />
+      <MenuPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides an easy way to create a ContentMenuItem from the content editor." />
+      <PublishLaterPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Adds the ability to delay the publication of a content item to a later date and time." />
+      <TagsPart ContentPartLayoutSettings.Placeable="True" ContentPartSettings.Attachable="True" ContentPartSettings.Description="Allows to describe your content using non-hierarchical keywords." />
+      <TitlePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides a Title for your content item." ContentPartLayoutSettings.Placeable="True" />
+    </Parts>
+  </ContentDefinition>
+  
+  <Settings>
+    <UnderscoreSettingsPart AutoEnable="false" AutoEnableAdmin="false" />
+    <FoundationSettingsPart AutoEnableAdmin="true" DoNotEnableFrontEnd="true" UseDatePicker="false" UseSelect="false" UseIcons="true" UseNicescroll="false" UsePlaceholder="true" />
+    <SiteSettingsPart SupportedCultures="en-US" PageTitleSeparator=" - " SiteName="CloudBust" SiteSalt="539d602dcfad40bd873da39a9e14bbc2" SuperUser="admin" SiteCulture="en-US" SiteCalendar="" UseCdn="false" PageSize="10" MaxPageSize="0" MaxPagedCount="0" SiteTimeZone="GTB Standard Time" BaseUrl="" />
+    <RegistrationSettingsPart UsersCanRegister="false" UsersMustValidateEmail="false" UsersAreModerated="false" NotifyModeration="false" EnableLostPassword="false" />
+    <CacheSettingsPart DefaultCacheDuration="300" DefaultCacheGraceTime="60" DefaultMaxAge="0" IgnoreNoCache="false" VaryByCulture="false" CacheAuthenticatedRequests="false" VaryByAuthenticationState="false" DebugMode="false" />
+  </Settings>
+
+  <Command>
+    feature disable "Orchard.Layouts"
+  </Command>
+</Orchard>

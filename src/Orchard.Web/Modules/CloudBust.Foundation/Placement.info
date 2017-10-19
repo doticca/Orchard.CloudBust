@@ -1,0 +1,10 @@
+﻿<Placement>
+    <Place Parts_FoundationMenuItem_Edit="Content:11"/>
+    <Place Parts_FeaturedHead="Content"/>
+    <Place Parts_FeaturedHead_Edit="Content:6"/>
+    <Place Parts_QuadPromo="Content"/>
+    <Place Parts_QuadPromo_Edit="Content:6"/>
+    <Place Parts_TrioPromo="Content"/>
+    <Place Parts_TrioPromo_Edit="Content:6"/>
+    <Place Parts_Foundation_FoundationSettings="Content:1"/>
+</Placement>

@@ -1,0 +1,9 @@
+﻿.settings .customcode .ace_editor {
+    width: 99%;
+    height: 200px;
+    border: 1px solid #ccc;
+}
+
+.settings .ace_editor div {
+    margin: 0;
+}

@@ -1,0 +1,113 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Core.Title.Models;
+@{
+    //Model.Metadata.Wrappers.Remove("Widget_Wrapper");
+    var title = Model.ContentItem.WidgetPart.Title;
+    var showtitle = Model.ContentItem.WidgetPart.RenderTitle;
+    var body = Model.ContentPart.Text;
+}
+
+<style type="text/css" >
+    .quad-promo a.click-block h3 {
+        font-size: 1.8em;
+    }
+    .quad-promo a.click-block {
+        display: block;
+        color: #333;
+        font-weight: normal;
+    }
+    .quad-promo a.click-block span strong {
+        display: block;
+    }
+    .quad-promo a.click-block span.normal-text {
+        display: block;
+        font-size: 0.875em;
+        margin-bottom: 30px;
+        line-height: 21px;
+    }
+    .quad-promo img {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .quad-promo a img {
+        border: none;
+    }
+    .quad-promo img, .quad-promo object, .quad-promo embed {
+        max-width: 100%;
+        height: auto;
+    }
+    .quad-promo .promolink.first {
+        @if (!string.IsNullOrWhiteSpace(Model.ContentPart.FirstLinkColor))
+        {
+            @Html.Raw("color: " + @Model.ContentPart.FirstLinkColor + ";");
+        }
+    }
+    .quad-promo .promolink.second {
+        @if (!string.IsNullOrWhiteSpace(Model.ContentPart.SecondLinkColor))
+        {
+            @Html.Raw("color: " + @Model.ContentPart.SecondLinkColor + ";");
+        }
+    }
+    .quad-promo .promolink.third {
+        @if (!string.IsNullOrWhiteSpace(Model.ContentPart.ThirdLinkColor))
+        {
+            @Html.Raw("color: " + @Model.ContentPart.ThirdLinkColor + ";");
+        }
+    }
+    .quad-promo .promolink.fourth {
+        @if (!string.IsNullOrWhiteSpace(Model.ContentPart.FourthLinkColor))
+        {
+            @Html.Raw("color: " + @Model.ContentPart.FourthLinkColor + ";");
+        }
+    }
+</style>
+
+<div class="quad-promo">
+
+    <div class="row">
+        <div class="large-12 columns">
+@if (showtitle)
+{
+            <h2 class="centered-text light smaller bump-60 bottom-add">@title</h2>
+}
+            <div class="centered-text">
+                @Html.Raw(body)
+            </div>
+        </div>
+    </div>
+
+    <div class="row bump-25">
+        <div class="large-3 medium-3 columns">
+            <a href="@Model.ContentPart.FirstLinkUrl" class="centered-text click-block">
+                <img src="@Model.ContentPart.FirstImage">
+                <h3 class="title light">@Html.Raw(Model.ContentPart.FirstTitle)</h3>
+                <span class="normal-text">@Html.Raw(Model.ContentPart.FirstPromoText)</span>
+                <span class="normal-text"><strong class="promolink first">@Html.Raw(Model.ContentPart.FirstLinkText)</strong></span>
+            </a>
+        </div>
+        <div class="large-3 medium-3 columns">
+            <a href="@Model.ContentPart.SecondLinkUrl" class="centered-text click-block">
+                <img src="@Model.ContentPart.SecondImage">
+                <h3 class="title light">@Html.Raw(Model.ContentPart.SecondTitle)</h3>
+                <span class="normal-text">@Html.Raw(Model.ContentPart.SecondPromoText)</span>
+                <span class="normal-text"><strong class="promolink second">@Html.Raw(Model.ContentPart.SecondLinkText)</strong></span>
+            </a>
+        </div>
+        <div class="large-3 medium-3 columns">
+            <a href="@Model.ContentPart.ThirdLinkUrl" class="centered-text click-block">
+                <img src="@Model.ContentPart.ThirdImage">
+                <h3 class="title light">@Html.Raw(Model.ContentPart.ThirdTitle)</h3>
+                <span class="normal-text">@Html.Raw(Model.ContentPart.ThirdPromoText)</span>
+                <span class="normal-text"><strong class="promolink third">@Html.Raw(Model.ContentPart.ThirdLinkText)</strong></span>
+            </a>
+        </div>
+        <div class="large-3 medium-3 columns">
+            <a href="@Model.ContentPart.FourthLinkUrl" class="centered-text click-block">
+                <img src="@Model.ContentPart.FourthImage">
+                <h3 class="title light">@Html.Raw(Model.ContentPart.FourthTitle)</h3>
+                <span class="normal-text">@Html.Raw(Model.ContentPart.FourthPromoText)</span>
+                <span class="normal-text"><strong class="promolink fourth">@Html.Raw(Model.ContentPart.FourthLinkText)</strong></span>
+            </a>
+        </div>
+    </div>
+</div>

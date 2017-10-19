@@ -1,0 +1,50 @@
+﻿@using CloudBust.Common.Models
+@model MetaTagsPart
+           
+<div class="tabbedcontent" data-title="Meta">
+    <h1>SEO Meta Data</h1>
+    
+    <fieldset>
+        @Html.LabelFor(model => model.Keywords)
+        @Html.TextBoxFor(model => model.Keywords, new { @class = "large text" })
+        @Html.ValidationMessageFor(model => model.Keywords)
+        
+        @Html.LabelFor(model => model.KeywordsInherited)
+        @Html.CheckBoxFor(model => model.KeywordsInherited)
+    </fieldset>
+    
+    <fieldset>
+        @Html.LabelFor(model => model.Description)
+        @Html.TextBoxFor(model => model.Description, new { @class = "large text" })
+        @Html.ValidationMessageFor(model => model.Description)
+        
+        @Html.LabelFor(model => model.DescriptionInherited)
+        @Html.CheckBoxFor(model => model.DescriptionInherited)
+    </fieldset>
+    
+    <fieldset>
+        @Html.LabelFor(model => model.MetaTag1Name)
+        @Html.TextBoxFor(model => model.MetaTag1Name)
+        @Html.ValidationMessageFor(model => model.MetaTag1Name)
+        
+        @Html.LabelFor(model => model.MetaTag1Inherited)
+        @Html.CheckBoxFor(model => model.MetaTag1Inherited)
+
+        @Html.LabelFor(model => model.MetaTag1Value)
+        @Html.TextBoxFor(model => model.MetaTag1Value, new {@class="large text"})
+        @Html.ValidationMessageFor(model => model.MetaTag1Value)
+    </fieldset>
+    
+    <fieldset>
+        @Html.LabelFor(model => model.MetaTag2Name)
+        @Html.TextBoxFor(model => model.MetaTag2Name)
+        @Html.ValidationMessageFor(model => model.MetaTag2Name)
+        
+        @Html.LabelFor(model => model.MetaTag2Inherited)
+        @Html.CheckBoxFor(model => model.MetaTag2Inherited)
+
+        @Html.LabelFor(model => model.MetaTag2Value)
+        @Html.TextBoxFor(model => model.MetaTag2Value, new {@class="large text"})
+        @Html.ValidationMessageFor(model => model.MetaTag2Value)
+    </fieldset>
+</div>

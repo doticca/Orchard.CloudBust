@@ -1,0 +1,10 @@
+﻿Name: Foundation for CloudBust
+Path: CloudBust.Foundation
+AntiForgery: enabled
+Author: Team Grapto @teamgrapto
+Website: http://www.grapto.com
+Version: 1.10.0
+OrchardVersion: 1.10
+Description: The base Foundation code, settings, menus and shapes for CloudBust applications.
+Category: CloudBust
+Dependencies: Orchard.Widgets, CloudBust.Common, CloudBust.Resources.Ace

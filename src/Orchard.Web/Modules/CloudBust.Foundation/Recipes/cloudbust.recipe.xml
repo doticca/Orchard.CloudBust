@@ -1,0 +1,163 @@
+﻿<?xml version="1.0"?>
+<Orchard>
+  <Recipe>
+    <Name>CloudBust</Name>
+    <Description>The default recipe to activate the full features of the cloudBUST platform.</Description>
+    <Author>Team Grapto @teamgrapto</Author>
+    <WebSite>http://www.grapto.com</WebSite>
+    <Tags>cloudbust</Tags>
+    <Version>1.0</Version>
+  </Recipe>
+
+  <Feature enable="js.Ias, js.imagesLoaded, js.Modernizr, js.Underscore, js.Slick, js.Highlight,
+                   Contrib.Ace, Contrib.CookieCuttr, Contrib.Gravatar, Contrib.Stripe,               
+                   CloudBust.Foundation.Common, CloudBust.Foundation.Common.ThemePicker, CloudBust.Foundation,
+                   CloudBust.Foundation.Application, CloudBust.Foundation.UserProfile, CloudBust.Foundation.Email,
+                   CloudBust.Foundation.Blogs, CloudBust.Foundation.Dashboard, CloudBust.Foundation.Forum, 
+                   TheAdminFoundation, Foundation" />
+
+  <Metadata>
+    <Types>
+      <Page>
+        <BodyPart BodyTypePartSettings.Flavor="Tabbedace" />
+        <JsPart />
+        <CssPart />
+      </Page>
+      <MenuItem Description="Represents a simple custom link with a text and an url." Stereotype="MenuItem" DisplayName="Custom Link">
+        <MenuPart />
+        <IdentityPart />
+        <CommonPart />
+      </MenuItem>
+      <Menu DisplayName="Menu">
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="false" />
+        <TitlePart />
+        <IdentityPart />
+      </Menu>
+      <MenuWidget Stereotype="Widget" DisplayName="Menu Widget">
+        <CommonPart />
+        <IdentityPart />
+        <WidgetPart />
+        <MenuWidgetPart />
+        <CssPart />
+      </MenuWidget>
+    </Types>
+    
+    <Parts />
+  </Metadata>
+
+  <Settings>
+    <FaviconSettingsPart FaviconUrl="" />
+    <ModernizrSettingsPart AutoEnable="true" AutoEnableAdmin="true" />
+    <FoundationSettingsPart AutoEnableAdmin="true" DoNotEnableFrontEnd="false"/>
+    <imagesLoadedSettingsPart AutoEnable="true" AutoEnableAdmin="true" />
+    <HighlightSettingsPart Style="xcode" AutoEnable="true" AutoEnableAdmin="false" FullBundle="false" />
+    <SlickSettingsPart AutoEnable="false" AutoEnableAdmin="false" />
+  </Settings>
+
+  <Data>
+    <Layer Id="/Layer.LayerName=Default" Status="Published">
+      <LayerPart Name="Default" Description="The widgets in this layer are displayed on all pages" LayerRule="not url '~/dashboard*'" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="20153-10-02T09:39:30Z" PublishedUtc="2013-10-02T09:39:30Z" ModifiedUtc="2015-10-02T09:39:30Z" />
+    </Layer>
+    <Layer Id="/Layer.LayerName=Authenticated" Status="Published">
+      <LayerPart Name="Authenticated" Description="The widgets in this layer are displayed when the user is authenticated" LayerRule="authenticated" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-10-02T09:39:30Z" PublishedUtc="2013-10-02T09:39:30Z" ModifiedUtc="2015-10-02T09:39:30Z" />
+    </Layer>
+    <Layer Id="/Layer.LayerName=Anonymous" Status="Published">
+      <LayerPart Name="Anonymous" Description="The widgets in this layer are displayed when the user is anonymous" LayerRule="not authenticated" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-10-02T09:39:30Z" PublishedUtc="2015-10-02T09:39:30Z" ModifiedUtc="2015-10-02T09:39:30Z" />
+    </Layer>
+    <Layer Id="/Layer.LayerName=Disabled" Status="Published">
+      <LayerPart Name="Disabled" Description="The widgets in this layer are never displayed" LayerRule="false" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-10-02T09:39:30Z" PublishedUtc="2015-10-02T09:39:30Z" ModifiedUtc="2015-10-02T09:39:30Z" />
+    </Layer>
+    <Layer Id="/Layer.LayerName=TheHomepage" Status="Published">
+      <LayerPart Name="TheHomepage" Description="The widgets in this layer are displayed on the home page" LayerRule="url '~/'" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-10-02T09:39:30Z" PublishedUtc="2015-10-02T09:39:30Z" ModifiedUtc="2015-10-02T09:39:30Z" />
+    </Layer>    
+    <Layer Id="/Layer.LayerName=AllExceptInfoPages" Status="Published">
+      <LayerPart Name="AllExceptInfoPages" Description="The widgets in this layer are displayed on every page except info pages" LayerRule="not url '~/info/*'" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-10-02T09:39:30Z" PublishedUtc="2015-10-02T09:39:30Z" ModifiedUtc="2015-10-02T09:39:30Z" />
+    </Layer>
+    <Layer Id="/Layer.LayerName=RegisterPage" Status="Published">
+      <LayerPart Name="RegisterPage" Description="The widgets in this layer are displayed on registration pages" LayerRule="url('~/users/account*') and not authenticated" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-10-02T09:39:30Z" PublishedUtc="2015-10-02T09:39:30Z" ModifiedUtc="2015-10-02T09:39:30Z" />
+    </Layer>
+    <Layer Id="/Layer.LayerName=AnonymousHomepage" Status="Published">
+      <LayerPart Name="AnonymousHomepage" Description="The widgets in this layer are displayed when the user is anonymous and he is at homepage" LayerRule="not authenticated and url '~/'" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-10-02T09:39:30Z" PublishedUtc="2015-10-02T09:39:30Z" ModifiedUtc="2015-10-02T09:39:30Z" />
+    </Layer>
+    <Layer Id="/Layer.LayerName=Dashboard" Status="Published">
+      <LayerPart Name="Dashboard" Description="The widgets in this layer are displayed at Dashboard page" LayerRule="url '~/dashboard*'" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-10-02T09:39:30Z" PublishedUtc="2015-10-02T09:39:30Z" ModifiedUtc="2013-10-02T09:39:30Z" />
+    </Layer>
+
+    <Menu Id="/Identifier=97d85366b5af4aa788e39e84d8043a08" Status="Published">
+      <IdentityPart Identifier="97d85366b5af4aa788e39e84d8043a08" />
+      <CommonPart Owner="/alias=profile\/2/User.UserName=admin" CreatedUtc="2014-10-06T10:22:27.1465031Z" PublishedUtc="2014-10-06T10:22:27.2246265Z" ModifiedUtc="2014-10-06T10:22:27.1621265Z" />
+      <TitlePart Title="Home" />
+    </Menu>
+    <Menu Id="/Identifier=de4505ba821346399892c405b898d1df" Status="Published">
+      <IdentityPart Identifier="de4505ba821346399892c405b898d1df" />
+      <CommonPart Owner="/alias=profile\/2/User.UserName=admin" CreatedUtc="2014-10-05T21:18:05.9900326Z" PublishedUtc="2014-10-05T21:18:06.1307382Z" ModifiedUtc="2014-10-05T21:18:06.0369065Z" />
+      <TitlePart Title="Dashboard" />
+    </Menu>
+    <MenuItem Id="/Identifier=9f6ad3fcd5134cf287a5d22be92dee5d" Status="Published">
+      <IdentityPart Identifier="9f6ad3fcd5134cf287a5d22be92dee5d" />
+      <CommonPart Owner="/alias=profile\/2/User.UserName=admin" CreatedUtc="2014-10-05T21:18:43.8061694Z" PublishedUtc="2014-10-05T21:18:43.9781057Z" ModifiedUtc="2014-10-05T21:18:43.8217889Z" />
+      <MenuItemPart Url="~/dashboard" />
+      <MenuPart Menu="/Identifier=de4505ba821346399892c405b898d1df" MenuText="Dashboard" MenuPosition="1" />
+      <FoundationMenuItemPart DisplayAsButton="false" isRoot="false" LeftSide="false" Divider="false" />
+    </MenuItem>
+    <MenuItem Id="/Identifier=ee17ee6f00134d4387b3981ed8e534d3" Status="Published">
+      <IdentityPart Identifier="ee17ee6f00134d4387b3981ed8e534d3" />
+      <CommonPart Owner="/alias=profile\/2/User.UserName=admin" CreatedUtc="2014-10-05T21:19:03.5996671Z" PublishedUtc="2015-03-03T17:35:05.5776446Z" ModifiedUtc="2015-03-03T17:35:05.0780014Z" />
+      <MenuItemPart Url="~/dashboard/applications" />
+      <MenuPart Menu="/Identifier=de4505ba821346399892c405b898d1df" MenuText="Applications" MenuPosition="2" />
+      <FoundationMenuItemPart DisplayAsButton="false" isRoot="false" LeftSide="false" Divider="false" />
+    </MenuItem>
+    <MenuItem Id="/Identifier=8f32cbf67476474abe154b3c51d86cfa" Status="Published">
+      <IdentityPart Identifier="8f32cbf67476474abe154b3c51d86cfa" />
+      <CommonPart Owner="/alias=profile\/2/User.UserName=admin" CreatedUtc="2014-10-05T21:19:21.5330417Z" PublishedUtc="2015-03-03T17:35:34.920929Z" ModifiedUtc="2015-03-03T17:35:34.8271802Z" />
+      <MenuItemPart Url="~/dashboard/games" />
+      <MenuPart Menu="/Identifier=de4505ba821346399892c405b898d1df" MenuText="Games" MenuPosition="3" />
+      <FoundationMenuItemPart DisplayAsButton="false" isRoot="false" LeftSide="false" Divider="false" />
+    </MenuItem>
+    <MenuItem Id="/Identifier=adde3d673e234d709c4648d8bc2563e3" Status="Published">
+      <IdentityPart Identifier="adde3d673e234d709c4648d8bc2563e3" />
+      <CommonPart Owner="/alias=profile\/2/User.UserName=admin" CreatedUtc="2014-10-06T10:39:46.6719122Z" PublishedUtc="2015-03-17T07:16:19.0011726Z" ModifiedUtc="2015-03-17T07:16:18.9074176Z" />
+      <MenuItemPart Url="//www.doticca.com/Blog" />
+      <MenuPart Menu="/Identifier=97d85366b5af4aa788e39e84d8043a08" MenuText="News" MenuPosition="1" />
+      <FoundationMenuItemPart DisplayAsButton="false" isRoot="false" LeftSide="false" Divider="false" />
+    </MenuItem>
+    <MenuItem Id="/Identifier=ec76f1cf9667422fb0f13d9e5513156c" Status="Published">
+      <IdentityPart Identifier="ec76f1cf9667422fb0f13d9e5513156c" />
+      <CommonPart Owner="/alias=profile\/2/User.UserName=admin" CreatedUtc="2014-10-06T10:22:50.7811742Z" PublishedUtc="2014-10-06T10:22:50.9217966Z" ModifiedUtc="2014-10-06T10:22:50.7811742Z" />
+      <MenuItemPart Url="~/dashboard" />
+      <MenuPart Menu="/Identifier=97d85366b5af4aa788e39e84d8043a08" MenuText="Dashboard" MenuPosition="2" />
+      <FoundationMenuItemPart DisplayAsButton="true" isRoot="false" LeftSide="false" Divider="false" />
+    </MenuItem>
+    <MenuWidget Id="/Identifier=31907b279ba94f57bafe19bffeaf7790" Status="Published">
+      <IdentityPart Identifier="31907b279ba94f57bafe19bffeaf7790" />
+      <CommonPart Owner="/alias=profile\/2/User.UserName=admin" Container="/Layer.LayerName=Default" CreatedUtc="2014-10-06T10:34:00.9792712Z" PublishedUtc="2014-10-06T10:34:00.9948933Z" ModifiedUtc="2014-10-06T10:34:00.9948933Z" />
+      <CssPart Css="" />
+      <WidgetPart Title="Home" Position="2" Zone="Navigation" RenderTitle="false" Name="" />
+      <MenuWidgetPart Menu="/Identifier=97d85366b5af4aa788e39e84d8043a08" StartLevel="1" Levels="0" Breadcrumb="false" AddCurrentPage="false" AddHomePage="false" ShowFullMenu="false" />
+    </MenuWidget>
+    <MenuWidget Id="/Identifier=6266aa20090e4a8f9981aa50b338d317" Status="Published">
+      <IdentityPart Identifier="6266aa20090e4a8f9981aa50b338d317" />
+      <CommonPart Owner="/alias=profile\/2/User.UserName=admin" Container="/Layer.LayerName=Dashboard" CreatedUtc="2014-10-05T21:20:47.9518838Z" PublishedUtc="2014-10-05T21:20:47.98277Z" ModifiedUtc="2014-10-05T21:20:48.0296389Z" />
+      <CssPart Css="" />
+      <WidgetPart Title="Dashboard" Position="4" Zone="Navigation" RenderTitle="false" Name="" />
+      <MenuWidgetPart Menu="/Identifier=de4505ba821346399892c405b898d1df" StartLevel="1" Levels="0" Breadcrumb="false" AddCurrentPage="false" AddHomePage="false" ShowFullMenu="false" />
+    </MenuWidget>
+
+  </Data>
+
+  <Command>
+    widget delete /Title:"Main Menu"
+    theme enable "Foundation CloudBust"
+    theme activate "Foundation"
+    themepicker add "RequestDirectoryThemeSelectionRule" /Name:"Dashboard" /Criterion:"/dashboard" /Theme:"Foundation.CloudBust"
+  </Command>
+</Orchard>

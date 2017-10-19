@@ -1,0 +1,54 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Core.Title.Models;
+@{
+    Model.Metadata.Wrappers.Remove("Widget_Wrapper");
+    var title = Model.ContentItem.WidgetPart.Title;
+    var body = Model.ContentPart.Text;
+}
+
+<style type="text/css">
+.main-header { @if(!string.IsNullOrWhiteSpace(Model.ContentPart.BackgroundColor)){@Html.Raw("background-color: " + @Model.ContentPart.BackgroundColor + ";");}@if(!string.IsNullOrWhiteSpace(Model.ContentPart.ForegroundColor)){@Html.Raw("color: " + @Model.ContentPart.ForegroundColor + ";");}}
+
+.main-header h1 { line-height: 1.2;font-size: 2.5em;padding-top: 30px;margin-bottom: 21px;@if(!string.IsNullOrWhiteSpace(Model.ContentPart.ForegroundColor)){@Html.Raw("color: " + @Model.ContentPart.ForegroundColor + ";");}}
+
+.main-header p { @if (!string.IsNullOrWhiteSpace(Model.ContentPart.ForegroundColor)){@Html.Raw("color: " + @Model.ContentPart.ForegroundColor + ";");} }
+
+.main-header p.lead { font-size: 1.125em;line-height: 1.6;margin-bottom: 55px;@if (!string.IsNullOrWhiteSpace(Model.ContentPart.ForegroundColor)){@Html.Raw("color: " + @Model.ContentPart.ForegroundColor + ";");} }
+
+@@media only screen and (max-width: 640px) {
+    .main-header { margin-bottom: 30px; }
+}
+@@media only screen and (max-width: 1024px) and (min-width: 640px){
+    .main-header { @if(!string.IsNullOrWhiteSpace(Model.ContentPart.BackgroundImageMedium)){@Html.Raw("background: url(" + @Model.ContentPart.BackgroundImageMedium + ") no-repeat;");}@if(!string.IsNullOrWhiteSpace(Model.ContentPart.BackgroundColorMedium)){@Html.Raw("background-color: " + @Model.ContentPart.BackgroundColorMedium + ";");}@if(Model.ContentPart.HeightMedium>0){@Html.Raw("min-height: " + @Model.ContentPart.HeightMedium + "px;");}}
+
+    .main-header h1 { font-size: 3em;padding-top: 80px;margin-bottom: 30px;@if(!string.IsNullOrWhiteSpace(Model.ContentPart.ForegroundColorMedium)){@Html.Raw("color: " + @Model.ContentPart.ForegroundColorMedium + ";");}}
+
+    .main-header p { @if(!string.IsNullOrWhiteSpace(Model.ContentPart.ForegroundColorMedium)){@Html.Raw("color: " + @Model.ContentPart.ForegroundColorMedium + ";");} }
+
+    .main-header p.lead { font-size: 1.25em; line-height: 1.6; margin-bottom: 80px; @if(!string.IsNullOrWhiteSpace(Model.ContentPart.ForegroundColorMedium)){@Html.Raw("color: " + @Model.ContentPart.ForegroundColorMedium + ";");} }
+}
+@@media only screen and (min-width: 1024px){
+    .main-header { @if(!string.IsNullOrWhiteSpace(Model.ContentPart.BackgroundImageLarge)){@Html.Raw("background: url(" + @Model.ContentPart.BackgroundImageLarge + ") no-repeat center center;");}@if(!string.IsNullOrWhiteSpace(Model.ContentPart.BackgroundColorLarge)){@Html.Raw("background-color: " + @Model.ContentPart.BackgroundColorLarge + ";");}@if(Model.ContentPart.HeightLarge>0){@Html.Raw("min-height: " + @Model.ContentPart.HeightLarge + "px;");}}
+
+    .main-header h1 { font-size: 4em;padding-top: 180px;margin-bottom: 30px;@if(!string.IsNullOrWhiteSpace(Model.ContentPart.ForegroundColorLarge)){@Html.Raw("color: " + @Model.ContentPart.ForegroundColorLarge + ";");}}
+
+    .main-header p { @if (!string.IsNullOrWhiteSpace(Model.ContentPart.ForegroundColorLarge)){@Html.Raw("color: " + @Model.ContentPart.ForegroundColorLarge + ";");} }
+
+    .main-header p.lead { font-size: 1.25em; line-height: 1.6; margin-bottom: 120px; @if (!string.IsNullOrWhiteSpace(Model.ContentPart.ForegroundColorLarge)){@Html.Raw("color: " + @Model.ContentPart.ForegroundColorLarge + ";");} }
+}
+</style>
+
+<div class="main-header">
+    <div class="tablet-overlay">
+        <div class="row">
+            <div class="large-6 medium-6 columns">
+                <h1 class="light">@title</h1>
+                <div class="row">
+                    <div class="large-11 columns">
+                        @Html.Raw(body)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

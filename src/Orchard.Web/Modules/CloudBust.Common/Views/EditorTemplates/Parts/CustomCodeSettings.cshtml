@@ -1,0 +1,43 @@
+﻿@model CloudBust.Common.Models.CustomCodeSettingsPart
+
+@{
+    Layout.Title = T("Custom code settings");
+
+    Script.Require("OrchardAce").AtHead();
+    Style.Include("customcode-admin.css");
+}
+
+<fieldset class="customcode">
+    <legend>@T("Head code")</legend>
+    <div>
+        <span class="hint">@T("Code below will be included between &lt;head&gt; and &lt;/head&gt; tags.")</span>
+        @Html.TextAreaFor(m => m.HeadCode)
+    </div>
+</fieldset>
+
+<fieldset class="customcode">
+    <legend>@T("Foot code")</legend>
+    <div>
+        <span class="hint">@T("Code below will be included at the end of the page.")</span>
+        @Html.TextAreaFor(m => m.FootCode)
+    </div>
+</fieldset>
+
+<script>
+    $('.customcode textarea').each(function () {
+        var codeArea = this;
+        var $editor = $("<div></div>");
+        $(codeArea).after($editor);
+        codeArea.ace = ace.edit($editor[0]);
+        $(codeArea).hide();
+        codeArea.ace.setTheme("ace/theme/chrome");
+        codeArea.ace.setShowPrintMargin(false);
+        codeArea.ace.setShowInvisibles(true);
+        codeArea.ace.getSession().setUseWrapMode(true);
+        codeArea.ace.getSession().setMode("ace/mode/html");
+        codeArea.ace.getSession().setValue($(this).val());
+        codeArea.ace.getSession().on('change', function (e) {
+            $(codeArea).val(codeArea.ace.getSession().getValue());
+        });
+    });
+</script>

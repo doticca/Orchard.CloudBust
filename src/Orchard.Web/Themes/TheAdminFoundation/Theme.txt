@@ -1,0 +1,8 @@
+﻿Name: The Admin (Foundation)
+Version: 1.9.2
+Author: Team Grapto (tweet: @teamgrapto)
+Tags: hidden, admin
+Description: An admin theme not to be used for the site so don't click "Activate" (or "Uninstall"). In the near future admin themes won't be mixed in with site themes.
+Website: http://www.grapto.com
+BaseTheme: TheAdmin
+Dependencies: CloudBust.Resources.Underscore,CloudBust.Resources.Ace,CloudBust.Common.ThemePicker, CloudBust.Foundation

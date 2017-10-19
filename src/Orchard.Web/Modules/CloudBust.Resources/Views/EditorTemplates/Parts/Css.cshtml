@@ -1,0 +1,61 @@
+﻿@using Orchard.Environment.Descriptor.Models
+@{
+    Script.Require("OrchardAce").AtHead();
+    var g = Guid.NewGuid();
+    string divid = "ace-" + g.ToString();
+    string txtid = "txt-" + g.ToString();
+}
+    <style>
+    #@divid {
+        border: 1px solid #7C8891;
+        position:relative;
+    min-height:400px;
+        width:99%;
+    }
+    </style>
+
+    <fieldset class="part_css">
+        <label id="csslabel">Css</label>
+        <div id="@divid"></div>
+        @Html.TextArea("Css", (string)Model.Css, 25, 80,
+     new Dictionary<string, object> {
+        {"class", "css aceeditor " + txtid},
+        {"style", "width:100%; display:none;"}
+     })
+    </fieldset>
+
+@using (Script.Foot())
+{
+<script type="text/javascript">
+    $(function () {
+        var CssAceEditor = ace.edit('@divid');
+        CssAceEditor.setTheme('ace/theme/grapto');
+        CssAceEditor.getSession().setMode('ace/mode/css');
+        CssAceEditor.setOptions({
+            enableEmmet: true,
+            enableBasicAutocompletion: true,
+            enableSnippets: false,
+            spellcheck: true,
+            useElasticTabstops: true,
+            maxLines: Infinity
+        });
+        CssAceEditor.setSelectionStyle("text");
+        CssAceEditor.getSession().setUseSoftTabs(false);
+
+        var CssTextArea = $('.@txtid').hide();
+        CssAceEditor.getSession().setValue(CssTextArea.val());
+        CssAceEditor.getSession().on('change', function () {
+            CssTextArea.val(CssAceEditor.getSession().getValue());
+        });
+
+        var desttab = $("#tabcss");
+        if (typeof (desttab) !== 'undefined' && desttab.length > 0) {
+            $("#@divid").appendTo("#tabcss");
+            $("#csslabel").parent().hide();
+            $('#tabcss').on('toggled', function (event, tab) {
+                CssAceEditor.resize();
+            });
+        }
+    });
+</script>
+}

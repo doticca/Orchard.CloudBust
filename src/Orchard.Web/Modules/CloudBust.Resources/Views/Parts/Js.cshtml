@@ -1,0 +1,17 @@
+﻿@using CloudBust.Resources.Models;
+@{
+    JsPart js = null;
+    try{
+        js = Model.Js;
+    }
+    catch{}
+}
+@if (js != null && !string.IsNullOrWhiteSpace(js.Js))
+{
+    using (Script.Foot())
+    {
+<script type="text/javascript">
+@Html.Raw(js.Js)
+</script>
+    }
+}

@@ -1,0 +1,62 @@
+﻿@using Orchard.Environment.Descriptor.Models
+@{
+    Script.Require("OrchardAce").AtHead();
+    var g = Guid.NewGuid();
+    string divid = "ace-" + g.ToString();
+    string txtid = "txt-" + g.ToString();
+}
+
+    <style>
+    #@divid {
+        border: 1px solid #7C8891;
+        position:relative;
+    min-height:400px;
+        width:99%;
+    }
+    </style>
+
+    <fieldset class="part_js">
+        <label id="jslabel">Javascript</label>
+        <div id="@divid"></div>
+        @Html.TextArea("Js", (string)Model.Js, 25, 80,
+     new Dictionary<string, object> {
+        {"class", "js aceeditor " + txtid},
+        {"style", "width:100%; display:none;"}
+     })
+    </fieldset>
+
+@using (Script.Foot())
+{
+<script type="text/javascript">
+    $(function () {
+        var JsAceEditor = ace.edit('@divid');
+        JsAceEditor.setTheme('ace/theme/grapto');
+        JsAceEditor.getSession().setMode('ace/mode/javascript');
+        JsAceEditor.setOptions({
+            enableEmmet: true,
+            enableBasicAutocompletion: true,
+            enableSnippets: false,
+            spellcheck: true,
+            useElasticTabstops: true,
+            maxLines: Infinity
+        });
+        JsAceEditor.setSelectionStyle("text");
+        JsAceEditor.getSession().setUseSoftTabs(false);
+
+        var JsTextArea = $('.@txtid').hide();
+        JsAceEditor.getSession().setValue(JsTextArea.val());
+        JsAceEditor.getSession().on('change', function () {
+            JsTextArea.val(JsAceEditor.getSession().getValue());
+        });
+
+        var desttab = $("#tabjs");
+        if (typeof (desttab) !== 'undefined' && desttab.length > 0) {
+            $("#@divid").appendTo("#tabjs");
+            $("#jslabel").parent().hide();
+            $('#tabjs').on('toggled', function (event, tab) {
+                JsAceEditor.resize();
+            });
+        }
+    });
+</script>
+}

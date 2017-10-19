@@ -1,0 +1,142 @@
+﻿@model dynamic
+@using Orchard.Security;
+@using Orchard.DisplayManagement.Descriptors;
+@using Orchard.UI.Resources;
+@using Orchard;
+@using Orchard.ContentManagement;
+
+@{
+    SetMeta("X-UA-Compatible", "IE=edge,chrome=1");
+    Script.Require("Underscore").AtFoot();
+    Script.Require("jQuery").AtFoot();
+    Script.Require("ShapesBase").AtFoot();
+    Script.Include("admin.js").AtFoot();
+
+    /* Some useful shortcuts or settings
+    ***************************************************************/
+
+    Func<dynamic, dynamic> Zone = x => Display(x); // Zone as an alias for Display to help make it obvious when we're displaying zones
+
+    /* Inserting some ad hoc shapes
+    ***************************************************************/
+
+    // these are just hacked together to fire existing partials... can change
+    //Model.Header.Add(Display.Header());
+
+    Model.Header.Add(Display.User(CurrentUser: WorkContext.CurrentUser));
+    Model.Footer.Add(Display.OrchardVersion());
+
+    if (Model.Title != null)
+    {
+        Model.Header.Add(Display.Title(Title: Model.Title));
+    }
+}
+
+@{
+    var siteName = WorkContext.CurrentSite.SiteName;
+    var siteLinkText = !string.IsNullOrWhiteSpace(siteName) ? siteName : T("Your site").Text;
+    var appLinkText = !string.IsNullOrWhiteSpace(siteName) ? siteName : T("Project Orchard").Text;
+}
+<div id="layout-wrapper" class="off-canvas-wrap">
+    <div id="layout-content" class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+        <!-- off-canvas title bar for 'small' screen -->
+        <div class="title-bar hide-for-medium" data-responsive-toggle="widemenu" data-hide-for="medium">
+            <div class="title-bar-left">
+                <button class="menu-icon" type="button" data-open="offCanvasLeft"></button>
+                <span class="title-bar-title">@siteLinkText</span>
+            </div>
+        </div>
+        <div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
+            <ul class="vertical menu">
+                @*@Display(Model.Navigation)*@
+            </ul>
+        </div>
+        <div id="layout-main" class="off-canvas-content" data-off-canvas-content >
+            <div  class="expanded row" >
+                <div id="menu" class="hide-for-small-only adminmenu nopadding" data-sticky-container>
+                    <div id="adminmenuback"></div>
+                    <div id="adminmenuwrap" class="sticky" data-sticky data-margin-top="0" data-margin-bottom="0">
+                        <div class="adminmenulive"><a href="~/">Visit Live Site</a></div>
+                            @Display(Model.Navigation)
+
+                        <div class="menu-holder"></div>
+                    </div>
+                </div>
+                <div class="admincontent nopadding">
+                    <section role="main" class="main-section scroll-container">
+                        <div id="contentcol">
+                            <div id="header">
+                                @Zone(Model.Header)
+                            </div>
+                            <div id="main" role="main">
+                                @if (Model.Messages != null)
+                                {
+                                    <div id="messages" class="row">
+                                        @Zone(Model.Messages)
+                                    </div>
+                                }
+
+                                @if (Model.BeforeContent != null)
+                                {
+                                    <div id="before-content">
+                                        @Zone(Model.BeforeContent)
+                                    </div>
+                                }
+                                @if (Model.LocalNavigation != null)
+                                {@Zone(Model.LocalNavigation)}
+                                @if (Model.Content != null)
+                                {
+                                    <div id="content" class="group">
+                                        @Zone(Model.Content)
+                                    </div>
+                                }
+
+                                @if (Model.AfterContent != null)
+                                {
+                                    <div id="after-content">
+                                        @Zone(Model.AfterContent)
+                                    </div>
+                                }
+                            </div>
+                            @if (Model.Footer != null)
+                            {
+                                <div id="footer" role="contentinfo">
+                                    @Zone(Model.Footer)
+                                </div>
+                            }
+                        </div>
+                    </section>
+
+
+                </div>
+                
+            </div>
+
+
+        </div>
+
+
+        @*<nav class="tab-bar show-for-small">
+                <section class="left-small">
+                    <a class="left-off-canvas-toggle menu-icon" href="#"><span class="title-bar-title">@siteLinkText</span></a>
+                </section>
+            </nav>*@
+
+        @*<aside class="left-off-canvas-menu">
+                <ul class="off-canvas-list">
+                    <li><label>ADMIN</label></li>
+                    @Zone(Model.Navigation)
+                </ul>
+            </aside>*@
+
+    </div>
+</div>
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+//<![CDATA[
+        var confirmRemoveMessage = '@T("Are you sure you want to remove this element?")';        
+//]]>
+    </script>
+}

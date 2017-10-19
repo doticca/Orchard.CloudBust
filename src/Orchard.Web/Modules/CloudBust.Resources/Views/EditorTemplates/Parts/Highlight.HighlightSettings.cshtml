@@ -1,0 +1,43 @@
+﻿@using CloudBust.Resources.ViewModels;
+@model HighlightSettingsViewModel
+
+<fieldset class="highlight">
+    <legend>@T("Highlight")</legend>
+    <div>
+        <label for="Style">@T("Style")</label>
+        <div>
+            @Html.TextBoxFor(m => m.Style, new { @class = "textMedium" })
+        </div>
+        <span class="hint">Select the style of highlight.</span>
+
+        @Html.ValidationMessage("Style", "*")
+    </div>
+    <br />
+    <div>
+        @Html.EditorFor(m => m.AutoEnable)
+        <label class="forcheckbox" for="HighlightSettings_AutoEnable">@T("Auto Enable")</label>
+        <span class="hint">@T("it enables highlight script on every page header.")</span>
+    </div>
+    <div data-controllerid="HighlightSettings_AutoEnable" data-defaultstate="visible">
+        @Html.EditorFor(m => m.AutoEnableAdmin)
+        <label class="forcheckbox" for="HighlightSettings_AutoEnableAdmin">@T("Auto Enable Admin")</label>
+        <span class="hint">@T("it enables highlight script on admin pages header.")</span>
+    </div>
+    <div >
+        @Html.EditorFor(m => m.FullBundle)
+        <label class="forcheckbox" for="HighlightSettings_FullBundle">@T("Full Bundle")</label>
+        <span class="hint">@T("it enables the full version of highlight script (detects any language).")</span>
+    </div>
+</fieldset>
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        // hack to make the base.js script work with controller ids
+        (function ($) {
+            $(document).ready(function () {
+                $(".highlight").find("input[name='HighlightSettings.AutoEnable']").click().click();
+            });
+        })(jQuery);
+    </script>
+}

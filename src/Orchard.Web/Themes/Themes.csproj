@@ -26,6 +26,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -91,6 +92,42 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TheAdminFoundation\Scripts\admin.js" />
+    <Content Include="TheAdminFoundation\Styles\ie.css" />
+    <Content Include="TheAdminFoundation\Styles\ie7.css" />
+    <Content Include="TheAdminFoundation\Styles\ie8.css" />
+    <Content Include="TheAdminFoundation\Styles\images\adminNavBackground.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\backgroundGradient.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\backgroundHeader.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\blockquote.png" />
+    <Content Include="TheAdminFoundation\Styles\images\error.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\fb_ico.png" />
+    <Content Include="TheAdminFoundation\Styles\images\gc_ico.png" />
+    <Content Include="TheAdminFoundation\Styles\images\ico-header-delete.png" />
+    <Content Include="TheAdminFoundation\Styles\images\ico-header-event.png" />
+    <Content Include="TheAdminFoundation\Styles\images\ico-header-mail.png" />
+    <Content Include="TheAdminFoundation\Styles\images\ico-header-parameter.png" />
+    <Content Include="TheAdminFoundation\Styles\images\icon-advisory.png" />
+    <Content Include="TheAdminFoundation\Styles\images\icon-contribute.png" />
+    <Content Include="TheAdminFoundation\Styles\images\icon-docs.png" />
+    <Content Include="TheAdminFoundation\Styles\images\icon-friends.png" />
+    <Content Include="TheAdminFoundation\Styles\images\icon-gallery.png" />
+    <Content Include="TheAdminFoundation\Styles\images\icon-settings.png" />
+    <Content Include="TheAdminFoundation\Styles\images\icons.png" />
+    <Content Include="TheAdminFoundation\Styles\images\info.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\menu-default.png" />
+    <Content Include="TheAdminFoundation\Styles\images\menu-filter.png" />
+    <Content Include="TheAdminFoundation\Styles\images\menu-glyph.png" />
+    <Content Include="TheAdminFoundation\Styles\images\menuClosed.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\menuClosedHover.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\menuOpen.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\menuOpenHover.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\orchardLogo.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\tableHeaderBackgroundRed.gif" />
+    <Content Include="TheAdminFoundation\Styles\images\vinesBackgroundBottom.gif" />
+    <Content Include="TheAdminFoundation\Styles\site.css" />
+    <Content Include="TheAdminFoundation\Theme.png" />
+    <Content Include="TheAdminFoundation\Theme.txt" />
     <Content Include="TheAdmin\Scripts\admin.js" />
     <Content Include="TheAdmin\Styles\ie.css" />
     <Content Include="TheAdmin\Styles\ie7.css" />
@@ -208,6 +245,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheAdminFoundation\Scripts\Web.config" />
+    <Content Include="TheAdminFoundation\Styles\Web.config" />
+    <Content Include="TheAdminFoundation\Views\AdminCultureSelector.cshtml" />
+    <Content Include="TheAdminFoundation\Views\Document.cshtml" />
+    <Content Include="TheAdminFoundation\Views\EditorTemplates\Parts.Common.Body.cshtml" />
+    <Content Include="TheAdminFoundation\Views\ErrorPage.cshtml" />
+    <Content Include="TheAdminFoundation\Views\Header.cshtml" />
+    <Content Include="TheAdminFoundation\Views\Layout.cshtml" />
+    <Content Include="TheAdminFoundation\Views\LocalMenu.cshtml" />
+    <Content Include="TheAdminFoundation\Views\Menu.cshtml" />
+    <Content Include="TheAdminFoundation\Views\OrchardVersion.cshtml" />
+    <Content Include="TheAdminFoundation\Views\Pager.cshtml" />
+    <Content Include="TheAdminFoundation\Views\Title.cshtml" />
+    <Content Include="TheAdminFoundation\Views\User.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

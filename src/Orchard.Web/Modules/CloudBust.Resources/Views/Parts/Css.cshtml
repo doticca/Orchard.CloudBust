@@ -1,0 +1,14 @@
+﻿@using CloudBust.Resources.Models;
+@{
+    CssPart css = null;
+    try{
+        css = Model.Css;
+    }
+    catch {}
+}
+@if (css != null && !string.IsNullOrWhiteSpace(css.Css))
+{
+    <style>
+@Html.Raw(css.Css)
+    </style>
+}

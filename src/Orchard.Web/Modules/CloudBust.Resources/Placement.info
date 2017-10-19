@@ -1,0 +1,24 @@
+﻿<Placement>
+  <Place Parts_Dropzone_DropzoneSettings="Content:5"/>
+  <Place Parts_FontAwesome_FontAwesomeSettings="Content:5"/>
+  <Place Parts_ElegantIcon_ElegantIconSettings="Content:5"/>
+  <Place Parts_Bootstrap_BootstrapSettings="Content:5"/>
+  <Place Parts_Underscore_UnderscoreSettings="Content:5"/>
+  <Place Parts_Notify_NotifySettings="Content:5"/>
+  <Place Parts_GoogleMaps_GoogleMapsSettings="Content:5"/>
+  <Place Parts_Highlight_HighlightSettings="Content:5"/>
+  <Place Parts_Slick_SlickSettings="Content:5"/>
+  <Place Parts_OwlCarousel_OwlCarouselSettings="Content:5"/>
+  <Place Parts_Niceselect_NiceselectSettings="Content:5"/>
+  <Place Parts_Masonry_MasonrySettings="Content:5"/>
+  <Place Parts_Magnific_MagnificSettings="Content:5"/>
+  <Place Parts_ImagesLoaded_imagesLoadedSettings="Content:5"/>
+  <Place Parts_Css_Edit="Content:2"/>
+  <Place Parts_Js_Edit="Content:3"/>
+  <Match DisplayType="Detail">
+    <Place Parts_Css="Content:4"/>
+    <Place Parts_Js="Content:6"/>
+  </Match> 
+  <Place Parts_CookieCuttr_CookieCuttrSettings="Content:5"/>
+  <Place Parts_CookieCuttr="Content"/>
+</Placement>

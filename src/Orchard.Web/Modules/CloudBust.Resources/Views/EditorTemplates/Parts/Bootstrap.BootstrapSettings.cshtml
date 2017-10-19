@@ -1,0 +1,29 @@
+﻿@using CloudBust.Resources.ViewModels;
+@model BootstrapSettingsViewModel
+
+<fieldset class="bootstrap">
+    <legend>@T("Bootstrap")</legend>
+    <span class="hint">Your version of Bootstrap.css is 3.3.7 visit http://getbootstrap.com/ for Documentation and Examples</span>
+    <div>
+        @Html.EditorFor(m => m.AutoEnable)
+        <label class="forcheckbox" for="BootstrapSettings_AutoEnable">@T("Auto Enable")</label>
+        <span class="hint">@T("it enables bootstrap library on every page.")</span>
+    </div>
+    <div data-controllerid="BootstrapSettings_AutoEnable" data-defaultstate="visible">
+        @Html.EditorFor(m => m.AutoEnableAdmin)
+        <label class="forcheckbox" for="BootstrapSettings_AutoEnableAdmin">@T("Auto Enable Admin")</label>
+        <span class="hint">@T("it enables bootstrap library on admin pages. Do this only if you are an admin theme developer")</span>
+    </div>
+</fieldset>
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        // hack to make the base.js script work with controller ids
+        (function ($) {
+            $(document).ready(function () {
+                $(".bootstrap").find("input[name='BootstrapSettings.AutoEnable']").click().click();
+            });
+        })(jQuery);
+    </script>
+}

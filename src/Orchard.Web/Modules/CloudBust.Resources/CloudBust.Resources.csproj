@@ -1,0 +1,911 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BE7C13C7-0C74-4BF6-8004-7DF08033F975}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CloudBust.Resources</RootNamespace>
+    <AssemblyName>CloudBust.Resources</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Module.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ace.cs" />
+    <Compile Include="AceCssMigrations.cs" />
+    <Compile Include="AceJsMigrations.cs" />
+    <Compile Include="DefaultManifest.cs" />
+    <Compile Include="Controllers\SlickController.cs" />
+    <Compile Include="Cookiecuttr.cs" />
+    <Compile Include="CookiecuttrMigrations.cs" />
+    <Compile Include="Drivers\ElegantIconSettingsPartDriver.cs" />
+    <Compile Include="Drivers\OwlCarouselSettingsPartDriver.cs" />
+    <Compile Include="Drivers\CookieCuttrPartDriver.cs" />
+    <Compile Include="Drivers\CookieCuttrSettingsPartDriver.cs" />
+    <Compile Include="Drivers\CssPartDriver.cs" />
+    <Compile Include="Drivers\DropzoneSettingsPartDriver.cs" />
+    <Compile Include="Drivers\GoogleMapsSettingsPartDriver.cs" />
+    <Compile Include="Drivers\HighlightSettingsPartDriver.cs" />
+    <Compile Include="Drivers\imagesLoadedSettingsPartDriver.cs" />
+    <Compile Include="Drivers\JsPartDriver.cs" />
+    <Compile Include="Drivers\MagnificSettingsPartDriver.cs" />
+    <Compile Include="Drivers\MasonrySettingsPartDriver.cs" />
+    <Compile Include="Drivers\FontAwesomeSettingsPartDriver.cs" />
+    <Compile Include="Drivers\NiceselectSettingsPartDriver.cs" />
+    <Compile Include="Drivers\BootstrapSettingsPartDriver.cs" />
+    <Compile Include="Drivers\SlickSettingsPartDriver.cs" />
+    <Compile Include="Drivers\NotifySettingsPartDriver.cs" />
+    <Compile Include="Drivers\UnderscoreSettingsPartDriver.cs" />
+    <Compile Include="FineUploader.cs" />
+    <Compile Include="Emmet.cs" />
+    <Compile Include="Bootstrap.cs" />
+    <Compile Include="BootstrapMigrations.cs" />
+    <Compile Include="ElegantIcon.cs" />
+    <Compile Include="ElegantIconMigrations.cs" />
+    <Compile Include="GoogleMaps.cs" />
+    <Compile Include="GoogleMapsMigrations.cs" />
+    <Compile Include="Handlers\ElegantIconSettingsPartHandler.cs" />
+    <Compile Include="Handlers\OwlCarouselSettingsPartHandler.cs" />
+    <Compile Include="Handlers\CookieCuttrSettingsPartHandler.cs" />
+    <Compile Include="Handlers\CssPartHandler.cs" />
+    <Compile Include="Handlers\DropzoneSettingsPartHandler.cs" />
+    <Compile Include="Handlers\GoogleMapsSettingsPartHandler.cs" />
+    <Compile Include="Handlers\HighlightSettingsPartHandler.cs" />
+    <Compile Include="Handlers\imagesLoadedSettingsPartHandler.cs" />
+    <Compile Include="Handlers\JsPartHandler.cs" />
+    <Compile Include="Handlers\FontAwesomeSettingsPartHandler.cs" />
+    <Compile Include="Handlers\MagnificSettingsPartHandler.cs" />
+    <Compile Include="Handlers\MasonrySettingsPartHandler.cs" />
+    <Compile Include="Handlers\NiceselectSettingsPartHandler.cs" />
+    <Compile Include="Handlers\BootstrapSettingsPartHandler.cs" />
+    <Compile Include="Handlers\SlickSettingsPartHandler.cs" />
+    <Compile Include="Handlers\NotifySettingsPartHandler.cs" />
+    <Compile Include="Handlers\UnderscoreSettingsPartHandler.cs" />
+    <Compile Include="Highlight.cs" />
+    <Compile Include="HighlightMigrations.cs" />
+    <Compile Include="ImagesLoaded.cs" />
+    <Compile Include="imagesLoadedMigrations.cs" />
+    <Compile Include="Magnific.cs" />
+    <Compile Include="MagnificMigrations.cs" />
+    <Compile Include="Masonry.cs" />
+    <Compile Include="MasonryMigrations.cs" />
+    <Compile Include="Models\ElegantIconSettingsPartRecord.cs" />
+    <Compile Include="Models\ElegantIconSettingsPart.cs" />
+    <Compile Include="Models\OwlCarouselSettingsPart.cs" />
+    <Compile Include="Models\OwlCarouselSettingsPartRecord.cs" />
+    <Compile Include="Models\CookieCuttrPart.cs" />
+    <Compile Include="Models\CookieCuttrSettingsPart.cs" />
+    <Compile Include="Models\CookieCuttrSettingsPartRecord.cs" />
+    <Compile Include="Models\CssPart.cs" />
+    <Compile Include="Models\CssPartRecord.cs" />
+    <Compile Include="Models\DropzoneSettingsPart.cs" />
+    <Compile Include="Models\DropzoneSettingsPartRecord.cs" />
+    <Compile Include="DropzoneMigrations.cs" />
+    <Compile Include="Dropzone.cs" />
+    <Compile Include="Models\GoogleMapsSettingsPart.cs" />
+    <Compile Include="Models\GoogleMapsSettingsPartRecord.cs" />
+    <Compile Include="Models\HighlightSettingsPart.cs" />
+    <Compile Include="Models\HighlightSettingsPartRecord.cs" />
+    <Compile Include="Models\imagesLoadedSettingsPart.cs" />
+    <Compile Include="Models\imagesLoadedSettingsPartRecord.cs" />
+    <Compile Include="Models\JsPart.cs" />
+    <Compile Include="Models\JsPartRecord.cs" />
+    <Compile Include="Models\MagnificSettingsPart.cs" />
+    <Compile Include="Models\MagnificSettingsPartRecord.cs" />
+    <Compile Include="Models\MasonrySettingsPart.cs" />
+    <Compile Include="Models\MasonrySettingsPartRecord.cs" />
+    <Compile Include="Models\FontAwesomeSettingsPart.cs" />
+    <Compile Include="Models\NiceselectSettingsPart.cs" />
+    <Compile Include="Models\FontAwesomeSettingsPartRecord.cs" />
+    <Compile Include="Models\NiceselectSettingsPartRecord.cs" />
+    <Compile Include="Models\BootstrapSettingsPart.cs" />
+    <Compile Include="Models\SlickSettingsPart.cs" />
+    <Compile Include="Models\BootstrapSettingsPartRecord.cs" />
+    <Compile Include="Models\SlickSettingsPartRecord.cs" />
+    <Compile Include="Models\NotifySettingsPart.cs" />
+    <Compile Include="Models\UnderscoreSettingsPart.cs" />
+    <Compile Include="Models\NotifySettingsPartRecord.cs" />
+    <Compile Include="Models\UnderscoreSettingsPartRecord.cs" />
+    <Compile Include="FontAwesome.cs" />
+    <Compile Include="Niceselect.cs" />
+    <Compile Include="FontAwesomeMigrations.cs" />
+    <Compile Include="NiceselectMigrations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ElegantIconService.cs" />
+    <Compile Include="Services\OwlCarouselService.cs" />
+    <Compile Include="Services\DropzoneService.cs" />
+    <Compile Include="Services\GoogleMapsService.cs" />
+    <Compile Include="Services\HighlightService.cs" />
+    <Compile Include="Services\imagesLoadedService.cs" />
+    <Compile Include="Services\MagnificService.cs" />
+    <Compile Include="Services\MasonryService.cs" />
+    <Compile Include="Services\FontAwesomeService.cs" />
+    <Compile Include="Services\NiceselectService.cs" />
+    <Compile Include="Services\BootstrapService.cs" />
+    <Compile Include="Services\SlickService.cs" />
+    <Compile Include="Services\NotifyService.cs" />
+    <Compile Include="Services\UnderscoreService.cs" />
+    <Compile Include="Shapes\ElegantIconShapes.cs" />
+    <Compile Include="Shapes\OwlCarouselShapes.cs" />
+    <Compile Include="Shapes\DropzoneShapes.cs" />
+    <Compile Include="Shapes\GoogleMapsShapes.cs" />
+    <Compile Include="Shapes\HighlightShapes.cs" />
+    <Compile Include="Shapes\imagesLoadedShapes.cs" />
+    <Compile Include="Shapes\MagnificShapes.cs" />
+    <Compile Include="Shapes\MasonryShapes.cs" />
+    <Compile Include="Shapes\FontAwesomeShapes.cs" />
+    <Compile Include="Shapes\NiceselectShapes.cs" />
+    <Compile Include="Shapes\BootstrapShapes.cs" />
+    <Compile Include="Shapes\SlickShapes.cs" />
+    <Compile Include="Shapes\NotifyShapes.cs" />
+    <Compile Include="Shapes\UnderscoreShapes.cs" />
+    <Compile Include="OwlCarousel.cs" />
+    <Compile Include="Slick.cs" />
+    <Compile Include="OwlCarouselMigrations.cs" />
+    <Compile Include="SlickMigrations.cs" />
+    <Compile Include="Notify.cs" />
+    <Compile Include="Underscore.cs" />
+    <Compile Include="NotifyMigrations.cs" />
+    <Compile Include="UnderscoreMigrations.cs" />
+    <Compile Include="ViewModels\ElegantIconViewModel.cs" />
+    <Compile Include="ViewModels\OwlCarouselViewModel.cs" />
+    <Compile Include="ViewModels\DropzoneSettingsViewModel.cs" />
+    <Compile Include="ViewModels\BootstrapViewModel.cs" />
+    <Compile Include="ViewModels\GoogleMapsSettingsViewModel.cs" />
+    <Compile Include="ViewModels\HighlightSettingsViewModel.cs" />
+    <Compile Include="ViewModels\imagesLoadedSettingsViewModel.cs" />
+    <Compile Include="ViewModels\MagnificSettingsViewModel.cs" />
+    <Compile Include="ViewModels\MasonrySettingsViewModel.cs" />
+    <Compile Include="ViewModels\FontAwesomeViewModel.cs" />
+    <Compile Include="ViewModels\NiceselectSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SlickSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SlickViewModel.cs" />
+    <Compile Include="ViewModels\NotifySettingsViewModel.cs" />
+    <Compile Include="ViewModels\UnderscoreSettingsViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
+      <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Orchard.Core.csproj">
+      <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
+      <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.MediaLibrary\Orchard.MediaLibrary.csproj">
+      <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
+      <Name>Orchard.MediaLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\ace2810\ace.js" />
+    <Content Include="Scripts\ace2810\ext-chromevox.js" />
+    <Content Include="Scripts\ace2810\ext-elastic_tabstops_lite.js" />
+    <Content Include="Scripts\ace2810\ext-emmet.js" />
+    <Content Include="Scripts\ace2810\ext-keybinding_menu.js" />
+    <Content Include="Scripts\ace2810\ext-language_tools.js" />
+    <Content Include="Scripts\ace2810\ext-modelist.js" />
+    <Content Include="Scripts\ace2810\ext-old_ie.js" />
+    <Content Include="Scripts\ace2810\ext-searchbox.js" />
+    <Content Include="Scripts\ace2810\ext-settings_menu.js" />
+    <Content Include="Scripts\ace2810\ext-spellcheck.js" />
+    <Content Include="Scripts\ace2810\ext-split.js" />
+    <Content Include="Scripts\ace2810\ext-statusbar.js" />
+    <Content Include="Scripts\ace2810\ext-textarea.js" />
+    <Content Include="Scripts\ace2810\ext-themelist.js" />
+    <Content Include="Scripts\ace2810\ext-whitespace.js" />
+    <Content Include="Scripts\ace2810\keybinding-emacs.js" />
+    <Content Include="Scripts\ace2810\keybinding-vim.js" />
+    <Content Include="Scripts\ace2810\mode-abap.js" />
+    <Content Include="Scripts\ace2810\mode-actionscript.js" />
+    <Content Include="Scripts\ace2810\mode-ada.js" />
+    <Content Include="Scripts\ace2810\mode-asciidoc.js" />
+    <Content Include="Scripts\ace2810\mode-assembly_x86.js" />
+    <Content Include="Scripts\ace2810\mode-autohotkey.js" />
+    <Content Include="Scripts\ace2810\mode-batchfile.js" />
+    <Content Include="Scripts\ace2810\mode-c9search.js" />
+    <Content Include="Scripts\ace2810\mode-clojure.js" />
+    <Content Include="Scripts\ace2810\mode-cobol.js" />
+    <Content Include="Scripts\ace2810\mode-coffee.js" />
+    <Content Include="Scripts\ace2810\mode-coldfusion.js" />
+    <Content Include="Scripts\ace2810\mode-csharp.js" />
+    <Content Include="Scripts\ace2810\mode-css.js" />
+    <Content Include="Scripts\ace2810\mode-curly.js" />
+    <Content Include="Scripts\ace2810\mode-c_cpp.js" />
+    <Content Include="Scripts\ace2810\mode-d.js" />
+    <Content Include="Scripts\ace2810\mode-dart.js" />
+    <Content Include="Scripts\ace2810\mode-diff.js" />
+    <Content Include="Scripts\ace2810\mode-django.js" />
+    <Content Include="Scripts\ace2810\mode-dot.js" />
+    <Content Include="Scripts\ace2810\mode-ejs.js" />
+    <Content Include="Scripts\ace2810\mode-erlang.js" />
+    <Content Include="Scripts\ace2810\mode-forth.js" />
+    <Content Include="Scripts\ace2810\mode-ftl.js" />
+    <Content Include="Scripts\ace2810\mode-glsl.js" />
+    <Content Include="Scripts\ace2810\mode-golang.js" />
+    <Content Include="Scripts\ace2810\mode-groovy.js" />
+    <Content Include="Scripts\ace2810\mode-haml.js" />
+    <Content Include="Scripts\ace2810\mode-handlebars.js" />
+    <Content Include="Scripts\ace2810\mode-haskell.js" />
+    <Content Include="Scripts\ace2810\mode-haxe.js" />
+    <Content Include="Scripts\ace2810\mode-html.js" />
+    <Content Include="Scripts\ace2810\mode-html_completions.js" />
+    <Content Include="Scripts\ace2810\mode-html_ruby.js" />
+    <Content Include="Scripts\ace2810\mode-ini.js" />
+    <Content Include="Scripts\ace2810\mode-jack.js" />
+    <Content Include="Scripts\ace2810\mode-jade.js" />
+    <Content Include="Scripts\ace2810\mode-java.js" />
+    <Content Include="Scripts\ace2810\mode-javascript.js" />
+    <Content Include="Scripts\ace2810\mode-json.js" />
+    <Content Include="Scripts\ace2810\mode-jsoniq.js" />
+    <Content Include="Scripts\ace2810\mode-jsp.js" />
+    <Content Include="Scripts\ace2810\mode-jsx.js" />
+    <Content Include="Scripts\ace2810\mode-julia.js" />
+    <Content Include="Scripts\ace2810\mode-latex.js" />
+    <Content Include="Scripts\ace2810\mode-less.js" />
+    <Content Include="Scripts\ace2810\mode-liquid.js" />
+    <Content Include="Scripts\ace2810\mode-lisp.js" />
+    <Content Include="Scripts\ace2810\mode-livescript.js" />
+    <Content Include="Scripts\ace2810\mode-logiql.js" />
+    <Content Include="Scripts\ace2810\mode-lsl.js" />
+    <Content Include="Scripts\ace2810\mode-lua.js" />
+    <Content Include="Scripts\ace2810\mode-luapage.js" />
+    <Content Include="Scripts\ace2810\mode-lucene.js" />
+    <Content Include="Scripts\ace2810\mode-makefile.js" />
+    <Content Include="Scripts\ace2810\mode-markdown.js" />
+    <Content Include="Scripts\ace2810\mode-matlab.js" />
+    <Content Include="Scripts\ace2810\mode-mushcode.js" />
+    <Content Include="Scripts\ace2810\mode-mushcode_high_rules.js" />
+    <Content Include="Scripts\ace2810\mode-mysql.js" />
+    <Content Include="Scripts\ace2810\mode-nix.js" />
+    <Content Include="Scripts\ace2810\mode-objectivec.js" />
+    <Content Include="Scripts\ace2810\mode-ocaml.js" />
+    <Content Include="Scripts\ace2810\mode-pascal.js" />
+    <Content Include="Scripts\ace2810\mode-perl.js" />
+    <Content Include="Scripts\ace2810\mode-pgsql.js" />
+    <Content Include="Scripts\ace2810\mode-php.js" />
+    <Content Include="Scripts\ace2810\mode-plain_text.js" />
+    <Content Include="Scripts\ace2810\mode-powershell.js" />
+    <Content Include="Scripts\ace2810\mode-prolog.js" />
+    <Content Include="Scripts\ace2810\mode-properties.js" />
+    <Content Include="Scripts\ace2810\mode-protobuf.js" />
+    <Content Include="Scripts\ace2810\mode-python.js" />
+    <Content Include="Scripts\ace2810\mode-r.js" />
+    <Content Include="Scripts\ace2810\mode-rdoc.js" />
+    <Content Include="Scripts\ace2810\mode-rhtml.js" />
+    <Content Include="Scripts\ace2810\mode-ruby.js" />
+    <Content Include="Scripts\ace2810\mode-rust.js" />
+    <Content Include="Scripts\ace2810\mode-sass.js" />
+    <Content Include="Scripts\ace2810\mode-scad.js" />
+    <Content Include="Scripts\ace2810\mode-scala.js" />
+    <Content Include="Scripts\ace2810\mode-scheme.js" />
+    <Content Include="Scripts\ace2810\mode-scss.js" />
+    <Content Include="Scripts\ace2810\mode-sh.js" />
+    <Content Include="Scripts\ace2810\mode-sjs.js" />
+    <Content Include="Scripts\ace2810\mode-snippets.js" />
+    <Content Include="Scripts\ace2810\mode-soy_template.js" />
+    <Content Include="Scripts\ace2810\mode-space.js" />
+    <Content Include="Scripts\ace2810\mode-sql.js" />
+    <Content Include="Scripts\ace2810\mode-stylus.js" />
+    <Content Include="Scripts\ace2810\mode-svg.js" />
+    <Content Include="Scripts\ace2810\mode-tcl.js" />
+    <Content Include="Scripts\ace2810\mode-tex.js" />
+    <Content Include="Scripts\ace2810\mode-text.js" />
+    <Content Include="Scripts\ace2810\mode-textile.js" />
+    <Content Include="Scripts\ace2810\mode-toml.js" />
+    <Content Include="Scripts\ace2810\mode-twig.js" />
+    <Content Include="Scripts\ace2810\mode-typescript.js" />
+    <Content Include="Scripts\ace2810\mode-vbscript.js" />
+    <Content Include="Scripts\ace2810\mode-velocity.js" />
+    <Content Include="Scripts\ace2810\mode-verilog.js" />
+    <Content Include="Scripts\ace2810\mode-vhdl.js" />
+    <Content Include="Scripts\ace2810\mode-xml.js" />
+    <Content Include="Scripts\ace2810\mode-xquery.js" />
+    <Content Include="Scripts\ace2810\mode-yaml.js" />
+    <Content Include="Scripts\ace2810\snippets\abap.js" />
+    <Content Include="Scripts\ace2810\snippets\actionscript.js" />
+    <Content Include="Scripts\ace2810\snippets\ada.js" />
+    <Content Include="Scripts\ace2810\snippets\asciidoc.js" />
+    <Content Include="Scripts\ace2810\snippets\assembly_x86.js" />
+    <Content Include="Scripts\ace2810\snippets\autohotkey.js" />
+    <Content Include="Scripts\ace2810\snippets\batchfile.js" />
+    <Content Include="Scripts\ace2810\snippets\c9search.js" />
+    <Content Include="Scripts\ace2810\snippets\clojure.js" />
+    <Content Include="Scripts\ace2810\snippets\cobol.js" />
+    <Content Include="Scripts\ace2810\snippets\coffee.js" />
+    <Content Include="Scripts\ace2810\snippets\coldfusion.js" />
+    <Content Include="Scripts\ace2810\snippets\csharp.js" />
+    <Content Include="Scripts\ace2810\snippets\css.js" />
+    <Content Include="Scripts\ace2810\snippets\curly.js" />
+    <Content Include="Scripts\ace2810\snippets\c_cpp.js" />
+    <Content Include="Scripts\ace2810\snippets\d.js" />
+    <Content Include="Scripts\ace2810\snippets\dart.js" />
+    <Content Include="Scripts\ace2810\snippets\diff.js" />
+    <Content Include="Scripts\ace2810\snippets\django.js" />
+    <Content Include="Scripts\ace2810\snippets\dot.js" />
+    <Content Include="Scripts\ace2810\snippets\ejs.js" />
+    <Content Include="Scripts\ace2810\snippets\erlang.js" />
+    <Content Include="Scripts\ace2810\snippets\forth.js" />
+    <Content Include="Scripts\ace2810\snippets\ftl.js" />
+    <Content Include="Scripts\ace2810\snippets\glsl.js" />
+    <Content Include="Scripts\ace2810\snippets\golang.js" />
+    <Content Include="Scripts\ace2810\snippets\groovy.js" />
+    <Content Include="Scripts\ace2810\snippets\haml.js" />
+    <Content Include="Scripts\ace2810\snippets\handlebars.js" />
+    <Content Include="Scripts\ace2810\snippets\haskell.js" />
+    <Content Include="Scripts\ace2810\snippets\haxe.js" />
+    <Content Include="Scripts\ace2810\snippets\html.js" />
+    <Content Include="Scripts\ace2810\snippets\html_completions.js" />
+    <Content Include="Scripts\ace2810\snippets\html_ruby.js" />
+    <Content Include="Scripts\ace2810\snippets\ini.js" />
+    <Content Include="Scripts\ace2810\snippets\jack.js" />
+    <Content Include="Scripts\ace2810\snippets\jade.js" />
+    <Content Include="Scripts\ace2810\snippets\java.js" />
+    <Content Include="Scripts\ace2810\snippets\javascript.js" />
+    <Content Include="Scripts\ace2810\snippets\json.js" />
+    <Content Include="Scripts\ace2810\snippets\jsoniq.js" />
+    <Content Include="Scripts\ace2810\snippets\jsp.js" />
+    <Content Include="Scripts\ace2810\snippets\jsx.js" />
+    <Content Include="Scripts\ace2810\snippets\julia.js" />
+    <Content Include="Scripts\ace2810\snippets\latex.js" />
+    <Content Include="Scripts\ace2810\snippets\less.js" />
+    <Content Include="Scripts\ace2810\snippets\liquid.js" />
+    <Content Include="Scripts\ace2810\snippets\lisp.js" />
+    <Content Include="Scripts\ace2810\snippets\livescript.js" />
+    <Content Include="Scripts\ace2810\snippets\logiql.js" />
+    <Content Include="Scripts\ace2810\snippets\lsl.js" />
+    <Content Include="Scripts\ace2810\snippets\lua.js" />
+    <Content Include="Scripts\ace2810\snippets\luapage.js" />
+    <Content Include="Scripts\ace2810\snippets\lucene.js" />
+    <Content Include="Scripts\ace2810\snippets\makefile.js" />
+    <Content Include="Scripts\ace2810\snippets\markdown.js" />
+    <Content Include="Scripts\ace2810\snippets\matlab.js" />
+    <Content Include="Scripts\ace2810\snippets\mushcode.js" />
+    <Content Include="Scripts\ace2810\snippets\mushcode_high_rules.js" />
+    <Content Include="Scripts\ace2810\snippets\mysql.js" />
+    <Content Include="Scripts\ace2810\snippets\nix.js" />
+    <Content Include="Scripts\ace2810\snippets\objectivec.js" />
+    <Content Include="Scripts\ace2810\snippets\ocaml.js" />
+    <Content Include="Scripts\ace2810\snippets\pascal.js" />
+    <Content Include="Scripts\ace2810\snippets\perl.js" />
+    <Content Include="Scripts\ace2810\snippets\pgsql.js" />
+    <Content Include="Scripts\ace2810\snippets\php.js" />
+    <Content Include="Scripts\ace2810\snippets\plain_text.js" />
+    <Content Include="Scripts\ace2810\snippets\powershell.js" />
+    <Content Include="Scripts\ace2810\snippets\prolog.js" />
+    <Content Include="Scripts\ace2810\snippets\properties.js" />
+    <Content Include="Scripts\ace2810\snippets\protobuf.js" />
+    <Content Include="Scripts\ace2810\snippets\python.js" />
+    <Content Include="Scripts\ace2810\snippets\r.js" />
+    <Content Include="Scripts\ace2810\snippets\rdoc.js" />
+    <Content Include="Scripts\ace2810\snippets\rhtml.js" />
+    <Content Include="Scripts\ace2810\snippets\ruby.js" />
+    <Content Include="Scripts\ace2810\snippets\rust.js" />
+    <Content Include="Scripts\ace2810\snippets\sass.js" />
+    <Content Include="Scripts\ace2810\snippets\scad.js" />
+    <Content Include="Scripts\ace2810\snippets\scala.js" />
+    <Content Include="Scripts\ace2810\snippets\scheme.js" />
+    <Content Include="Scripts\ace2810\snippets\scss.js" />
+    <Content Include="Scripts\ace2810\snippets\sh.js" />
+    <Content Include="Scripts\ace2810\snippets\sjs.js" />
+    <Content Include="Scripts\ace2810\snippets\snippets.js" />
+    <Content Include="Scripts\ace2810\snippets\soy_template.js" />
+    <Content Include="Scripts\ace2810\snippets\space.js" />
+    <Content Include="Scripts\ace2810\snippets\sql.js" />
+    <Content Include="Scripts\ace2810\snippets\stylus.js" />
+    <Content Include="Scripts\ace2810\snippets\svg.js" />
+    <Content Include="Scripts\ace2810\snippets\tcl.js" />
+    <Content Include="Scripts\ace2810\snippets\tex.js" />
+    <Content Include="Scripts\ace2810\snippets\text.js" />
+    <Content Include="Scripts\ace2810\snippets\textile.js" />
+    <Content Include="Scripts\ace2810\snippets\toml.js" />
+    <Content Include="Scripts\ace2810\snippets\twig.js" />
+    <Content Include="Scripts\ace2810\snippets\typescript.js" />
+    <Content Include="Scripts\ace2810\snippets\vbscript.js" />
+    <Content Include="Scripts\ace2810\snippets\velocity.js" />
+    <Content Include="Scripts\ace2810\snippets\verilog.js" />
+    <Content Include="Scripts\ace2810\snippets\vhdl.js" />
+    <Content Include="Scripts\ace2810\snippets\xml.js" />
+    <Content Include="Scripts\ace2810\snippets\xquery.js" />
+    <Content Include="Scripts\ace2810\snippets\yaml.js" />
+    <Content Include="Scripts\ace2810\theme-ambiance.js" />
+    <Content Include="Scripts\ace2810\theme-chaos.js" />
+    <Content Include="Scripts\ace2810\theme-chrome.js" />
+    <Content Include="Scripts\ace2810\theme-clouds.js" />
+    <Content Include="Scripts\ace2810\theme-clouds_midnight.js" />
+    <Content Include="Scripts\ace2810\theme-cobalt.js" />
+    <Content Include="Scripts\ace2810\theme-crimson_editor.js" />
+    <Content Include="Scripts\ace2810\theme-dawn.js" />
+    <Content Include="Scripts\ace2810\theme-dreamweaver.js" />
+    <Content Include="Scripts\ace2810\theme-eclipse.js" />
+    <Content Include="Scripts\ace2810\theme-github.js" />
+    <Content Include="Scripts\ace2810\theme-grapto.js" />
+    <Content Include="Scripts\ace2810\theme-idle_fingers.js" />
+    <Content Include="Scripts\ace2810\theme-kr.js" />
+    <Content Include="Scripts\ace2810\theme-merbivore.js" />
+    <Content Include="Scripts\ace2810\theme-merbivore_soft.js" />
+    <Content Include="Scripts\ace2810\theme-monokai.js" />
+    <Content Include="Scripts\ace2810\theme-mono_industrial.js" />
+    <Content Include="Scripts\ace2810\theme-pastel_on_dark.js" />
+    <Content Include="Scripts\ace2810\theme-solarized_dark.js" />
+    <Content Include="Scripts\ace2810\theme-solarized_light.js" />
+    <Content Include="Scripts\ace2810\theme-terminal.js" />
+    <Content Include="Scripts\ace2810\theme-textmate.js" />
+    <Content Include="Scripts\ace2810\theme-tomorrow.js" />
+    <Content Include="Scripts\ace2810\theme-tomorrow_night.js" />
+    <Content Include="Scripts\ace2810\theme-tomorrow_night_blue.js" />
+    <Content Include="Scripts\ace2810\theme-tomorrow_night_bright.js" />
+    <Content Include="Scripts\ace2810\theme-tomorrow_night_eighties.js" />
+    <Content Include="Scripts\ace2810\theme-twilight.js" />
+    <Content Include="Scripts\ace2810\theme-vibrant_ink.js" />
+    <Content Include="Scripts\ace2810\theme-xcode.js" />
+    <Content Include="Scripts\ace2810\worker-coffee.js" />
+    <Content Include="Scripts\ace2810\worker-css.js" />
+    <Content Include="Scripts\ace2810\worker-javascript.js" />
+    <Content Include="Scripts\ace2810\worker-json.js" />
+    <Content Include="Scripts\ace2810\worker-lua.js" />
+    <Content Include="Scripts\ace2810\worker-php.js" />
+    <Content Include="Scripts\ace2810\worker-xquery.js" />
+    <Content Include="Scripts\bigtext.js" />
+    <Content Include="Scripts\dropzone.js" />
+    <Content Include="Scripts\emmet.js" />
+    <Content Include="Scripts\emmet.min.js" />
+    <Content Include="Scripts\fineuploader\dnd.js" />
+    <Content Include="Scripts\fineuploader\dnd.min.js" />
+    <Content Include="Scripts\fineuploader\fine-uploader.core.js" />
+    <Content Include="Scripts\fineuploader\fine-uploader.core.min.js" />
+    <Content Include="Scripts\fineuploader\fine-uploader.js" />
+    <Content Include="Scripts\fineuploader\fine-uploader.min.js" />
+    <Content Include="Scripts\fineuploader\jquery.fine-uploader.js" />
+    <Content Include="Scripts\fineuploader\jquery.fine-uploader.min.js" />
+    <Content Include="Scripts\highlight.default.pack.js" />
+    <Content Include="Scripts\highlight.full.pack.js" />
+    <Content Include="Scripts\imagesloaded.pkgd.js" />
+    <Content Include="Scripts\imagesloaded.pkgd.min.js" />
+    <Content Include="Scripts\isotope.pkgd.min.js" />
+    <Content Include="Scripts\jquery.animate.js" />
+    <Content Include="Scripts\jquery.animate.min.js" />
+    <Content Include="Scripts\jquery.animateNumber.min.js" />
+    <Content Include="Scripts\jquery.appear.js" />
+    <Content Include="Scripts\jquery.appear.min.js" />
+    <Content Include="Scripts\jquery.boxfit.js" />
+    <Content Include="Scripts\jquery.boxfit.min.js" />
+    <Content Include="Scripts\jquery.cookiecuttr.js" />
+    <Content Include="Scripts\jquery.cookiecuttr.min.js" />
+    <Content Include="Scripts\jquery.easing.min.js" />
+    <Content Include="Scripts\jquery.elevator.min.js" />
+    <Content Include="Scripts\jquery.elevator.js" />
+    <Content Include="Scripts\jquery.nice-select.js" />
+    <Content Include="Scripts\jquery.nice-select.min.js" />
+    <Content Include="Scripts\jquery.nohash.js" />
+    <Content Include="Scripts\jquery.pseudo.min.js" />
+    <Content Include="Scripts\jquery.pseudo.js" />
+    <Content Include="Scripts\jquery.quickfit.js" />
+    <Content Include="Scripts\jquery.quicksand.js" />
+    <Content Include="Scripts\jquery.scrollbar.js" />
+    <Content Include="Scripts\jquery.scrollbar.min.js" />
+    <Content Include="Scripts\jquery.slicknav.js" />
+    <Content Include="Scripts\jquery.slicknav.min.js" />
+    <Content Include="Scripts\jquery.superslides.js" />
+    <Content Include="Scripts\jquery.superslides.min.js" />
+    <Content Include="Scripts\magnific.js" />
+    <Content Include="Scripts\magnific.min.js" />
+    <Content Include="Scripts\notify.js" />
+    <Content Include="Scripts\notify.min.js" />
+    <Content Include="Scripts\orchard-ace.js" />
+    <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\slick.js" />
+    <Content Include="Scripts\slick.min.js" />
+    <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Scripts\underscore.js" />
+    <Content Include="Scripts\wow.js" />
+    <Content Include="Scripts\wow.min.js" />
+    <Content Include="Styles\animate.css" />
+    <Content Include="Styles\animate.min.css" />
+    <Content Include="Styles\cookiecuttr.css" />
+    <Content Include="Styles\fineuploader\continue.gif" />
+    <Content Include="Styles\fineuploader\edit.gif" />
+    <Content Include="Styles\fineuploader\fine-uploader-gallery.css" />
+    <Content Include="Styles\fineuploader\fine-uploader-gallery.min.css" />
+    <Content Include="Styles\fineuploader\fine-uploader-new.css" />
+    <Content Include="Styles\fineuploader\fine-uploader-new.min.css" />
+    <Content Include="Styles\fineuploader\fine-uploader.css" />
+    <Content Include="Styles\fineuploader\fine-uploader.min.css" />
+    <Content Include="Styles\fineuploader\loading.gif" />
+    <Content Include="Styles\fineuploader\pause.gif" />
+    <Content Include="Styles\fineuploader\processing.gif" />
+    <Content Include="Styles\fineuploader\retry.gif" />
+    <Content Include="Styles\fineuploader\trash.gif" />
+    <Content Include="Styles\font-awesome.css" />
+    <Content Include="Styles\font-awesome.min.css" />
+    <Content Include="Styles\fonts\elegant\elegant-icon.css" />
+    <Content Include="Styles\fonts\elegant\ElegantIcons.svg" />
+    <Content Include="Styles\fonts\fontawesome-webfont.svg" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Styles\highlight\agate.css" />
+    <Content Include="Styles\highlight\androidstudio.css" />
+    <Content Include="Styles\highlight\arduino-light.css" />
+    <Content Include="Styles\highlight\arta.css" />
+    <Content Include="Styles\highlight\ascetic.css" />
+    <Content Include="Styles\highlight\atelier-cave-dark.css" />
+    <Content Include="Styles\highlight\atelier-cave-light.css" />
+    <Content Include="Styles\highlight\atelier-dune-dark.css" />
+    <Content Include="Styles\highlight\atelier-dune-light.css" />
+    <Content Include="Styles\highlight\atelier-dune.dark.css" />
+    <Content Include="Styles\highlight\atelier-dune.light.css" />
+    <Content Include="Styles\highlight\atelier-estuary-dark.css" />
+    <Content Include="Styles\highlight\atelier-estuary-light.css" />
+    <Content Include="Styles\highlight\atelier-forest-dark.css" />
+    <Content Include="Styles\highlight\atelier-forest-light.css" />
+    <Content Include="Styles\highlight\atelier-forest.dark.css" />
+    <Content Include="Styles\highlight\atelier-forest.light.css" />
+    <Content Include="Styles\highlight\atelier-heath-dark.css" />
+    <Content Include="Styles\highlight\atelier-heath-light.css" />
+    <Content Include="Styles\highlight\atelier-heath.dark.css" />
+    <Content Include="Styles\highlight\atelier-heath.light.css" />
+    <Content Include="Styles\highlight\atelier-lakeside-dark.css" />
+    <Content Include="Styles\highlight\atelier-lakeside-light.css" />
+    <Content Include="Styles\highlight\atelier-lakeside.dark.css" />
+    <Content Include="Styles\highlight\atelier-lakeside.light.css" />
+    <Content Include="Styles\highlight\atelier-plateau-dark.css" />
+    <Content Include="Styles\highlight\atelier-plateau-light.css" />
+    <Content Include="Styles\highlight\atelier-savanna-dark.css" />
+    <Content Include="Styles\highlight\atelier-savanna-light.css" />
+    <Content Include="Styles\highlight\atelier-seaside-dark.css" />
+    <Content Include="Styles\highlight\atelier-seaside-light.css" />
+    <Content Include="Styles\highlight\atelier-seaside.dark.css" />
+    <Content Include="Styles\highlight\atelier-seaside.light.css" />
+    <Content Include="Styles\highlight\atelier-sulphurpool-dark.css" />
+    <Content Include="Styles\highlight\atelier-sulphurpool-light.css" />
+    <Content Include="Styles\highlight\atom-one-dark.css" />
+    <Content Include="Styles\highlight\atom-one-light.css" />
+    <Content Include="Styles\highlight\brown-paper.css" />
+    <Content Include="Styles\highlight\brown-papersq.png" />
+    <Content Include="Styles\highlight\brown_paper.css" />
+    <Content Include="Styles\highlight\brown_papersq.png" />
+    <Content Include="Styles\highlight\codepen-embed.css" />
+    <Content Include="Styles\highlight\color-brewer.css" />
+    <Content Include="Styles\highlight\darcula.css" />
+    <Content Include="Styles\highlight\dark.css" />
+    <Content Include="Styles\highlight\darkula.css" />
+    <Content Include="Styles\highlight\default.css" />
+    <Content Include="Styles\highlight\docco.css" />
+    <Content Include="Styles\highlight\dracula.css" />
+    <Content Include="Styles\highlight\far.css" />
+    <Content Include="Styles\highlight\foundation.css" />
+    <Content Include="Styles\highlight\github-gist.css" />
+    <Content Include="Styles\highlight\github.css" />
+    <Content Include="Styles\highlight\googlecode.css" />
+    <Content Include="Styles\highlight\grayscale.css" />
+    <Content Include="Styles\highlight\gruvbox-dark.css" />
+    <Content Include="Styles\highlight\gruvbox-light.css" />
+    <Content Include="Styles\highlight\hopscotch.css" />
+    <Content Include="Styles\highlight\hybrid.css" />
+    <Content Include="Styles\highlight\idea.css" />
+    <Content Include="Styles\highlight\ir-black.css" />
+    <Content Include="Styles\highlight\ir_black.css" />
+    <Content Include="Styles\highlight\kimbie.dark.css" />
+    <Content Include="Styles\highlight\kimbie.light.css" />
+    <Content Include="Styles\highlight\magula.css" />
+    <Content Include="Styles\highlight\mono-blue.css" />
+    <Content Include="Styles\highlight\monokai-sublime.css" />
+    <Content Include="Styles\highlight\monokai.css" />
+    <Content Include="Styles\highlight\monokai_sublime.css" />
+    <Content Include="Styles\highlight\obsidian.css" />
+    <Content Include="Styles\highlight\ocean.css" />
+    <Content Include="Styles\highlight\paraiso-dark.css" />
+    <Content Include="Styles\highlight\paraiso-light.css" />
+    <Content Include="Styles\highlight\paraiso.dark.css" />
+    <Content Include="Styles\highlight\paraiso.light.css" />
+    <Content Include="Styles\highlight\pojoaque.css" />
+    <Content Include="Styles\highlight\pojoaque.jpg" />
+    <Content Include="Styles\highlight\purebasic.css" />
+    <Content Include="Styles\highlight\qtcreator_dark.css" />
+    <Content Include="Styles\highlight\qtcreator_light.css" />
+    <Content Include="Styles\highlight\railscasts.css" />
+    <Content Include="Styles\highlight\rainbow.css" />
+    <Content Include="Styles\highlight\routeros.css" />
+    <Content Include="Styles\highlight\school-book.css" />
+    <Content Include="Styles\highlight\school-book.png" />
+    <Content Include="Styles\highlight\school_book.css" />
+    <Content Include="Styles\highlight\school_book.png" />
+    <Content Include="Styles\highlight\solarized-dark.css" />
+    <Content Include="Styles\highlight\solarized-light.css" />
+    <Content Include="Styles\highlight\solarized_dark.css" />
+    <Content Include="Styles\highlight\solarized_light.css" />
+    <Content Include="Styles\highlight\sunburst.css" />
+    <Content Include="Styles\highlight\tomorrow-night-blue.css" />
+    <Content Include="Styles\highlight\tomorrow-night-bright.css" />
+    <Content Include="Styles\highlight\tomorrow-night-eighties.css" />
+    <Content Include="Styles\highlight\tomorrow-night.css" />
+    <Content Include="Styles\highlight\tomorrow.css" />
+    <Content Include="Styles\highlight\vs.css" />
+    <Content Include="Styles\highlight\vs2015.css" />
+    <Content Include="Styles\highlight\xcode.css" />
+    <Content Include="Styles\highlight\xt256.css" />
+    <Content Include="Styles\highlight\zenburn.css" />
+    <Content Include="Styles\jquery.elevator.css" />
+    <Content Include="Styles\jquery.scrollbar.css" />
+    <Content Include="Styles\magnific.css" />
+    <Content Include="Styles\nice-select.css" />
+    <Content Include="Styles\owlcarousel\owl.carousel.css" />
+    <Content Include="Styles\owlcarousel\owl.theme.css" />
+    <Content Include="Styles\slicknav.css" />
+    <Content Include="Styles\slicknav.min.css" />
+    <Content Include="Styles\slick\ajax-loader.gif" />
+    <Content Include="Styles\slick\fonts\slick.svg" />
+    <Content Include="Styles\slick\slick-theme.css" />
+    <Content Include="Styles\slick\slick.css" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Dropzone.DropzoneSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Placement.info" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\underscore.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Underscore.UnderscoreSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\GoogleMaps.GoogleMapsSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Highlight.HighlightSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Niceselect.NiceselectSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\slick\fonts\slick.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\slick\fonts\slick.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\slick\fonts\slick.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\slick\config.rb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\nice-select.css.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Masonry.MasonrySettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Magnific.MagnificSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\ImagesLoaded.imagesLoadedSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Body-Ace.Editor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Body-Tabbed.Editor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Body-TabbedAce.Editor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Css.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Js.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Css.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Js.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\CookieCuttr.CookieCuttrSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\CookieCuttr.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\FontAwesome.FontAwesomeSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fonts\fontawesome-webfont.eot" />
+    <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Styles\fonts\FontAwesome.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Bootstrap.BootstrapSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\OwlCarousel.OwlCarouselSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fonts\elegant\ElegantIcons.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fonts\elegant\ElegantIcons.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fonts\elegant\ElegantIcons.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\ElegantIcon.ElegantIconSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Notify.NotifySettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery.fittext.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\fineuploader\dnd.js.map" />
+    <Content Include="Scripts\fineuploader\dnd.min.js.map" />
+    <Content Include="Styles\fineuploader\fine-uploader-gallery.min.css.map" />
+    <Content Include="Styles\fineuploader\fine-uploader-new.min.css.map" />
+    <Content Include="Scripts\fineuploader\fine-uploader.core.js.map" />
+    <Content Include="Scripts\fineuploader\fine-uploader.core.min.js.map" />
+    <Content Include="Scripts\fineuploader\fine-uploader.js.map" />
+    <Content Include="Styles\fineuploader\fine-uploader.min.css.map" />
+    <Content Include="Scripts\fineuploader\fine-uploader.min.js.map" />
+    <Content Include="Scripts\fineuploader\jquery.fine-uploader.js.map" />
+    <Content Include="Scripts\fineuploader\jquery.fine-uploader.min.js.map" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" DependsOnTargets="AfterBuildCompiler">
+    <PropertyGroup>
+      <AreasManifestDir>$(ProjectDir)\..\Manifests</AreasManifestDir>
+    </PropertyGroup>
+    <!-- If this is an area child project, uncomment the following line:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Child" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    -->
+    <!-- If this is an area parent project, uncomment the following lines:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Parent" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    <CopyAreaManifests ManifestPath="$(AreasManifestDir)" CrossCopy="false" RenameViews="true" />
+    -->
+  </Target>
+  <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>53593</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://orchard.codeplex.com</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,65 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Environment.Descriptor.Models
+@using Orchard.Localization
+@{ 
+    var shellDescriptor = WorkContext.Resolve<ShellDescriptor>();
+    Script.Require("jQueryUI").AtHead();
+    Script.Require("OrchardAce").AtHead();
+    Style.Require("jQueryUI_Orchard").AtHead();
+    Script.Require("OrchardTinyMce");
+    Script.Require("jQueryColorBox");
+    Style.Require("jQueryColorBox");
+    var g = Guid.NewGuid();
+    string divid = "ace-" + g.ToString();
+    string txtid = "txt-" + g.ToString();
+}
+@using (Script.Head())
+{
+<style>
+.part_css{
+    display:none;
+}
+.part_js{
+    display:none;
+}
+</style>
+<script>
+var mediaPickerEnabled = @(shellDescriptor.Features.Any(x => x.Name == "Orchard.MediaPicker") ? "true" : "false");
+var mediaLibraryEnabled = @(shellDescriptor.Features.Any(x => x.Name == "Orchard.MediaLibrary") ? "true" : "false");
+var directionality = '@WorkContext.GetTextDirection((IContent)Model.ContentItem)';
+var language = '@Model.Language';
+var autofocus = "@(Model.AutoFocus == true ? ViewData.TemplateInfo.GetFullHtmlFieldId("Text") : null)";
+</script>
+}
+<div id="bodytabs" style="visibility:hidden;">
+    <ul>
+        <li><a href="#tabtiny">TinyMCE</a></li>
+        <li><a href="#tabcss">Css</a></li>
+        <li><a href="#tabjs">Javascript</a></li>
+    </ul>
+    <div id="tabtiny">
+        @Html.TextArea("Text", (string)Model.Text, 25, 80,
+             new Dictionary<string, object> {
+		        {"class", "html " + txtid + " tinymce"},
+		        {"data-mediapicker-uploadpath",Model.AddMediaPath},
+		        {"data-mediapicker-title",T("Insert/Update Media")},
+                {"style", "width:100%"}
+	         })
+    </div>
+    <div id="tabcss">
+    </div>
+    <div id="tabjs">
+    </div>
+</div>
+@using (Script.Foot())
+{
+<script>
+$(function () {
+    $('#bodytabs').parent().find('label').hide();
+});
+$( document ).ready(function() {
+    $("#bodytabs").tabs();
+    $("#bodytabs").css('visibility','visible');
+});
+</script>
+}

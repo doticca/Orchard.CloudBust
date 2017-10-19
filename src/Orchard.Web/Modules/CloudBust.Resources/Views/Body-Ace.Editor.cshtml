@@ -1,0 +1,46 @@
+﻿@using Orchard.Environment.Descriptor.Models
+@{ 
+    Script.Require("OrchardAce").AtHead();
+    var g = Guid.NewGuid();
+    string divid = "ace-" + g.ToString();
+    string txtid = "txt-" + g.ToString();
+}
+<style>
+    #@divid {
+        width: 100%;
+        min-height: 400px;
+        border: 1px solid #7C8891;
+    }
+</style>
+<div id="@divid"></div>
+@Html.TextArea("Text", (string)Model.Text, 25, 80,
+	 new Dictionary<string,object> {
+		{"class", "html aceeditor " + txtid},
+        {"style", "width:100%; display:none;"}
+	 })
+
+
+<script type="text/javascript">
+    $(function () {
+        var BodyAceEditor = ace.edit('@divid');
+        BodyAceEditor.setTheme('ace/theme/grapto');
+        BodyAceEditor.getSession().setMode('ace/mode/html');
+        BodyAceEditor.setOptions({
+            enableEmmet: true,
+            enableBasicAutocompletion: true,
+            enableSnippets: false,
+            spellcheck: true,
+            useElasticTabstops: true,
+            maxLines: Infinity
+        });
+        BodyAceEditor.setSelectionStyle("text");
+        BodyAceEditor.getSession().setUseSoftTabs(false);
+
+        var TextArea = $('.@txtid').hide();
+        BodyAceEditor.getSession().setValue(TextArea.val());
+        BodyAceEditor.getSession().on('change', function () {
+            TextArea.val(BodyAceEditor.getSession().getValue());
+        });
+    });
+
+</script>

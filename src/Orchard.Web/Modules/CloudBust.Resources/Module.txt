@@ -1,0 +1,119 @@
+﻿Name: CloudBust Resources
+Path: CloudBust.Resources
+AntiForgery: enabled
+Author: Team Grapto (tweet: @teamgrapto)
+Website: https://github.com/grapto/CloudBust.Resources
+Version: 1.10.0
+OrchardVersion: 1.10
+Description: The CloudBust.Resources module contains al the js and styles for various components required for CloudBust applications.
+Dependencies: Orchard.Resources
+Category: CloudBust
+Features:
+	CloudBust.Resources.DropZone:
+		Name: Dropzone
+		Version: 4.0
+		Description: Dropzone JS is an open source library that provides drag’n’drop file uploads with image previews.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources, Orchard.MediaLibrary
+	CloudBust.Resources.Underscore:
+		Name: Underscore
+		Version: 1.8.3
+		Description: Underscore is a JavaScript library that provides a whole mess of useful functional programming helpers without extending any built-in objects.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.Emmet:
+		Name: Emmet
+		Version: 1.1
+		Description: Emmet is a plugin for many popular text editors which greatly improves HTML & CSS workflow.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources, CloudBust.Resources.Underscore
+	CloudBust.Resources.GoogleMaps:
+		Name: GoogleMaps
+		Version: 3.22
+		Description: Build a custom map for your site using styled maps, 3D buildings, indoor floor plans, multi-modal directions and more.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.Highlight:
+		Name: Highlight
+		Version: 8.2
+		Description: Syntax highlighting for the Web.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.Slick:
+		Name: Slick
+		Version: 1.5.7
+		Description: Slick is a responsive carousel jQuery plugin that supports multiple breakpoints, CSS3 transitions, touch events/swiping & much more!
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources, Orchard.MediaLibrary
+	CloudBust.Resources.Niceselect:
+		Name: Niceselect
+		Version: 1.0
+		Description: Niceselect is A lightweight jQuery plugin that replaces native select elements with customizable dropdowns.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.Masonry:
+		Name: Masonry
+		Version: 4.0.0
+		Description: Masonry is a JavaScript grid layout library. It works by placing elements in optimal position based on available vertical space, sort of like a mason fitting stones in a wall.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.Magnific:
+		Name: Magnific
+		Version: 1.1.0
+		Description: Magnific Popup is a responsive lightbox & dialog script with focus on performance and providing best experience for user with any device.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.ImagesLoaded:
+		Name: imagesLoaded
+		Version: 3.1.8
+		Description: Detect when images have been loaded.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.Ace:
+		Name: Ace
+		Version: 3.1.8
+		Description: The Ace module for Orchard enables Html, Css and Javascript editing of Body items using the Ace Editor.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources, CloudBust.Resources.Underscore, CloudBust.Resources.Emmet
+	CloudBust.Resources.CookieCuttr:
+		Name: CookieCuttr
+		Version: 2.0.0
+		Description: CookieCuttr implementation for Orchard, A tailorable jQuery plugin to deal with the EU Cookie Law.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.FontAwesome:
+		Name: FontAwesome
+		Version: 4.7.0
+		Description: FontAwesome The iconic font and CSS toolkit
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.ElegantIcon:
+		Name: ElegantIcon
+		Version: 1.0.0
+		Description: Elegant Icon Font
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.Notify
+		Name: Notify
+		Version: 0.4.2
+		Description: A simple, versatile notification library
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.Bootstrap:
+		Name: Bootstrap
+		Version: 3.3.7
+		Description: Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.OwlCarousel:
+		Name: OwlCarousel
+		Version: 1.3.3
+		Description: Touch enabled jQuery plugin that lets you create a beautiful responsive carousel slider.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.FineUploader:
+		Name: FileUploader
+		Version: 5.14.1
+		Description: The FineUploader Plugin.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources

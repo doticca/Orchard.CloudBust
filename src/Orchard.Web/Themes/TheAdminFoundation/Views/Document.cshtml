@@ -1,0 +1,25 @@
+﻿@using Orchard.Mvc.Html;
+@using Orchard.UI.Resources;
+@{
+    string title = Convert.ToString(Model.Title);
+    string siteName = Convert.ToString(WorkContext.CurrentSite.SiteName);
+}
+<!DOCTYPE html>
+<html lang="@WorkContext.CurrentCulture" class="dyn @Html.ClassForPage()">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="IE=edge,chrome=1" name="X-UA-Compatible" />
+    <title>@Html.Title(title, siteName)</title>
+    @*<script type="text/javascript" src="//use.typekit.net/uvf0mab.js"></script>
+    <script type="text/javascript">try { Typekit.load(); } catch (e) { }</script>*@
+    @Display(Model.Head)
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro|Roboto:400,700,300,400italic|PT+Sans:400,700,400italic,700italic&subset=greek,latin,greek-ext' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    @Display(Model.Body)
+    @Display(Model.Tail)
+</body>
+</html>

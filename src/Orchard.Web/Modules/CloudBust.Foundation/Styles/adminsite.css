@@ -1197,6 +1197,7 @@ textarea {
 }
 
 .contentItems .properties li {
+    white-space: nowrap;
     border: 0;
     float: left;
     padding: 0 0 .1em 0;

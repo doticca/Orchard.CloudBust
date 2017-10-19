@@ -284,6 +284,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules.Changed", "Modules.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudBust.Common", "Orchard.Web\Modules\CloudBust.Common\CloudBust.Common.csproj", "{30758001-CC5E-4C90-A464-300773909A18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudBust.Foundation", "Orchard.Web\Modules\CloudBust.Foundation\CloudBust.Foundation.csproj", "{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CodeCoverage|Any CPU = CodeCoverage|Any CPU
@@ -1305,6 +1307,18 @@ Global
 		{30758001-CC5E-4C90-A464-300773909A18}.Release Grapto|Any CPU.Build.0 = Release Grapto|Any CPU
 		{30758001-CC5E-4C90-A464-300773909A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30758001-CC5E-4C90-A464-300773909A18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.CodeCoverage|Any CPU.ActiveCfg = Release|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.CodeCoverage|Any CPU.Build.0 = Release|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.Coverage|Any CPU.ActiveCfg = Release|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.Coverage|Any CPU.Build.0 = Release|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.FxCop|Any CPU.ActiveCfg = Release|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.FxCop|Any CPU.Build.0 = Release|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.Release Grapto|Any CPU.ActiveCfg = Release|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.Release Grapto|Any CPU.Build.0 = Release|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1394,6 +1408,7 @@ Global
 		{D4E8F7C8-2DB2-4C50-A422-DA1DF1E3CC73} = {E9C9F120-07BA-4DFB-B9C3-3AFB9D44C9D5}
 		{BE7C13C7-0C74-4BF6-8004-7DF08033F975} = {74D7B24C-2773-4BD3-BB16-2D956C5641C0}
 		{30758001-CC5E-4C90-A464-300773909A18} = {74D7B24C-2773-4BD3-BB16-2D956C5641C0}
+		{19D93AD9-8C74-428E-B8C9-7B9681F6D2FD} = {74D7B24C-2773-4BD3-BB16-2D956C5641C0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {59DD0ADC-F895-42E4-8662-94E59BDCA523}

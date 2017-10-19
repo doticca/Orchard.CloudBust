@@ -26,6 +26,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -719,6 +720,7 @@
     <Content Include="Styles\slick\fonts\slick.svg" />
     <Content Include="Styles\slick\slick-theme.css" />
     <Content Include="Styles\slick\slick.css" />
+    <Content Include="tsconfig.js" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>

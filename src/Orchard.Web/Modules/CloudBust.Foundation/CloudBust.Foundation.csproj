@@ -26,6 +26,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -155,14 +156,14 @@
     <Content Include="Scripts\admin.foundation.js" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\fastclick.js" />
-    <Content Include="Scripts\fastclick.min.js" />
     <Content Include="Scripts\foundation-datepicker.js" />
     <Content Include="Scripts\foundation-datepicker.min.js" />
     <Content Include="Scripts\foundation-select.js" />
     <Content Include="Scripts\foundation-select.min.js" />
     <Content Include="Scripts\foundation.6.3.0.js" />
     <Content Include="Scripts\foundation.6.3.0.min.js" />
+    <Content Include="Scripts\foundation.6.4.2.js" />
+    <Content Include="Scripts\foundation.6.4.2.min.js" />
     <Content Include="Scripts\jquery.nicescroll.js" />
     <Content Include="Scripts\jquery.nicescroll.min.js" />
     <Content Include="Scripts\jquery.placeholder.js" />
@@ -246,6 +247,8 @@
     <Content Include="Styles\foundation-select.min.css" />
     <Content Include="Styles\foundation.6.3.0.css" />
     <Content Include="Styles\foundation.6.3.0.min.css" />
+    <Content Include="Styles\foundation.6.4.2.css" />
+    <Content Include="Styles\foundation.6.4.2.min.css" />
     <Content Include="Styles\images\adminNavBackground.gif" />
     <Content Include="Styles\images\backgroundGradient.gif" />
     <Content Include="Styles\images\backgroundHeader.gif" />
@@ -628,6 +631,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Styles\foundation-datepicker.css.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Menu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MenuItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\FoundationMenuItemLink.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

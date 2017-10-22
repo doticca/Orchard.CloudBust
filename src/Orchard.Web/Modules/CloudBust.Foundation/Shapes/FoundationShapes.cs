@@ -52,16 +52,14 @@ namespace CloudBust.Foundation.Shapes
                             return;
                         }
 
-                        resourceManager.Include("script", "https://doticcacdn.blob.core.windows.net/public/cloudbust/cloudbust.foundation/js/fastclick.min.js", "~/Modules/CloudBust.Foundation/Scripts/fastclick.js").AtFoot();
-
                         if (_foundationService.GetUseNicescroll())
                             resourceManager.Include("script", "https://doticcacdn.blob.core.windows.net/public/cloudbust/cloudbust.foundation/js/jquery.nicescroll.min.js", "~/Modules/CloudBust.Foundation/Scripts/jquery.nicescroll.js").AtFoot();
                         if (_foundationService.GetUsePlaceholder())
                             resourceManager.Include("script", "https://doticcacdn.blob.core.windows.net/public/cloudbust/cloudbust.foundation/js/jquery.placeholder.min.js", "~/Modules/CloudBust.Foundation/Scripts/jquery.placeholder.js").AtFoot();
 
 
-                        resourceManager.Include("script", "https://doticcacdn.blob.core.windows.net/public/cloudbust/cloudbust.foundation/js/what-input.min.js", "~/Modules/CloudBust.Foundation/Scripts/what-input.js").AtFoot();
-                        resourceManager.Include("script", "https://doticcacdn.blob.core.windows.net/public/cloudbust/cloudbust.foundation/js/foundation.6.3.0.min.js", "~/Modules/CloudBust.Foundation/Scripts/foundation.6.3.0.js").AtFoot();
+                        resourceManager.Include("script", "~/Modules/CloudBust.Foundation/Scripts/what-input.min.js", "~/Modules/CloudBust.Foundation/Scripts/what-input.js").AtFoot();
+                        resourceManager.Include("script", "~/Modules/CloudBust.Foundation/Scripts/foundation.6.4.2.min.js", "~/Modules/CloudBust.Foundation/Scripts/foundation.6.4.2.js").AtFoot();
 
                         if(AdminFilter.IsApplied(request.RequestContext))
                             resourceManager.Include("script", "~/Modules/CloudBust.Foundation/Scripts/admin.foundation.js", "~/Modules/CloudBust.Foundation/Scripts/admin.foundation.js").AtFoot();
@@ -99,7 +97,7 @@ namespace CloudBust.Foundation.Shapes
                         }
 
                         // foundation always first
-                        resourceManager.Include("stylesheet", "https://doticcacdn.blob.core.windows.net/public/cloudbust/cloudbust.foundation/css/foundation.6.3.0.min.css", "~/modules/cloudbust.foundation/styles/foundation.6.3.0.css").AtHead();
+                        resourceManager.Include("stylesheet", "~/modules/cloudbust.foundation/styles/foundation.6.4.2.min.css", "~/modules/cloudbust.foundation/styles/foundation.6.4.2.css").AtHead();
                         if (_foundationService.GetUseIcons())
                             resourceManager.Include("stylesheet", "~/modules/cloudbust.foundation/styles/foundation-icons.css", "~/modules/cloudbust.foundation/styles/foundation-icons.css").AtHead();
                         if (_foundationService.GetUseDatePicker())

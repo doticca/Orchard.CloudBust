@@ -1,0 +1,30 @@
+﻿@using Orchard.ContentManagement;
+@using CloudBust.Foundation.Models;
+@{
+    var items = Enumerable.Cast<dynamic>((System.Collections.IEnumerable)Model);
+}
+@{
+    if (!HasText(Model.Text))
+    {
+        @DisplayChildren(Model)
+    }
+    else
+    {
+        Model.Metadata.Alternates.Clear();
+        Model.Metadata.Type = "FoundationMenuItemLink";
+        if (items.Any())
+        {
+        <li class="has-submenu">
+            @Display(Model)
+            <ul class="submenu menu vertical is-dropdown-submenu" data-submenu>
+                @DisplayChildren(Model)
+            </ul>
+        </li>
+        }
+        else
+        {
+            @Display(Model)
+        }
+
+    }
+}

@@ -1,0 +1,16 @@
+﻿@{
+    bool useplaceholder = false;
+    if (Model.Level>1 || (Model.Level==1 && Model.Items.Count==0))
+    {
+        useplaceholder = true;
+    }
+}
+
+@if (useplaceholder)
+{
+    <li><a href="@Model.Href">@Model.Text</a></li>
+}
+else
+{
+    <a href="@Model.Href">@Model.Text</a>
+}

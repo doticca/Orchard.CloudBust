@@ -789,7 +789,10 @@ html.dyn #submit-pager, html.dyn .apply-bulk-actions-auto { display:none; }
         float: left;
         width: 100%;
     }
-
+    /* fix exceptions */
+    div#activity-toolbox {
+        width: 300px!important;
+    }
 div.primary {
     width: auto;
 }
@@ -1792,6 +1795,10 @@ img.icon.settings {
 }
 .ui-tabs .ui-tabs-panel {
     padding: 10px;
+}
+.callout {
+    margin: 0 0 0.3rem 0;
+    padding: 0.3rem;
 }
 @media screen and (max-width: 39.9375em) {
     .admincontent {

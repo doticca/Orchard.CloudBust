@@ -151,6 +151,13 @@
     <Content Include="TheAdmin\Styles\images\menuOpenHover.gif" />
     <Content Include="TheAdmin\Styles\images\vinesBackgroundBottom.gif" />
     <Content Include="TheAdmin\Styles\images\menu-filter.png" />
+    <Content Include="TheThemeMachineFoundation\Styles\default-grid.css" />
+    <Content Include="TheThemeMachineFoundation\Styles\img\menu-grey.png" />
+    <Content Include="TheThemeMachineFoundation\Styles\site.css" />
+    <Content Include="TheThemeMachineFoundation\Styles\SiteOld.css" />
+    <Content Include="TheThemeMachineFoundation\Theme.png" />
+    <Content Include="TheThemeMachineFoundation\Theme.txt" />
+    <Content Include="TheThemeMachineFoundation\ThemeZonePreview.png" />
     <Content Include="TheThemeMachine\Styles\default-grid.css" />
     <Content Include="TheThemeMachine\Styles\Site.css" />
     <Content Include="TheThemeMachine\Theme.png" />
@@ -261,6 +268,35 @@
     <Content Include="TheAdminFoundation\Views\Pager.cshtml" />
     <Content Include="TheAdminFoundation\Views\Title.cshtml" />
     <Content Include="TheAdminFoundation\Views\User.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheThemeMachineFoundation\Placement.info" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheThemeMachineFoundation\Styles\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheThemeMachineFoundation\Views\BadgeOfHonor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheThemeMachineFoundation\Views\Branding.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheThemeMachineFoundation\Views\Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheThemeMachineFoundation\Views\Pager.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheThemeMachineFoundation\Views\Pager.First.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheThemeMachineFoundation\Views\Pager.Last.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheThemeMachineFoundation\Views\Document.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

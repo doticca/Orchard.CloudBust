@@ -100,6 +100,7 @@
     <Compile Include="Drivers\QuadPromoPartDriver.cs" />
     <Compile Include="Drivers\FeaturedHeadPartDriver.cs" />
     <Compile Include="Drivers\FoundationMenuItemPartDriver.cs" />
+    <Compile Include="FeaturedHead.cs" />
     <Compile Include="Handlers\FoundationSettingsPartHandler.cs" />
     <Compile Include="Handlers\TrioPromoPartHandler.cs" />
     <Compile Include="Models\FoundationSettingsPart.cs" />
@@ -239,6 +240,7 @@
     <Content Include="Styles\adminsite.css" />
     <Content Include="Styles\contrib.css" />
     <Content Include="Styles\contrib.min.css" />
+    <Content Include="Styles\featuredhead.css" />
     <Content Include="Styles\foundation-datepicker.css" />
     <Content Include="Styles\foundation-datepicker.min.css" />
     <Content Include="Styles\foundation-icons.css" />

@@ -40,6 +40,11 @@ namespace CloudBust.Foundation.Models {
             get { return Record.ForegroundColorLarge; }
             set { Record.ForegroundColorLarge = value; }
         }
+        public string BackgroundImage
+        {
+            get { return Record.BackgroundImage; }
+            set { Record.BackgroundImage = value; }
+        }
         public string BackgroundImageMedium
         {
             get { return Record.BackgroundImageMedium; }
@@ -50,16 +55,5 @@ namespace CloudBust.Foundation.Models {
             get { return Record.BackgroundImageLarge; }
             set { Record.BackgroundImageLarge = value; }
         }
-        public int HeightLarge
-        {
-            get { return Record.HeightLarge; }
-            set { Record.HeightLarge = value; }
-        }
-        public int HeightMedium
-        {
-            get { return Record.HeightMedium; }
-            set { Record.HeightMedium = value; }
-        }
-
     }
 }

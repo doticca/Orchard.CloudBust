@@ -1,0 +1,49 @@
+﻿.site-hero {
+    background: #074E68;
+    overflow: visible;
+    padding: 2.5rem 0 4.5rem;
+    position: relative;
+    text-align: center;
+}
+.site-hero.home-large-hero {
+    background-position: bottom center;
+    background-size: cover;
+}
+.site-hero .hero-main-header {
+    color: #fefefe;
+    font-size: 2.875rem;
+    font-weight: 200;
+    margin: 0;
+    text-align: center;
+}
+.hero-subheader {
+    position: relative;
+}
+.site-hero .hero-subheader {
+    color: #fefefe;
+    font-size: 1.3125rem;
+    font-weight: 200;
+}
+.site-hero a {
+    color: #fff;
+}
+@media screen and (max-width: 39.9375em) {
+    .site-hero {
+        padding: 1.875rem 0;
+    }
+}
+@media screen and (max-width: 768px) {
+    .site-hero .hero-main-header {
+        font-size: 1.875rem;
+        font-weight: 200;
+    }
+}
+
+.homepage .hero-main-header {
+    text-align: left !important;
+}
+.site-hero #twitter a {
+    color: #fefefe;
+    font-size: .8125rem;
+    font-weight: 200;
+}

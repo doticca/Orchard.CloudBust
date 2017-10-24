@@ -1,4 +1,22 @@
-﻿.title-bar {
+﻿body, h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+    font-family: 'Raleway', sans-serif;
+}
+.button {
+    border: 0;
+    box-shadow: 0 -2px 0 rgba(0,0,0,0.2) inset;
+    font-weight: bold;
+}
+.lead {
+    color: #777777;
+    margin-bottom: 30px;
+    font-size: 1em;
+}
+.title-bar {
     background: #2c3840;
     padding: 0.67rem;
     position: relative;
@@ -179,3 +197,50 @@
         content: '';
         display: none;
     }
+.homepage {
+    text-align: left !important;
+}
+a.twitter {
+    padding-left: 22px;
+    background: url(img/icon-twitter.png) no-repeat left center;
+}
+#oops {
+    color: white !important;
+    padding: 200px 0 150px;
+    background: url(img/404.jpg) no-repeat center -300px #074e68;
+    text-align: center;
+}
+    #oops h1.oversized {
+        font-size: 3.2rem;
+        color: white;
+        line-height: 1;
+    }
+    #oops h5 {
+        font-size: 0.75rem;
+        font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        font-weight: 900;
+        margin-bottom: 20px;
+        color: white;
+    }
+    #oops a {
+        color: white;
+        opacity: 0.7;
+    }
+    #oops h3 {
+        color: white;
+    }
+    #oops ul {
+        list-style: none;
+        margin-left: 0;
+    }
+@media only screen and (max-width: 40em) {
+    #oops {
+        padding: 100px 0 100px 0;
+        background-size: 250%;
+        background-position-y: top;
+    }
+        #oops h1.oversized {
+            font-size: 2.0rem;
+        }
+}

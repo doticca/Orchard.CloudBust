@@ -77,20 +77,7 @@ namespace CloudBust.Foundation
                     .Column<string>("SecondLinkColor", column => column.WithDefault(string.Empty))
                     .Column<string>("ThirdLinkColor", column => column.WithDefault(string.Empty))
                 );
-            SchemaBuilder.CreateTable("FeaturedHeadPartRecord",
-                table => table
-                    .ContentPartRecord()
-                    .Column<int>("HeightLarge", column => column.WithDefault(650))
-                    .Column<int>("HeightMedium", column => column.WithDefault(525))
-                    .Column<string>("BackgroundColor", column => column.WithDefault("#23b9d1"))
-                    .Column<string>("ForegroundColor", column => column.WithDefault("#fff"))
-                    .Column<string>("BackgroundColorMedium", column => column.WithDefault("#bcd110"))
-                    .Column<string>("ForegroundColorMedium", column => column.WithDefault("#fff"))
-                    .Column<string>("BackgroundColorLarge", column => column.WithDefault("#efa412"))
-                    .Column<string>("ForegroundColorLarge", column => column.WithDefault("#fff"))
-                    .Column<string>("BackgroundImageMedium", column => column.WithDefault(string.Empty))
-                    .Column<string>("BackgroundImageLarge", column => column.WithDefault(string.Empty))
-                );
+
             // foundation content menu item
             ContentDefinitionManager.AlterTypeDefinition("ContentMenuItem", cfg => cfg
                 .WithPart("FoundationMenuItemPart")
@@ -123,19 +110,7 @@ namespace CloudBust.Foundation
                     .WithPart("WidgetPart")
                     .WithSetting("Stereotype", "Widget")
                 );
-            // featured head
-            ContentDefinitionManager.AlterPartDefinition("FeaturedHeadPart", builder => builder
-                .Attachable()
-                .WithDescription("Creates a responsive featured Header for Foundation framework.")
-                );
-            ContentDefinitionManager.AlterTypeDefinition("FeaturedHeadWidget",
-                cfg => cfg
-                    .WithPart("FeaturedHeadPart")
-                    .WithPart("CommonPart")
-                    .WithPart("BodyPart")
-                    .WithPart("WidgetPart")
-                    .WithSetting("Stereotype", "Widget")
-                );
+
             return 1;
         }
     }

@@ -26,6 +26,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -195,6 +196,7 @@
     <Compile Include="ApplinksRoutes.cs" />
     <Compile Include="RobotsRoutes.cs" />
     <Compile Include="RuleEngine\DomainRuleProvider.cs" />
+    <Compile Include="RuleEngine\NotFoundRuleProvider.cs" />
     <Compile Include="Services\DetectMobileService.cs" />
     <Compile Include="Services\FaviconService.cs" />
     <Compile Include="Services\IApplinksService.cs" />
@@ -213,6 +215,7 @@
     <Compile Include="Shapes\FaviconShapes.cs" />
     <Compile Include="ThemePickerAdminMenu.cs" />
     <Compile Include="ThemePickerMigrations.cs" />
+    <Compile Include="Tokens\UrlTokens.cs" />
     <Compile Include="ViewModels\FaviconSettingsViewModel.cs" />
     <Compile Include="ViewModels\ApplinksFileViewModel.cs" />
     <Compile Include="ViewModels\RobotsFileViewModel.cs" />
@@ -246,6 +249,10 @@
     <ProjectReference Include="..\Orchard.Themes\Orchard.Themes.csproj">
       <Project>{cde24a24-01d3-403c-84b9-37722e18dfb7}</Project>
       <Name>Orchard.Themes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Tokens\Orchard.Tokens.csproj">
+      <Project>{6f759635-13d7-4e94-bcc9-80445d63f117}</Project>
+      <Name>Orchard.Tokens</Name>
     </ProjectReference>
     <ProjectReference Include="..\Orchard.Widgets\Orchard.Widgets.csproj">
       <Project>{194d3ccc-1153-474d-8176-fde8d7d0d0bd}</Project>

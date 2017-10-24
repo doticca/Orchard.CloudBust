@@ -35,11 +35,10 @@ namespace CloudBust.Foundation.Drivers {
         {
             var partName = part.PartDefinition.Name;
 
-            part.Record.HeightMedium = GetAttribute<int>(context, partName, "HeightMedium");
-            part.Record.HeightLarge = GetAttribute<int>(context, partName, "HeightLarge");
             part.Record.BackgroundColor = GetAttribute<string>(context, partName, "BackgroundColor");
             part.Record.BackgroundColorMedium = GetAttribute<string>(context, partName, "BackgroundColorMedium");
             part.Record.BackgroundColorLarge = GetAttribute<string>(context, partName, "BackgroundColorLarge");
+            part.Record.BackgroundImage = GetAttribute<string>(context, partName, "BackgroundImage");
             part.Record.BackgroundImageLarge = GetAttribute<string>(context, partName, "BackgroundImageLarge");
             part.Record.BackgroundImageMedium = GetAttribute<string>(context, partName, "BackgroundImageMedium");
         }
@@ -48,11 +47,10 @@ namespace CloudBust.Foundation.Drivers {
         {
             var element = context.Element(part.PartDefinition.Name);
 
-            element.SetAttributeValue("HeightMedium", part.HeightMedium);
-            element.SetAttributeValue("HeightLarge", part.HeightLarge);
             element.SetAttributeValue("BackgroundColor", part.BackgroundColor);
             element.SetAttributeValue("BackgroundColorMedium", part.BackgroundColorMedium);
             element.SetAttributeValue("BackgroundColorLarge", part.BackgroundColorLarge);
+            element.SetAttributeValue("BackgroundImage", part.BackgroundImage);
             element.SetAttributeValue("BackgroundImageLarge", part.BackgroundImageLarge);
             element.SetAttributeValue("BackgroundImageMedium", part.BackgroundImageMedium);
         }

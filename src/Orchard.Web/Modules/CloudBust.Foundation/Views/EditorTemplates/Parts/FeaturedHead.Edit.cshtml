@@ -2,15 +2,19 @@
 @using CloudBust.Foundation.Models;
 
 <fieldset>
-    <legend>@T("Small Devices (Mobile)")</legend>
+    <legend>@T("Default Settings, Mobile First")</legend>
     <div>
         @Html.LabelFor(m => m.ForegroundColor, T("Foreground Color"))
         @Html.TextBoxFor(m => m.ForegroundColor, new { @class = "textSmall" })
-        <span class="hint">@T("Enter the foreground color for small devices")</span>
+        <span class="hint">@T("Enter the default foreground color")</span>
 
         @Html.LabelFor(m => m.BackgroundColor, T("Background Color"))
         @Html.TextBoxFor(m => m.BackgroundColor, new { @class = "textSmall" })
-        <span class="hint">@T("Enter the background color for small devices")</span>
+        <span class="hint">@T("Enter the default background color")</span>
+
+        @Html.LabelFor(m => m.BackgroundImage, T("Background Image"))
+        @Html.TextBoxFor(m => m.BackgroundImage, new { @class = "text large" })
+        <span class="hint">@T("Enter the url of the default background image")</span>
     </div>
 
     <legend>@T("Medium Devices (most Tablets)")</legend>
@@ -25,13 +29,9 @@
 
         @Html.LabelFor(m => m.BackgroundImageMedium, T("Background Image"))
         @Html.TextBoxFor(m => m.BackgroundImageMedium, new { @class = "text large" })
-        <span class="hint">@T("Enter the url of the image to display in medium devices")</span>
-        <span class="hint">@T("Best size is 2500x600, leave empty to use background color")</span>
-
-        @Html.LabelFor(m => m.HeightMedium, T("Height"))
-        @Html.TextBoxFor(m => m.HeightMedium)
-        <span class="hint">@T("Enter the minimum height for medium devices. (0) to ignore.")</span>
+        <span class="hint">@T("Enter the url of the background image for medium devices")</span>
     </div>
+
     <legend>@T("Large Devices")</legend>
     <div>
         @Html.LabelFor(m => m.ForegroundColorLarge, T("Foreground Color"))
@@ -44,10 +44,6 @@
 
         @Html.LabelFor(m => m.BackgroundImageLarge, T("Background Image"))
         @Html.TextBoxFor(m => m.BackgroundImageLarge, new { @class = "text large" })
-        <span class="hint">@T("Enter the url of the image to display in large devices")</span>
-        <span class="hint">@T("Best size is 2500x600, leave empty to use background color")</span>
-        @Html.LabelFor(m => m.HeightLarge, T("Height"))
-        @Html.TextBoxFor(m => m.HeightLarge)
-        <span class="hint">@T("Enter the minimum height for large devices. (0) to ignore.")</span>
+        <span class="hint">@T("Enter the url of the background image for large devices")</span>
     </div>
 </fieldset>

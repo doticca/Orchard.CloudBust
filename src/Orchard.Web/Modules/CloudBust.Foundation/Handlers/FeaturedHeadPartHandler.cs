@@ -10,8 +10,6 @@ namespace CloudBust.Foundation.Handlers {
 
             OnInitializing<FeaturedHeadPart>((context, part) =>
             {
-                part.HeightLarge = 650;
-                part.HeightMedium = 525;
                 part.BackgroundColor = "#23b9d1";
                 part.BackgroundColorMedium = "#bcd110";
                 part.BackgroundColorLarge = "#efa412";

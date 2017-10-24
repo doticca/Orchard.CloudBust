@@ -3,10 +3,10 @@ Path: CloudBust.Common
 AntiForgery: enabled
 Author: Team Grapto @teamgrapto
 Website: http://www.grapto.com
-Version: 1.10.0
-OrchardVersion: 1.10
-Description: OData Dependencies, Models, Extensions and Services
-Dependencies: Orchard.MediaLibrary, Orchard.Themes, Orchard.Widgets, Orchard.Alias
+Version: 1.10.2
+OrchardVersion: 1.10.2
+Description: OData Dependencies, Models, Condition Rules, Tokens, Extensions and Services
+Dependencies: Orchard.MediaLibrary, Orchard.Themes, Orchard.Widgets, Orchard.Alias, Orchard.Tokens, Orchard.Conditions
 Category: CloudBust
 Features:
 	CloudBust.Common.SEO:

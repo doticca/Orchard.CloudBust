@@ -1,4 +1,8 @@
 ﻿<Placement>
+  <Match DisplayType="Detail">
+    <Place Parts_Title="-"/>
+    <Place Parts_Common_Metadata="-"/>
+  </Match>
   <!-- Customize where the shapes are rendered -->
 
   <!-- 

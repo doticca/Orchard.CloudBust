@@ -185,3 +185,31 @@
 </div>
 @tag.EndElement
 
+@using (Script.Foot())
+{
+    <script>
+        var prev = 0;
+        var $window = $(window);
+        var nav = $('.scrollhide-nav');
+        var subnav = $('.sub-nav-links');
+        var distance = 0;
+        if(subnav.length>0)
+            distance = $('.sub-nav-links').offset().top;
+
+        $window.on('scroll', function(){
+            var scrollTop = $window.scrollTop();
+            if(distance>0)
+                nav.toggleClass('hidden', scrollTop > prev || scrollTop > distance - nav.height());
+            else
+                nav.toggleClass('hidden', scrollTop > prev);
+            prev = scrollTop;
+            if (scrollTop >= distance ) {
+                $('.sub-nav-links').addClass('fixed');
+            }
+            else{
+	            $('.sub-nav-links').removeClass('fixed');
+            }
+        });
+    </script>
+}
+

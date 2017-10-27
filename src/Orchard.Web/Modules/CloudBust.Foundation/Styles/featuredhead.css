@@ -1,13 +1,16 @@
 ﻿.site-hero {
     background: #074E68;
-    overflow: visible;
+    overflow: hidden;
     padding: 2.5rem 0 4.5rem;
     position: relative;
     text-align: center;
 }
+
+
 .site-hero.home-large-hero {
-    background-position: bottom center;
+    background-position: top center;
     background-size: cover;
+    background-repeat: no-repeat;
 }
 .site-hero .hero-main-header {
     color: #fefefe;
@@ -27,9 +30,22 @@
 .site-hero a {
     color: #fff;
 }
+div.curved {
+    position: absolute;
+    background-color: white;
+    border-radius: 100%;
+    width: 102%;
+    height: 100px;
+    left: -1%;
+    bottom: -50px;
+}
 @media screen and (max-width: 39.9375em) {
     .site-hero {
         padding: 1.875rem 0;
+    }
+    div.curved {
+        height: 40px;
+        bottom: -20px;
     }
 }
 @media screen and (max-width: 768px) {
@@ -38,12 +54,56 @@
         font-weight: 200;
     }
 }
-
+@media only screen and (min-width: 40em) and (max-width: 63.9375em) {
+    .site-hero.home-large-hero {
+        background-position: center;
+        padding-bottom: 200px;
+        padding-top: 130px;
+    }
+    div.curved {
+        height: 80px;
+        bottom: -40px;
+    }
+    article.submenu .site-hero.home-large-hero {
+        padding-bottom: 70px;
+        padding-top: 50px;
+    }
+}
+@media only screen and (min-width: 64em) {
+    .site-hero.home-large-hero {
+        padding-bottom: 250px;
+        padding-top: 180px;
+        background-size: cover;
+    }
+    article.submenu .site-hero.home-large-hero {
+        padding-bottom: 70px;
+        padding-top: 50px;
+    }
+}
+@media only screen and (min-width: 1400px) {
+    .site-hero.home-large-hero {
+        padding-bottom: 300px;
+        padding-top: 230px;
+        background-position-y: bottom;
+    }
+    article.submenu .site-hero.home-large-hero {
+        padding-bottom: 100px;
+        padding-top: 80px;
+    }
+}
 .homepage .hero-main-header {
-    text-align: left !important;
+    text-align: left;
 }
 .site-hero #twitter a {
     color: #fefefe;
     font-size: .8125rem;
     font-weight: 200;
+}
+article.submenu .columns {
+    width: 100% !important;
+    text-align: center !important;
+    margin: 0!important;
+}
+article.submenu .homepage .hero-main-header {
+    text-align: center!important;
 }

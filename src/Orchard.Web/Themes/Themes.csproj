@@ -301,6 +301,9 @@
   <ItemGroup>
     <Content Include="TheThemeMachineFoundation\Views\NotFound.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="TheThemeMachineFoundation\Views\Widget.Wrapper.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

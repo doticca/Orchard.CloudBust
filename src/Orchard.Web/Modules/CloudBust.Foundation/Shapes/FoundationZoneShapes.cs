@@ -25,7 +25,7 @@ namespace CloudBust.Foundation.Shapes
                     if (!AdminFilter.IsApplied(request.RequestContext) && _foundationService.GetDoNotEnableFrontEnd()) return;
                     var zoneItem = displaying.Shape;
 
-                    zoneItem.Metadata.Alternates.Add("FoundationZone");
+                    zoneItem.Metadata.Alternates.Add("FoundationZones");
 
                 });
         }

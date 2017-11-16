@@ -1,29 +1,194 @@
 ﻿@using CloudBust.Common.ViewModels;
 @model FaviconSettingsViewModel
-
-<fieldset>
+@{
+    bool androidsuggested = false;
+    if (string.IsNullOrWhiteSpace(Model.AndroidManifestUrl))
+    {
+        if (Model.AndroidManifestSuggestions != null &&
+                Model.AndroidManifestSuggestions.Any())
+        {
+            Model.AndroidManifestUrl = Model.AndroidManifestSuggestions.First();
+            androidsuggested = true;
+        }
+    }
+    bool msappsuggested = false;
+    if (string.IsNullOrWhiteSpace(Model.MSApplicationConfigUrl))
+    {
+        if (Model.MSApplicationConfigSuggestions != null &&
+                Model.MSApplicationConfigSuggestions.Any())
+        {
+            Model.MSApplicationConfigUrl = Model.MSApplicationConfigSuggestions.First();
+            msappsuggested = true;
+        }
+    }
+}
+<div>
+    <fieldset>
     <legend>@T("Favicon")</legend>
-    <div>
-        <label for="FaviconUrl">@T("Favicon URL")</label>
-        @Html.TextBoxFor(m => m.FaviconUrl, new { @class = "textMedium inline" })
-        @if (!String.IsNullOrWhiteSpace(Model.FaviconUrl)) {
-            <img class="icon settings" src="@Model.FaviconUrl" alt="The current favicon"/>
-        }
-        @Html.ValidationMessage("FaviconUrl", "*")
-        @if (Model.FaviconUrlSuggestions != null &&
-            Model.FaviconUrlSuggestions.Any()) {
-            <label>Suggested Icons, click to select:</label>
-            <ul>
-            @foreach (var suggestion in Model.FaviconUrlSuggestions) {
-                <li style="float:left;margin:3px"
-                    onclick="document.getElementById('@Html.FieldIdFor(m => m.FaviconUrl)').value='@suggestion'">
-                    <img class="icon settings preview" src="@suggestion" alt="@suggestion"/>
-                </li>
+
+        <div>
+            <label for="FaviconUrl">@T("Favicon URL (16x16 ico file)")</label>
+            @Html.TextBoxFor(m => m.FaviconUrl, new { @class = "textMedium inline" })
+            @if (!String.IsNullOrWhiteSpace(Model.FaviconUrl)) {
+                <img class="icon settings" src="@Model.FaviconUrl" alt="The current favicon"/>
             }
-            </ul>
-        }
-        else {
-            <span class="hint">@T("Upload favicon files into a favicon folder in the Media module.")</span>
-        }
-    </div>
-</fieldset>
+            @Html.ValidationMessage("FaviconUrl", "*")
+            @if (Model.FaviconUrlSuggestions != null &&
+                Model.FaviconUrlSuggestions.Any()) {
+                <label>Suggested Icons, click to select:</label>
+                <ul>
+                @foreach (var suggestion in Model.FaviconUrlSuggestions) {
+                    <li style="float:left;margin:3px"
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.FaviconUrl)').value='@suggestion'">
+                        <img class="icon settings preview" 
+                            data-tooltip aria-haspopup="true"
+                            data-click-open="false"
+                            data-disable-hover="false"
+                            title="@suggestion"
+                             src="@suggestion" 
+                             alt="@suggestion"/>
+                    </li>
+                }
+                </ul>
+            }
+            else {
+                <span class="hint">@T("Upload favicon files into a favicon folder in the Media module.")</span>
+            }
+        </div>
+
+        <fieldset>
+            <label for="AppleTouchIconUrl">@T("Apple Touch Icon URL (152x152 png image, name starts with apple)")</label>
+            @Html.TextBoxFor(m => m.AppleTouchIconUrl, new { @class = "textMedium inline" })
+            <img id="appletouchiconurlimage" class="icon settings" src="@Model.AppleTouchIconUrl" onerror="this.style.display='none'"/>
+            @if (Model.AppleTouchIconUrlSuggestions != null &&
+                Model.AppleTouchIconUrlSuggestions.Any()) {
+                <label>Suggested Apple Touch Icons, click to select:</label>
+                <ul>
+                @foreach (var suggestion in Model.AppleTouchIconUrlSuggestions) {
+                    <li style="float:left;margin:3px"
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.AppleTouchIconUrl)').value='@suggestion';document.getElementById('appletouchiconurlimage').style.display='inline-block';document.getElementById('appletouchiconurlimage').src='@suggestion'">
+                        <img class="icon settings preview" 
+                            data-tooltip aria-haspopup="true"
+                            data-click-open="false"
+                            data-disable-hover="false"
+                            title="@suggestion"
+                             src="@suggestion" 
+                             alt="@suggestion"/>
+                    </li>
+                }
+                </ul>
+            }
+            else {
+                <span class="hint">@T("Upload favicon files into a favicon folder in the Media module.")</span>
+            }
+        </fieldset>
+
+        <fieldset>
+            <label for="AndroidManifestUrl">@T("Android manifest URL (manifest.json)")</label>
+            @Html.TextBoxFor(m => m.AndroidManifestUrl, new { @class = "textMedium inline" })
+            @if (androidsuggested)
+            {
+            <span class="hint">@T("Android manifest file is suggested from your media favicon folder. Press save to use this value.")</span>
+            }
+        </fieldset>
+
+        <fieldset>
+            <label for="MSApplicationConfigUrl">@T("MS Application config URL (xml file, name starts with browser)")</label>
+            @Html.TextBoxFor(m => m.MSApplicationConfigUrl, new { @class = "textMedium inline" })
+            @if (msappsuggested)
+            {
+            <span class="hint">@T("MS Application manifest file is suggested from your media favicon folder. Press save to use this value.")</span>
+            }
+            <label for="ThemeColor">@T("MS Application Theme Color")</label>
+            @Html.TextBoxFor(m => m.ThemeColor, new { @class = "textMedium inline" })
+            <div class="btn-group" id="w8_favicon_suggested_colors">
+				<button type="button" style="background-color: #00aba9" 
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.ThemeColor)').value='#00aba9'"
+                        class="btn btn-primary">Teal</button>
+				<button type="button" style="background-color: #2b5797" 
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.ThemeColor)').value='#2b5797'"
+                        class="btn btn-primary">Dark Blue</button>
+				<button type="button" style="background-color: #9f00a7" 
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.ThemeColor)').value='#9f00a7'"
+                        class="btn btn-primary">Light Purple</button>
+				<button type="button" style="background-color: #603cba"                         
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.ThemeColor)').value='#603cba'"
+                        class="btn btn-primary">Dark Purple</button>
+				<button type="button" style="background-color: #b91d47" 
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.ThemeColor)').value='#b91d47'"
+                        class="btn btn-primary">Dark Red</button>
+				<button type="button" style="background-color: #da532c"                        
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.ThemeColor)').value='#da532c'"
+                        class="btn btn-primary">Dark Orange</button>
+				<button type="button" style="background-color: #ffc40d"                         
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.ThemeColor)').value='#ffc40d'"
+                        class="btn btn-primary">Yellow</button>
+				<button type="button" style="background-color: #00a300"                         
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.ThemeColor)').value='#00a300'"
+                        class="btn btn-primary">Green</button>
+				<button type="button" style="background-color: #2d89ef"                         
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.ThemeColor)').value='#2d89ef'"
+                        class="btn btn-primary">Blue</button>
+			</div>
+        </fieldset>
+
+        <fieldset>
+            <label for="PngImageUrl">@T("PNG image URL (32x32 png image)")</label>
+            @Html.TextBoxFor(m => m.PngImageUrl, new { @class = "textMedium inline" })
+            <img id="pngimage" class="icon settings" src="@Model.PngImageUrl" onerror="this.style.display='none'"/>
+            @if (Model.PngImageSuggestions != null &&
+                Model.PngImageSuggestions.Any()) {
+                <label>Suggested PNG images, click to select:</label>
+                <ul>
+                @foreach (var suggestion in Model.PngImageSuggestions) {
+                    <li style="float:left;margin:3px"
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.PngImageUrl)').value='@suggestion';document.getElementById('pngimage').style.display='inline-block';document.getElementById('pngimage').src='@suggestion'">
+                        <img class="icon settings preview" 
+                            data-tooltip aria-haspopup="true"
+                            data-click-open="false"
+                            data-disable-hover="false"
+                            title="@suggestion"
+                             src="@suggestion" 
+                             alt="@suggestion"/>
+                    </li>
+                }
+                </ul>
+            }
+            else {
+                <span class="hint">@T("Upload favicon files into a favicon folder in the Media module.")</span>
+            }
+        </fieldset>
+
+        <fieldset>
+            <label for="SafariPinnedUrl">@T("Safari image URL (svg image)")</label>
+            @Html.TextBoxFor(m => m.SafariPinnedUrl, new { @class = "textMedium inline" })
+            <img id="safariimage" class="icon settings" src="@Model.SafariPinnedUrl" onerror="this.style.display='none'"/>
+            @if (Model.SafariSuggestions != null &&
+                Model.SafariSuggestions.Any()) {
+                <label>Suggested SVG images, click to select:</label>
+                <ul>
+                @foreach (var suggestion in Model.SafariSuggestions) {
+                    <li style="float:left;margin:3px"
+                        onclick="document.getElementById('@Html.FieldIdFor(m => m.SafariPinnedUrl)').value='@suggestion';document.getElementById('safariimage').style.display='inline-block';document.getElementById('safariimage').src='@suggestion'">
+                        <img class="icon settings preview" 
+                            data-tooltip aria-haspopup="true"
+                            data-click-open="false"
+                            data-disable-hover="false"
+                            title="@suggestion"
+                             src="@suggestion" 
+                             alt="@suggestion"/>
+                    </li>
+                }
+                </ul>
+            }
+            else {
+                <span class="hint">@T("Upload favicon files into a favicon folder in the Media module.")</span>
+            }
+            <fieldset>
+                <label for="SafariPinnedMask">@T("Safari mask color")</label>
+                @Html.TextBoxFor(m => m.SafariPinnedMask, new { @class = "textMedium inline" })
+            </fieldset>
+        </fieldset>
+
+    </fieldset>
+</div>

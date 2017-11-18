@@ -10,61 +10,59 @@ using CloudBust.Resources.ViewModels;
 
 namespace CloudBust.Resources.Drivers
 {
-    [OrchardFeature("CloudBust.Resources.Highlight")]
-    public class HighlightSettingsPartDriver : ContentPartDriver<HighlightSettingsPart> 
+    [OrchardFeature("CloudBust.Resources.Particles")]
+    public class ParticlesSettingsPartDriver : ContentPartDriver<ParticlesSettingsPart> 
     {
         private readonly ISignals _signals;
-        private readonly IHighlightService _highlightService;
+        private readonly IParticlesService _particlesService;
 
-        public HighlightSettingsPartDriver(ISignals signals, IHighlightService highlightService)
+        public ParticlesSettingsPartDriver(ISignals signals, IParticlesService particlesService)
         {
             _signals = signals;
-            _highlightService = highlightService;
+            _particlesService = particlesService;
         }
 
-        protected override string Prefix { get { return "HighlightSettings"; } }
+        protected override string Prefix { get { return "ParticlesSettings"; } }
 
-        protected override DriverResult Editor(HighlightSettingsPart part, dynamic shapeHelper)
+        protected override DriverResult Editor(ParticlesSettingsPart part, dynamic shapeHelper)
         {
-
-            return ContentShape("Parts_Highlight_HighlightSettings",
+            var jsonSuggestions = _particlesService.GetJsonUrlSuggestions();
+            return ContentShape("Parts_Particles_ParticlesSettings",
                                () => shapeHelper.EditorTemplate(
-                                   TemplateName: "Parts/Highlight.HighlightSettings",
-                                   Model: new HighlightSettingsViewModel
+                                   TemplateName: "Parts/Particles.ParticlesSettings",
+                                   Model: new ParticlesSettingsViewModel
                                    {
-                                       Style = part.Style,
+                                       JsonUrl = part.JsonUrl,
                                        AutoEnable = part.AutoEnable,
                                        AutoEnableAdmin = part.AutoEnableAdmin,
-                                       FullBundle = part.FullBundle
+                                       JsonUrlSuggestions = jsonSuggestions
                                    },
-                                   Prefix: Prefix)).OnGroup("Highlight");
+                                   Prefix: Prefix)).OnGroup("Particles");
         }
 
-        protected override DriverResult Editor(HighlightSettingsPart part, IUpdateModel updater, dynamic shapeHelper)
+        protected override DriverResult Editor(ParticlesSettingsPart part, IUpdateModel updater, dynamic shapeHelper)
         {
             updater.TryUpdateModel(part.Record, Prefix, null, null);
-            _signals.Trigger("CloudBust.Resources.Highlight.Changed");
+            _signals.Trigger("CloudBust.Resources.Particles.Changed");
             return Editor(part, shapeHelper);
         }
 
-        protected override void Exporting(HighlightSettingsPart part, ExportContentContext context)
+        protected override void Exporting(ParticlesSettingsPart part, ExportContentContext context)
         {
             var element = context.Element(part.PartDefinition.Name);
 
-            element.SetAttributeValue("Style", part.Style);
+            element.SetAttributeValue("JsonUrl", part.JsonUrl);
             element.SetAttributeValue("AutoEnable", part.AutoEnable);
             element.SetAttributeValue("AutoEnableAdmin", part.AutoEnableAdmin);
-            element.SetAttributeValue("FullBundle", part.FullBundle);
         }
 
-        protected override void Importing(HighlightSettingsPart part, ImportContentContext context)
+        protected override void Importing(ParticlesSettingsPart part, ImportContentContext context)
         {
             var partName = part.PartDefinition.Name;
 
-            part.Record.Style = GetAttribute<string>(context, partName, "Style");
+            part.Record.JsonUrl = GetAttribute<string>(context, partName, "JsonUrl");
             part.Record.AutoEnable = GetAttribute<bool>(context, partName, "AutoEnable");
             part.Record.AutoEnableAdmin = GetAttribute<bool>(context, partName, "AutoEnableAdmin");
-            part.Record.FullBundle = GetAttribute<bool>(context, partName, "FullBundle");
         }
 
         private TV GetAttribute<TV>(ImportContentContext context, string partName, string elementName)

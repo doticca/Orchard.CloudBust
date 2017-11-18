@@ -102,6 +102,8 @@
     <Compile Include="Cookiecuttr.cs" />
     <Compile Include="CookiecuttrMigrations.cs" />
     <Compile Include="Drivers\ElegantIconSettingsPartDriver.cs" />
+    <Compile Include="Drivers\ParticlesPartDriver.cs" />
+    <Compile Include="Drivers\ParticlesSettingsPartDriver.cs" />
     <Compile Include="Drivers\OwlCarouselSettingsPartDriver.cs" />
     <Compile Include="Drivers\CookieCuttrPartDriver.cs" />
     <Compile Include="Drivers\CookieCuttrSettingsPartDriver.cs" />
@@ -128,6 +130,8 @@
     <Compile Include="GoogleMaps.cs" />
     <Compile Include="GoogleMapsMigrations.cs" />
     <Compile Include="Handlers\ElegantIconSettingsPartHandler.cs" />
+    <Compile Include="Handlers\ParticlesPartHandler.cs" />
+    <Compile Include="Handlers\ParticlesSettingsPartHandler.cs" />
     <Compile Include="Handlers\OwlCarouselSettingsPartHandler.cs" />
     <Compile Include="Handlers\CookieCuttrSettingsPartHandler.cs" />
     <Compile Include="Handlers\CssPartHandler.cs" />
@@ -144,6 +148,11 @@
     <Compile Include="Handlers\SlickSettingsPartHandler.cs" />
     <Compile Include="Handlers\NotifySettingsPartHandler.cs" />
     <Compile Include="Handlers\UnderscoreSettingsPartHandler.cs" />
+    <Compile Include="Models\ParticlesPart.cs" />
+    <Compile Include="Models\ParticlesPartRecord.cs" />
+    <Compile Include="Models\ParticlesSettingsPart.cs" />
+    <Compile Include="Models\ParticlesSettingsPartRecord.cs" />
+    <Compile Include="Particles.cs" />
     <Compile Include="Highlight.cs" />
     <Compile Include="HighlightMigrations.cs" />
     <Compile Include="ImagesLoaded.cs" />
@@ -195,6 +204,7 @@
     <Compile Include="NiceselectMigrations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ElegantIconService.cs" />
+    <Compile Include="Services\ParticlesService.cs" />
     <Compile Include="Services\OwlCarouselService.cs" />
     <Compile Include="Services\DropzoneService.cs" />
     <Compile Include="Services\GoogleMapsService.cs" />
@@ -209,6 +219,7 @@
     <Compile Include="Services\NotifyService.cs" />
     <Compile Include="Services\UnderscoreService.cs" />
     <Compile Include="Shapes\ElegantIconShapes.cs" />
+    <Compile Include="Shapes\ParticlesShapes.cs" />
     <Compile Include="Shapes\OwlCarouselShapes.cs" />
     <Compile Include="Shapes\DropzoneShapes.cs" />
     <Compile Include="Shapes\GoogleMapsShapes.cs" />
@@ -225,12 +236,14 @@
     <Compile Include="OwlCarousel.cs" />
     <Compile Include="Slick.cs" />
     <Compile Include="OwlCarouselMigrations.cs" />
+    <Compile Include="ParticlesMigrations.cs" />
     <Compile Include="SlickMigrations.cs" />
     <Compile Include="Notify.cs" />
     <Compile Include="Underscore.cs" />
     <Compile Include="NotifyMigrations.cs" />
     <Compile Include="UnderscoreMigrations.cs" />
     <Compile Include="ViewModels\ElegantIconViewModel.cs" />
+    <Compile Include="ViewModels\ParticlesSettingsViewModel.cs" />
     <Compile Include="ViewModels\OwlCarouselViewModel.cs" />
     <Compile Include="ViewModels\DropzoneSettingsViewModel.cs" />
     <Compile Include="ViewModels\BootstrapViewModel.cs" />
@@ -577,6 +590,8 @@
     <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\orchard-ace.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\particles.js" />
+    <Content Include="Scripts\particles.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\slick.js" />
     <Content Include="Scripts\slick.min.js" />
@@ -865,6 +880,15 @@
     <Content Include="Scripts\fineuploader\fine-uploader.min.js.map" />
     <Content Include="Scripts\fineuploader\jquery.fine-uploader.js.map" />
     <Content Include="Scripts\fineuploader\jquery.fine-uploader.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Particles.ParticlesSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\Particles.Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Particles.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,11 @@
+﻿@model ParticlesPart
+@using CloudBust.Resources.Models;
+
+<fieldset>
+    <legend>@T("Particles Json File from Settings")</legend>
+    <div>
+        @Html.LabelFor(m => m.JsonUrl, T("Particles Json"))
+        @Html.TextBoxFor(m => m.JsonUrl, new { @class = "textSmall", @readonly="readonly" })
+        <span class="hint">@T("This setting can only be changed from site settings")</span>
+    </div>
+</fieldset>

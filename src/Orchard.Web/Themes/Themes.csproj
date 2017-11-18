@@ -151,13 +151,14 @@
     <Content Include="TheAdmin\Styles\images\menuOpenHover.gif" />
     <Content Include="TheAdmin\Styles\images\vinesBackgroundBottom.gif" />
     <Content Include="TheAdmin\Styles\images\menu-filter.png" />
-    <Content Include="TheThemeMachineFoundation\Styles\img\icon-twitter.png" />
-    <Content Include="TheThemeMachineFoundation\Styles\img\menu-grey.png" />
-    <Content Include="TheThemeMachineFoundation\Styles\img\404.jpg" />
-    <Content Include="TheThemeMachineFoundation\Styles\site.css" />
-    <Content Include="TheThemeMachineFoundation\Theme.png" />
-    <Content Include="TheThemeMachineFoundation\Theme.txt" />
-    <Content Include="TheThemeMachineFoundation\ThemeZonePreview.png" />
+    <Content Include="Foundation\Styles\img\icon-twitter.png" />
+    <Content Include="Foundation\Styles\img\menu-grey.png" />
+    <Content Include="Foundation\Styles\img\404.jpg" />
+    <Content Include="Foundation\Styles\img\search-icon.svg" />
+    <Content Include="Foundation\Styles\site.css" />
+    <Content Include="Foundation\Theme.png" />
+    <Content Include="Foundation\Theme.txt" />
+    <Content Include="Foundation\ThemeZonePreview.png" />
     <Content Include="TheThemeMachine\Styles\default-grid.css" />
     <Content Include="TheThemeMachine\Styles\Site.css" />
     <Content Include="TheThemeMachine\Theme.png" />
@@ -238,6 +239,14 @@
       <Project>{6bd8b2fa-f2e3-4ac8-a4c3-2925a653889a}</Project>
       <Name>Orchard.Layouts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Orchard.Users\Orchard.Users.csproj">
+      <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
+      <Name>Orchard.Users</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Orchard.Widgets\Orchard.Widgets.csproj">
+      <Project>{194d3ccc-1153-474d-8176-fde8d7d0d0bd}</Project>
+      <Name>Orchard.Widgets</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="TheThemeMachine\Views\Pager.cshtml" />
@@ -270,39 +279,48 @@
     <Content Include="TheAdminFoundation\Views\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Placement.info" />
+    <Content Include="Foundation\Placement.info" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Styles\Web.config">
+    <Content Include="Foundation\Styles\Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Views\BadgeOfHonor.cshtml" />
+    <Content Include="Foundation\Views\BadgeOfHonor.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Views\Branding.cshtml" />
+    <Content Include="Foundation\Views\Branding.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Views\Layout.cshtml" />
+    <Content Include="Foundation\Views\Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Views\Pager.cshtml" />
+    <Content Include="Foundation\Views\Pager.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Views\Pager.First.cshtml" />
+    <Content Include="Foundation\Views\Pager.First.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Views\Pager.Last.cshtml" />
+    <Content Include="Foundation\Views\Pager.Last.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Views\Document.cshtml" />
+    <Content Include="Foundation\Views\Document.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Views\NotFound.cshtml" />
+    <Content Include="Foundation\Views\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TheThemeMachineFoundation\Views\Widget.Wrapper.cshtml" />
+    <Content Include="Foundation\Views\Widget.Wrapper.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\LogOn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Parts\Blogs.BlogPost.List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Parts\Particles.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

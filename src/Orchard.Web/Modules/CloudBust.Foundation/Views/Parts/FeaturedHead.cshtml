@@ -3,6 +3,7 @@
 @{
     Style.Include("featuredhead.css");
     Model.Metadata.Wrappers.Remove("Widget_Wrapper");
+    var showtitle = Model.ContentItem.WidgetPart.RenderTitle;
     var title = Model.ContentItem.WidgetPart.Title;
     var body = Model.ContentPart.Text;
 }
@@ -78,7 +79,10 @@
 <div class="site-hero home-large-hero">
         <div class="row homepage">
             <div class="small-8 medium-5 medium-offset-1 large-offset-2 end columns">
+                @if (showtitle)
+                {
                 <h1 class="hero-main-header">@title</h1>
+                }
                 @Html.Raw(body)
             </div>
         </div>

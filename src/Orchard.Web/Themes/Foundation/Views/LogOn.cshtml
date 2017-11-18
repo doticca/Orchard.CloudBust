@@ -1,0 +1,85 @@
+﻿@using Orchard.ContentManagement
+@{
+    var userCanRegister = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().UsersCanRegister;
+    var enableLostPassword = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().EnableLostPassword;
+
+    Script.Require("Notify");
+}
+@using (Html.BeginFormAntiForgeryPost(Url.Action("LogOn", new { ReturnUrl = Request.QueryString["ReturnUrl"] }), FormMethod.Post, new { data_abide = "", novalidate = "", autocomplete = "off" }))
+{
+    <div class="row noselect">
+        <div class="text-center small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+            <div class="babyface pink center"></div>
+        </div>
+    </div>
+    <div class="row noselect">
+        <div class="small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+            <h2 class="center">
+                @Html.TitleForPage(T("Log in").ToString())
+            </h2>
+            <div class="hidden">
+                @Html.ValidationSummary()
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+            @Html.TextBox("userNameOrEmail", "", new { @class = "userinput", @placeholder = "Email", required = "required", autofocus = "autofocus" })
+            <span class="floating-label">Email</span>
+            <span class="form-error">Your Email is required.</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+            @Html.Password("password", "", new { @class = "userinput", @placeholder = "Password", @autocomplete = "new-password", required = "required" })
+            <span class="floating-label">Password</span>
+            <span class="form-error">Please enter a password.</span>
+        </div>
+    </div>
+    <div class="row">
+        <fieldset class="small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+            <input id="remember-me" type="checkbox"><label for="remember-me">Remember Me</label>
+        </fieldset>
+    </div>
+    if (enableLostPassword)
+    {
+        <div class="row">
+            <fieldset class="small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+                <label for="passwordreminder" style="display:block;margin-top:10px;margin-bottom:0;">Forgot your password?</label>
+                @Html.ActionLink(T("Reset Password").ToString(), "RequestLostPassword", new { Controller = "Account", Area = "CloudBust.Application" }, new { rel = "nofollow", id = "passwordreminder", @class = "hint center" })
+            </fieldset>
+        </div>
+    }
+    <div class="row">
+        <div class="text-center small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+            <button class="button primaryAction center" type="submit">@T("Log in")</button>
+        </div>
+    </div>
+    if (userCanRegister)
+    {
+        <div class="row noselect">
+            <div class="text-center small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+                <h5 class="">Don't have an account? @Html.ActionLink(T("Sign up").ToString(), "Register", new { Controller = "Account", Area = "CloudBust.Application" }, new { rel = "nofollow" })</h5>
+            </div>
+        </div>
+    }
+}
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+    //<![CDATA[
+    $(function () {
+
+        $("form").on("forminvalid.zf.abide", function () {
+            $.notify("There are some errors in your login data!", { position: "bottom left" });
+        });
+
+        $("form .validation-summary-errors ul li").each(function () {
+            $.notify($(this).html(), { position: "bottom left" });
+        });
+
+    });
+    //]]>
+    </script>
+}

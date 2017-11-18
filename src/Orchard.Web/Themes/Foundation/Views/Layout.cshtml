@@ -76,54 +76,36 @@
 }
 
 @if (Model.BeforeMain != null) {
-<div id="layout-before-main" class="group">
     @Zone(Model.BeforeMain)
-</div>
 }
 
-<div id="layout-main-container">
+@if (Model.AsideFirst != null) {
+<aside id="aside-first" class="aside-first group">
+    @Zone(Model.AsideFirst)
+</aside>
+}
 
-<div id="layout-main" class="group">
-    @if (Model.AsideFirst != null) {
-    <aside id="aside-first" class="aside-first group">
-        @Zone(Model.AsideFirst)
-    </aside>
+    @if (Model.Messages != null) {
+        @Zone(Model.Messages)
     }
-    <div id="layout-content" class="group">
-        @if (Model.Messages != null) {
-        <div id="messages">
-            @Zone(Model.Messages)
-        </div>
-        }
-        @if (Model.BeforeContent != null) {
-        <div id="before-content">
-            @Zone(Model.BeforeContent)
-        </div>
-        }
-        @* the model content for the page is in the Content zone @ the default position (nothing, zero, zilch) *@
-        @if (Model.Content != null) {
-        <div id="content" class="group">
-            @Zone(Model.Content)
-        </div>
-        }
-        @if (Model.AfterContent != null) {
-        <div id="after-content">
-            @Zone(Model.AfterContent)
-        </div>
-        }
-    </div>
-    @if (Model.AsideSecond != null) {
-    <aside id="aside-second" class="aside-second">
-        @Zone(Model.AsideSecond)
-    </aside>
+    @if (Model.BeforeContent != null) {
+        @Zone(Model.BeforeContent)
     }
-</div>
-</div>
+    @if (Model.Content != null) {
+        @Zone(Model.Content)
+    }
+    @if (Model.AfterContent != null) {
+        @Zone(Model.AfterContent)
+    }
+
+@if (Model.AsideSecond != null) {
+<aside id="aside-second" class="aside-second">
+    @Zone(Model.AsideSecond)
+</aside>
+}
 
 @if (Model.AfterMain != null) {
-<div id="layout-after-main" class="group">
     @Zone(Model.AfterMain)
-</div>
 }
 
 @if (Model.TripelFirst != null || Model.TripelSecond != null || Model.TripelThird != null) {

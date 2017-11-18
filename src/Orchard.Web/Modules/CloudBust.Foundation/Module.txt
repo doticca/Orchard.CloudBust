@@ -1,10 +1,21 @@
-﻿Name: Foundation for CloudBust
+﻿Name: ZURB Foundation
 Path: CloudBust.Foundation
 AntiForgery: enabled
-Author: Team Grapto @teamgrapto
-Website: http://www.grapto.com
-Version: 1.10.0
-OrchardVersion: 1.10
+Author: Team Doticca @teamdoticca
+Website: http://www.doticca.com
+Version: 1.10.2
+OrchardVersion: 1.10.2
 Description: The base Foundation code, settings, menus and shapes for CloudBust applications.
-Category: CloudBust
 Dependencies: Orchard.Widgets, CloudBust.Common, CloudBust.Resources.Ace
+Category: CloudBust ZURB Foundation
+Features:
+	CloudBust.Foundation.Zones:
+		Name: Clear Zone wrappers
+		Description: Enable this feature to remove zone wrappers from html code
+		Category: CloudBust ZURB Foundation
+		Dependencies: CloudBust.Foundation
+	CloudBust.Foundation.Widgets:
+		Name: Clear Widget wrappers
+		Description: Enable this feature to remove widget wrappers from html code
+		Category: CloudBust ZURB Foundation
+		Dependencies: CloudBust.Foundation

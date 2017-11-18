@@ -1,8 +1,8 @@
 ﻿Name: Commons
 Path: CloudBust.Common
 AntiForgery: enabled
-Author: Team Grapto @teamgrapto
-Website: http://www.grapto.com
+Author: Team Doticca @teamdoticca
+Website: http://www.doticca.com
 Version: 1.10.2
 OrchardVersion: 1.10.2
 Description: OData Dependencies, Models, Condition Rules, Tokens, Extensions and Services
@@ -25,7 +25,7 @@ Features:
 		Category: CloudBust
 		Dependencies: CloudBust.Common
 	CloudBust.Common.FavIcon:
-		Name: Fav Icon
-		Description: Set the website favicon
+		Name: Fav & OS Icons
+		Description: Set the website favicon, apple icon, android manifest, safari icon, microsoft app config
 		Category: CloudBust
 		Dependencies: CloudBust.Common

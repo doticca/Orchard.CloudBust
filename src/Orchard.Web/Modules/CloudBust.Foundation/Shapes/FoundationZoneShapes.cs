@@ -2,10 +2,12 @@
 using Orchard;
 using Orchard.DisplayManagement.Descriptors;
 using Orchard.Environment;
+using Orchard.Environment.Extensions;
 using Orchard.UI.Admin;
 
 namespace CloudBust.Foundation.Shapes
 {
+    [OrchardFeature("CloudBust.Foundation.Zones")]
     public class FoundationZoneShapes : IShapeTableProvider
     {
         private readonly Work<WorkContext> _workContext;
@@ -25,7 +27,7 @@ namespace CloudBust.Foundation.Shapes
                     if (!AdminFilter.IsApplied(request.RequestContext) && _foundationService.GetDoNotEnableFrontEnd()) return;
                     var zoneItem = displaying.Shape;
 
-                    zoneItem.Metadata.Alternates.Add("FoundationZones");
+                    zoneItem.Metadata.Alternates.Add("FoundationZone");
 
                 });
         }

@@ -12,7 +12,7 @@ namespace CloudBust.Resources
                 table => table
                              .ContentPartRecord()
                              .Column<bool>("AutoEnable", c => c.WithDefault(true))
-                             .Column<bool>("AutoEnableAdmin", c => c.WithDefault(false))
+                             .Column<bool>("AutoEnableAdmin", c => c.WithDefault(true))
                              .Column<bool>("FullBundle", c => c.WithDefault(false))
                              .Column<string>("Style", c => c.WithDefault("default"))
                 );

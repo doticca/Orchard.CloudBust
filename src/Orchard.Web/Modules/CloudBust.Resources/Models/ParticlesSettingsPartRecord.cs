@@ -7,20 +7,18 @@ using System.Web;
 
 namespace CloudBust.Resources.Models
 {
-    [OrchardFeature("CloudBust.Resources.Highlight")]
-    public class HighlightSettingsPartRecord: ContentPartRecord
+    [OrchardFeature("CloudBust.Resources.Particles")]
+    public class ParticlesSettingsPartRecord : ContentPartRecord
     {
-        public virtual string Style { get; set; }
+        public virtual string JsonUrl { get; set; }
         public virtual bool AutoEnable { get; set; }
         public virtual bool AutoEnableAdmin { get; set; }
-        public virtual bool FullBundle { get; set; }
 
-        public HighlightSettingsPartRecord()
+        public ParticlesSettingsPartRecord()
         {
-            Style = "default";
+            JsonUrl = "particles.json";
             AutoEnable = true;
-            AutoEnableAdmin = true;
-            FullBundle = false;
+            AutoEnableAdmin = false;
         }
     }
 }

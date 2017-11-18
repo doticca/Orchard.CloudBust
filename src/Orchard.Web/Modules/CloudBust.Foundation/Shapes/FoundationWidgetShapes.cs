@@ -2,10 +2,12 @@
 using Orchard;
 using Orchard.DisplayManagement.Descriptors;
 using Orchard.Environment;
+using Orchard.Environment.Extensions;
 using Orchard.UI.Admin;
 
 namespace CloudBust.Foundation.Shapes
 {
+    [OrchardFeature("CloudBust.Foundation.Widgets")]
     public class FoundationWidgetShapes : IShapeTableProvider
     {
         private readonly Work<WorkContext> _workContext;

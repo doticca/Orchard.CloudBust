@@ -110,7 +110,6 @@
     <Compile Include="OverrideTheAdmin.cs" />
     <Compile Include="Handlers\QuadPromoPartHandler.cs" />
     <Compile Include="Shapes\FoundationWidgetShapes.cs" />
-    <Compile Include="Shapes\ListShapeProvider.cs" />
     <Compile Include="Shapes\FoundationZoneShapes.cs" />
     <Compile Include="Shapes\MenuItemLinkShapes.cs" />
     <Compile Include="Migrations.cs" />

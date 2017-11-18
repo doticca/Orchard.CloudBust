@@ -1,0 +1,23 @@
+﻿@{
+    string Url = string.Empty;
+    try
+    {
+        Url = Model.Url;
+    }
+    catch {}
+}
+@if (!string.IsNullOrWhiteSpace(Url))
+{
+    <div id="particles-js"></div>
+    <div class="curved"></div>
+    using (Script.Foot())
+    {
+<script type="text/javascript">
+    //<![CDATA[
+
+    particlesJS.load('particles-js', '@Url');
+
+    //]]>
+</script>
+    }
+}

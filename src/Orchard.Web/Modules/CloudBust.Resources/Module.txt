@@ -117,3 +117,9 @@ Features:
 		Description: The FineUploader Plugin.
 		Category: CloudBust Resources
 		Dependencies: CloudBust.Resources
+	CloudBust.Resources.Particles:
+		Name: Particles
+		Version: 2.0.0
+		Description: A lightweight JavaScript library for creating particles.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources

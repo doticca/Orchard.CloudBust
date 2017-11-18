@@ -31,10 +31,10 @@ namespace CloudBust.Resources.Services
         public string GetStyle()
         {
             return _cacheManager.Get(
-                "CloudBust.Resources.Style",
+                "CloudBust.Resources.Highlight.Style",
                 ctx =>
                 {
-                    ctx.Monitor(_signals.When("CloudBust.Resources.Changed"));
+                    ctx.Monitor(_signals.When("CloudBust.Resources.Highlight.Changed"));
                     WorkContext workContext = _wca.GetContext();
                     var highlightSettings =
                         (HighlightSettingsPart)workContext
@@ -47,10 +47,10 @@ namespace CloudBust.Resources.Services
         public bool GetAutoEnable()
         {
             return _cacheManager.Get(
-                "CloudBust.Resources.AutoEnable",
+                "CloudBust.Resources.Highlight.AutoEnable",
                 ctx =>
                 {
-                    ctx.Monitor(_signals.When("CloudBust.Resources.Changed"));
+                    ctx.Monitor(_signals.When("CloudBust.Resources.Highlight.Changed"));
                     WorkContext workContext = _wca.GetContext();
                     var highlightSettings =
                         (HighlightSettingsPart)workContext
@@ -64,7 +64,7 @@ namespace CloudBust.Resources.Services
         public bool GetAutoEnableAdmin()
         {
             return _cacheManager.Get(
-                "CloudBust.Resources.AutoEnableAdmin",
+                "CloudBust.Resources.Highlight.AutoEnableAdmin",
                 ctx =>
                 {
                     ctx.Monitor(_signals.When("CloudBust.Resources.Changed"));
@@ -81,7 +81,7 @@ namespace CloudBust.Resources.Services
         public bool GetFullBundle()
         {
             return _cacheManager.Get(
-                "CloudBust.Resources.FullBundle",
+                "CloudBust.Resources.Highlight.FullBundle",
                 ctx =>
                 {
                     ctx.Monitor(_signals.When("CloudBust.Resources.Changed"));

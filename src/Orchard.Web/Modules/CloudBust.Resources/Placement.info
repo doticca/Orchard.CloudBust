@@ -7,6 +7,9 @@
   <Place Parts_Notify_NotifySettings="Content:5"/>
   <Place Parts_GoogleMaps_GoogleMapsSettings="Content:5"/>
   <Place Parts_Highlight_HighlightSettings="Content:5"/>
+  <Place Parts_Particles_ParticlesSettings="Content:5"/>
+  <Place Parts_Particles="Content"/>
+  <Place Parts_Particles_Edit="Content:6"/>
   <Place Parts_Slick_SlickSettings="Content:5"/>
   <Place Parts_OwlCarousel_OwlCarouselSettings="Content:5"/>
   <Place Parts_Niceselect_NiceselectSettings="Content:5"/>

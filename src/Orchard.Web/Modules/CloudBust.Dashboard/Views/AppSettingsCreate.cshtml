@@ -1,0 +1,132 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@using CloudBust.Application.Services
+
+@model CloudBust.Dashboard.ViewModels.AppSettingsCreateViewModel
+@{
+    bool iechecked = Model.ParameterValueBool;
+    string checkedie = iechecked ? "checked" : "";
+}
+
+
+<div class="dashboardarea">
+    <div class="row bump-25">
+        <h1 class="header-parameter subhead">
+
+
+            Add a new Application Settings Variable
+            <div><small>Add a new Setting for @Model.ApplicationName application</small></div>
+        </h1>
+        <hr />
+    </div>
+    @using (Html.BeginFormAntiForgeryPost())
+    {
+        <div class="row">
+            <div class="large-3 medium-5 columns end">
+                <label for="Name">
+                    Name
+                    <input id="Name" name="Name" type="text" placeholder="enter setting variable name" value="@Model.Name" />
+                </label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label for="Description">
+                    Description
+                    <input id="Description" name="Description" type="text" placeholder="enter setting variable description" value="@Model.Description" />
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label for="ParameterType">@T("Type")</label>
+                <select id="ParameterType" name="ParameterType">
+                    @Html.SelectOption(Model.ParameterType, "string", T("String").ToString())
+                    @Html.SelectOption(Model.ParameterType, "bool", T("Boolean").ToString())
+                    @Html.SelectOption(Model.ParameterType, "double", T("Double").ToString())
+                    @Html.SelectOption(Model.ParameterType, "int", T("Integer").ToString())
+                    @Html.SelectOption(Model.ParameterType, "datetime", T("DateTime").ToString())
+                </select>
+            </div>
+        </div>
+        <div class="row stringsetting valuerow hidden">
+            <div class="large-3 columns end">
+                <label for="ParameterValueString">
+                    Value
+                    <input id="ParameterValueString" name="ParameterValueString" type="text" placeholder="enter string value" value="@Model.ParameterValueString" />
+                </label>
+            </div>
+        </div>
+        <div class="row intsetting valuerow hidden">
+            <div class="large-3 columns end">
+                <label for="ParameterValueInt">
+                    Value
+                    <input id="ParameterValueInt" name="ParameterValueInt" type="number" placeholder="enter integer value" value="@Model.ParameterValueInt" />
+                </label>
+            </div>
+        </div>
+        <div class="row doublesetting valuerow hidden">
+            <div class="large-3 columns end">
+                <label for="ParameterValueDouble">
+                    Value
+                    <input id="ParameterValueDouble" name="ParameterValueDouble" type="number" step="any" placeholder="enter double value" value="@Model.ParameterValueDouble" />
+                </label>
+            </div>
+        </div>
+        <div class="row boolsetting valuerow hidden">
+            <div class="large-3 columns end">                
+                <label>Value</label>
+                <div class="switch">
+                    <input id="ParameterValueBool" name="ParameterValueBool" type="checkbox" @checkedie value="@Model.ParameterValueBool" />
+                    <label for="ParameterValueBool"></label>
+                </div>                
+            </div>
+        </div>
+        <div class="row datetimesetting valuerow hidden">
+            <div class="large-3 columns end">
+                <label for="ParameterValueDateTime">
+                    Value
+                    <input id="ParameterValueDateTime" name="ParameterValueDateTime" type="text" value="@Model.ParameterValueDateTime.ToString("MM/dd/yyyy HH:mm:ss")" />
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <a href="~/dashboard/applications/@Model.ApplicationKey/ast" class="secondary button">Cancel</a>
+                <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+            </div>
+        </div>
+    }
+    <div class="row bump-25"></div>
+</div>
+
+@using(Script.Foot()){
+    <script type="text/javascript">
+        $(function () {
+            function setVisibleValue() {
+                var str = $('#ParameterType').val();
+                if (typeof str === 'undefined') {
+                    return;
+                };
+                var res = str.toLowerCase();
+                $('.valuerow').addClass('hidden');
+                $('.'+res+'setting').removeClass('hidden');
+            }
+            $('#ParameterValueDateTime').fdatepicker({
+                format: 'mm-dd-yyyy hh:ii',
+                disableDblClickSelection: true,
+                pickTime: true
+            });
+            $('#ParameterType').change(function () {
+                setVisibleValue();
+            });
+            setVisibleValue();
+        });
+
+
+
+    </Script>
+}

@@ -1,0 +1,72 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.TableCreateViewModel
+@{
+
+    
+}
+
+<div class="dashboardarea">
+    <div class="row bump-25">
+        <h1 class="header-tables subhead">
+
+
+            Add a Table
+            <div><small>Add a new CloudBust Table. Use the  CloudBust SDK to fetch and post new data to your CloudBust application.</small></div>
+        </h1>
+        <hr />
+    </div>
+    @using (Html.BeginFormAntiForgeryPost())
+    {
+        if (!string.IsNullOrWhiteSpace(Model.ApplicationName))
+        {
+            <div class="row">
+                <div class="large-9 columns end">
+                    <div class="panel callout radius">
+                        <h5>information</h5>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                This Table will automatically be added to your cloudbust @Model.ApplicationName application.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="large-3 columns end">
+                <label for="Name">
+                    Name
+                    <input id="Name" name="Name" type="text" placeholder="enter table name" value="@Model.Name" />
+                    <input id="ApplicationName" name="ApplicationName" type="hidden" value="@Model.ApplicationName" />
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label for="Description">
+                    Description
+                    <input id="Description" name="Description" type="text" placeholder="enter game description" value="@Model.Description" />
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-12 columns">
+                <input type="submit" class="button" name="submit.Save" value="Save">
+                @if (string.IsNullOrWhiteSpace(Model.ApplicationName)){
+                    <a href="~/dashboard/" class="button secondary">Cancel</a>
+                }
+                else
+                {
+                    <a href="~/dashboard/applications/@Model.ApplicationKey/datatables/add" class="button secondary">Cancel</a>
+                }
+            </div>
+        </div>
+        <div class="row bump-25"></div>
+    }
+
+</div>
+

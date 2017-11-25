@@ -11,5 +11,7 @@ namespace Orchard.Setup.Services {
         public string DatabaseTablePrefix { get; set; }
         public IEnumerable<string> EnabledFeatures { get; set; }
         public Recipe Recipe { get; set; }
+        public bool startAzure { get; set; }
+        public bool startFoundation { get; set; }
     }
 }

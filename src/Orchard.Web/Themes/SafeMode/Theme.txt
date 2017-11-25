@@ -1,6 +1,6 @@
 ﻿Name: SafeMode
-Author: Jonathan Wall
-Description: The Orchard Theme for setup and failure conditions.
-Version: 1.10.2
+Author: Grapto Ltd.
+Description: The Orchard Theme for cloudbust setup.
+Version: 1.10.1
 Tags: hidden
 Website: http://www.orchardproject.net

@@ -1,0 +1,45 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+<div class="row">
+    <div class="large-12 columns">
+        <table>
+            <thead>
+                <tr>
+                    <th width="150">Name</th>
+                    <th width="150">Normalized Name</th>
+                    <th width="300">Description</th>
+                    <th width="180">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ApplicationGameRecord game in Model.Games)
+                {
+                    <tr>
+                        <td>
+                            @game.Name
+                        </td>
+                        <td>
+                            @game.NormalizedGameName
+                        </td>
+                        <td>
+                            @game.Description
+                        </td>
+                        <td>
+                            <a href="~/dashboard/games/@game.AppKey" class="tiny button">Edit</a>
+                            <a href="~/dashboard/applications/@Model.Application.AppKey/senseapi/games/@game.AppKey/remove" class="tiny button alert">Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <a class="button" href="~/dashboard/applications/@Model.Application.AppKey/senseapi/games/add"><i class="fi-plus"></i>  Add a Game</a>
+    </div>
+</div>

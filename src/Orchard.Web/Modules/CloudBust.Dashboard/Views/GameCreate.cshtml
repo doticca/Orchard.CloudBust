@@ -1,0 +1,82 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.GameCreateViewModel
+@{
+
+    
+}
+
+<div class="dashboardarea">
+    <div class="row bump-25">
+        <h1 class="header-games subhead">
+
+
+            Add a Game
+            <div><small>Add a new Senseapi Game. Use the  CloudBust+Senseapi SDK to create new user experience and collect user data.</small></div>
+        </h1>
+        <hr />
+    </div>
+    @using (Html.BeginFormAntiForgeryPost())
+    {
+        if (!string.IsNullOrWhiteSpace(Model.ApplicationName))
+        {
+            <div class="row">
+                <div class="large-9 columns">
+                    <div class="panel callout radius">
+                        <h5>information</h5>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                This Senseapi Game will automatically be added to your cloudbust @Model.ApplicationName application.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="large-3 columns">
+                <label for="Name">
+                    Name
+                    <input id="Name" name="Name" type="text" placeholder="enter game name" value="@Model.Name" />
+                    <input id="ApplicationName" name="ApplicationName" type="hidden" value="@Model.ApplicationName" />
+                </label>
+            </div>
+            @*<div class="large-9 columns">
+                    <div class="panel callout radius">
+                        <h5>information</h5>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                If you use single sign on with facebook, you have to set your application name exactly the same with your facebook application name.
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label for="Description">
+                    Description
+                    <input id="Description" name="Description" type="text" placeholder="enter game description" value="@Model.Description" />
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-12 columns">
+                <input type="submit" class="button" name="submit.Save" value="Save">
+                @if (string.IsNullOrWhiteSpace(Model.ApplicationName)){
+                    <a href="~/dashboard/" class="button secondary">Cancel</a>
+                }
+                else
+                {
+                    <a href="~/dashboard/applications/@Model.ApplicationKey/senseapi/games/add" class="button secondary">Cancel</a>
+                }
+            </div>
+        </div>
+        <div class="row bump-25"></div>
+    }
+
+</div>
+

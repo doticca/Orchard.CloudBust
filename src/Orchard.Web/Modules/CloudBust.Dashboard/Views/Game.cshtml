@@ -1,0 +1,337 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+@using CloudBust.Application.Models
+
+@model CloudBust.Dashboard.ViewModels.GameViewModel
+@functions{
+    dynamic appParameterValue(ParameterRecord entry){
+        switch (entry.ParameterType.ToLower())
+        {
+            case "int":
+                return entry.ParameterValueInt;
+            case "double":
+                return entry.ParameterValueDouble;
+            case "bool":
+                return entry.ParameterValueBool;
+            case "datetime":
+                return entry.ParameterValueDateTime;
+            default:
+                return entry.ParameterValueString;
+        }                    
+    }
+    
+}
+@{
+    
+    string deleteurl = Url.Content("~") + "dashboard/applications/" + Model.Game.AppKey + "/delete";
+    string reseturl = Url.Content("~") + "dashboard/applications/" + Model.Game.AppKey + "/reset";
+
+    string codeurl = @"https://" + Model.Uri.Host.ToString();
+
+    string[] a_page = { string.Empty, string.Empty, string.Empty };
+    string[] b_page = { string.Empty, string.Empty, string.Empty };
+    string[] a_url = { 
+                         Url.Content("~") + "dashboard/games/" + Model.Game.AppKey, 
+                         Url.Content("~") + "dashboard/games/" + Model.Game.AppKey + "/keys", 
+                         Url.Content("~") + "dashboard/games/" + Model.Game.AppKey + "/events", 
+                     };
+    string create_url = Url.Content("~") + "dashboard/games/" + Model.Game.AppKey + "/events/create";
+    
+    string[] a_title = {
+                           "Game Information",
+                           "Game Tokens", 
+                           "Events",                 
+                       };
+    string[] a_category = {
+                           "Settings",
+                           "Settings", 
+                           "Senseapi",            
+                       };                                            
+
+        
+    a_page[Model.Page] = "active";
+    b_page[Model.Page] = "current";
+
+    IUser webUser = Model.User;
+}
+
+
+<div class="dashboardarea">
+    <ul class="breadcrumbs hide-for-small">
+        <li><a href="~/dashboard">Dashboard</a></li>
+        <li><a href="~/dashboard/games">Games</a></li>
+        <li class="@b_page[0]"><a href="@a_url[0]">@Model.Game.Name</a></li>
+        <li class="current"><a href="#">@a_category[Model.Page]</a></li>
+        <li class="@b_page[Model.Page]"><a href="@a_url[Model.Page]">@a_title[Model.Page]</a></li>
+    </ul>
+    <div class="row">
+        <div class="large-3 medium-4 columns">
+            <div class="hide-for-small">
+                <div class="sidebar">
+                    <h1 class="header-app subhead">
+                        @Model.Game.Name
+                        <div><small>@Model.Game.Description</small></div>
+                    </h1>
+
+                    <nav>
+                        <ul class="side-nav">
+                            <li class="heading">Settings</li>
+                            <li class="@a_page[0]"><a href="@a_url[0]">@a_title[0]</a></li>
+                            <li class="@a_page[1]"><a href="@a_url[1]">@a_title[1]</a></li>
+                            <li class="divider"></li>
+                            <li class="heading">Senseapi ®</li>
+                            <li class="@a_page[2]"><a href="@a_url[2]">@a_title[2]</a></li>
+                        </ul>
+                    </nav>
+
+
+                </div>
+            </div>
+        </div>
+
+        @if (Model.Page == 0)
+        {
+            <div class="large-9 medium-8 columns bump-25">
+                <h1 class="subhead">
+                    Information
+                    <div><small>Basic settings to have a senseapi Game up and running</small></div>
+                </h1>
+
+                <hr />
+
+                @using (Html.BeginFormAntiForgeryPost())
+                {
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <label for="Name">
+                                Name
+                                @Html.TextBoxFor(m => m.Game.Name, new { })
+                                @*<input id="Name" name="Name" type="text" placeholder="enter game name" value="@Model.Game.Name" />*@
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <label for="Description">
+                                Description
+                                @Html.TextBoxFor(m => m.Game.Description, new { })
+                                @*<input id="Description" name="Description" type="text" placeholder="enter game description" value="@Model.Game.Description" />*@
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row pamp-15">
+                        <div class="large-12 columns">
+                            <h2 class="subhead">
+                                Integrate Game Location
+                                <div><small>Set your game location, in case you want to start a specific game depending on location.</small></div>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <label for="Latitude">
+                                Latitude
+                                @Html.TextBoxFor(m => m.Game.Latitude, new { })
+                                @*<input id="Latitude" name="Latitude" type="number" placeholder="enter the latitude" step="any" value="@Model.Game.Latitude" />*@
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <label for="Longitude">
+                                Longitude
+                                @Html.TextBoxFor(m => m.Game.Longitude, new { })
+                                @*<input id="Longitude" name="Longitude" type="number" placeholder="set the longitude" step="any" value="@Model.Game.Longitude" />*@
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+                        </div>
+                    </div>
+                }
+
+                <hr />
+
+                <div class="row">
+                    <div class="large-12 columns">
+                        <div class="alert alert-message block-message">
+                            <h5>Remove Game</h5>
+                            <div class="row">
+                                <div class="large-7 medium-8 small-9 columns">
+                                    <span class="label warning">Warning</span> Removing this game will remove all associated tokens <em class="red">completely</em>! There is no way to undo this, so proceed with caution.
+                                </div>
+
+                                <div class="large-5 medium-4 small-3 text-center columns">
+                                    <a href="@deleteurl" class="primary btn delete wide pull-right small">Remove Game</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row bump-25"></div>
+
+            </div>
+            }
+                        @if (Model.Page == 1)
+                        {
+                            <div class="large-9 medium-8 columns bump-25">
+                                <h1 class="subhead">
+                                    Senseapi framework Tokens
+                                    <div><small>Everything you need to know about integrating the Senseapi framework in your  CloudBust application.</small></div>
+                                </h1>
+                                <hr />
+
+                                <div class="row">
+                                    <div class="large-12 columns">
+                                        <h2 class="subhead">
+                                            Integrate Game Token
+                                            <div><small>Here are your game tokens. Download the Framework, create a  CloudBust application and launch your Senseapi game with these tokens.</small></div>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="row bump-15">
+                                    <div class="large-3 columns">
+                                        <label for="AppKey">
+                                            Game ID
+                                            <input id="AppKey" name="AppKey" type="text" placeholder="Application Key" value="@Model.Game.AppKey" readonly="readonly" />
+                                        </label>
+                                    </div>
+                                    <div class="large-4 columns">
+                                        <label for="AppSecret">
+                                            Client Key
+                                            <input id="AppSecret" name="AppSecret" type="text" placeholder="Application Secret" value="@Model.Game.AppSecret" readonly="readonly" />
+                                        </label>
+                                    </div>
+                                    <div class="large-5 columns"></div>
+                                </div>
+                                @*<div class="row">
+                                                        <div class="large-12 columns">
+                                                            <h5>Quick Start</h5>
+                                                        </div>
+                                                        <div class="large-12 columns">
+                                                            <pre><code>
+                                    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+                                    {
+                                        // start of your application:didFinishLaunchingWithOptions // ...
+                                        [[CloudBust shared] setApplicationId:@@"@Model.Game.AppKey" clientKey:@@"@Model.Game.AppSecret"];
+                                        [[CloudBust shared] setCloudBustServerUrl:@@"@codeurl"];
+                                        // The rest of your application:didFinishLaunchingWithOptions method// ...
+                                        return YES;
+                                    }
+                                                </code></pre>
+                                                        </div>
+                                                        <div class="large-4 columns"></div>
+                                                    </div>*@
+                                <hr />
+                                <div class="row">
+                                    <div class="large-12 columns">
+                                        <div class="alert-message block-message">
+                                            <h5>Reset Tokens</h5>
+                                            <div class="row">
+                                                <div class="large-7 medium-8 small-9 columns">
+                                                    <span class="label warning">Warning</span> When you reset your game tokens, any client using these tokens  <em class="red">will not be able to launch your gane</em>! There is no way to undo this, so proceed with caution.
+                                                </div>
+                                                <div class="large-5 medium-4 small-3 text-center columns">
+                                                    <a href="@reseturl" class="primary btn reset wide pull-right small">Reset Tokens</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row bump-25"></div>
+                            </div>
+                        }
+                        @if (Model.Page == 2)
+                        {
+                            <div class="large-9 medium-8 columns bump-25">
+                                <h1 class="subhead">
+                                    Senseapi / Game Events
+                                    <div><small>Define your game's Events.</small></div>
+                                </h1>
+                                <hr />
+                                <div class="row">
+                                    <div class="large-12 columns">
+                                        <h2 class="subhead">
+                                            Business Processes
+                                            <div>
+                                                <small>
+                                                    Define all the events of your Game and Senseapi will handle all calculations and calibrations.<br />
+                                                    These events are grouped as business processes and you have to call them for a specific stimulae and object.
+                                                </small>
+                                            </div>
+                                        </h2>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="large-12 columns">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th width="50">&nbsp;</th>
+                                                    @*<th width="50">Process</th>*@
+                                                    <th width="150">Name</th>
+                                                    <th width="300">Description</th>
+                                                    <th width="100">Type</th>
+                                                    <th width="180">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (GameEventRecord role in Model.Events)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @if (role.BusinessProcess > 1)
+                                                            {
+                                                                <a href="~/dashboard/games/@Model.Game.AppKey/events/@role.Id/moveup" class="fi-arrow-up"></a>
+                                                            }
+
+                                                            @if (role.BusinessProcess < Model.Events.Count())
+                                                            {
+                                                                <a href="~/dashboard/games/@Model.Game.AppKey/events/@role.Id/movedown" class="fi-arrow-down"></a>
+                                                            }
+                                                        </td>
+                                                        @*<td>
+                                                                @role.BusinessProcess
+                                                            </td>*@
+                                                        <td>
+                                                            @role.Name
+                                                        </td>
+                                                        <td>
+                                                            @role.Description
+                                                        </td>
+                                                        <td>
+                                                            @( ((GameEventType)role.GameEventType).ToEventString() )
+                                                        </td>
+                                                        <td>
+                                                            <a href="~/dashboard/games/@Model.Game.AppKey/events/@role.Id/edit" class="tiny button">Edit</a>
+                                                            <a href="~/dashboard/games/@Model.Game.AppKey/events/@role.Id/delete" class="tiny button alert">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="large-12 columns">
+                                        <a class="button" href="@create_url"><i class="fi-plus"></i>  Add an Event</a>
+                                    </div>
+                                </div>
+                                <div class="row bump-25"></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+@using(Script.Foot()){
+<script type="text/javascript">
+    $(function () {                    
+    });
+</script>
+}

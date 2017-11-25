@@ -1,0 +1,115 @@
+﻿<div class="row">
+    <div class="col-md-3">
+        <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="nav bs-sidenav">
+                <li>
+                    <a href="#graptoinstall">Installing CloudBust</a>
+                    <ul class="nav">
+                        <li><a href="#requirements">Requirements</a></li>
+                    </ul>
+                    <a href="#sqlazure">Microsoft Azure SQL Database</a>
+                    <ul class="nav">
+                        <li><a href="#sqlcreate">Create the Database</a></li>
+                    </ul>
+                    <a href="#mediaazure">Microsoft Azure Media Storage</a>
+                    <ul class="nav">
+                        <li><a href="#mediaazurecreate">Create Azure Media Storage </a></li>
+                        <li><a href="#mediaazureset">Configure Application Settings</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9" role="main">
+        <div class="bs-docs-section">
+            <div class="page-header">
+                <h1 id="graptoinstall">Installing CloudBust</h1>
+                <p>Please check the requirements table before proceeding with CloudBust installation.</p>
+            </div>
+            <p id="requirements">&nbsp;</p>
+            <h4>Requirements</h4>
+            <p>CloudBust is based on <a href="http://orchardproject.net/" target="_blank">Orchard application framework</a> thats why CloudBust requirements are in accordance to Orchard requirements.</p>
+            <p>The minimum requirements for running Orchard are the following: * ASP.NET 4 * A web server such as IIS Express 8, 7.5 or IIS 7.x.</p>
+            <p>When installing IIS, make sure you enable the ASP.NET IIS modules. Also make sure that you run Orchard in an integrated pipeline ASP.NET 4 application pool.</p>
+            <div class="bs-callout bs-callout-info">
+                <p><strong>Important</strong>:  If you previously installed any pre-release versions of WebMatrix, ASP.NET Web Pages, or ASP.NET MVC 4, you must uninstall those products before Orchard will run correctly on your computer. Also, if you plan to use Visual Studio 2012 with Orchard, prior to installing Orchard, install ASP.NET MVC 4 from the Web Platform Installer.</p>
+            </div>
+            <p>To develop and customize CloudBust, many developers will want to use a database such as SQL Server, and a web page programming environment such as WebMatrix or Visual Studio 2012.</p>
+            <div class="bs-callout bs-callout-info">
+                <p>CloudBust production environment should only run in an installation with an SQL server like Windows Azure SQL.</p>
+            </div>
+        </div>
+        <div class="bs-docs-section">
+            <div class="page-header">
+                <h1 id="sqlazure">Windows Azure SQL Database</h1>
+                <p>Before deploying your CloudBust whitelabel solution, you need to create an SQL Database.</p>
+            </div>
+            <p id="sqlcreate">&nbsp;</p>
+            <h4>Create a Windows Azure SQL Database using Windows Azure Management Portal</h4>
+            <h5>a. Login to <a href="https://manage.windowsazure.com/" target="_blank">Windows Azure Management Portal</a> and navigate to SQL Databases section and click <strong>“New”</strong> button on bottom-left.</h5>
+            <img src="/modules/orchard.setup/content/ht-001.png" class="img-responsive" alt="SQL Databases section">
+            <h5>b. Select <strong>“SQL Database” </strong>then <strong>“Custom Create”</strong></h5>
+            <img src="/modules/orchard.setup/content/ht-002.png" class="img-responsive" alt="Custom create">
+            <h5>c. You’ll see a modal pop-up for database settings </h5>
+            <p>NAME : Name of the database</p>
+            <p>EDITION : WEB | BUSINESS ; WEB Edition supports up to 5 GB maximum and BUSINESS Edition supports up to 150 GB maximum size T-SQL based relational database. Normal CloudBust whitelabel solutions don’t need more than 5 GB, choose WEB.</p>
+            <p>COLLATION : Default database rules for sorting and comparing. Note that collation cannot be changed after creation</p>
+            <p>SUBSCRIPTION : Select your subscription for billing purposes. You can move your databases between your subscriptions</p>
+            <p>SERVER : Choose an existing SQL Server or create new SQL Database Server. Note that these are logical servers, not dedicated physical servers</p>
+            <img src="/modules/orchard.setup/content/ht-003.png" class="img-responsive" alt="New Database">
+            <h5>d. If you chose to create a new SQL Database Server, you’ll have another modal pop-up.</h5>
+            <p>LOGIN NAME/PASSWORD : create default login for your SQL Database Server</p>
+            <p>REGION : Windows Azure Datacenter. ALWAYS SELECT SAME REGION WITH YOUR CLOUD SERVICE</p>
+            <p>ALLOW WINDOWS AZURE SERVICES TO ACCESS THE SERVER : You have to select this for your CloudBust cloud service running in Windows Azure Datacenters to be able to access this server.</p>
+            <img src="/modules/orchard.setup/content/ht-004.png" class="img-responsive" alt="New Database Server">
+        </div>
+        <div class="bs-docs-section">
+            <div class="page-header">
+                <h1 id="mediaazure">Microsoft Azure Media Storage</h1>
+                <p>Before the feature can be enabled you must configure the connection string to the storage account you want to use.</p>
+            </div>
+            <p id="mediaazurecreate">&nbsp;</p>
+            <h4>Create a Windows Azure Storage account using Windows Azure Management Portal</h4>
+            <h5>a. Login to <a href="https://manage.windowsazure.com/" target="_blank">Windows Azure Management Portal</a> and navigate to Storage section and click <strong>“New”</strong> button on bottom-left.</h5>
+            <h5>b. Select <strong>“Storage” </strong>then <strong>“Quick Create”. Select a name for your url and set the location to be the same as your web application.</strong></h5> 
+            <img src="/modules/orchard.setup/content/ht-005.png" class="img-responsive" alt="Create Storage Account">
+            <h5>c. Press create storage account and wait for Windows Azure to create a storage account for you</h5>
+            <img src="/modules/orchard.setup/content/ht-006.png" class="img-responsive" alt="Creating Storage Account">
+            <h5>d. After a few seconds your storage account is ready and you are automatically navigated to the welcome screen. At the bottom of the screen, press the button <strong>“Manage Access Keys”</strong></h5>
+            <img src="/modules/orchard.setup/content/ht-007.png" class="img-responsive" alt="Manage Storage Account">
+            <h5>e. You are done! Copy your account name and primary key to a text file and follow the instructions to confugre your application settings.</h5>
+            <img src="/modules/orchard.setup/content/ht-008.png" class="img-responsive" alt="Manage Storage Account">
+
+            <p id="mediaazureset">&nbsp;</p>
+            <h4>Configure application settings <em>before</em> deploying (using web.config)</h4>
+            <ol>
+                <li>Open <code>Orchard.sln</code>.</li>
+                <li>Navigate to <code>Orchard.Web</code> and open the <code>Web.config</code> file.</li>
+                <li>In the <code>&lt;appSettings&gt;</code> element add a setting named <code>Orchard.Azure.Media.StorageConnectionString</code> and set its value to be the connection string of the storage account in which you want to store media content (see example below).</li>
+                <li>Deploy the web site.</li>
+            </ol>
+            <p>Here's an example configuration:</p>
+            <pre><code class="hljs vbscript-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">appSettings</span>&gt;</span>
+    ...
+            <span class="hljs-tag">&lt;<span class="hljs-title">add</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"Orchard.Azure.Media.StorageConnectionString"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"[storageConnectionString]"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">appSettings</span>&gt;</span>
+</span></code></pre>
+            <p>The storage connections string will look something like the following:</p>
+            <pre><code class="hljs applescript">DefaultEndpointsProtocol=http;AccountName=myAccount;AccountKey=myKey;
+*You can <span class="hljs-keyword">get</span> <span class="hljs-keyword">the</span> account <span class="hljs-property">name</span> <span class="hljs-keyword">and</span> key <span class="hljs-keyword">from</span> <span class="hljs-keyword">the</span> Microsoft Azure management portal 
+            <span class="hljs-keyword">that</span> you used <span class="hljs-keyword">to</span> create your storage <span class="hljs-keyword">or</span> ask you dev ops admin <span class="hljs-keyword">to</span> provide them <span class="hljs-keyword">for</span> you.
+</code></pre>
+            <h4>Configure the connection string <em>after</em> deploying:</h4>
+            <ol>
+                <li>Deploy the web site.</li>
+                <li>In the windows azure management portal, navigate to your web site and select the <em>Configure</em> tab.</li>
+                <li>Under <em>App settings</em> add a setting named <code>Orchard.Azure.Media.StorageConnectionString</code> and set its value to be the connection string of the storage account in which you want to store media content.</li>
+                <li>Click <em>Save</em>.</li>
+            </ol>
+            <p>You can now enable the feature <em>Microsoft Azure Media Storage</em> in the admin dashboard.</p>
+            <blockquote>
+                <p>NOTE: For multi-tenancy scenarios the <code>Orchard.Azure.Media.StorageConnectionString</code> setting can optionally be prefixed with a tenant name. </p>
+            </blockquote>
+        </div>
+    </div>
+</div>

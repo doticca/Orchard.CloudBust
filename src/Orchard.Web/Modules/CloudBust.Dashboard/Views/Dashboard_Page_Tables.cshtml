@@ -1,0 +1,45 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+<div class="row">
+    <div class="large-12 columns">
+        <table>
+            <thead>
+                <tr>
+                    <th width="150">Name</th>
+                    <th width="150">Normalized Name</th>
+                    <th width="300">Description</th>
+                    <th width="180">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ApplicationDataTableRecord datatable in Model.DataTables)
+                {
+                    <tr>
+                        <td>
+                            @datatable.Name
+                        </td>
+                        <td>
+                            @datatable.NormalizedTableName
+                        </td>
+                        <td>
+                            @datatable.Description
+                        </td>
+                        <td>
+                            <a href="~/dashboard/datatables/@datatable.Id" class="tiny button">Edit</a>
+                            <a href="~/dashboard/applications/@Model.Application.AppKey/datatables/@datatable.Id/remove" class="tiny button alert">Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <a class="button" href="~/dashboard/applications/@Model.Application.AppKey/datatables/add"><i class="fi-plus"></i>  Add a Table</a>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@using CloudBust.Application.ViewModels;
+@using CloudBust.Application.Models;
+@model ApplicationSettingsViewModel
+@{
+    ApplicationRecord CurrentApp = null;
+    foreach (var app in Model.Applications)
+    {
+        if (app.AppKey == Model.ApplicationKey)
+        {
+            CurrentApp = app;
+            break;
+        }
+    }
+
+}
+@if (Model.Applications == null || Model.Applications.Count() == 0)
+{
+    <p>There are no CloudBust applications defined on this server.</p>
+}
+else
+{
+<fieldset class="webappsettings row">
+    <legend>@T("CloudBust Web Application")</legend>
+    <span class="hint">Selecting a CloudBust to act as you primary Web Application, will forward all logins to this application.</span>
+    <div class="row">
+        <div class="large-4 columns">
+            <label for="@Html.FieldIdFor(m => m.ApplicationKey)">@T("Application Key")</label>
+            @Html.TextBoxFor(m => m.ApplicationKey, new { })
+            @Html.HiddenFor(m => m.ApplicationName)
+        </div>
+        <div class="large-4 columns end">
+            <label for="Applications">@T("Select Application:")</label>
+            <select id="Applications" name="Applications" onchange="document.getElementById('@Html.FieldIdFor(m => m.ApplicationKey)').value = this.value;">
+                <option value="" @(CurrentApp == null ? "selected" : "") disabled>Please select an option...</option>
+                @foreach (var app in Model.Applications)
+                {
+                    @Html.SelectOption(app.AppKey, (CurrentApp != null && CurrentApp.AppKey == app.AppKey) ? true : false, app.Name);
+                })
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="columns">
+            <span class="hint">@T("If you revoke access keys for your application, you will have to set this option again.")</span>
+        </div>
+    </div>
+</fieldset>
+}

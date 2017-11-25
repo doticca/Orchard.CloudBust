@@ -1,0 +1,13 @@
+﻿@using Orchard.Utility.Extensions;
+@{
+    var terms = (IEnumerable<Orchard.Taxonomies.Models.TermPart>)Model.Terms;
+    string name = Model.ContentField.DisplayName;
+}
+@if (Model.Terms.Count > 0) {
+    foreach (var t in terms)
+    {
+        <p class="taxonomy-field @(t.Slug.Substring(t.Slug.LastIndexOf('/') + 1)) round">
+           @Html.ItemDisplayLink(t.Name, t.ContentItem)
+        </p>
+    }
+}

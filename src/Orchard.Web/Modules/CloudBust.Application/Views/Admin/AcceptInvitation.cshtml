@@ -1,0 +1,9 @@
+﻿@model CloudBust.Application.ViewModels.AcceptInvitationViewModel
+<div class="row">
+    <div class="columns">
+        <h1>@Html.TitleForPage(T("Invitation Approved").ToString()) </h1>
+        <p>Congratulations @Model.friend.UserName, you are now a friend of @Model.user.UserName !</p>
+        <div class="row bump-30 columns">
+            <a href="~/dashboard/applications/@Model.ApplicationKey/users" class="secondary button">Back</a>
+        </div>
+</div>

@@ -1,0 +1,98 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+@using CloudBust.Application.Models
+
+@model CloudBust.Dashboard.ViewModels.GameEventCreateViewModel
+@{
+    GameEventType etype = @Model.GameEventType;
+    string s = Model.GameEventType == GameEventType.motion ? "selected" : "";
+    //bool idchecked = Model.isDefault;
+    //string checkedid = idchecked ? "checked" : "";
+}
+
+
+<div class="dashboardarea">
+    <div class="row bump-25">
+        <h1 class="header-event subhead">
+
+
+            Add a new Game Event
+            <div><small>Add a new Event for @Model.GameName game</small></div>
+        </h1>
+        <hr />
+    </div>
+    @using (Html.BeginFormAntiForgeryPost())
+    {
+        <div class="row">
+            <div class="large-3 medium-5 columns">
+                <label for="EventName">
+                    Event Name
+                    <input id="EventName" name="EventName" type="text" placeholder="enter event name" value="@Model.EventName" />
+                </label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label for="Description">
+                    Event Description
+                    <input id="EventDescription" name="EventDescription" type="text" placeholder="enter event description" value="@Model.EventDescription" />
+                </label>
+            </div>
+        </div>       
+        
+        <div class="row">
+            <div class="large-2 columns">
+                <label for="GameEventType">
+                    Event Type
+                    <select id="GameEventType" name="GameEventType">
+                        <option @(Model.GameEventType == GameEventType.motion ? "selected=selected" : string.Empty) value="@GameEventType.motion">Motion</option>
+                        <option @(Model.GameEventType == GameEventType.time ? "selected=selected" : string.Empty) value="@GameEventType.time">Time</option>
+                        <option @(Model.GameEventType == GameEventType.reflex ? "selected=selected" : string.Empty) value="@GameEventType.reflex">Reflex</option>
+                        <option @(Model.GameEventType == GameEventType.instruction ? "selected=selected" : string.Empty) value="@GameEventType.instruction">Instruction</option>
+                        <option @(Model.GameEventType == GameEventType.directive ? "selected=selected" : string.Empty) value="@GameEventType.directive">Directive</option>
+                        <option @(Model.GameEventType == GameEventType.prompt ? "selected=selected" : string.Empty) value="@GameEventType.prompt">Prompt</option>
+                        <option @(Model.GameEventType == GameEventType.hook ? "selected=selected" : string.Empty) value="@GameEventType.hook">Hook</option>
+                        <option @(Model.GameEventType == GameEventType.recall ? "selected=selected" : string.Empty) value="@GameEventType.recall">Recall</option>
+                        <option @(Model.GameEventType == GameEventType.distraction ? "selected=selected" : string.Empty) value="@GameEventType.distraction">Distraction</option>
+                        <option @(Model.GameEventType == GameEventType.nosense ? "selected=selected" : string.Empty) value="@GameEventType.nosense">No Sense</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+                @*<div class="row">
+                    <div class="large-2 medium-2 small-3 columns">
+                        <label>Default Role</label>
+                        <div class="switch">
+                            <input id="isDefault" name="isDefault" type="checkbox" @checkedid value="@Model.isDefault">
+                            <label for="isDefault"></label>
+                        </div>
+                    </div>
+                    <div class="large-10 medium-10 small-9 columns">
+                        <div class="panel callout radius">
+                            <h5>information</h5>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    All the users that register in your application for the first time are assigned to the default role. You can have only one default Role for every application.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>*@
+                <div class="row">
+                    <div class="large-12 columns">
+                        <a href="~/dashboard/games/@Model.GameKey/events" class="secondary button">Cancel</a>
+                        <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+                    </div>
+                </div>
+                }
+
+            </div>
+
+            @using(Script.Foot()){
+                <script type="text/javascript">
+                    $(function () {
+                    });
+                </script>
+}

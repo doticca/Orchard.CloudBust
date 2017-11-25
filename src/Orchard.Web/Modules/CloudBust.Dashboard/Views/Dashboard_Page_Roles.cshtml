@@ -1,0 +1,52 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+
+<div class="row">
+    <div class="large-12 columns">
+        <table>
+            <thead>
+                <tr>
+                    <th width="150">Name</th>
+                    <th width="300">Description</th>
+                    <th width="100">Default</th>
+                    <th width="180">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (UserRoleRecord role in Model.Roles)
+                {
+                <tr>
+                    <td>
+                        @role.Name
+                    </td>
+                    <td>
+                        @role.Description
+                    </td>
+                    <td>
+                        @if (role.IsDefaultRole)
+                            {
+                            <span>Yes</span>
+                            }
+                    </td>
+                    <td>
+                        <a href="~/dashboard/applications/@Model.Application.AppKey/userroles/@role.Id/edit" class="tiny button">Edit</a>
+                        @if (!role.IsDefaultRole)
+                            {
+                            <a href="~/dashboard/applications/@Model.Application.AppKey/userroles/@role.Id/delete" class="tiny button alert">Delete</a>
+                            }
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <a class="button" href="~/dashboard/applications/@Model.Application.AppKey/userroles/create"><i class="fi-plus"></i>  Add a Role</a>
+    </div>
+</div>

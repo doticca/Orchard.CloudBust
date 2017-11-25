@@ -1,0 +1,54 @@
+﻿@using Orchard.ContentManagement
+@model CloudBust.Dashboard.ViewModels.UserFriendsViewModel
+@{
+    int rowcounter = 0;
+    string zebra = string.Empty;
+}
+<div class="row">
+    <div class="columns">
+        <h1>@Html.TitleForPage(T("Friends of ").ToString() + Model.UserProfile.UserName) </h1>
+        @if (Model.Friends.Count() > 0)
+        {
+            <p>This is a list of friends.</p>
+        }
+        else
+        {
+            <p>There are no friends.</p>
+        }
+    </div>
+</div>
+@if (Model.Friends.Count() > 0)
+{
+<div class="row bump-15 header">
+    <div class="text-left large-6 medium-6 small-12 columns"><h5>UserName</h5></div>
+</div>
+}
+@foreach (var row in Model.Friends)
+{
+    rowcounter = rowcounter + 1;
+    zebra = "zebra-" + rowcounter % 2;
+    var request = string.Empty;//Url.Content("~") + "dashboard/games/" + row.AppKey;
+
+    <div class="row app @zebra" data-url="@request">@* data-click="@Url.Action("ApplicationUserEdit", "Dashboard", new { Area = "CloudBust.Application", appID=row.ApplicationRecord.Id, profileID= })">*@
+        <div class="text-left large-6 medium-6 columns with-subhead">
+            <h6 class="subhead">
+                @row.UserName
+            </h6>
+        </div> 
+    </div>
+}
+<div class="row bump-30 columns">
+    <a href="~/dashboard/applications/@Model.Application.AppKey/users" class="secondary button">Cancel</a>
+</div>
+
+@*@using (Script.Foot())
+{
+    <script>
+        $(function () {
+            $('.row.app').click(function () {
+                var url = $(this).data('click');
+                window.location.href = url;
+            });
+        });
+    </script>
+}*@

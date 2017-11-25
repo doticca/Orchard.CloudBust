@@ -1,0 +1,73 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@{
+    Script.Require("Highlight");
+    Style.Require("Highlight_dark");
+
+    string fbappkey = Model.Application.fbAppKey;
+    string reseturl = Url.Content("~") + "dashboard/applications/" + Model.Application.AppKey + "/reset";
+    string codeurl = Model.Uri.ToString();
+}
+
+<div class="row bump-15">
+    <div class="large-3 columns">
+        <label for="AppKey">
+            Application ID
+            <input id="AppKey" name="AppKey" type="text" placeholder="Application Key" value="@Model.Application.AppKey" readonly="readonly" />
+        </label>
+    </div>
+    <div class="large-4 columns">
+        <label for="AppSecret">
+            Client Key
+            <input id="AppSecret" name="AppSecret" type="text" placeholder="Application Secret" value="@Model.Application.AppSecret" readonly="readonly" />
+        </label>
+    </div>
+    <div class="large-5 columns"></div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <h5>Quick Start</h5>
+    </div>
+    <div class="large-12 columns">
+        <pre><code>
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{   
+    // start of your application:didFinishLaunchingWithOptions // ... 
+    [[CloudBust shared] setApplicationId:@@"@Model.Application.AppKey"];
+    [[CloudBust shared] setCloudBustServerUrl:@@"@codeurl"];
+    // The rest of your application:didFinishLaunchingWithOptions method// ... 
+    return YES;
+}
+        </code></pre>
+    </div>
+    <div class="large-4 columns"></div>
+</div>
+<hr />
+<div class="row">
+    <div class="large-12 columns">
+        <div class="alert alert-message block-message">
+            <h5>Reset Tokens</h5>
+            <div class="row">
+                <div class="large-7 medium-8 small-9 columns">
+                    <span class="label warning">Warning</span> When you reset your application tokens, any client using these tokens  <em class="red">will not be able to login</em>! There is no way to undo this, so proceed with caution.
+                </div>
+                <div class="large-5 medium-4 small-3 text-center columns">
+                    <a href="@reseturl" class="primary btn reset wide pull-right small">Reset Tokens</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        $(function () {
+            hljs.initHighlightingOnLoad();
+        });
+    </script>
+}

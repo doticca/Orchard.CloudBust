@@ -1,0 +1,33 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@{
+    string smtpurl = Url.Content("~") + "dashboard/applications/" + Model.Application.AppKey + "/smtp";
+}
+<div class="dashboardarea">
+    <div class="row bump-25">
+        <h1 class="header-mail subhead">
+            We just sent a test mail
+            <div><small>it should take less than a minute for the test mail to arrive in your mailbox</small></div>
+        </h1>
+        <hr />
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            Check your @Model.User.Email mailbox. <br />
+            If you don't receive your mail in the next few minutes, go back and check your SMTP settings. <br />
+        </div>
+    </div>
+    <div class="row bump-25">
+        <div class="large-4 columns">
+            <a href="@smtpurl" class="button expand">Go to @Model.Application.Name SMTP setting</a>
+        </div>
+    </div>
+    <div class="row bump-25">
+        <div class="large-12 columns">
+        </div>
+    </div>
+</div>
+

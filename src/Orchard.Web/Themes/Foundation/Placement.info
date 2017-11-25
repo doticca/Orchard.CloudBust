@@ -1,21 +1,55 @@
 ﻿<Placement>
   <Match DisplayType="Detail">
-    <Place Parts_Title="-"/>
-    <Place Parts_Common_Metadata="-"/>
+    <Place
+           Parts_Title_Summary="-"
+           Parts_Common_Metadata="-"
+           
+           />
   </Match>
-  <!-- Customize where the shapes are rendered -->
-
-  <!-- 
-  <Place Parts_Blogs_BlogArchives="Content:before"/>
-  <Place Parts_Blogs_RecentBlogPosts="Content:after"/>
+  <Match DisplayType="Summary">
+    <Place Parts_Tags_ShowTags="-"/>
+  </Match>
   <Match ContentType="Blog">
+    <Place
+           Parts_Common_Metadata="-"
+           />
+  </Match>
+
+  <Match ContentType="RecentBlogPosts">
+    <Place Parts_Title="-" />
+  </Match>
+  <Match ContentType="PopularBlogPosts">
+    <Place Parts_Title="-" />
+  </Match>
+  <Match ContentType="HtmlWidget">
+    <Place Parts_Title="-" />
+  </Match>
+  <Match ContentType="RandomBlogPosts">
+    <Place Parts_Title="-" />
+  </Match>
+  <Match ContentType="TopicTerm">
+    <Place Parts_Title="-" />
+  </Match>
+  <Match ContentType="BlogPost">
     <Match DisplayType="Summary">
-      <Place Parts_Blogs_Blog_Description="Content:before"
-             Parts_Blogs_Blog_BlogPostCount="Meta:3"/>
+      <Place Parts_Common_Body_Summary="Summary:0"
+             Fields_MediaLibraryPicker="Header:1"
+             Fields_TaxonomyField-Topic="Content:1"
+             Parts_Title_Summary="Content:2"
+             Parts_Common_Metadata_Summary="Content:3"
+             Parts_Viewers="-"
+             />
+    </Match>
+    <Match DisplayType="Detail">
+      <Place
+        Parts_Preview="-"
+        Fields_MediaLibraryPicker="Header:2"
+        Fields_TaxonomyField-Topic="Header:3"
+        Parts_Title="Header:4"
+        Parts_Common_Metadata="Header:5"
+        Parts_Viewers="Header:1"
+        Parts_Tags_ShowTags="Content:10"
+       />
     </Match>
   </Match>
-  <Match Path="/About">
-    <Place Parts_Common_Metadata="-"/>
-  </Match>
--->
 </Placement>

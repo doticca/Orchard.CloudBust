@@ -1,0 +1,41 @@
+﻿@model CloudBust.Dashboard.ViewModels.AppSettingsCategoriesCreateViewModel
+
+<div class="dashboardarea">
+    <div class="row bump-25">
+        <h1 class="header-parameter subhead">
+
+
+            Add a new Application Settings Category
+            <div><small>Add a new Setting Category for @Model.ApplicationName application</small></div>
+        </h1>
+        <hr />
+    </div>
+    @using (Html.BeginFormAntiForgeryPost())
+    {
+        <div class="row">
+            <div class="large-3 medium-5 columns end">
+                <label for="Name">
+                    Name
+                    <input id="Name" name="Name" type="text" placeholder="enter setting category name" value="@Model.Name" />
+                </label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label for="Description">
+                    Description
+                    <input id="Description" name="Description" type="text" placeholder="enter setting category description" value="@Model.Description" />
+                </label>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="large-12 columns">
+                <a href="~/dashboard/applications/@Model.ApplicationKey/ast/categories" class="secondary button">Cancel</a>
+                <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+            </div>
+        </div>
+    }
+    <div class="row bump-25"></div>
+</div>

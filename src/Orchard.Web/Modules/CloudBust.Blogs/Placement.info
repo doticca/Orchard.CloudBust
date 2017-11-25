@@ -1,0 +1,18 @@
+﻿<Placement>
+  <Place Parts_Preview_Edit="Content:5"/>
+  <Place Parts_Preview="Content:4"/>
+  <Place
+    Parts_Viewers="Header:4"
+    Parts_Share="Content:9"
+    Parts_Blogs_PopularBlogPosts_Edit="Content:5"
+    Parts_Blogs_PopularBlogPosts="Content"
+  />
+        <Match DisplayType="SummaryAdmin">
+          <Place Parts_Viewers="-"/>
+          <Place Parts_Share="-"/>
+        </Match>
+    <Match DisplayType="Summary">
+      <Place Parts_Viewers="-"/>
+      <Place Parts_Share="-"/>
+    </Match>
+</Placement>

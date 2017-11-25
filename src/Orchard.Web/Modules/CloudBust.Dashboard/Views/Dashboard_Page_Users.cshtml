@@ -1,0 +1,55 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+
+<div class="row">
+    <div class="large-12 columns">
+        <table>
+            <thead>
+                <tr>
+                    <th width="180">Username</th>
+                    <th width="180">Full Name</th>
+                    <th width="100">OAuth</th>
+                    <th width="220">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entry in Model.Users)
+                {
+                <tr>
+                    <td>
+                        @entry.User.UserName
+                    </td>
+                    <td>
+                        @entry.Profile.FirstName @entry.Profile.LastName
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrWhiteSpace(entry.Profile.FBemail))
+                            {
+                            <div class="text-left large-1 hide-for-small-only medium-1 columns">
+                                <img src="~/Themes/TheAdminFoundation/Styles/images/fb_ico.png">
+                            </div>
+                            }
+                        @if (!string.IsNullOrWhiteSpace(entry.Profile.GCuserid))
+                            {
+                            <div class="text-left large-1 hide-for-small-only medium-1 columns">
+                                <img src="~/Themes/TheAdminFoundation/Styles/images/gc_ico.png">
+                            </div>
+                            }
+                    </td>
+                    <td>
+                        <a href="~/dashboard/applications/@Model.Application.AppKey/users/@entry.Profile.Id/edit" class="tiny button">Details</a>
+                        <a href="~/dashboard/applications/@Model.Application.AppKey/users/@entry.Profile.Id/friends" class="tiny button">Friends</a>
+                        <a href="~/dashboard/applications/@Model.Application.AppKey/users/@entry.Profile.Id/invites" class="tiny button">Invites</a>
+                        <a href="~/dashboard/applications/@Model.Application.AppKey/users/@entry.Profile.Id/delete" class="tiny button alert">Delete</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@Display(Model.Pager)

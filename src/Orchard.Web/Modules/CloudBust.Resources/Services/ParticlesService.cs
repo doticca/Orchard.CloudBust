@@ -41,7 +41,7 @@ namespace CloudBust.Resources.Services
                 "CloudBust.Resources.Particles.JsonUrl",
                 ctx =>
                 {
-                    ctx.Monitor(_signals.When("CloudBust.Resources.Changed"));
+                    ctx.Monitor(_signals.When("CloudBust.Resources.Particles.Changed"));
                     WorkContext workContext = _wca.GetContext();
                     var particlesSettings =
                         (ParticlesSettingsPart)workContext

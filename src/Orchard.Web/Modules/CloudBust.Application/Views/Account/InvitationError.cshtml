@@ -1,0 +1,16 @@
+﻿@model CloudBust.Application.ViewModels.InvitationViewModel
+
+<div class="row">
+    <div class="columns">
+        <h1>@Html.TitleForPage(T("Error Parsing Invitation").ToString()) </h1>
+        <p>This invitation was not intended to be used for your email. Sorry for any incovinience.</p>
+        @if (Url.IsLocalUrl(Request.QueryString["ReturnUrl"]))
+        {
+            <p>@Html.Link(T("Go back to where you were"), Url.Content(Request.QueryString["ReturnUrl"]))</p>
+        }
+        else
+        {
+            <p>@Html.Link(T("Go to Home"), Url.Content("/"))</p>
+        }
+    </div>
+</div>

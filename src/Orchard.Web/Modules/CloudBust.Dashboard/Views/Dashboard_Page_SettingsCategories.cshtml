@@ -1,0 +1,43 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+
+<div class="row">
+    <div class="large-12 columns">
+        <table>
+            <thead>
+                <tr>
+                    <th width="120">Name</th>
+                    <th width="180">Description</th>
+                    <th width="180">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entry in Model.SettingsCategories)
+                {
+                <tr>
+                    <td>
+                        @entry.Name
+                    </td>
+                    <td>
+                        @entry.Description
+                    </td>
+                    <td>
+                        <a href="~/dashboard/applications/@Model.Application.AppKey/ast/categories/@entry.NormalizedName/edit" class="tiny button">Edit</a>
+
+                        <a href="~/dashboard/applications/@Model.Application.AppKey/ast/categories/@entry.NormalizedName/delete" class="tiny button alert">Delete</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <a class="button" href="~/dashboard/applications/@Model.Application.AppKey/ast/categories/create"><i class="fi-plus"></i>  Add a Category</a>
+    </div>
+</div>

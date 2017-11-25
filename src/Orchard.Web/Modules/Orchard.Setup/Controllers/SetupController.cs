@@ -40,6 +40,18 @@ namespace Orchard.Setup.Controllers {
         public ILogger Logger { get; set; }
         public int RecipeExecutionTimeout { get; set; }
 
+        public ActionResult HowTo()
+        {
+            _notifier.Add(NotifyType.Information, T("Guidelines and information for a succesfull CloudBust installation"));
+            return View();
+        }
+
+        public ActionResult Doticca()
+        {
+            _notifier.Add(NotifyType.Information, T("Your application factory on the cloud"));
+            return View();
+        }
+
         private ActionResult IndexViewResult(SetupViewModel model) {
             return View(model);
         }
@@ -66,7 +78,8 @@ namespace Orchard.Setup.Controllers {
                 AdminUsername = "admin",
                 DatabaseIsPreconfigured = !String.IsNullOrEmpty(initialSettings.DataProvider),
                 Recipes = recipes,
-                RecipeDescription = recipeDescription
+                RecipeDescription = recipeDescription,
+                startAzure = false
             });
         }
 
@@ -146,7 +159,8 @@ namespace Orchard.Setup.Controllers {
                     DatabaseConnectionString = model.DatabaseConnectionString,
                     DatabaseTablePrefix = model.DatabaseTablePrefix,
                     EnabledFeatures = null, // Default list
-                    Recipe = recipe
+                    Recipe = recipe,
+                    startAzure = model.startAzure
                 };
 
                 var executionId = _setupService.Setup(setupContext);

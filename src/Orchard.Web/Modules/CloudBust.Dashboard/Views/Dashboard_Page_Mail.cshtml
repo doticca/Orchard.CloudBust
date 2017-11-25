@@ -1,0 +1,157 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@{
+    string testmailurl = Url.Content("~") + "dashboard/applications/" + Model.Application.AppKey + "/sendmail";
+    bool iechecked = Model.Application.internalEmail;
+    string checkedie = iechecked ? "checked" : "";
+}
+@using (Html.BeginFormAntiForgeryPost())
+{
+<div id="doticcasettings">
+    <div class="row">
+        <div class="large-4 columns end">
+            <label>Use  CloudBust Server</label>
+            <div class="switch">
+                <input class="switch-input" id="internalEmail" name="internalEmail" type="checkbox" @checkedie value="@Model.Application.internalEmail">
+                <label class="switch-paddle" for="internalEmail">
+                    <span class="show-for-sr">Enable internal mail server</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="panel callout radius">
+                <h5>information</h5>
+                <div class="row">
+                    <div class="large-12 columns">
+                        CloudBust SMTP server uses Microsoft mail servers for outgoing connections. <br />
+                        Your users will get a mail from our robot account (robot@grapto.com) during registration to activate their accounts.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="usersettings" style="display:none">
+    <div class="row">
+        <div class="large-4 columns">
+            <label for="senderEmail">
+                Sender Email address
+                <input id="senderEmail" name="senderEmail" type="email" placeholder="yourname@yourdomain.com" value="@Model.Application.senderEmail" />
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-4 columns">
+            <label for="mailServer">
+                Outgoing Mail Server Address
+                <input id="mailServer" name="mailServer" type="text" placeholder="smtp.mailprovider.com" value="@Model.Application.mailServer" pattern="^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$" />
+            </label>
+        </div>
+        <div class="large-2 columns">
+            <label for="mailPort">
+                Port for SSL
+                <input id="mailPort" name="mailPort" type="number" placeholder="Port for SSL" value="@Model.Application.mailPort" />
+            </label>
+        </div>
+        <div class="large-6 columns"></div>
+    </div>
+    <div class="row">
+        <div class="large-4 columns">
+            <label for="mailUsername">
+                Username
+                <input id="mailUsername" name="mailUsername" type="text" placeholder="yourname@yourdomain.com" value="@Model.Application.mailUsername" />
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-4 columns">
+            <label for="mailPassword">
+                Password
+                <input id="mailPassword" name="mailPassword" type="password" placeholder="" value="@Model.Application.mailPassword" />
+            </label>
+        </div>
+    </div>
+    <div class="row bump-15" id="serverinfo">
+        <div class="large-12 columns">
+            <div class="alert alert-message block-message">
+                <h5>warning</h5>
+                <div class="row">
+                    <div class="large-12 columns" id="serverinfotext">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+        @if (Model.afterPost)
+            {
+            <a class="button secondary" style="" href="@testmailurl">Send a Test Mail</a>
+            }
+    </div>
+</div>
+}
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        $(function () {
+            function setServerInfo() {
+                var str = $('#mailServer').val();
+                if (typeof str === 'undefined') {
+                    return;
+                };
+                var res = str.toLowerCase();
+                var strport = $('#mailPort').val();
+                switch (res) {
+                    case 'smtp.gmail.com':
+                        if (strport !== '25' && strport != '587') {
+                            $('#serverinfotext').html('For Gmail use ports 25 or 587. We support Explicit SSL as described in RFC 2228. Explicit SSL starts as unencrypted on port 25, then issues a STARTDLS and switches to an Encrypted connection. If the SMTP server expects SSL/TLS connection right from the start then this will not work. Gmail port 465 is for Implicit SSL. Implicit SSL would have the entire connection wrapped in an SSL layer. There is no formal RFC covering Implicit SSL.');
+                            $('#serverinfo').show();
+                        }
+                        else {
+                            $('#serverinfo').hide();
+                        }
+                        break;
+                    default:
+                        $('#serverinfo').hide();
+                        $('#serverinfotext').html('');
+                        break;
+                }
+            }
+
+            $("#internalEmail").click(function () {
+                if (this.checked) {
+                    $("#usersettings").hide();
+                }
+                else {
+                    $("#usersettings").show();
+                }
+            });
+
+            $('#mailServer').change(function () {
+                setServerInfo();
+            });
+            $('#mailPort').change(function () {
+                setServerInfo();
+            });
+            if ($("#internalEmail").prop('checked')) {
+                $("#usersettings").hide();
+            }
+            else {
+                $("#usersettings").show();
+            }
+            setServerInfo();
+        });
+    </script>
+}

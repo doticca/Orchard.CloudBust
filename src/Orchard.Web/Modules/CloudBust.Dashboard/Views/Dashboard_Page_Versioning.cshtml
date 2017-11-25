@@ -1,0 +1,91 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@using (Html.BeginFormAntiForgeryPost())
+{
+<div class="row bump-15">
+    <div class="large-4 medium-4 columns">
+        <label for="ServerBuild">
+            Server Build
+            <input id="ServerBuild" name="ServerBuild" type="number" placeholder="Set your Server Build version" value="@Model.Application.ServerBuild" />
+        </label>
+    </div>
+    <div class="large-8 medium-8 columns"></div>
+</div>
+<div class="row bump-15">
+    <div class="large-4 medium-4 columns">
+        <label for="MinimumClientBuild">
+            Minimum Client Build
+            <input id="MinimumClientBuild" name="MinimumClientBuild" type="number" placeholder="Set your minimum allowed Client Build version" value="@Model.Application.MinimumClientBuild" />
+        </label>
+    </div>
+    <div class="large-8 medium-8 columns"></div>
+</div>
+<hr />
+<div class="row">
+    <div class="large-12 columns">
+        <h2 class="subhead">
+            Update URLs
+            <div><small>Supply us with your App Store update URLs and CloudBust will automatically redirect older client versions to get an update.</small></div>
+        </h2>
+    </div>
+</div>
+<div class="row bump-15">
+    <div class="large-12 columns">
+        <ul class="tabs" data-tabs id="url-tabs">
+            <li class="tabs-title is-active first"><a href="#updateios">iOS</a></li>
+            <li class="tabs-title"><a href="#updateosx">OSX (Mac)</a></li>
+            <li class="tabs-title"><a href="#updatetvos">Apple TV</a></li>
+            <li class="tabs-title"><a href="#updatewatch">Apple Watch</a></li>
+            <li class="tabs-title last"><a href="#updatedev">Developer</a></li>
+        </ul>
+
+        <div class="tabs-content" data-tabs-content="url-tabs">
+
+            <div class="tabs-panel is-active" id="updateios">
+                <label for="UpdateUrl">
+                    Update URL for iOS
+                    <input id="UpdateUrl" name="UpdateUrl" type="text" placeholder="Enter your App Store Update URL for your iOS version" value="@Model.Application.UpdateUrl" />
+                </label>
+            </div>
+
+            <div class="tabs-panel" id="updateosx">
+                <label for="UpdateUrlOSX">
+                    Update URL for OSX
+                    <input id="UpdateUrlOSX" name="UpdateUrlOSX" type="text" placeholder="Enter your App Store Update URL for your OSX (Mac) version" value="@Model.Application.UpdateUrlOSX" />
+                </label>
+            </div>
+
+            <div class="tabs-panel" id="updatetvos">
+                <label for="UpdateUrlTvOS">
+                    Update URL for Apple TV OS
+                    <input id="UpdateUrlTvOS" name="UpdateUrlTvOS" type="text" placeholder="Enter your App Store Update URL for your Tv OS version" value="@Model.Application.UpdateUrlTvOS" />
+                </label>
+            </div>
+
+            <div class="tabs-panel" id="updatewatch">
+                <label for="UpdateUrlWatch">
+                    Update URL for Apple Watch
+                    <input id="UpdateUrlWatch" name="UpdateUrlWatch" type="text" placeholder="Enter your App Store Update URL for your Apple Watch version" value="@Model.Application.UpdateUrlWatch" />
+                </label>
+            </div>
+
+            <div class="tabs-panel" id="updatedev">
+                <label for="UpdateUrlDeveloper">
+                    Developer Update URL
+                    <input id="UpdateUrlDeveloper" name="UpdateUrlDeveloper" type="text" placeholder="Enter your App Store Update URL for your Applications (Developer)" value="@Model.Application.UpdateUrlDeveloper" />
+                </label>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+    </div>
+</div>
+}

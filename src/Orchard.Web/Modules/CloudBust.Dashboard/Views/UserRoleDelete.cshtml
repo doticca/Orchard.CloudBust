@@ -1,0 +1,55 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.UserRoleDeleteViewModel
+@{
+
+    
+}
+
+
+<div class="dashboardarea">
+    <div class="row bump-25">
+        <h1 class="header-delete subhead">
+            Delete Role @Model.Name
+            <div><small>@Model.Description</small></div>
+        </h1>
+        <hr />
+    </div>
+    @if(Model.isDefault){
+        <div class="row">
+            <div class="large-6 columns">
+                <h2>
+                    You cannot delete the default role!
+                </h2>
+                <span class="label information">Important</span> There is no way to delete the default User role! Please set another user role as default before deleting this one.
+            </div>
+            <div class="large-6 small-12 columns">
+                <div class="bump-25"></div>
+                <a href="~/dashboard/applications/@Model.AppKey/userroles" class="button secondary">Cancel</a>
+            </div>
+        </div>
+    }
+    else{
+        using (Html.BeginFormAntiForgeryPost())
+        {
+            <div class="row">
+                <div class="large-6 columns">
+                    <h2>
+                        Really delete the role @Model.Name ?
+                    </h2>
+                    <span class="label important">Warning</span> Removing this role will move ALL ASSOCIATED USERS to the <em class="red">default role</em> the next time they login to your application! You are advised to move any users from this role before deleting it. There is no way to undo this, so proceed with caution.
+                </div>
+                <div class="large-6 small-12 columns">
+                    <div class="bump-25"></div>
+                    <a href="~/dashboard/applications/@Model.AppKey/userroles" class="button secondary">Cancel</a>
+                    <input type="submit" class="button alert" name="submit.Delete" value="Yes, delete the Role">
+                </div>
+
+            </div>
+        }
+    }
+    <div class="row bump-25"></div>
+</div>
+

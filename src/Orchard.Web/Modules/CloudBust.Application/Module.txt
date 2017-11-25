@@ -1,0 +1,18 @@
+﻿Name: CloudBust.Application
+Path: CloudBust.Application
+AntiForgery: enabled
+Author: Team Grapto @teamgrapto
+Website: http://www.grapto.com
+Version: 1.10.0
+OrchardVersion: 1.10
+Description: The CloudBust Applications with SenseAPI
+Category: CloudBust
+Dependencies: CloudBust.Common, Orchard.Users, Orchard.Autoroute
+Features:
+	CloudBust.Application.WebApp:
+		Name: Web Application
+		Version: 1.0
+		Description: Enable this server to act as a CloudBust web application.
+		Category: CloudBust
+		Dependencies: CloudBust.Application, Orchard.Blogs, Orchard.JobsQueue
+		Priority:100

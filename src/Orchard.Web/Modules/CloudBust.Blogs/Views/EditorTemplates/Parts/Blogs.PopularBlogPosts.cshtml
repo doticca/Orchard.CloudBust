@@ -1,0 +1,19 @@
+﻿@model CloudBust.Blogs.ViewModels.PopularBlogPostsViewModel
+
+@using Orchard.Blogs.Models;
+@using Orchard.ContentManagement;
+
+<div class="content" id="popularblogposts">
+    <fieldset>
+        <div>
+            @Html.LabelFor(m => m.BlogId, T("For Blog"))
+            <select id="@Html.FieldIdFor(m => m.BlogId)" name="@Html.FieldNameFor(m => m.BlogId)">
+                @foreach (BlogPart blog in Model.Blogs)
+                {
+                    @Html.SelectOption(Model.BlogId, blog.ContentItem.Id, blog.Name)
+                }
+            </select>
+            <span class="hint">@T("Select which blog you want to display the popular post for")</span>
+        </div>
+    </fieldset>
+</div>

@@ -1,12 +1,74 @@
-﻿@{
-    IEnumerable<object> blogPosts = Model.ContentItems;
-    if (blogPosts != null)
+﻿@using Orchard.DisplayManagement.Shapes;
+@{
+    var list = Model.ContentItems;
+    if (list == null) {
+        list = Model;
+    }
+    if (list == null)
     {
-        Model.ContentItems.Classes.Add("content-items");
-        Model.ContentItems.Classes.Add("blog-posts");
+        return;
+    }
+    var items = list.Items;
+    var count = items.Count;
+    var listTag = Tag(list, "ul");
+    listTag.AddCssClass("content-items");
+    listTag.AddCssClass("blog-posts");
+    var index = 0;
+    var firstItem = items;
+    if (count > 0)
+    {
+        firstItem = items[0];
+    }
+    else {
+        firstItem = null;
     }
 }
-@Display(Model.ContentItems)
-@if (blogPosts == null || blogPosts.Count() < 1) {
-<p>@T("There are no posts for this blog.")</p>
+<div class="blog-head">
+    @if (firstItem != null)
+    {
+        ShapeMetadata metadata = firstItem.Metadata;
+        string alternate = metadata.Type + "_" +
+                metadata.DisplayType + "__" +
+                firstItem.ContentItem.ContentType +
+                "_First";
+        metadata.OnDisplaying(ctx =>
+        {
+            metadata.Alternates.Add(alternate);
+        });
+        @listTag.StartElement
+        var itemTag = Tag(firstItem, "li");
+        itemTag.AddCssClass("first blog-head");
+        @itemTag.StartElement
+        @Display(firstItem)                
+        @itemTag.EndElement
+        @listTag.EndElement
+    }
+</div>
+<div class="blog-details">
+@if (items.Count > 1)
+{
+    <div class="row">
+        <div class="columns">
+            <span class="recent icon"></span>
+            <span class="recent label">MOST RECENT ARTICLES</span>
+        </div>
+    </div>
 }
+@listTag.StartElement
+@foreach (var item in items)
+{
+    var itemTag = Tag(item, "li");
+    if (index == count - 1)
+    {
+        itemTag.AddCssClass("last");
+    }
+    if (index > 0)
+    {
+        @itemTag.StartElement
+        @Display(item)
+        @itemTag.EndElement
+    }
+    ++index;
+}
+@listTag.EndElement
+</div>

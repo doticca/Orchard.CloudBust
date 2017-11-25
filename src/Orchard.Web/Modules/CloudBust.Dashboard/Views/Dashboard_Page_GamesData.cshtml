@@ -1,0 +1,35 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+<div class="row">
+    <div class="large-12 columns">
+        <table>
+            <thead>
+                <tr>
+                    <th width="400">Full Name / Email</th>
+                    <th width="100"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entry in Model.Users)
+                {
+                    <tr>
+                        <td>
+                            @entry.Profile.FirstName @entry.Profile.LastName (@entry.User.Email)
+                        </td>
+                        <td>
+                            <a href="~/dashboard/applications/@Model.Application.AppKey/senseapi/users/@Uri.EscapeDataString(entry.User.NormalizedUserName)/sessions" class="tiny button">Sessions</a>
+                            @*<a href="~/dashboard/applications/@Model.Application.AppKey/senseapi/users/@entry.User.NormalizedUserName/history" class="tiny button">Events</a>
+                                <a href="~/dashboard/applications/@Model.Application.AppKey/senseapi/users/@entry.User.NormalizedUserName/history" class="tiny button">Timed Results</a>
+                                <a href="~/dashboard/applications/@Model.Application.AppKey/senseapi/users/@entry.User.NormalizedUserName/history" class="tiny button">Path Results</a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@Display(Model.Pager)

@@ -1,0 +1,69 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@{
+    string fbappkey = Model.Application.fbAppKey;
+    string deleteurl = Url.Content("~") + "dashboard/applications/" + Model.Application.AppKey + "/delete";
+}
+
+@using (Html.BeginFormAntiForgeryPost())
+{
+<div class="row">
+    <div class="large-3 columns">
+        <label for="Name">
+            Name
+            <input id="Name" name="Name" type="text" placeholder="enter application name" value="@Model.Application.Name" />
+        </label>
+    </div>
+    <div class="large-9 columns">
+        <div class="panel callout radius">
+            <h5>information</h5>
+            <div class="row">
+                <div class="large-12 columns">
+                    If you use single sign on with facebook, you have to set your application name exactly the same with your facebook application name.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <label for="Description">
+            Description
+            <input id="Description" name="Description" type="text" placeholder="enter application description" value="@Model.Application.Description" />
+        </label>
+    </div>
+</div>
+<button class="" type="submit" name="submit.Save" value="Save">Save</button>
+}
+@if (!string.IsNullOrWhiteSpace(fbappkey))
+{
+<div class="row" style="margin-top:0px">
+    <div class="large-12 columns">
+        jump to
+        <a href='https://developers.facebook.com/apps/@fbappkey/settings/' id="fbdashboard" class="">
+            <i class="fi-social-facebook"></i>
+            <span style="margin-left:-1px;">acebook application settings</span>
+        </a>
+        and synchronize the Display Name with this cloudbust app name
+    </div>
+</div>
+}
+<hr />
+<div class="large-12 columns">
+    <div class="alert alert-message block-message">
+        <h5>Remove Application</h5>
+        <div class="row">
+            <div class="large-7 medium-8 small-9 columns">
+                <span class="label warning">Warning</span> Removing this application will remove all associated tokens <em class="red">completely</em>! There is no way to undo this, so proceed with caution.
+            </div>
+
+            <div class="large-5 medium-4 small-3 text-center columns">
+                <a href="@deleteurl" class="primary btn delete wide pull-right small">Remove Application</a>
+            </div>
+        </div>
+    </div>
+</div>

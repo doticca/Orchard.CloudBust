@@ -94,8 +94,14 @@ namespace Orchard.Setup.Services {
                 "Orchard.Pages", "Orchard.ContentPicker", "Orchard.Themes", "Orchard.Users", "Orchard.Roles", "Orchard.Modules",
                 "PackagingServices", "Orchard.Packaging", "Gallery", "Orchard.Recipes"
             };
-
+            string[] azure =
+            {
+                "Orchard.Azure.Media"
+            };
             context.EnabledFeatures = hardcoded.Union(context.EnabledFeatures ?? Enumerable.Empty<string>()).Distinct().ToList();
+
+            if(context.startAzure)
+                context.EnabledFeatures = context.EnabledFeatures.Union(azure).Distinct().ToList();
 
             // Set shell state to "Initializing" so that subsequent HTTP requests are responded to with "Service Unavailable" while Orchard is setting up.
             _shellSettings.State = TenantState.Initializing;
@@ -128,7 +134,7 @@ namespace Orchard.Setup.Services {
 
                 using (var environment = bootstrapLifetimeScope.CreateWorkContextScope()) {
 
-                    // Check if the database is already created (in case an exception occurred in the second phase).
+                    // Check if the database is already created (in case an exception occured in the second phase).
                     var schemaBuilder = new SchemaBuilder(environment.Resolve<IDataMigrationInterpreter>());
                     var installationPresent = true;
                     try {

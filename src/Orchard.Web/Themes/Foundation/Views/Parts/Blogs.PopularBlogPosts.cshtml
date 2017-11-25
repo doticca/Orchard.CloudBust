@@ -1,0 +1,114 @@
+﻿@using Orchard.DisplayManagement.Shapes;
+@using Orchard.ContentManagement;
+@using Orchard.Widgets.Models;
+@{
+    Script.Require("Slick");
+    Style.Require("Slick");
+
+
+    var widgetPart = ((IContent)Model.ContentItem).As<WidgetPart>();
+    var title = widgetPart.Title;
+    var showtitle = widgetPart.RenderTitle;
+
+    var list = Model.ContentItems.ContentItems;
+    var items = list.Items;
+    var count = items.Count;
+    var listTag = Tag(list, "ul");
+    listTag.AddCssClass("content-items");
+    listTag.AddCssClass("blog-posts");
+    var index = 0;
+}
+
+<div class="popular-blog-posts">
+    <div class="row">
+        <div class="columns">
+            <span class="popular icon"></span>
+            <span class="popular label">@title</span>
+        </div>
+        <div class="arrows right hide-for-800">
+            <button type="button" class="prev slick-arrow" role="button" style="display: block;">Previous</button>
+            <button type="button" class="next slick-arrow" role="button" style="display: block;">Next</button>
+        </div>
+    </div>
+    @listTag.StartElement
+    @foreach (var item in items)
+    {
+        var itemTag = Tag(item, "li");
+
+        @itemTag.StartElement
+        @Display(item)
+        @itemTag.EndElement
+
+        ++index;
+    }
+    @listTag.EndElement
+</div>
+
+@using (Script.Foot())
+{
+    <script>
+        $(function () {
+            var slickStarted = false;
+            var postslist = 'div.popular-blog-posts ul.blog-posts';
+            var postscontainer = 'div.popular-blog-posts';
+            var firsttime = true;
+            function repositionToSlick() {
+                // requires section slick in layout.cshtml
+                if ($('section#slick').is(':empty')) {
+                    $(postscontainer).hide();
+                    var element = $(postscontainer).detach();
+                    $('section#slick').append(element);
+                    startSlick();
+                }
+            }
+            function repositionToBlogs() {
+                if (slickStarted) {
+                    if (typeof $(postslist) != 'undefined') {
+                        $(postslist).slick("unslick");
+                        var element = $(postscontainer).detach();
+                        $('.zone.zone-content').append(element);
+                        slickStarted = false;
+                    }
+                }
+                else if (firsttime) {
+                    firsttime = false;
+                    $(postscontainer).show();
+                }
+            }
+            $(postslist).on('init', function (event, slick, currentSlide, nextSlide) {
+                slickStarted = true;
+                setTimeout(function () {
+                    if ($('section#main').css('padding-bottom') == 0) return;
+                    $(postscontainer).hide().css('visibility', 'visible').fadeIn('slow');
+                }, 200);
+            });
+            function startSlick() {
+                if (slickStarted) return;
+                $(postslist).slick({
+                    dots: true,
+                    slide: 'li',
+                    arrows: true,
+                    infinite: true,
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    variableWidth: true,
+                    autoplay: true,
+                    autoplaySpeed: 3000,
+                    prevArrow: $('.prev'),
+                    nextArrow: $('.next')
+                });
+            }
+            
+
+            function reposition() {
+                if ($('.menuwrapper ul.menuitems').length === 0 || $('.menuwrapper ul.menuitems').css('display') === 'none' || (  $('.menuitems li.search').length>0 && $('.menuitems li.search').css('margin-left').replace("px", "") == '0'))
+                    repositionToSlick();
+                else
+                    repositionToBlogs();
+            }
+            reposition();
+            // requires blog page menu
+            $(window).resize(reposition);
+        });
+    </script>
+}

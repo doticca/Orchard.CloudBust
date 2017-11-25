@@ -1,0 +1,10 @@
+﻿@model CloudBust.Application.ViewModels.AcceptInvitationViewModel
+<div class="row">
+    <div class="columns">
+        <h1>@Html.TitleForPage(T("Invitation Approved").ToString()) </h1>
+        <p>Congratulations, you are now a friend of @Model.user.UserName !</p>
+        <p>
+            @Html.Link("Go to Home", Url.Content("/"), new { @class = "button" })
+        </p>
+</div>
+</div>

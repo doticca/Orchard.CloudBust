@@ -1,0 +1,62 @@
+﻿@using Orchard.Environment.Descriptor.Models
+@{
+    Script.Require("OrchardAce").AtHead();
+    var g = Guid.NewGuid();
+    string divid = "ace-" + g.ToString();
+    string txtid = "txt-" + g.ToString();
+}
+<div class="tabbedcontent" data-title="Preview">
+    <style>
+    #@divid {
+        width: 100%;
+        min-height: 400px;
+        border: 1px solid #7C8891;
+    }
+    </style>
+    <fieldset>
+        <label id="previewlabel">Preview</label>
+        <div id="@divid"></div>
+        @Html.TextArea("Previewtext", (string)Model.PreviewText, 25, 80,
+     new Dictionary<string, object> {
+        {"class", "preview aceeditor " + txtid},
+        {"style", "width:100%; display:none;"}
+     })
+    </fieldset>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var PreviewAceEditor = ace.edit('@divid');
+        PreviewAceEditor.setTheme('ace/theme/grapto');
+        PreviewAceEditor.getSession().setMode('ace/mode/html');
+        PreviewAceEditor.setOptions({
+            enableEmmet: true,
+            enableBasicAutocompletion: true,
+            enableSnippets: false,
+            spellcheck: true,
+            useElasticTabstops: true,
+            maxLines: Infinity
+        });
+        PreviewAceEditor.setSelectionStyle("text");
+        PreviewAceEditor.getSession().setUseSoftTabs(false);
+
+        var PreviewTextArea = $('.@txtid').hide();
+        PreviewAceEditor.getSession().setValue(PreviewTextArea.val());
+        PreviewAceEditor.getSession().on('change', function () {
+            PreviewTextArea.val(PreviewAceEditor.getSession().getValue());
+        });
+    });
+
+</script>
+
+@*@using (Script.Foot())
+{
+<script type="text/javascript">
+    $(function () {
+        var desttab = $("#tabcss");
+        if (typeof (desttab) !== 'undefined' && desttab.length > 0) {
+            $("#@divid").appendTo("#tabcss");
+            $("#csslabel").hide();
+        }
+    });
+</script>
+}*@

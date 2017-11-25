@@ -92,6 +92,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Foundation\Styles\fonts\Heroes-Legend.ttf.svg" />
+    <Content Include="Foundation\Styles\img\recenticon.png" />
+    <Content Include="SafeMode\Content\pattern.png" />
+    <Content Include="SafeMode\Scripts\bootstrap.js" />
+    <Content Include="SafeMode\Scripts\safemode.js" />
+    <Content Include="SafeMode\Styles\bootstrap.css" />
     <Content Include="TheAdminFoundation\Scripts\admin.js" />
     <Content Include="TheAdminFoundation\Styles\ie.css" />
     <Content Include="TheAdminFoundation\Styles\ie7.css" />
@@ -193,7 +199,6 @@
     <Content Include="SafeMode\Styles\images\backgroundHeader.gif" />
     <Content Include="SafeMode\Styles\images\backgroundVines.gif" />
     <Content Include="SafeMode\Styles\images\orchardLogo.gif" />
-    <Content Include="SafeMode\Styles\site.css" />
     <Content Include="SafeMode\Theme.png" />
     <Content Include="SafeMode\Theme.txt" />
     <Content Include="SafeMode\Views\Layout.cshtml" />
@@ -321,6 +326,56 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Foundation\Views\Parts\Particles.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Elements\Column.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Parts\Common.Body-BlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Parts\Blogs.PopularBlogPosts.cshtml" />
+    <Content Include="Foundation\Views\Parts\Common.Metadata-BlogPost.cshtml" />
+    <Content Include="Foundation\Views\Parts\Common.Metadata.Summary-BlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Parts\Image.Summary.cshtml" />
+    <Content Include="Foundation\Views\Parts\Tags.ShowTags.cshtml" />
+    <Content Include="Foundation\Views\Parts\TermPart.cshtml" />
+    <Content Include="Foundation\Views\Parts\Title-Blog.cshtml" />
+    <Content Include="Foundation\Views\Parts\Title-SectionsTerm.cshtml" />
+    <Content Include="Foundation\Views\Parts\Title.Summary-BlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Content-Blog.cshtml" />
+    <Content Include="Foundation\Views\Content-BlogPost.cshtml" />
+    <Content Include="Foundation\Views\Content-BlogPost.First.Summary.cshtml" />
+    <Content Include="Foundation\Views\Content-BlogPost.Summary.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Media-Image.Thumbnail.cshtml" />
+    <Content Include="Foundation\Views\Media.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Fields\MediaLibraryPicker.cshtml" />
+    <Content Include="Foundation\Views\Fields\TaxonomyField-Topic.cshtml" />
+    <Content Include="Foundation\Views\Fields\TaxonomyField.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Fields\Common.Text-BlogPost-Color.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SafeMode\Scripts\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SafeMode\Views\Document.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SafeMode\Views\Zone-Content.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Styles\fonts\Heroes-Legend.ttf.eot" />
+    <Content Include="Foundation\Styles\fonts\Heroes-Legend.ttf.woff" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

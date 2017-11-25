@@ -1,0 +1,16 @@
+Name: CloudBust Blogs for Web Apps
+Path: CloudBust.Blogs
+AntiForgery: enabled
+Author: Team Grapto @teamgrapto
+Website: http://www.grapto.com
+Version: 1.10.0
+OrchardVersion: 1.10
+Description: Enable CloudBust Blogs for Web Apps.
+Category: CloudBust
+Dependencies: CloudBust.Common, Orchard.Blogs, CloudBust.Resources.Magnific, Orchard.Taxonomies
+Features:
+	CloudBust.Blogs.Stats:
+		Name: CloudBust Blog Stats
+		Description: Provides a way to calculate the viewers of your blog posts and the API to include more stats.
+		Category: CloudBust
+		Dependencies: Contrib.Voting

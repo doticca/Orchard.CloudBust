@@ -1,0 +1,87 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.UserEditViewModel
+@{
+
+    bool idchecked = Model.ShowEmail;
+    string checkedid = idchecked ? "checked" : "";
+}
+
+
+<div class="dashboardarea">
+    <div class="row bump-25">
+        <h1 class="header-role subhead">
+            Edit User
+            <div><small>Edit User @Model.UserProfile.UserName</small></div>
+        </h1>
+        <hr />
+    </div>
+    @using (Html.BeginFormAntiForgeryPost())
+    {
+        <div class="row">
+            <div class="large-4 medium-5 columns">
+                <label for="FirstName">
+                    First Name
+                    <input id="FirstName" name="FirstName" type="text" placeholder="enter first name" value="@Model.FirstName" />
+                </label>
+            </div>
+            <div class="large-4 medium-5 columns end">
+                <label for="LastName">
+                    Last Name
+                    <input id="LastName" name="LastName" type="text" placeholder="enter last name" value="@Model.LastName" />
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-8 medium-10 columns">
+                <label for="Email">
+                    Email
+                    <input id="Email" name="Email" type="text" placeholder="enter user email" value="@Model.Email" />
+                </label>
+            </div>
+            <div class="large-2 medium-2 columns end">
+
+                    <label>Show Email</label>
+                    <div class="switch">
+                        <input class="switch-input" id="ShowEmail" name="ShowEmail" type="checkbox" @checkedid value="@Model.ShowEmail">
+                        <label class="switch-paddle" for="ShowEmail">
+                            <span class="show-for-sr">Show User Email</span>
+                        </label>
+                    </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-8 medium-10 small-12 columns end">
+                <label for="Bio">
+                    Bio
+                    <input id="Bio" name="Bio" type="text" placeholder="enter user bio" value="@Model.Bio" />
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-8 medium-10 small-12 columns end">
+                <label for="Location">
+                    Location
+                    <input id="Location" name="Location" type="text" placeholder="enter user location" value="@Model.Location" />
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <a href="~/dashboard/applications/@Model.Application.AppKey/users" class="secondary button">Cancel</a>
+                <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+            </div>
+        </div>
+    }
+
+</div>
+
+@using(Script.Foot()){
+    <script type="text/javascript">
+        $(function () {
+        });
+    </Script>
+}

@@ -1,0 +1,237 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+       
+<div class="large-9 medium-8 columns bump-25">
+@if (Model.Page == 0)
+{
+    <h1 class="subhead">
+        Information
+        <div><small>Basic settings to have a cloudbust application up and running</small></div>
+    </h1>
+    <hr />
+    Html.RenderPartial("Dashboard_Page_Information");
+}
+@if (Model.Page == 1)
+{
+    <h1 class="subhead">
+        CloudBust framework Tokens
+        <div><small>Everything you need to know about integrating the CloudBust framework in your application.</small></div>
+    </h1>
+    <hr />
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="subhead">
+                Integrate App Token
+                <div><small>Here is your application tokens. Download the Framework and launch CloudBust with these tokens.</small></div>
+            </h2>
+        </div>
+    </div>
+    Html.RenderPartial("Dashboard_Page_Cloudbust");
+}
+@if (Model.Page == 2)
+{
+    <h1 class="subhead">
+        Facebook integration
+        <div><small>Pair your cloudbast application using your facebook tokens to activate FB login.</small></div>
+    </h1>
+    <hr />
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="subhead">
+                Tokens
+                <div><small>Enter your facebook tokens. Go to facebook developer portal and copy your App ID and App Secret here.</small></div>
+            </h2>
+        </div>
+    </div>
+    Html.RenderPartial("Dashboard_Page_Facebook");
+}
+ @if (Model.Page == 3)
+{
+    <h1 class="subhead">
+        Game Center integration
+        <div><small>Pair your cloudbast application using your Bundle Identifier to activate Game Center login.</small></div>
+    </h1>
+    <hr />
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="subhead">
+                Bundle Identifier
+                <div><small>Supply us with your Bundle Identifier. Find your bundle Identifier in your Xcode Project's iOS/OSX/TvOS/Watch Application Target.</small></div>
+            </h2>
+        </div>
+    </div>
+     Html.RenderPartial("Dashboard_Page_GameCenter");
+ }
+@if (Model.Page == 4)
+{
+    <h1 class="subhead">
+        Versioning
+        <div><small>Keep your client and server versions synchronized. CloudBust will deny login to clients with build version lower than minimum client build version and higher than server build version.</small></div>
+    </h1>
+    <hr />
+    Html.RenderPartial("Dashboard_Page_Versioning");
+}
+ @if (Model.Page == 5)
+ {
+    <h1 class="subhead">
+        Mail delivery
+        <div><small>Use the default cloudbust server or define your own smtp server and enable your Mail service.</small></div>
+    </h1>
+    <hr />
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="subhead">
+                SMTP
+                <div><small>Define your SMTP settings. Check with your mail provider or use the cloudbust server.</small></div>
+            </h2>
+        </div>
+    </div>
+     Html.RenderPartial("Dashboard_Page_Mail");
+ }
+@if (Model.Page == 6)
+{
+    <h1 class="subhead">
+        Test Mail
+        <div><small>Send a test mail to check your SMTP settings.</small></div>
+    </h1>
+    <hr />
+    Html.RenderPartial("Dashboard_Page_MailTest");
+}
+@if (Model.Page == 7)
+{
+    <h1 class="subhead">
+        Security / Roles
+        <div><small>Define your application's User Roles.</small></div>
+    </h1>
+    <hr />
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="subhead">
+                Default Roles
+                <div>
+                    <small>
+                        CloudBust always keeps one of your roles as default.
+                        All your users that register in your application for the first time are assigned to the default role.
+                    </small>
+                </div>
+            </h2>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <h2 class="subhead">
+                    Security Roles
+                    <div>
+                        <small>
+                            Define extra roles for your application in case you want to set Data table security. You can also use these roles to group users inside your client side business logic.
+                        </small>
+                    </div>
+                </h2>
+            </div>
+        </div>
+    </div>
+    Html.RenderPartial("Dashboard_Page_Roles");
+}
+@if (Model.Page == 8)
+{
+    <h1 class="subhead">
+        @Model.Application.Name Users
+        <div><small>All accounts registered and logedin in your application.</small></div>
+    </h1>
+    <hr />
+    Html.RenderPartial("Dashboard_Page_Users");
+}
+@if (Model.Page == 9)
+{
+    <h1 class="subhead">
+        @Model.Application.Name Settings
+        <div><small>Global application settings Table. Those values are application specific, accessible from all users and roles.</small></div>
+    </h1>
+    <hr />
+    Html.RenderPartial("Dashboard_Page_Settings");
+}
+@if (Model.Page == 10)
+{
+    <h1 class="subhead">
+        @Model.Application.Name Settings Categories
+        <div><small>Global application settings Categorization. Those categories are for grouping purposes only. Accesible from all users and roles.</small></div>
+    </h1>
+    <hr />
+    Html.RenderPartial("Dashboard_Page_SettingsCategories");
+}
+@if (Model.Page == 11)
+{
+    <h1 class="subhead">
+        DataTables
+        <div><small>Define all the available tables of @Model.Application.Name.</small></div>
+    </h1>
+    <hr />
+    Html.RenderPartial("Dashboard_Page_Tables");
+}
+@if (Model.Page == 12)
+{
+}
+@if (Model.Page == 13)
+{
+    <h1 class="subhead">
+        Senseapi / Games
+        <div><small>Define all the available games of @Model.Application.Name.</small></div>
+    </h1>
+    <hr />
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="subhead">
+                CloudBust and Senseapi Games
+                <div>
+                    <small>
+                        CloudBust is responsible of the unicity of each of your games. Thus you can define a game and reuse it on any other  CloudBust application to collect senseapi data.
+                    </small>
+                </div>
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="subhead">
+                Games
+                <div>
+                    <small>
+                        Senseapi Games describe mini applications inside your cloudbust application with exclusive events and calculations.
+                        The security of each game is handled through the cloudbust User Roles.
+                    </small>
+                </div>
+            </h2>
+        </div>
+    </div>
+    Html.RenderPartial("Dashboard_Page_Games");
+}
+@if (Model.Page == 14)
+{
+    <h1 class="subhead">
+        Senseapi User Data
+        <div><small>User information stored for @Model.Application.Name</small></div>
+    </h1>
+    <hr />
+    Html.RenderPartial("Dashboard_Page_GamesData");
+}
+@if (Model.Page == 15)
+{
+    <h1 class="subhead">
+        Blogs
+        <div><small>Blogs settings for automation and optimization of CloudBust enabled Web Apps.</small></div>
+    </h1>
+    <hr />
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="subhead">
+                Automation
+                <div><small>Define your Automation settings and enable your social tools for Blogs.</small></div>
+            </h2>
+        </div>
+    </div>
+    Html.RenderPartial("Dashboard_Page_Blogs");
+}
+<div class="row bump-25"></div>
+</div>

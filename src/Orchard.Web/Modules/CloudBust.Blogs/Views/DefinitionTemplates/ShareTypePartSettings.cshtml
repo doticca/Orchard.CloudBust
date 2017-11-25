@@ -1,0 +1,15 @@
+﻿@model CloudBust.Blogs.Settings.ShareTypePartSettings
+<fieldset>
+    <div>
+        @Html.EditorFor(m => m.ShowFacebook)
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.ShowFacebook)">@T("Enable Facebook Sharing")</label>
+    </div>
+    <div>
+        @Html.EditorFor(m => m.ShowTwitter)
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.ShowTwitter)">@T("Enable Twitter Sharing")</label>
+    </div>
+    <div>
+        @Html.EditorFor(m => m.ShowMail)
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.ShowMail)">@T("Enable Mail Sharing")</label>
+    </div>
+</fieldset>

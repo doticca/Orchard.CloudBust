@@ -1,0 +1,42 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@{
+    string testmailurl = Url.Content("~") + "dashboard/applications/" + Model.Application.AppKey + "/sendmail";
+    string fromMail = Model.Application.internalEmail ? "robot@grapto.com" : Model.Application.senderEmail;
+    IUser webUser = Model.User;
+}
+<div class="row">
+    <div class="large-12 columns">
+        <h2 class="subhead">
+            From
+
+            <div><small>@fromMail</small></div>
+        </h2>
+    </div>
+</div>
+<div class="row bump-15">
+    <div class="large-12 columns">
+        <h2 class="subhead">
+            To
+
+            <div><small>@webUser.Email</small></div>
+        </h2>
+    </div>
+</div>
+<div class="row bump-15">
+    <div class="large-12 columns">
+        <h2 class="subhead">
+            Subject
+            <div><small>Test mail from @Model.Application.Name</small></div>
+        </h2>
+    </div>
+</div>
+<div class="row bump-15">
+    <div class="large-12 columns">
+        <a class="button" href="@testmailurl">Send</a>
+    </div>
+</div>

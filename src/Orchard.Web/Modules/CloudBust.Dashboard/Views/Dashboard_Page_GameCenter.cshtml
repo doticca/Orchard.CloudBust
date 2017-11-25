@@ -1,0 +1,96 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@{
+    Script.Require("Highlight");
+    Style.Require("Highlight_dark");
+}
+@using (Html.BeginFormAntiForgeryPost())
+{
+<div class="row bump-15">
+    <div class="large-12 medium-12 columns">
+        <ul class="tabs" data-tabs id="bundle-tabs">
+            <li class="tabs-title is-active first"><a href="#bundleios">iOS</a></li>
+            <li class="tabs-title"><a href="#bundleosx">OSX (Mac)</a></li>
+            <li class="tabs-title"><a href="#bundletvos">Apple TV</a></li>
+            <li class="tabs-title last"><a href="#bundlewatch">Apple Watch</a></li>
+        </ul>
+        <div class="tabs-content" data-tabs-content="bundle-tabs">
+
+            <div class="tabs-panel is-active" id="bundleios">
+                <label for="BundleIdentifier">
+                    Bundle Identifier for iOS
+                    <input id="BundleIdentifier" name="BundleIdentifier" type="text" placeholder="Find your bundle Identifier in your Xcode Project's iOS Application Target" value="@Model.Application.BundleIdentifier" />
+                </label>
+            </div>
+            <div class="tabs-panel" id="bundleosx">
+                <label for="BundleIdentifierOSX">
+                    Bundle Identifier for OSX
+                    <input id="BundleIdentifierOSX" name="BundleIdentifierOSX" type="text" placeholder="Find your bundle Identifier in your Xcode Project's OSX (Mac) Application Target" value="@Model.Application.BundleIdentifierOSX" />
+                </label>
+            </div>
+            <div class="tabs-panel" id="bundletvos">
+                <label for="BundleIdentifierTvOS">
+                    Bundle Identifier for Apple TV OS
+                    <input id="BundleIdentifierTvOS" name="BundleIdentifierTvOS" type="text" placeholder="Find your bundle Identifier in your Xcode Project's Tv OS Application Target" value="@Model.Application.BundleIdentifierTvOS" />
+                </label>
+            </div>
+            <div class="tabs-panel" id="bundlewatch">
+                <label for="BundleIdentifierWatch">
+                    Bundle Identifier for Apple Watch
+                    <input id="BundleIdentifierWatch" name="BundleIdentifierWatch" type="text" placeholder="Find your bundle Identifier in your Xcode Project's Apple Watch Application Target" value="@Model.Application.BundleIdentifierWatch" />
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+    </div>
+</div>
+}
+<div class="row">
+    <div class="large-12 columns">
+        <h5>Quick Start</h5>
+    </div>
+    <div class="large-12 columns">
+        <pre><code>
+// Set your View Controller as a CloudBust Delegate
+@@interface HomeViewController : UIViewController<<a />CloudBustDelegate>
+@@end
+@@implementation HomeViewController
+// Listen for an event that user has succesfully Logged In.
+-(void)UserLoggedIn:(NSString *)DisplayName IsNew:(BOOL)isNew{
+// Start the Game
+}
+// Listen for an event to display the Game Center Login View
+-(void)GameKitShowAuthenticationController:(UIViewController *)AuthenticationViewController
+{
+[self presentViewController:AuthenticationViewController animated:YES completion:nil];
+}
+- (void)viewDidAppear:(BOOL)animated {
+{   
+[super viewDidAppear:animated];
+// Route all CloudBust events to this View Controller
+[CloudBust shared].delegate = self;
+// Start the async Connection to Game Center
+[[CloudBust shared] connectGameKit];
+}
+@@end
+        </code></pre>
+    </div>
+    <div class="large-12 columns"></div>
+</div>
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        $(function () {
+            hljs.initHighlightingOnLoad();
+        });
+    </script>
+}

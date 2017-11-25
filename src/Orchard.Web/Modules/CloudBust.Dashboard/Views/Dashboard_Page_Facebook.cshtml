@@ -1,0 +1,57 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@{
+    string fbappkey = Model.Application.fbAppKey;
+    string reseturl = Url.Content("~") + "dashboard/applications/" + Model.Application.AppKey + "/reset";
+    string codeurl = Model.Uri.ToString();
+}
+
+@using (Html.BeginFormAntiForgeryPost())
+{
+<div class="row bump-15">
+    <div class="large-3 columns">
+        <label for="fbAppKey">
+            App ID
+            <input id="fbAppKey" name="fbAppKey" type="text" placeholder="App ID" value="@Model.Application.fbAppKey" />
+        </label>
+    </div>
+    <div class="large-4 columns">
+        <label for="fbAppSecret">
+            App Secret
+            <input id="fbAppSecret" name="fbAppSecret" type="text" placeholder="App Secret" value="@Model.Application.fbAppSecret" />
+        </label>
+    </div>
+    <div class="large-5 columns"></div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+    </div>
+</div>
+}
+@if (!string.IsNullOrWhiteSpace(fbappkey))
+{
+<div class="row" style="">
+    <div class="large-12 columns">
+        Follow these steps at
+        <a href='https://developers.facebook.com/quickstarts/@fbappkey/?platform=ios'>
+            <i class="fi-social-facebook"></i>
+            <span style="margin-left:-1px;">acebook Quick start guide for iOS</span>
+        </a>
+        to prepare your Xcode project for facebook login
+    </div>
+</div>
+<div class="row" style="">
+    <div class="large-12 columns">
+        Download
+        <a href='https://origincache.facebook.com/developers/resources/?id=facebook-ios-sdk-current.zip'>
+            <i class="fi-social-facebook"></i>
+            <span style="margin-left:-1px;">acebook SDK for iOS</span>
+        </a>
+    </div>
+</div>
+}

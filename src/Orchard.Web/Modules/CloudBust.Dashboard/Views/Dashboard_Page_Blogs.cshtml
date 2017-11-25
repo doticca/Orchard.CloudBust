@@ -1,0 +1,105 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@{
+    bool bpuchecked = Model.Application.blogPerUser;
+    bool bsechecked = Model.Application.blogSecurity;
+    string checkedbpu = bpuchecked ? "checked" : "";
+    string checkedbse = bsechecked ? "checked" : "";
+}
+@if (!Model.isWebApp)
+{
+<div class="row">
+    <div class="large-12 columns">
+        <h2 class="subhead">
+            To use CloudBust Blog extensions you have to set this application as your main Web Application.
+            Click <a href="~/Admin/Settings/CloudBust">here</a> to check your web application settings.
+        </h2>
+    </div>
+</div>
+}
+else
+{
+    using (Html.BeginFormAntiForgeryPost())
+    {
+<div id="doticcasettings">
+    <div class="row">
+        <div class="large-4 columns end">
+            <label>1-Blog per User</label>
+            <div class="switch">
+                <input class="switch-input" id="blogPerUser" name="blogPerUser" type="checkbox" @checkedbpu value="@Model.Application.blogPerUser">
+                <label class="switch-paddle" for="blogPerUser"><span class="show-for-sr">Enable 1-Blog per user</span></label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="panel callout radius">
+                <h5>information</h5>
+                <div class="row">
+                    <div class="large-12 columns">
+                        1-Blog per User will inform the authentication service that each user should have his own Blog. <br />
+                        Blog social settings require 1-Blog per User to be enabled.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="blogusersettings" style="display:none">
+    <div class="row">
+        <div class="large-4 columns end">
+            <label>Blogs Security</label>
+            <div class="switch">
+                <input class="switch-input" id="blogSecurity" name="blogSecurity" type="checkbox" @checkedbse value="@Model.Application.blogSecurity">
+                <label class="switch-paddle" for="blogSecurity"><span class="show-for-sr">Enable Blogs Security</span></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="panel callout radius">
+                <h5>information</h5>
+                <div class="row">
+                    <div class="large-12 columns">
+                        Enabling Blog Security will only allow users to view their own blogs.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+    </div>
+</div>
+    }
+}
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#blogPerUser").click(function () {
+                if (this.checked) {
+                    $("#blogusersettings").show();
+                }
+                else {
+                    $("#blogusersettings").hide();
+                }
+            });
+            if ($("#blogPerUser").prop('checked')) {
+                $("#blogusersettings").show();
+            }
+            else {
+                $("#blogusersettings").hide();
+            }
+        });
+    </script>
+}

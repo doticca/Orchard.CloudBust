@@ -9,7 +9,7 @@ using System.Security;
 [assembly: AssemblyDescription("Common Modules for CloudBust")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("CloudBust")]
-[assembly: AssemblyCopyright("Copyright © 2014, Grapto Ltd.")]
+[assembly: AssemblyCopyright("Copyright © 2014-2017, Doticca SRL")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -26,8 +26,8 @@ using System.Security;
 //
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.10.0.0")]
-[assembly: AssemblyFileVersion("1.10.0.0")]
-[assembly: AssemblyCompany("Grapto Ltd.")]
+[assembly: AssemblyVersion("1.10.2.0")]
+[assembly: AssemblyFileVersion("1.10.2.0")]
+[assembly: AssemblyCompany("Doticca SRL")]
 [assembly: Guid("B8DECE22-D077-4C16-8413-34D124785901")]
 

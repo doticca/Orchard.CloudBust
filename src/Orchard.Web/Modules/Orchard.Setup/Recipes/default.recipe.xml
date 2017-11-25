@@ -16,46 +16,81 @@
                    Orchard.Resources,Orchard.Widgets,Orchard.ContentTypes,
                    Orchard.Scripting,Orchard.Scripting.Lightweight,PackagingServices,Orchard.Packaging,
                    Orchard.Projections,Orchard.Fields,Orchard.OutputCache,Orchard.Taxonomies,Orchard.Workflows,
-                   Orchard.Layouts,Orchard.Layouts.Tokens,
-                   TheThemeMachine" />
+                   CloudBust.Common, CloudBust.Common.ThemePicker, CloudBust.Common.FavIcon,
+                   CloudBust.Foundation, CloudBust.Resources, CloudBust.Resources.Ace, CloudBust.Resources.Emmet,
+                   CloudBust.Resources.Highlight, CloudBust.Resources.ImagesLoaded, CloudBust.Resources.Magnific, CloudBust.Resources.Underscore,
+                   Foundation,
+                   TheAdminFoundation" />
 
     <ContentDefinition>
-        <Types>
-            <Page ContentTypeSettings.Draftable="True" TypeIndexing.Indexes="Search">
-                <TagsPart />
-                <LocalizationPart />
-                <TitlePart/>
-                <AutoroutePart />
-                <MenuPart />
-            </Page>
-            <BlogPost ContentTypeSettings.Draftable="True" TypeIndexing.Indexes="Search">
-                <CommentsPart />
-                <TagsPart />
-                <LocalizationPart />
-                <TitlePart/>
-                <AutoroutePart />
-            </BlogPost>
-        </Types>
-        <Parts>
-            <BodyPart BodyPartSettings.FlavorDefault="html" />
-        </Parts>
+      <Types>
+        <Page ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True" ContentTypeSettings.Draftable="True" TypeIndexing.Indexes="Search" DisplayName="Page">
+          <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-page&quot;,&quot;Culture&quot;:&quot;en-US&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
+          <BodyPart BodyTypePartSettings.Flavor="Tabbed" />
+          <CommonPart DateEditorSettings.ShowDateEditor="True" OwnerEditorSettings.ShowOwnerEditor="True" />
+          <CssPart />
+          <JsPart />
+          <LayoutPart LayoutTypePartSettings.IsTemplate="False" />
+          <LocalizationPart />
+          <MenuPart />
+          <PublishLaterPart />
+          <TagsPart />
+          <TitlePart />
+        </Page>
+        <BlogPost ContentTypeSettings.Draftable="True" TypeIndexing.Indexes="Search">
+          <CommentsPart />
+          <TagsPart />
+          <LocalizationPart />
+          <TitlePart/>
+          <AutoroutePart />
+        </BlogPost>
+      </Types>
+      <Parts>
+        <AutoroutePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Adds advanced url configuration options to your content type to completely customize the url pattern for a content item." />
+        <BodyPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Allows the editing of text using an editor provided by the configured flavor (e.g. html, text, markdown)." ContentPartLayoutSettings.Placeable="True" BodyPartSettings.FlavorDefault="html" />
+        <CommonPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides common information about a content item, such as Owner, Date Created, Date Published and Date Modified." ContentPartLayoutSettings.Placeable="True" />
+        <CssPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Allows the inline editing of Css using Ace editor." />
+        <JsPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Allows the inline editing of Javascript using Ace editor." />
+        <LayoutPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Adds a layout designer to your content type." />
+        <LocalizationPart />
+        <MenuPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides an easy way to create a ContentMenuItem from the content editor." />
+        <PublishLaterPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Adds the ability to delay the publication of a content item to a later date and time." />
+        <TagsPart ContentPartLayoutSettings.Placeable="True" ContentPartSettings.Attachable="True" ContentPartSettings.Description="Allows to describe your content using non-hierarchical keywords." />
+        <TitlePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides a Title for your content item." ContentPartLayoutSettings.Placeable="True" />          
+      </Parts>
     </ContentDefinition>
 
-    <Settings />
+    <Settings>
+      <UnderscoreSettingsPart AutoEnable="false" AutoEnableAdmin="false" />
+      <FoundationSettingsPart AutoEnableAdmin="true" DoNotEnableFrontEnd="false" UseDatePicker="false" UseSelect="false" UseIcons="false" UseNicescroll="false" UsePlaceholder="false" />
+      <SiteSettingsPart SupportedCultures="en-US" PageTitleSeparator=" - " SiteSalt="539d602dcfad40bd873da39a9e14bbc2" SuperUser="admin" SiteCulture="en-US" SiteCalendar="" UseCdn="false" PageSize="10" MaxPageSize="0" MaxPagedCount="0" SiteTimeZone="GTB Standard Time" BaseUrl="" />
+      <RegistrationSettingsPart UsersCanRegister="false" UsersMustValidateEmail="false" UsersAreModerated="false" NotifyModeration="false" EnableLostPassword="false" />
+      <CacheSettingsPart DefaultCacheDuration="300" DefaultCacheGraceTime="60" DefaultMaxAge="0" IgnoreNoCache="false" VaryByCulture="false" CacheAuthenticatedRequests="false" VaryByAuthenticationState="false" DebugMode="false" />
+      <HighlightSettingsPart AutoEnable="false" AutoEnableAdmin="false" FullBundle="false" />
+      <imagesLoadedSettingsPart AutoEnable="true" AutoEnableAdmin="false" />
+      <MagnificSettingsPart AutoEnable="false" AutoEnableAdmin="false" />
+    </Settings>
 
     <Migration features="*" />
 
     <Command>
-        layer create Default /LayerRule:"true" /Description:"The widgets in this layer are displayed on all pages"
-        layer create Authenticated /LayerRule:"authenticated" /Description:"The widgets in this layer are displayed when the user is authenticated"
-        layer create Anonymous /LayerRule:"not authenticated" /Description:"The widgets in this layer are displayed when the user is anonymous"
-        layer create Disabled /LayerRule:"false" /Description:"The widgets in this layer are never displayed"
-        layer create TheHomepage /LayerRule:"url '~/'" /Description:"The widgets in this layer are displayed on the home page"
-        site setting set baseurl
-        menu create /MenuName:"Main Menu"
-        page create /Slug:"welcome-to-orchard" /Title:"Welcome to Orchard!" /Path:"welcome-to-orchard" /Homepage:true /Publish:true /UseWelcomeText:true
-        menuitem create /MenuPosition:"0" /MenuText:"Home" /Url:"~/" /MenuName:"Main Menu"
-        widget create MenuWidget /Title:"Main Menu" /RenderTitle:false /Zone:"Navigation" /Position:"1" /Layer:"Default" /Identity:"MenuWidget1" /MenuName:"Main Menu"
-        theme activate "The Theme Machine"
+      layer create NotFoundPage /LayerRule:"notfound" /Description:"The widgets in this layer are displayed on 404-not found page"
+      layer create Default /LayerRule:"not notfound" /Description:"The widgets in this layer are displayed on all pages, except 404-not found page"
+      layer create AllPages /LayerRule:"true" /Description:"The widgets in this layer are displayed on all pages"
+      layer create Authenticated /LayerRule:"authenticated" /Description:"The widgets in this layer are displayed when the user is authenticated"
+      layer create Anonymous /LayerRule:"not authenticated" /Description:"The widgets in this layer are displayed when the user is anonymous"
+      layer create Disabled /LayerRule:"false" /Description:"The widgets in this layer are never displayed"
+      layer create TheHomepage /LayerRule:"url '~/'" /Description:"The widgets in this layer are displayed on the home page"
+      layer create NotHomepage /LayerRule:"(not url '~/') and (not notfound)" /Description:"The widgets in this layer are displayed on all pages except Home and 404-not found"
+      layer create Cookies /LayerRule:"not url('/cookies*') and not notfound" /Description:"Layer to display Cookies"
+      layer create BlogHome /LayerRule:"(url '~/blog') or (url '~/topic*')" /Description:"Home page for Blog and Topics"
+      layer create BlogPages /LayerRule:"(url '~/blog/*')  and (not notfound)" /Description:"All Blog detail pages"
+      site setting set baseurl
+      menu create /MenuName:"Main Menu"
+      page create /Slug:"welcome-to-orchard" /Title:"Welcome to Orchard!" /Path:"welcome-to-orchard" /Homepage:true /Publish:true /UseWelcomeText:true
+      menuitem create /MenuPosition:"1" /MenuText:"Home" /Url:"~/" /MenuName:"Main Menu"
+      menuitem create /MenuPosition:"2" /MenuText:"Blog" /Url:"~/blog" /MenuName:"Blog"
+      widget create MenuWidget /Title:"Main Menu" /RenderTitle:false /Zone:"Navigation" /Position:"1" /Layer:"AllPages" /Identity:"MenuWidget1" /MenuName:"Main Menu"
+      theme activate "Foundation"
     </Command>
 </Orchard>

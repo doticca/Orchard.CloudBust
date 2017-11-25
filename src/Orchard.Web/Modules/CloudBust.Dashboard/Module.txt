@@ -1,0 +1,11 @@
+Name: CloudBust Dashboard
+Path: CloudBust.Dashboard
+AntiForgery: enabled
+Author: Team Grapto @teamgrapto
+Website: http://www.grapto.com
+Version: 1.10.0
+OrchardVersion: 1.10
+Description: A dashboard for CloudBust APIs.
+Category: Admin
+Dependencies: CloudBust.Application, CloudBust.Resources.Highlight, Orchard.Autoroute, Orchard.Users
+

@@ -1,0 +1,43 @@
+﻿@using Orchard.Utility.Extensions;
+@using System.Globalization;
+@{
+    if (Model.Title != null)
+    {
+        Layout.Title = Model.Title;
+    }
+
+    Model.Classes.Add("content-item");
+
+    var contentTypeClassName = ((string)Model.ContentItem.ContentType).HtmlClassify();
+    Model.Classes.Add(contentTypeClassName);
+    Model.Classes.Add("summary");
+    var tag = Tag(Model, "article");
+
+    dynamic colorval = Model.ContentItem.BlogPost.Color.Value;
+    string color = colorval;
+    int r = int.Parse(color.Substring(1, 2), System.Globalization.NumberStyles.HexNumber);
+    int g = int.Parse(color.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
+    int b = int.Parse(color.Substring(5, 2), System.Globalization.NumberStyles.HexNumber);
+    string tcolor = string.Format("rgba({0}, {1}, {2}, {3});", r, g, b, 0.1);
+}
+@tag.StartElement
+<header>
+    @Display(Model.Header)
+    @if (Model.Meta != null)
+    {
+        <div class="metadata">
+            @Display(Model.Meta)
+        </div>
+    }
+</header>
+<div class="details" style="background-color:@tcolor">
+    @Display(Model.Content)
+    <div class="actions"><a class="button secondary large hollow" href="@Url.ItemDisplayUrl((Orchard.ContentManagement.ContentItem)Model.ContentItem)">@T("Read More")</a></div>
+</div>
+@if (Model.Footer != null)
+{
+    <footer>
+        @Display(Model.Footer)
+    </footer>
+}
+@tag.EndElement

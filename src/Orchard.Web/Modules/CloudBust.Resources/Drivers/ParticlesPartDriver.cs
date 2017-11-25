@@ -17,11 +17,7 @@ namespace CloudBust.Resources.Drivers {
         }
         protected override DriverResult Display(ParticlesPart part, string displayType, dynamic shapeHelper)
         {
-            if (string.IsNullOrWhiteSpace(part.JsonUrl))
-            {
-                var jsonurl = _particlesService.GetJsonUrl();
-                part.JsonUrl = jsonurl;
-            }
+            part.JsonUrl = _particlesService.GetJsonUrl();
             return ContentShape("Parts_Particles",
                             () => shapeHelper.Parts_Particles(Url: part.JsonUrl));
         }

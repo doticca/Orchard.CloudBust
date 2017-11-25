@@ -1,0 +1,10 @@
+﻿@using CloudBust.Blogs.Models;
+@{
+    PreviewPart preview = Model.ContentItem;
+}
+@if (preview != null && !string.IsNullOrWhiteSpace(preview.PreviewText))
+{
+    <div class="preview">
+        @Html.Raw(preview.PreviewText)
+    </div>
+}

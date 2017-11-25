@@ -1,0 +1,65 @@
+﻿@using Orchard.ContentManagement
+@model CloudBust.Dashboard.ViewModels.UserInvitesViewModel
+@{
+    int rowcounter = 0;
+    string zebra = string.Empty;
+}
+<div class="row">
+    <div class="columns">
+        <h1>@Html.TitleForPage(T("Pending Invitations").ToString()) </h1>
+        @if (Model.Invitations.Count() > 0)
+        {
+            <p>This is a list of pending invitations waiting for your approval.</p>
+        }
+        else
+        {
+            <p>There are no pending invitations.</p>
+        }
+    </div>
+</div>
+@if (Model.Invitations.Count() > 0)
+{
+<div class="row bump-15 header">
+    <div class="text-left large-2 medium-3 small-6 columns"><h5>From</h5></div>
+    <div class="text-left large-4 medium-3 small-6 columns end"><h5>Message</h5></div>
+    <div class="text-left large-6 medium-6 hide-for-small-only columns"><h5>Actions</h5></div>
+</div>
+}
+@foreach (var row in Model.Invitations)
+{
+    rowcounter = rowcounter + 1;
+    zebra = "zebra-" + rowcounter % 2;
+    var request = string.Empty;//Url.Content("~") + "dashboard/games/" + row.AppKey;
+
+    <div class="row app @zebra" data-url="@request" data-click="@Url.Action("Invitation", "Account", new { Area = "CloudBust.Application", nonce=row.Hash })">
+        <div class="text-left large-2 medium-3 small-6 columns">
+            <h6 class="subhead">
+                @row.UserProfilePartRecord.FirstName<br><small>@row.UserProfilePartRecord.LastName  </small>
+            </h6>
+        </div>
+        <div class="text-left large-4 medium-3 small-6 columns end">
+            <h6>@row.Message</h6>
+        </div>
+        <div class="text-left large-6 medium-6 columns with-subhead">
+            <a href="@Url.Action("AcceptInvitation", "Admin", new { Area = "CloudBust.Application", nonce=row.Hash })" class="tiny button">Approve</a>
+            <a href="" class="tiny button alert">Reject</a>
+            <a href="" class="tiny button warning">Reject with a Message</a>
+        </div>
+        
+    </div>
+}
+<div class="row bump-30 columns">
+    <a href="~/dashboard/applications/@Model.Application.AppKey/users" class="secondary button">Cancel</a>
+</div>
+
+@using (Script.Foot())
+{
+    <script>
+        $(function () {
+            $('.row.app').click(function () {
+                var url = $(this).data('click');
+                window.location.href = url;
+            });
+        });
+    </script>
+}

@@ -1,0 +1,78 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationsViewModel
+@{
+    int rowcounter = 0;
+    string zebra = string.Empty;
+}
+       
+<div class="dashboardarea">
+    <ul class="breadcrumbs hide-for-small">
+        <li><a href="~/dashboard">Dashboard</a></li>
+        <li class="current"><a href="#">Applications</a></li>
+    </ul>
+    <div class="row bump-25">
+        <h1 class="header-apps subhead">
+
+
+            Manage Your Apps
+            <div><small>Select an app to view and edit your settings</small></div>
+        </h1>
+    </div>
+    <div class="row bump-15 header">
+        <div class="text-left small-6 large-3 medium-3 columns">Application</div>
+        <div class="text-left large-1 medium-1 hide-for-small-only columns">Created</div>
+        <div class="text-left large-1 medium-1 hide-for-small-only columns">Modified</div>
+        <div class="text-left large-1 medium-1 hide-for-small-only columns">Owner</div>
+        <div class="text-left large-2 medium-2 hide-for-small-only columns">Key</div>
+        <div class="text-left large-1 medium-1 hide-for-small-only columns">OAuth</div>
+        <div class="text-left large-3 medium-3 hide-for-small-only columns">Login</div>
+    </div>
+
+
+    @foreach (var row in Model.Applications)
+    {
+        rowcounter = rowcounter + 1;
+        zebra = "zebra-" + rowcounter % 2;
+        var request = Url.Content("~") + "dashboard/applications/" + row.AppKey;
+
+        <div class="row app @zebra" data-url="@request">
+            <div class="text-left small-6 large-3 medium-3 columns">
+                <h2 class="subhead" style="margin-bottom:0">
+                    @row.Name<br><small>@row.Description</small>
+                </h2>
+            </div>
+            <div class="small-6 show-for-small-only columns"><a href="#" class="button tiny">Select</a></div>
+            <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns">@row.CreatedUtc</div>
+            <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns">@row.ModifiedUtc</div>
+            <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns">@row.owner</div>
+            <div class="gridcell small-12 show-for-small-only columns">owner: @row.owner</div>
+
+            <div class="gridcell text-left large-2 hide-for-small-only medium-2 columns">@row.AppKey</div>
+            <div class="gridcell small-12 show-for-small-only columns">key: @row.AppKey</div>
+
+            @if (!string.IsNullOrWhiteSpace(row.fbAppKey))
+            {
+                <div class=" text-left large-1 hide-for-small-only medium-1 columns">
+                    <img src="~/Themes/Foundation. CloudBust/css/img/fb_ico.png">
+                </div>
+            }
+            <div class="gridcell text-left large-3 hide-for-small-only medium-3 columns">@row.LastLoginUtc</div>
+            
+        </div>
+    }
+
+    <div class="bump-60"></div>
+</div>
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        $( ".row.app" ).click(function() {
+            window.location = $(this).data('url');
+        });
+    </script>
+
+}

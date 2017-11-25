@@ -1,39 +1,71 @@
 @using Orchard.UI.Resources;
 @{
+    Style.Include("bootstrap.css");
     Script.Require("ShapesBase");
-    Style.Include("site.css");
+    Script.Include("bootstrap.js");
+    Script.Include("safemode.js");
     RegisterLink(new LinkEntry { Condition = "lte IE 6", Rel = "stylesheet", Type="text/css", Href = Href("../Styles/ie6.css")}.AddAttribute("media", "screen, projection"));
 
     if (!string.IsNullOrEmpty(WorkContext.CurrentSite.SuperUser)) {
         WorkContext.Layout.Footer.Add(New.User(), "10"); // Login and dashboard links
     }
+    string title = Convert.ToString(Model.Title);
+    string url = Request.Url.AbsolutePath.ToString().ToLower();
 }
-<div id="header">
-    <div id="branding">
-        <h1>@T("Welcome to Orchard")</h1>
+<header class="navbar navbar-inverse  navbar-fixed-top bs-docs-nav" role="banner">
+<div class="container">
+<div class="navbar-header">
+    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    </button>
+    <a href="~/setup/doticca" class="navbar-brand">Doticca</a>
+</div>
+@if (Model.Navigation != null)
+{
+    @Display(Model.Navigation)
+}
+else{
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li id="mnu_getstarted">
+          <a href="~/setup/index">Get Started</a>
+        </li>        
+        <li id="mnu_howto">
+          <a href="~/setup/howto">How To</a>
+        </li>
+      </ul>
+    </nav>
+
+}
+</div>
+</header>
+
+<div class="bs-header" id="content">
+    <div class="container">
+        <h1>@T("Welcome to CloudBust")</h1>
+        Your out of the box server solution for web applications
+        @if (Model.Messages != null) {
+        <p>@Display(Model.Messages)</p>
+        }
     </div>
 </div>
 
-@if (Model.Navigation != null) {
-<div id="layout-navigation" class="group">
-    @Display(Model.Navigation)
-</div>
-}
-
-@if (Model.Messages != null) {
-<div id="messages">
-    @Display(Model.Messages)
-</div>
-}
-
-<div id="main">
+<div class="container grapto-container">
 @if (Model.Content != null) {
     @Display(Model.Content)
 }
 </div>
 
+<div id="footer" class="bs-footer" role="contentinfo">
+    <div class="container">
 @if (Model.Footer != null) {
-<div id="footer" role="contentinfo">
-    @Display(Model.Footer)
-</div>
+        @Display(Model.Footer)
 }
+    <p>Theme powered by <a href="http://getbootstrap.com/" target="_blank">Bootstrap v3.0</a></p>
+    <p>Your cloudbust solution is based on <a href="http://cloudbust.doticca.com/" target="_blank">CloudBust</a> platform</p>
+    </div>
+</div>
+

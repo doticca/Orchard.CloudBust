@@ -1,0 +1,20 @@
+﻿@{
+    var tagsHtml = new List<IHtmlString>();
+    foreach(var t in Model.Tags) {
+        if (tagsHtml.Any()) {
+            tagsHtml.Add(new HtmlString(""));
+        }
+        tagsHtml.Add(Html.ActionLink((string)t.TagName, "Search", "Home", new { area = "Orchard.Tags", tagName = (string)t.TagName }, new { @class = "round" }));
+    }
+}
+
+@if (tagsHtml.Any()) {
+    <div class="tags blog-post-body">
+        <ul>
+            @foreach (var htmlString in tagsHtml)
+            {
+                <li>@htmlString </li>
+            }
+        </ul>
+    </div>
+}

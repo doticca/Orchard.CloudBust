@@ -1,0 +1,41 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.GameEventDeleteViewModel
+@{
+
+    
+}
+
+
+<div class="dashboardarea">
+    <div class="row bump-25">
+        <h1 class="header-delete subhead">
+            Delete Event @Model.EventName
+            <div><small>@Model.EventDescription</small></div>
+        </h1>
+        <hr />
+    </div>
+
+        @using (Html.BeginFormAntiForgeryPost())
+        {
+            <div class="row">
+                <div class="large-6 columns">
+                    <h2>
+                        Really delete the event @Model.EventName ?
+                    </h2>
+                    <span class="label important">Warning</span> Removing this event will reject ALL ASSOCIATED CALLS from your client to your backend application regarding this event! There is no way to undo this, so proceed with caution.
+                </div>
+                <div class="large-6 small-12 columns">
+                    <div class="bump-25"></div>
+                    <a href="~/dashboard/games/@Model.GameKey/events" class="button secondary">Cancel</a>
+                    <input type="submit" class="button alert" name="submit.Delete" value="Yes, delete the Event!">
+                </div>
+
+            </div>
+        }
+    
+    <div class="row bump-25"></div>
+</div>
+

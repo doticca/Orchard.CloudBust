@@ -25,5 +25,6 @@ namespace Orchard.Setup.ViewModels {
         public IEnumerable<Recipe> Recipes { get; set; }
         public string Recipe { get; set; }
         public string RecipeDescription { get; set; }
+        public bool startAzure { get; set; }
     }
 }

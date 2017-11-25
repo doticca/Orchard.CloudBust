@@ -1,0 +1,39 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@model CloudBust.Dashboard.ViewModels.ApplicationDeleteViewModel
+@{
+
+    
+}
+
+
+<div class="dashboardarea">
+    <div class="row bump-25">
+        <h1 class="header-delete subhead">
+            Delete @Model.Application.Name
+            <div><small>@Model.Application.Description</small></div>
+        </h1>
+        <hr />
+    </div>
+    @using (Html.BeginFormAntiForgeryPost())
+    {
+        <div class="row">
+            <div class="large-6 columns">
+                <h2>
+                    Really delete @Model.Application.Name ?
+                </h2>
+                <span class="label important">Warning</span> Removing this application will remove ALL ASSOCIATED DATA from CloudBust <em class="red">completely</em>! There is no way to undo this, so proceed with caution.
+            </div>
+            <div class="large-6 small-12 columns">
+                <div class="bump-25"></div>
+                <a href="~/dashboard/applications/@Model.Application.AppKey" class="button secondary">Cancel</a>
+                <input type="submit" class="button alert" name="submit.Delete" value="Yes, delete entire application">
+            </div>
+
+        </div>
+    }
+    <div class="row bump-25"></div>
+</div>
+

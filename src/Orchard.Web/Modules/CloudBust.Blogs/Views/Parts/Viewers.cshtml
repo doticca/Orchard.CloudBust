@@ -1,0 +1,40 @@
+﻿@using Orchard.Utility.Extensions;
+@{
+    string rooturl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath;
+
+    Style.Require("Grapto_Viewers");
+    Script.Require("Grapto_Viewers");
+
+    double userRating = Model.UserRating;
+    bool userCanRate = Request.IsAuthenticated || Model.AllowAnonymousRatings;
+    //if (userCanRate && !Request.IsAuthenticated && Request.Cookies["Orchrd__viewers"] != null && !string.IsNullOrWhiteSpace(Request.Cookies["Orchrd__viewers"].Value))
+    //{
+    //    userRating = Convert.ToDouble(Request.Cookies["Orchrd__viewers"].Value);
+    //}
+    //if (Model.Count == 0)
+    //{
+    //    Model.Count = 1;
+    //}
+    //if (Model.UserRating == 0) {
+    //    Model.UserRating = 1;
+    //}
+    //if (Model.ResultValue == 0)
+    //{
+    //    Model.ResultValue = 1;
+    //}
+}
+@if (userCanRate) {
+    <div class="viewers-rating">      
+        @if (Request.IsAuthenticated)
+        {
+            <span class="viewers-count" style="display:none">@(Model.Count) unique views</span>
+            <span class="viewers-current" style="display:none">@if (Model.UserRating == 1)
+            {<text>this is your first time here! Welcome.</text>}
+            else {<text>you've seen this&nbsp;@(Model.UserRating)&nbsp;times</text>}</span>
+        }
+        <span class="viewers-total" style="display:none">Total impressions:&nbsp;@(Model.ResultValue)</span>         
+        @Html.Hidden("contentId", (int)Model.ContentItem.Id)
+        @Html.Hidden("contentType", (string)Model.ContentItem.ContentType)
+    </div><div class="clearfix"></div>
+}
+

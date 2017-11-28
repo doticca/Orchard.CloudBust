@@ -3,14 +3,14 @@
     var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Model.Items);
     string siteName = Convert.ToString(WorkContext.CurrentSite.SiteName);
 }
-<nav class="site-menu scrollhide-nav show-for-medium">
-    <div class="menu-left>">
+<nav class="site-menu scrollhide-nav show-for-medium noselect">
+    <div class="menu-logo">
         <ul class="menu">
             <li class="topbar-title"><a class="site-logo" href="@Url.Content("~/")">@siteName</a>
             </li>
         </ul>
     </div>
-    <div class="menu-right">
+    <div class="menu-center">
         <ul class="dropdown menu" data-dropdown-menu data-click-open="false">@DisplayChildren(Model)</ul>
     </div>
 </nav>

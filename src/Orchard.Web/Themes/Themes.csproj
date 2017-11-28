@@ -377,6 +377,15 @@
     <Content Include="Foundation\Styles\fonts\Heroes-Legend.ttf.eot" />
     <Content Include="Foundation\Styles\fonts\Heroes-Legend.ttf.woff" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Parts\Title.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Content-TopicTerm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Parts\Share.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

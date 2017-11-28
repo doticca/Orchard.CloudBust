@@ -80,7 +80,7 @@ div.curved {
         padding-top: 50px;
     }
 }
-@media only screen and (min-width: 1400px) {
+/*@media only screen and (min-width: 1360px) {
     .site-hero.home-large-hero {
         padding-bottom: 300px;
         padding-top: 230px;
@@ -90,7 +90,7 @@ div.curved {
         padding-bottom: 100px;
         padding-top: 80px;
     }
-}
+}*/
 .homepage .hero-main-header {
     text-align: left;
 }

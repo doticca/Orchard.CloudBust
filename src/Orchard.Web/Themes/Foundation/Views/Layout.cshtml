@@ -9,7 +9,7 @@
 @{
     /* Global includes for the theme are set inside Document.cshtml to bypass Orchard lack of ordering css files
     ***************************************************************/
-    
+
 
 
     /* Some useful shortcuts or settings
@@ -31,7 +31,7 @@
 
     WorkContext.Layout.Header.Add(New.Branding(), "5"); // Site name and link to the home page
     WorkContext.Layout.Footer.Add(New.BadgeOfHonor(), "5"); // Powered by Orchard
-    WorkContext.Layout.Footer.Add(New.User(), "10"); // Login and dashboard links
+    //WorkContext.Layout.Footer.Add(New.User(), "10");
 
     /* Last bit of code to prep the layout wrapper
     ***************************************************************/
@@ -81,7 +81,7 @@
     }
 <section id="main">
 @if (Model.Content != null) {
-    <div class="row" id="content">
+    <div  id="content">
     @Zone(Model.Content)
     </div>
 }

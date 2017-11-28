@@ -1,0 +1,66 @@
+﻿@{
+    Script.Require("Magnific").AtFoot();
+    Style.Require("Magnific");
+
+    string title = Model.ContentItem.TitlePart.Title;
+}
+<div class="share blog-post-body">
+    <a href="#productShare" class="share button open-popup-link">Share</a>
+</div>
+<div id="productShare" class="productSharePopUp mfp-hide">
+    <div class="productSharePopUpTitle">ΜΟΙΡΑΣΟΥ</div>
+    <div class="productSharePopUpContent">
+        @if (Model.ShowFacebook)
+        {
+        <a href="" onclick="fbShare('@Request.Url');return false;">
+            <img src="/Modules/CloudBust.Blogs/Styles/img/share-img-fb.png" alt="Share Post in Facebook">
+        </a>
+        }
+        @if (Model.ShowTwitter)
+        {
+        <a href="" onclick="twitterShare('@Request.Url', '@title'); return false;">
+            <img src="/Modules/CloudBust.Blogs/Styles/img/share-img-twitter.png" alt="Share Post in Twitter">
+        </a>
+        }
+        @if (Model.ShowMail)
+        {
+        <a href="mailto:?subject=@title&body=@Request.Url">
+            <img src="/Modules/CloudBust.Blogs/Styles/img/share-img-email.png" alt="Email this Post">
+        </a>
+        }
+    </div>
+
+
+</div>
+@using (Script.Foot())
+{
+    <script>
+        function fbShare(sharedUrl) {
+            var leftPosition, topPosition;
+            var width = 400;
+            var height = 350;
+            leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
+            topPosition = (window.screen.height / 2) - ((height / 2) + 100);
+            var windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
+            window.open("http://www.facebook.com/sharer.php?u=" + encodeURIComponent(sharedUrl), "sharer", windowFeatures);
+            return false;
+        }
+        function twitterShare(sharedUrl, sharedTitle) {
+            var leftPosition, topPosition;
+            var width = 400;
+            var height = 350;
+            leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
+            topPosition = (window.screen.height / 2) - ((height / 2) + 100);
+            var windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
+            window.open("https://twitter.com/share?" + sharedUrl + "&text=" + sharedTitle, "sharer", windowFeatures);
+        }
+        $(document).ready(function () {
+            $('.open-popup-link').magnificPopup({
+                type: 'inline',
+                midClick: true,
+                removalDelay: 300,
+                mainClass: "mfp-fade"
+            });
+        });
+    </script>
+}

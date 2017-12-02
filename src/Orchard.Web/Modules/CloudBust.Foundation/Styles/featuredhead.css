@@ -39,9 +39,13 @@ div.curved {
     left: -1%;
     bottom: -50px;
 }
+.site-hero {
+    padding: 12rem 0 14rem;
+}
 @media screen and (max-width: 39.9375em) {
-    .site-hero {
-        padding: 1.875rem 0;
+    .site-hero.home-large-hero {
+        background-position: center;
+        padding: 9rem 0 11rem;
     }
     div.curved {
         height: 40px;
@@ -54,11 +58,11 @@ div.curved {
         font-weight: 200;
     }
 }
-@media only screen and (min-width: 40em) and (max-width: 63.9375em) {
+
+@media only screen and (min-width: 40em){
     .site-hero.home-large-hero {
         background-position: center;
-        padding-bottom: 200px;
-        padding-top: 130px;
+        padding: 12rem 0 14rem;
     }
     div.curved {
         height: 80px;
@@ -69,28 +73,6 @@ div.curved {
         padding-top: 50px;
     }
 }
-@media only screen and (min-width: 64em) {
-    .site-hero.home-large-hero {
-        padding-bottom: 250px;
-        padding-top: 180px;
-        background-size: cover;
-    }
-    article.submenu .site-hero.home-large-hero {
-        padding-bottom: 70px;
-        padding-top: 50px;
-    }
-}
-/*@media only screen and (min-width: 1360px) {
-    .site-hero.home-large-hero {
-        padding-bottom: 300px;
-        padding-top: 230px;
-        background-position-y: bottom;
-    }
-    article.submenu .site-hero.home-large-hero {
-        padding-bottom: 100px;
-        padding-top: 80px;
-    }
-}*/
 .homepage .hero-main-header {
     text-align: left;
 }

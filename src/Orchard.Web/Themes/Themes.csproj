@@ -353,7 +353,7 @@
     <Content Include="Foundation\Views\Content-BlogPost.Summary.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Foundation\Views\Media-Image.Thumbnail.cshtml" />
+    <Content Include="Foundation\Views\Media-Image.Screenshot.cshtml" />
     <Content Include="Foundation\Views\Media.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +385,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Foundation\Views\Parts\Share.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Foundation\Views\Fields\MediaLibraryPicker-BlogPost-FeaturedImage.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

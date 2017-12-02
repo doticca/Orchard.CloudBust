@@ -1,0 +1,16 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.MediaLibrary.Fields
+@using Orchard.Utility.Extensions;
+
+@{
+    var field = (MediaLibraryPickerField) Model.ContentField;
+    string displayName = field.DisplayName;
+    string name = field.Name;
+    var contents = field.MediaParts;
+}
+<section class="intro-image">
+@foreach (var content in contents)
+{
+    @Display(BuildDisplay(content, "Screenshot"))
+}
+</section>

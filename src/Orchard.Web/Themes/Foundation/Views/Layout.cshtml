@@ -119,22 +119,32 @@
         var nav = $('.scrollhide-nav');
         var subnav = $('.sub-nav-links');
         var distance = 0;
+        var distancenav = nav.offset().top;
         if(subnav.length>0)
-            distance = nav.offset().top;
+            distance = $('.sub-nav-links').offset().top;
 
         $window.on('scroll', function(){
             var scrollTop = $window.scrollTop();
-            if(distance>0)
-                nav.toggleClass('hidden', scrollTop > prev || scrollTop > distance - nav.height());
+
+            if(distancenav>0)
+                nav.toggleClass('hidden', scrollTop > prev || scrollTop > distancenav - nav.height());
             else
                 nav.toggleClass('hidden', scrollTop > prev);
-            prev = scrollTop;
+
             if (scrollTop > 0 ) {
                 nav.addClass('change');
             }
             else{
 	            nav.removeClass('change');
             }
+
+            if (scrollTop >= distance ) {
+                $('.sub-nav-links').addClass('fixed');
+            }
+            else{
+	            $('.sub-nav-links').removeClass('fixed');
+            }
+            prev = scrollTop;
         });
     </script>
 }

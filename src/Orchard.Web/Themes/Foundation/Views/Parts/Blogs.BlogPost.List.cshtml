@@ -23,7 +23,7 @@
         firstItem = null;
     }
 }
-<div class="blog-head">
+<div class="blog-head row">
     @if (firstItem != null)
     {
         ShapeMetadata metadata = firstItem.Metadata;
@@ -39,36 +39,38 @@
         var itemTag = Tag(firstItem, "li");
         itemTag.AddCssClass("first blog-head");
         @itemTag.StartElement
-        @Display(firstItem)                
+        @Display(firstItem) 
         @itemTag.EndElement
         @listTag.EndElement
     }
 </div>
-<div class="blog-details">
+<div class="blog-details row">
 @if (items.Count > 1)
 {
-    <div class="row">
-        <div class="columns">
-            <span class="recent icon"></span>
-            <span class="recent label">MOST RECENT ARTICLES</span>
-        </div>
+    <div class="columns">
+        <span class="recent icon"></span>
+        <span class="recent label">MOST RECENT ARTICLES</span>
     </div>
 }
-@listTag.StartElement
-@foreach (var item in items)
-{
-    var itemTag = Tag(item, "li");
-    if (index == count - 1)
-    {
-        itemTag.AddCssClass("last");
-    }
-    if (index > 0)
-    {
-        @itemTag.StartElement
-        @Display(item)
-        @itemTag.EndElement
-    }
-    ++index;
-}
-@listTag.EndElement
+    <div class="columns">
+        @listTag.StartElement
+        @foreach (var item in items)
+        {
+            var itemTag = Tag(item, "li");
+            itemTag.AddCssClass("medium-4");
+            if (index == count - 1)
+            {
+                itemTag.AddCssClass("last");
+            }
+            if (index > 0)
+            {
+                @itemTag.StartElement
+                @Display(item)
+                @itemTag.EndElement
+            }
+            ++index;
+        }
+        @listTag.EndElement
+    </div>
 </div>
+

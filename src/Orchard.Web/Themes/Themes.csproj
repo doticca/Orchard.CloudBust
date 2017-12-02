@@ -92,8 +92,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Foundation\Styles\pages.css" />
     <Content Include="Foundation\Styles\fonts\Heroes-Legend.ttf.svg" />
     <Content Include="Foundation\Styles\img\recenticon.png" />
+    <Content Include="Foundation\Styles\blogs.css" />
     <Content Include="SafeMode\Content\pattern.png" />
     <Content Include="SafeMode\Scripts\bootstrap.js" />
     <Content Include="SafeMode\Scripts\safemode.js" />

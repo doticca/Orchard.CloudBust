@@ -195,15 +195,6 @@ ul li {
     padding: 0 0;
 }
 
-.nav-text-link {
-    color: #8b959c;
-    font-family: Helvetica, san-serif;
-    font-size: 1rem;
-    position: relative;
-    text-decoration: none;
-    -webkit-transition: color 0.3s ease;
-    transition: color 0.3s ease;
-}
 .title-bar {
     background: #2c3840;
     padding: 0.67rem;
@@ -611,7 +602,7 @@ a.twitter {
 
 .nav-text-link {
     color: #8b959c;
-    font-size: 1rem;
+    font-size: 14px;
     position: relative;
     text-decoration: none;
     -webkit-transition: color 0.3s ease;
@@ -1129,6 +1120,13 @@ img.search-icon{
         font-size: 9vw;
         line-height: 1.5;
     }
+    .nav-text-link {
+        font-size: 12px;
+    }
+    .sub-nav ul li {
+        font-size: 12px;
+        padding: .2rem 0;
+    }
 }
 .zone,
 .off-canvas-content,
@@ -1247,6 +1245,11 @@ article.flexbox:not(.over) {
 }
 
 /* utilities */
+.align-center {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -1263,6 +1266,16 @@ article.flexbox:not(.over) {
     -ms-flex: 0 0;
     flex: 0 0;
     max-width: 100%;
+}
+
+.reversed {
+    background-color: #202626;
+    color: rgb(254,254,254);
+}
+
+.grayed {
+    background-color: #f1f2f3;
+    color: #2A2E31;
 }
 /* misc */
 .credits {

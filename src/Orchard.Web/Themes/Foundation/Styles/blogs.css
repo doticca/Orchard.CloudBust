@@ -209,13 +209,12 @@ li article.blog-post div.details,
 li article.blog-post div.details p,
 li article.blog-post div.details div.preview {
     color: #b4b4b4;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
 }
 
 li.first article.blog-post {
     height: 550px;
-    max-height: 550px;
     margin-bottom: 20px;
     width: 100%;
 }
@@ -325,7 +324,7 @@ li.first article.summary.blog-post img {
 }
 
 li.first article.blog-post div.details {
-    padding: 40px 0px 20px 0px;
+    padding: 40px 25px 20px 25px;
 }
 
 li.first h1.summary {
@@ -339,8 +338,6 @@ li.first h1.summary {
 
 li.first article.blog-post {
     height: 480px;
-    max-height: 480px;
-    margin-bottom: 20px;
 }
 
 li article.blog-post {
@@ -348,6 +345,10 @@ li article.blog-post {
 }
 
 @media only screen and (max-width: 1250px) {
+    p {
+        line-height: 1.7;
+        margin-bottom: 1rem;
+    }
     .detail-blog-post section#main {
         padding: 0;
     }
@@ -362,64 +363,25 @@ li article.blog-post {
         max-width: 100%;
     }
 
-    li.first article.blog-post header {
-        /*width: 615px;*/
-    }
-
     li.first article.summary.blog-post img {
         width: 100%;
         height: 100%;
-        /*max-height: 375px;
-        min-height: 375px;*/
     }
 
     li.first article.blog-post div.details {
         float: right;
-        /*width: 334px;*/
-        padding: 40px 30px 20px 30px;
-    }
-
-    li.first h1.summary {
-        line-height: 20px;
-        padding: 15px 0;
-    }
-
-        li.first h1.summary a {
-            font-size: 14px;
-        }
-
-    li.first article.blog-post {
-        /*height: 375px;
-        max-height: 375px;
-        margin-bottom: 20px;*/
+        padding: 40px 20px 20px 20px;
     }
 
     li article.blog-post {
-        /*width: 300px;*/
-        height: 370px;
-    }
-
-    article.summary.blog-post header {
-        /*width: 300px;*/
-    }
-
-    ul.blog-posts li article.summary.blog-post {
-        /*margin-right: 12px;*/
-    }
-
-    .blog-details {
-        /*width: 624px;*/
+        height: 400px;
     }
 
     li article.blog-post div.details,
     li article.blog-post div.details p,
     li article.blog-post div.details div.preview {
         color: #b4b4b4;
-        font-size: 13px;
-    }
-
-    .metadata .published, .details .published {
-        padding: 5px 0 10px 0;
+        font-size: 14px;
     }
 
     article.summary.blog-post header img {
@@ -431,42 +393,36 @@ li article.blog-post {
         height: 200px;
     }
 
-    h1.summary {
-        text-align: center;
-        display: table;
-        position: relative;
-        margin: 0 auto;
-        font-size: 14px;
-        line-height: 20px;
-        padding: 10px 5px 15px 5px;
-    }
-
         h1.summary a {
             font-size: 14px;
         }
 }
 
 @media only screen and (max-width: 1023px) {
+    li.first article.blog-post div.details {
+        padding: 35px 15px 15px 15px;
+    }
+    .actions {
+        padding: 15px 0 5px 0;
+    }
     section#main {
         padding-bottom: 10px;
     }
 
     li.first article.blog-post header {
-        /*width: 640px;*/
         overflow: hidden;
     }
 
     li.first article.summary.blog-post img {
         height: 100%;
-        max-height: 395px;
-        min-height: 395px;
+        max-height: 530px;
+        min-height: 530px;
         -o-object-fit: cover;
         object-fit: cover;
     }
 
     li.first article.blog-post {
-        height: 395px;
-        max-height: 395px;
+        height: 530px;
         margin-bottom: 5px;
     }
 
@@ -483,41 +439,37 @@ li article.blog-post {
     }
 
     li article.blog-post {
-        /*width: 340px;*/
-        height: 400px;
-    }
-
-    article.summary.blog-post header {
-        /*width: 340px;*/
-    }
-
-    ul.blog-posts li article.summary.blog-post {
-        /*margin-right: 20px;*/
-    }
-
-    .blog-details, div#after-content {
-        /*width: 720px;*/
+        height: 530px;
     }
 }
 
-@media only screen and (max-width: 767px) {
-    li.first article.blog-post header {
-        /*width: 550px;*/
+@media only screen and (max-width: 766px) {
+    li article.blog-post div.details, li article.blog-post div.details p, li article.blog-post div.details div.preview {
+        font-size: 13px;
     }
-
+    .actions {
+        padding: 10px 0 5px 0;
+    }
+    p {
+        line-height: 1.6;
+        margin-bottom: 0.8rem;
+    }
     li.first article.blog-post {
-        height: 355px;
-        max-height: 355px;
+        height: 420px;
     }
 
     li.first article.summary.blog-post img {
-        max-height: 355px;
-        min-height: 355px;
+        max-height: 420px;
+        min-height: 420px;
     }
 
     li.first h1.summary {
         line-height: 20px;
-        padding: 15px 0 10px 0;
+        padding: 10px 0 0 0;
+        font-size: 18px;
+    }
+    li.first h1.summary a{
+        font-size: 18px;
     }
 
     h1.summary a {
@@ -527,76 +479,51 @@ li article.blog-post {
 
     li.first article.blog-post div.details {
         float: right;
-        /*width: 279px;*/
-        padding: 40px 15px 20px 15px;
+        padding: 30px 10px 20px 10px;
     }
 
     li article.blog-post {
-        /*width: 280px;*/
-        height: 355px;
+        height: 420px;
     }
 
     article.blog-post p.taxonomy-field, article.blog-post div.details p.taxonomy-field {
         padding: 6px 16px;
         margin: -15px auto 0 auto;
     }
-
-    article.summary.blog-post header {
-        /*width: 280px;*/
-    }
-
     article.blog-post header h1, article.blog-post .published {
-        max-width: 440px;
         text-align: center;
-        font-size: 16px;
-        padding: 25px 0 10px 0;
-    }
-
-    article.blog-post .blog-post-body {
-        max-width: 440px;
+        font-size: 14px;
+        padding: 15px 0 10px 0;
     }
 }
 
-@media only screen and (max-width: 659px) {
-    li.first article.blog-post header {
-        /*width: 376px;*/
-    }
-
+@media only screen and (max-width: 639px) {
     li.first article.blog-post {
-        height: 520px;
-        max-height: 520px;
+        height: auto;
+        max-height: initial;
     }
 
     li.first article.summary.blog-post img {
-        max-height: 210px;
-        min-height: 210px;
+        max-height: 260px;
+        min-height: 260px;
     }
 
     li.first article.blog-post div.details {
         float: left;
-        /*width: 376px;*/
         padding: 0 30px;
     }
 
-    .blog-details {
-        width: 376px;
-    }
-
     li article.blog-post {
-        /*width: 376px;*/
-        height: 388px;
-    }
-
-    article.summary.blog-post header {
-        /*width: 376px;*/
+        height: auto;
+        max-height: initial;
     }
 
         article.summary.blog-post header img {
-            height: 220px;
+            height: 260px;
         }
 
     article.summary.blog-post:hover header::before {
-        height: 220px;
+        height: 260px;
     }
 
     article.blog-post p.taxonomy-field, article.blog-post div.details p.taxonomy-field {
@@ -610,10 +537,6 @@ li article.blog-post {
 }
 
 @media only screen and (max-width:479px) {
-    li.first article.blog-post header {
-        /*width: 377px;*/
-    }
-
     article.blog-post {
         margin: 0 auto;
         border-top: none;
@@ -624,14 +547,6 @@ li article.blog-post {
 
     section#main {
         padding-top: 0;
-    }
-
-    li article.blog-post {
-        /*width: 330px;*/
-    }
-
-    article.summary.blog-post header {
-        /*width: 330px;*/
     }
 
     .blog-details ul.blog-posts li article.summary.blog-post {
@@ -652,26 +567,16 @@ li article.blog-post {
 @media only screen and (max-width:370px) {
     li.first article.blog-post div.details {
         float: left;
-        /*width: 320px;*/
         padding: 0 10px;
     }
 
-    .blog-details {
-        width: 320px;
-    }
-
     li article.blog-post {
-        /*width: 292px;*/
         height: 360px;
     }
 
-    article.summary.blog-post header {
-        /*width: 292px;*/
+    article.summary.blog-post header img {
+        height: 190px;
     }
-
-        article.summary.blog-post header img {
-            height: 190px;
-        }
 
     article.summary.blog-post:hover header::before {
         height: 190px;
@@ -679,14 +584,6 @@ li article.blog-post {
 
     .blog-details ul.blog-posts li article.summary.blog-post {
         margin-left: 14px;
-    }
-
-    article.blog-post header h1, article.blog-post .published {
-        max-width: 280px;
-    }
-
-    article.blog-post .blog-post-body {
-        max-width: 280px;
     }
 }
 /* EOF: BLOG LIST */

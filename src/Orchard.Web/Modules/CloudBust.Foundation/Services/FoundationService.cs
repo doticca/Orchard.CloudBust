@@ -13,6 +13,8 @@ namespace CloudBust.Foundation.Services
         bool GetUseIcons();
         bool GetUsePlaceholder();
         bool GetUseNicescroll();
+        int GetGridStyle();
+        string GetGridStyleText();
     }
 
     public class FoundationService : IFoundationService
@@ -43,11 +45,7 @@ namespace CloudBust.Foundation.Services
                 {
                     ctx.Monitor(_signals.When("CloudBust.Foundation.Changed"));
                     WorkContext workContext = _wca.GetContext();
-                    var foundationSettings =
-                        (FoundationSettingsPart)workContext
-                                                  .CurrentSite
-                                                  .ContentItem
-                                                  .Get(typeof(FoundationSettingsPart));
+                    var foundationSettings = (FoundationSettingsPart)workContext.CurrentSite.ContentItem.Get(typeof(FoundationSettingsPart));
                     return foundationSettings.AutoEnableAdmin;
                 });
         }
@@ -59,11 +57,7 @@ namespace CloudBust.Foundation.Services
                 {
                     ctx.Monitor(_signals.When("CloudBust.Foundation.Changed"));
                     WorkContext workContext = _wca.GetContext();
-                    var foundationSettings =
-                        (FoundationSettingsPart)workContext
-                                                  .CurrentSite
-                                                  .ContentItem
-                                                  .Get(typeof(FoundationSettingsPart));
+                    var foundationSettings = (FoundationSettingsPart)workContext.CurrentSite.ContentItem.Get(typeof(FoundationSettingsPart));
                     return foundationSettings.DoNotEnableFrontEnd;
                 });
         }
@@ -75,11 +69,7 @@ namespace CloudBust.Foundation.Services
                 {
                     ctx.Monitor(_signals.When("CloudBust.Foundation.Changed"));
                     WorkContext workContext = _wca.GetContext();
-                    var foundationSettings =
-                        (FoundationSettingsPart)workContext
-                                                  .CurrentSite
-                                                  .ContentItem
-                                                  .Get(typeof(FoundationSettingsPart));
+                    var foundationSettings = (FoundationSettingsPart)workContext.CurrentSite.ContentItem.Get(typeof(FoundationSettingsPart));
                     return foundationSettings.UseDatePicker;
                 });
         }
@@ -91,11 +81,7 @@ namespace CloudBust.Foundation.Services
                 {
                     ctx.Monitor(_signals.When("CloudBust.Foundation.Changed"));
                     WorkContext workContext = _wca.GetContext();
-                    var foundationSettings =
-                        (FoundationSettingsPart)workContext
-                                                  .CurrentSite
-                                                  .ContentItem
-                                                  .Get(typeof(FoundationSettingsPart));
+                    var foundationSettings = (FoundationSettingsPart)workContext.CurrentSite.ContentItem.Get(typeof(FoundationSettingsPart));
                     return foundationSettings.UseSelect;
                 });
         }
@@ -107,11 +93,7 @@ namespace CloudBust.Foundation.Services
                 {
                     ctx.Monitor(_signals.When("CloudBust.Foundation.Changed"));
                     WorkContext workContext = _wca.GetContext();
-                    var foundationSettings =
-                        (FoundationSettingsPart)workContext
-                                                  .CurrentSite
-                                                  .ContentItem
-                                                  .Get(typeof(FoundationSettingsPart));
+                    var foundationSettings = (FoundationSettingsPart)workContext.CurrentSite.ContentItem.Get(typeof(FoundationSettingsPart));
                     return foundationSettings.UseNicescroll;
                 });
         }
@@ -123,11 +105,7 @@ namespace CloudBust.Foundation.Services
                 {
                     ctx.Monitor(_signals.When("CloudBust.Foundation.Changed"));
                     WorkContext workContext = _wca.GetContext();
-                    var foundationSettings =
-                        (FoundationSettingsPart)workContext
-                                                  .CurrentSite
-                                                  .ContentItem
-                                                  .Get(typeof(FoundationSettingsPart));
+                    var foundationSettings = (FoundationSettingsPart)workContext.CurrentSite.ContentItem.Get(typeof(FoundationSettingsPart));
                     return foundationSettings.UsePlaceholder;
                 });
         }
@@ -139,12 +117,32 @@ namespace CloudBust.Foundation.Services
                 {
                     ctx.Monitor(_signals.When("CloudBust.Foundation.Changed"));
                     WorkContext workContext = _wca.GetContext();
-                    var foundationSettings =
-                        (FoundationSettingsPart)workContext
-                                                  .CurrentSite
-                                                  .ContentItem
-                                                  .Get(typeof(FoundationSettingsPart));
+                    var foundationSettings = (FoundationSettingsPart)workContext.CurrentSite.ContentItem.Get(typeof(FoundationSettingsPart));
                     return foundationSettings.UseIcons;
+                });
+        }
+        public string GetGridStyleText()
+        {
+            return _cacheManager.Get(
+                "CloudBust.Foundation.GridStyleText",
+                ctx =>
+                {
+                    ctx.Monitor(_signals.When("CloudBust.Foundation.Changed"));
+                    WorkContext workContext = _wca.GetContext();
+                    var foundationSettings = (FoundationSettingsPart)workContext.CurrentSite.ContentItem.Get(typeof(FoundationSettingsPart));
+                    return foundationSettings.GridStyleText;
+                });
+        }
+        public int GetGridStyle()
+        {
+            return _cacheManager.Get(
+                "CloudBust.Foundation.GridStyle",
+                ctx =>
+                {
+                    ctx.Monitor(_signals.When("CloudBust.Foundation.Changed"));
+                    WorkContext workContext = _wca.GetContext();
+                    var foundationSettings = (FoundationSettingsPart)workContext.CurrentSite.ContentItem.Get(typeof(FoundationSettingsPart));
+                    return foundationSettings.GridStyle;
                 });
         }
     }

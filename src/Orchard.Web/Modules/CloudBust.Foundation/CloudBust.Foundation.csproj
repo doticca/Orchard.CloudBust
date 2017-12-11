@@ -100,6 +100,9 @@
     <Compile Include="Drivers\QuadPromoPartDriver.cs" />
     <Compile Include="Drivers\FeaturedHeadPartDriver.cs" />
     <Compile Include="Drivers\FoundationMenuItemPartDriver.cs" />
+    <Compile Include="FoundationMenu.cs" />
+    <Compile Include="TrioPromo.cs" />
+    <Compile Include="QuadPromo.cs" />
     <Compile Include="FeaturedHead.cs" />
     <Compile Include="Handlers\FoundationSettingsPartHandler.cs" />
     <Compile Include="Handlers\TrioPromoPartHandler.cs" />
@@ -112,7 +115,7 @@
     <Compile Include="Shapes\FoundationWidgetShapes.cs" />
     <Compile Include="Shapes\FoundationZoneShapes.cs" />
     <Compile Include="Shapes\MenuItemLinkShapes.cs" />
-    <Compile Include="Migrations.cs" />
+    <Compile Include="Foundation.cs" />
     <Compile Include="Handlers\FeaturedHeadPartHandler.cs" />
     <Compile Include="Handlers\FoundationMenuItemPartHandler.cs" />
     <Compile Include="Models\QuadPromoPart.cs" />
@@ -160,8 +163,6 @@
     <Content Include="Scripts\foundation-datepicker.min.js" />
     <Content Include="Scripts\foundation-select.js" />
     <Content Include="Scripts\foundation-select.min.js" />
-    <Content Include="Scripts\foundation.6.3.0.js" />
-    <Content Include="Scripts\foundation.6.3.0.min.js" />
     <Content Include="Scripts\foundation.6.4.2.js" />
     <Content Include="Scripts\foundation.6.4.2.min.js" />
     <Content Include="Scripts\jquery.nicescroll.js" />
@@ -237,6 +238,7 @@
     <Content Include="Scripts\what-input.min.js" />
     <Content Include="Styles\adminbuttons.css" />
     <Content Include="Styles\adminsite.css" />
+    <Content Include="Styles\utilities.css" />
     <Content Include="Styles\contrib.css" />
     <Content Include="Styles\contrib.min.css" />
     <Content Include="Styles\featuredhead.css" />
@@ -246,10 +248,14 @@
     <Content Include="Styles\foundation-icons.svg" />
     <Content Include="Styles\foundation-select.css" />
     <Content Include="Styles\foundation-select.min.css" />
-    <Content Include="Styles\foundation.6.3.0.css" />
-    <Content Include="Styles\foundation.6.3.0.min.css" />
     <Content Include="Styles\foundation.6.4.2.css" />
+    <Content Include="Styles\foundation.6.4.2.flex.css" />
+    <Content Include="Styles\foundation.6.4.2.flex.min.css" />
+    <Content Include="Styles\foundation.6.4.2.float.css" />
+    <Content Include="Styles\foundation.6.4.2.float.min.css" />
     <Content Include="Styles\foundation.6.4.2.min.css" />
+    <Content Include="Styles\foundation.6.4.2.xy.css" />
+    <Content Include="Styles\foundation.6.4.2.xy.min.css" />
     <Content Include="Styles\images\adminNavBackground.gif" />
     <Content Include="Styles\images\backgroundGradient.gif" />
     <Content Include="Styles\images\backgroundHeader.gif" />

@@ -9,8 +9,7 @@
     #@divid {
         border: 1px solid #7C8891;
         position:relative;
-    min-height:400px;
-        width:99%;
+        height:61vh;
     }
     </style>
 
@@ -29,18 +28,20 @@
 <script type="text/javascript">
     $(function () {
         var CssAceEditor = ace.edit('@divid');
-        CssAceEditor.setTheme('ace/theme/grapto');
-        CssAceEditor.getSession().setMode('ace/mode/css');
         CssAceEditor.setOptions({
+            theme: "ace/theme/grapto",
+            mode: "ace/mode/css",
+            showPrintMargin: false,
             enableEmmet: true,
+            autoScrollEditorIntoView: true,
             enableBasicAutocompletion: true,
             enableSnippets: false,
             spellcheck: true,
             useElasticTabstops: true,
-            maxLines: Infinity
+            UseSoftTabs: false,
+            SelectionStyle: "text"
         });
-        CssAceEditor.setSelectionStyle("text");
-        CssAceEditor.getSession().setUseSoftTabs(false);
+        CssAceEditor.$blockScrolling = Infinity;
 
         var CssTextArea = $('.@txtid').hide();
         CssAceEditor.getSession().setValue(CssTextArea.val());

@@ -1536,6 +1536,8 @@ body.child #media-library-main-editor {
 
 .tabs-content {
     margin-bottom: 10px;
+    /*overflow: scroll;
+    height: 74vh;*/
 }
 
 .edit-item-content {
@@ -1798,9 +1800,14 @@ img.icon.settings {
     box-shadow: none;
     padding:0;
 }
+/*#bodytabs {
+    height: 68vh;
+}*/
 .ui-tabs .ui-tabs-panel {
     padding: 10px;
+    position:relative;
 }
+
 .callout {
     margin: 0 0 0.3rem 0;
     padding: 0.3rem;
@@ -1889,4 +1896,45 @@ img.icon.settings {
     margin: 0.5em 0 !important;
     padding-left: 30px;
     width: 90%;
+}
+
+.zebra-1 .subhead,
+.zebra-0 .subhead,
+.zebra-1 .button,
+.zebra-1 .button {
+    margin: 0;
+}
+
+.row.zebra-1 {
+    border-bottom: rgba(0,0,0,0.05) 1px solid;
+    border-top: rgba(0,0,0,0.05) 1px solid;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: normal;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: rgba(0,0,0,0.03);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.row.zebra-0 {
+    border-bottom: none;
+    border-top: none;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: normal;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: rgba(0,0,0,0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

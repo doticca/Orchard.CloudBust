@@ -29,6 +29,7 @@ namespace CloudBust.Foundation.Shapes
             builder.Describe("HeadScripts").OnDisplaying(shapeDisplayingContext =>
                 {
                     var request = _workContext.Value.HttpContext.Request;
+                    bool isAdmin = AdminFilter.IsApplied(request.RequestContext);
                     var resourceManager = _workContext.Value.Resolve<IResourceManager>();
                     var scripts = resourceManager.GetRequiredResources("script");
                     var currentjQuery = scripts
@@ -43,11 +44,11 @@ namespace CloudBust.Foundation.Shapes
                                             .FirstOrDefault();
                     if (currentFoundation == null)
                     {
-                        if (!_foundationService.GetAutoEnableAdmin() && AdminFilter.IsApplied(request.RequestContext))
+                        if (!_foundationService.GetAutoEnableAdmin() && isAdmin)
                         {
                             return;
                         }
-                        if(_foundationService.GetDoNotEnableFrontEnd() && !AdminFilter.IsApplied(request.RequestContext))
+                        if(_foundationService.GetDoNotEnableFrontEnd() && !isAdmin)
                         {
                             return;
                         }
@@ -61,7 +62,7 @@ namespace CloudBust.Foundation.Shapes
                         resourceManager.Include("script", "~/Modules/CloudBust.Foundation/Scripts/what-input.min.js", "~/Modules/CloudBust.Foundation/Scripts/what-input.js").AtFoot();
                         resourceManager.Include("script", "~/Modules/CloudBust.Foundation/Scripts/foundation.6.4.2.min.js", "~/Modules/CloudBust.Foundation/Scripts/foundation.6.4.2.js").AtFoot();
 
-                        if(AdminFilter.IsApplied(request.RequestContext))
+                        if(isAdmin)
                             resourceManager.Include("script", "~/Modules/CloudBust.Foundation/Scripts/admin.foundation.js", "~/Modules/CloudBust.Foundation/Scripts/admin.foundation.js").AtFoot();
 
                         if (_foundationService.GetUseDatePicker())
@@ -78,7 +79,8 @@ namespace CloudBust.Foundation.Shapes
                     var request = _workContext.Value.HttpContext.Request;
                     var resourceManager = _workContext.Value.Resolve<IResourceManager>();
                     var scripts = resourceManager.GetRequiredResources("stylesheet");
-                    
+                    bool isAdmin = AdminFilter.IsApplied(request.RequestContext);
+
 
                     var currentFoundation = scripts
                                                 .Where(l => l.Name == "Foundation")
@@ -86,18 +88,27 @@ namespace CloudBust.Foundation.Shapes
 
                     if (currentFoundation == null)
                     {
-                        if (!_foundationService.GetAutoEnableAdmin() && AdminFilter.IsApplied(request.RequestContext))
+                        if (!_foundationService.GetAutoEnableAdmin() && isAdmin)
                         {
                             resourceManager.Include("stylesheet", "~/themes/theadmin/styles/site.css", "~/themes/theadmin/styles/site.css").AtHead();
                             return;
                         }
-                        if (_foundationService.GetDoNotEnableFrontEnd() && !AdminFilter.IsApplied(request.RequestContext))
+                        if (_foundationService.GetDoNotEnableFrontEnd() && !isAdmin)
                         {
                             return;
                         }
 
                         // foundation always first
-                        resourceManager.Include("stylesheet", "~/modules/cloudbust.foundation/styles/foundation.6.4.2.min.css", "~/modules/cloudbust.foundation/styles/foundation.6.4.2.css").AtHead();
+                        if (isAdmin)
+                        {
+                            // load default foundation css for admin
+                            resourceManager.Include("stylesheet", "~/modules/cloudbust.foundation/styles/foundation.6.4.2.min.css", "~/modules/cloudbust.foundation/styles/foundation.6.4.2.css").AtHead();
+                        }
+                        else
+                        {
+                            var gridstyle = _foundationService.GetGridStyleText();
+                            resourceManager.Include("stylesheet", "~/modules/cloudbust.foundation/styles/foundation.6.4.2."+ gridstyle + ".min.css", "~/modules/cloudbust.foundation/styles/foundation.6.4.2."+ gridstyle + ".css").AtHead();
+                        }
                         if (_foundationService.GetUseIcons())
                             resourceManager.Include("stylesheet", "~/modules/cloudbust.foundation/styles/foundation-icons.css", "~/modules/cloudbust.foundation/styles/foundation-icons.css").AtHead();
                         if (_foundationService.GetUseDatePicker())
@@ -107,7 +118,7 @@ namespace CloudBust.Foundation.Shapes
                         // contrib always last
                         resourceManager.Include("stylesheet", "https://doticcacdn.blob.core.windows.net/public/cloudbust/cloudbust.foundation/css/contrib.min.css", "~/modules/cloudbust.foundation/styles/contrib.css").AtHead();
 
-                        if (AdminFilter.IsApplied(request.RequestContext))
+                        if (isAdmin)
                         {
                             resourceManager.Include("stylesheet", "~/modules/cloudbust.foundation/styles/adminsite.css", "~/modules/cloudbust.foundation/styles/adminsite.css").AtHead();
                             resourceManager.Include("stylesheet", "~/modules/cloudbust.foundation/styles/adminbuttons.css", "~/modules/cloudbust.foundation/styles/adminbuttons.css").AtHead();

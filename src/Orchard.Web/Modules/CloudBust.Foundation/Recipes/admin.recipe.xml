@@ -18,7 +18,7 @@
     <Types>
       <Page ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True" ContentTypeSettings.Draftable="True" TypeIndexing.Indexes="Search" DisplayName="Page">
         <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-page&quot;,&quot;Culture&quot;:&quot;en-US&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
-        <BodyPart BodyTypePartSettings.Flavor="Tabbed" />
+        <BodyPart BodyTypePartSettings.Flavor="TabbedAce" />
         <CommonPart DateEditorSettings.ShowDateEditor="True" OwnerEditorSettings.ShowOwnerEditor="True" />
         <CssPart />
         <JsPart />
@@ -47,13 +47,10 @@
   
   <Settings>
     <UnderscoreSettingsPart AutoEnable="false" AutoEnableAdmin="false" />
-    <FoundationSettingsPart AutoEnableAdmin="true" DoNotEnableFrontEnd="true" UseDatePicker="false" UseSelect="false" UseIcons="true" UseNicescroll="false" UsePlaceholder="true" />
+    <FoundationSettingsPart AutoEnableAdmin="true" DoNotEnableFrontEnd="true" UseDatePicker="false" UseSelect="false" UseIcons="false" UseNicescroll="false" UsePlaceholder="false" />
     <SiteSettingsPart SupportedCultures="en-US" PageTitleSeparator=" - " SiteName="CloudBust" SiteSalt="539d602dcfad40bd873da39a9e14bbc2" SuperUser="admin" SiteCulture="en-US" SiteCalendar="" UseCdn="false" PageSize="10" MaxPageSize="0" MaxPagedCount="0" SiteTimeZone="GTB Standard Time" BaseUrl="" />
     <RegistrationSettingsPart UsersCanRegister="false" UsersMustValidateEmail="false" UsersAreModerated="false" NotifyModeration="false" EnableLostPassword="false" />
     <CacheSettingsPart DefaultCacheDuration="300" DefaultCacheGraceTime="60" DefaultMaxAge="0" IgnoreNoCache="false" VaryByCulture="false" CacheAuthenticatedRequests="false" VaryByAuthenticationState="false" DebugMode="false" />
   </Settings>
 
-  <Command>
-    feature disable "Orchard.Layouts"
-  </Command>
 </Orchard>

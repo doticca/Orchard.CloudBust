@@ -18,8 +18,8 @@ display:none;
 }
 #@divid {
     border: 1px solid #7C8891;
-    min-height:400px;
-    width:99%;
+    margin: 0;
+    height: 61vh;
 }
 .edit-item{
     display:none;
@@ -27,33 +27,18 @@ display:none;
 .tabs-content, #tabhtml, #tabcss, #tabjs{
     position: relative;
 }
+#tabhtml, #tabcss, #tabjs{
+
+}
 </style>
 }
-@*@Html.TextArea("Text", (string)Model.Text, 25, 80,
-     new Dictionary<string, object> {
-        {"class", "html aceeditor " + txtid},
-        {"style", "width:100%; display:none;"}
-     })
 
-    <ul id="bodytabs" class="tabs" data-tab>
-        <li class="tab-title active first"><a href="#tabhtml">Html</a></li>
-        <li class="tab-title"><a href="#tabcss">Css</a></li>
-        <li class="tab-title last"><a href="#tabjs">Javascript</a></li>
-    </ul>
-    <div class="tabs-content">
-        <div class="content active" id="tabhtml">
-            <div id="@divid"></div>
-        </div>
-        <div class="content" id="tabcss">
-        </div>
-        <div class="content" id="tabjs">
-        </div>
-    </div>*@
 @Html.TextArea("Text", (string)Model.Text, 25, 80,
              new Dictionary<string, object> {
                 {"class", "html aceeditor " + txtid},
                 {"style", "width:100%; display:none;"}
              })
+
 <div id="bodytabs" style="visibility:hidden;">
     <ul>
         <li><a href="#tabhtml">Html</a></li>
@@ -68,26 +53,30 @@ display:none;
     <div id="tabjs">
     </div>
 </div>
+
 @using (Script.Foot())
 {
 <script>
 $(function () {
     var BodyAceEditor = ace.edit('@divid');
-    BodyAceEditor.setTheme('ace/theme/grapto');
-    BodyAceEditor.getSession().setMode('ace/mode/html');
     BodyAceEditor.setOptions({
         enableEmmet: true,
         enableBasicAutocompletion: true,
+        autoScrollEditorIntoView: true,
         enableSnippets: false,
         spellcheck: true,
         useElasticTabstops: true,
-        maxLines: Infinity
+        theme: "ace/theme/grapto",
+        mode: "ace/mode/html",
+        showPrintMargin: false,
+        UseSoftTabs: false,
+        SelectionStyle: "text"
     });
-    BodyAceEditor.setSelectionStyle("text");
-    BodyAceEditor.getSession().setUseSoftTabs(false);
+    BodyAceEditor.$blockScrolling = Infinity;
 
     var TextArea = $('.@txtid').hide();
     BodyAceEditor.getSession().setValue(TextArea.val());
+
     BodyAceEditor.getSession().on('change', function () {
         TextArea.val(BodyAceEditor.getSession().getValue());
     });
@@ -95,6 +84,7 @@ $(function () {
     $('#tabhtml').on('toggled', function (event, tab) {
         BodyAceEditor.resize();
     });
+
     $('#bodytabs').parent().find('label').hide();
     $('.edit-item').show();
 });

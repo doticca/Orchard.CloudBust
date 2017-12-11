@@ -2,7 +2,7 @@
 
 namespace CloudBust.Foundation.Models
 {
-    public class FoundationSettingsPartRecord: ContentPartRecord
+    public class FoundationSettingsPartRecord : ContentPartRecord
     {
         public virtual bool AutoEnableAdmin { get; set; }
         public virtual bool DoNotEnableFrontEnd { get; set; }
@@ -11,6 +11,7 @@ namespace CloudBust.Foundation.Models
         public virtual bool UseIcons { get; set; }
         public virtual bool UsePlaceholder { get; set; }
         public virtual bool UseNicescroll { get; set; }
+        public virtual int GridStyle { get; set;}
         public FoundationSettingsPartRecord()
         {
             AutoEnableAdmin = false;
@@ -20,6 +21,7 @@ namespace CloudBust.Foundation.Models
             UseIcons = true;
             UsePlaceholder = true;
             UseNicescroll = true;
+            GridStyle = 0;
         }
     }
 }

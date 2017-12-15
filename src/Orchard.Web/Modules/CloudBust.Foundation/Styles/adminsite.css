@@ -1,4 +1,4 @@
-﻿html, body {
+html, body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
@@ -1591,11 +1591,11 @@ textarea.html.tinymce {
 
 .orchard-contenttypes #main h2 {
     border: none;
-    margin: 10px 0 0;
+    /* margin: 7px 0 0; */
     display: block;
     position: relative;
-    top: 20px;
-    width:50%;
+    /* top: 20px; */
+    /* width:50%; */
     pointer-events:none;
 }
 
@@ -1839,7 +1839,7 @@ img.icon.settings {
         float: right;
         border: none;
         box-shadow: none;
-        margin-top: -25px;
+        /* margin-top: -25px; */
     }
 
     .manage-type .manage-part .manage, .manage-type .manage-field .manage, .manage-part .manage-field .manage {

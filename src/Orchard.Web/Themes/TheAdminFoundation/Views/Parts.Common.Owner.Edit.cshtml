@@ -1,0 +1,11 @@
+﻿@model Orchard.Core.Common.OwnerEditor.OwnerEditorViewModel
+@{
+	var OwnerEditor = Model;
+}
+<fieldset class="row expanded">
+    <div class="small-12 medium-6 columns">
+        @Html.LabelFor(m => OwnerEditor.Owner, T("Owner"))
+        @Html.EditorFor(m => OwnerEditor.Owner)
+        @Html.ValidationMessageFor(m => OwnerEditor.Owner)
+    </div>
+</fieldset>

@@ -25,6 +25,7 @@ namespace CloudBust.Resources.Services
         private readonly IMediaLibraryService _mediaService;
 
         private const string ParticlesMediaFolder = "particles";
+        private const string signalstring = "CloudBust.Resources.Particles.JsonUrl";
 
 
         public ParticlesService(IWorkContextAccessor wca, ICacheManager cacheManager, ISignals signals, IMediaLibraryService mediaService)
@@ -41,7 +42,7 @@ namespace CloudBust.Resources.Services
                 "CloudBust.Resources.Particles.JsonUrl",
                 ctx =>
                 {
-                    ctx.Monitor(_signals.When("CloudBust.Resources.Particles.Changed"));
+                    ctx.Monitor(_signals.When(signalstring));
                     WorkContext workContext = _wca.GetContext();
                     var particlesSettings =
                         (ParticlesSettingsPart)workContext
@@ -57,7 +58,7 @@ namespace CloudBust.Resources.Services
                 "CloudBust.Resources.Particles.AutoEnable",
                 ctx =>
                 {
-                    ctx.Monitor(_signals.When("CloudBust.Resources.Changed"));
+                    ctx.Monitor(_signals.When(signalstring));
                     WorkContext workContext = _wca.GetContext();
                     var particlesSettings =
                         (ParticlesSettingsPart)workContext
@@ -73,7 +74,7 @@ namespace CloudBust.Resources.Services
                 "CloudBust.Resources.Particles.AutoEnableAdmin",
                 ctx =>
                 {
-                    ctx.Monitor(_signals.When("CloudBust.Resources.Changed"));
+                    ctx.Monitor(_signals.When(signalstring));
                     WorkContext workContext = _wca.GetContext();
                     var particlesSettings =
                         (ParticlesSettingsPart)workContext

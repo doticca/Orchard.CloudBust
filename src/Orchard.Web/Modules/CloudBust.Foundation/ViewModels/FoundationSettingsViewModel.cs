@@ -9,5 +9,6 @@
         public bool UseIcons { get; set; }
         public bool UsePlaceholder { get; set; }
         public bool UseNicescroll { get; set; }
+        public int GridStyle { get; set; }
     }
 }

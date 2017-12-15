@@ -38,11 +38,10 @@
             enableSnippets: false,
             spellcheck: true,
             useElasticTabstops: true,
-            UseSoftTabs: false,
-            SelectionStyle: "text"
+            selectionStyle: "text"
         });
         CssAceEditor.$blockScrolling = Infinity;
-
+        CssAceEditor.getSession().setUseSoftTabs(false);
         var CssTextArea = $('.@txtid').hide();
         CssAceEditor.getSession().setValue(CssTextArea.val());
         CssAceEditor.getSession().on('change', function () {

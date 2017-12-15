@@ -22,5 +22,15 @@ namespace CloudBust.Foundation.Models {
             get { return Record.Divider; }
             set { Record.Divider = value; }
         }
+        public bool RightSide
+        {
+            get { return Record.RightSide; }
+            set { Record.RightSide = value; }
+        }
+        public string CustomCss
+        {
+            get { return Record.CustomCss; }
+            set { Record.CustomCss = value; }
+        }
     }
 }

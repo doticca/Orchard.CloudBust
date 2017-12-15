@@ -39,11 +39,10 @@
             enableSnippets: false,
             spellcheck: true,
             useElasticTabstops: true,
-            UseSoftTabs: false,
-            SelectionStyle: "text"
+            selectionStyle: "text"
         });
         JsAceEditor.$blockScrolling = Infinity;
-
+        JsAceEditor.getSession().setUseSoftTabs(false);
         var JsTextArea = $('.@txtid').hide();
         JsAceEditor.getSession().setValue(JsTextArea.val());
         JsAceEditor.getSession().on('change', function () {

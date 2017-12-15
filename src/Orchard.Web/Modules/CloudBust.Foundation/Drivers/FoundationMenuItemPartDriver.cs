@@ -48,6 +48,8 @@ namespace CloudBust.Foundation.Drivers {
             part.Record.isRoot = GetAttribute<bool>(context, partName, "isRoot");
             part.Record.LeftSide = GetAttribute<bool>(context, partName, "LeftSide");
             part.Record.Divider = GetAttribute<bool>(context, partName, "Divider");
+            part.Record.RightSide = GetAttribute<bool>(context, partName, "RightSide");
+            part.Record.CustomCss = GetAttribute<string>(context, partName, "CustomCss");
         }
 
         protected override void Exporting(FoundationMenuItemPart part, Orchard.ContentManagement.Handlers.ExportContentContext context)
@@ -58,6 +60,8 @@ namespace CloudBust.Foundation.Drivers {
             element.SetAttributeValue("isRoot", part.isRoot);
             element.SetAttributeValue("LeftSide", part.LeftSide); 
             element.SetAttributeValue("Divider", part.Divider);
+            element.SetAttributeValue("RightSide", part.RightSide);
+            element.SetAttributeValue("CustomCss", part.CustomCss);
         }
 
         private TV GetAttribute<TV>(ImportContentContext context, string partName, string elementName)

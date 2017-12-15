@@ -1,16 +1,40 @@
-﻿@{
+﻿@using Orchard.ContentManagement;
+@using CloudBust.Foundation.Models;
+@{
     // Model is Model.Menu from the layout (Layout.Menu)
     var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Model.Items);
     string siteName = Convert.ToString(WorkContext.CurrentSite.SiteName);
 }
-<nav class="site-menu scrollhide-nav show-for-medium noselect">
-    <div class="menu-logo">
-        <ul class="menu">
+<nav class="site-menu scrollhide-nav show-for-large noselect">
+    <div class="menu-logo main-nav-left">
+        <ul class="menu side-nav-menu">
             <li class="topbar-title"><a class="site-logo" href="@Url.Content("~/")">@siteName</a>
             </li>
         </ul>
     </div>
-    <div class="menu-center">
-        <ul class="dropdown menu" data-dropdown-menu data-click-open="false">@DisplayChildren(Model)</ul>
+    <div class="main-nav-center">
+        <ul class="dropdown menu main-nav-menu" data-dropdown-menu data-click-open="false">@DisplayChildren(Model)</ul>
+    </div>
+    <div class="main-nav-right">
+        <ul class="dropdown menu side-nav-menu" data-dropdown-menu data-click-open="false">
+            @foreach (var menuItem in items)
+            {
+                bool isButton = false;
+                bool isRight = false;
+                string customcss = string.Empty;
+
+                var fpart = ((IContent)menuItem.Content.ContentItem).As<FoundationMenuItemPart>();
+                if (fpart != null)
+                {
+                    isRight = fpart.RightSide;
+                    isButton = fpart.DisplayAsButton;
+                    customcss = fpart.CustomCss;
+                }
+                if (isRight)
+                {
+                    <li><a class="nav-text-link @(isButton?" button":"")@(!string.IsNullOrWhiteSpace(customcss)?" "+customcss:"")" href="@menuItem.Href">@menuItem.Text</a></li>
+                }
+            }
+        </ul>
     </div>
 </nav>

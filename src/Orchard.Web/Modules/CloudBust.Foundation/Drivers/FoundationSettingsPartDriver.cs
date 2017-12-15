@@ -36,7 +36,8 @@ namespace js.Slick.Drivers
                                        UseSelect = part.UseSelect,
                                        UseIcons = part.UseIcons,
                                        UseNicescroll = part.UseNicescroll,
-                                       UsePlaceholder = part.UsePlaceholder
+                                       UsePlaceholder = part.UsePlaceholder,
+                                       GridStyle = part.GridStyle
                                    },
                                    Prefix: Prefix)).OnGroup("Foundation");
         }

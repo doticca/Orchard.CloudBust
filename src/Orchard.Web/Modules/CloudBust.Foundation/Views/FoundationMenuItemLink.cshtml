@@ -1,16 +1,31 @@
-﻿@{
+﻿@using Orchard.ContentManagement;
+@using CloudBust.Foundation.Models;
+@{
     bool useplaceholder = false;
-    if (Model.Level>1 || (Model.Level==1 && Model.Items.Count==0))
+    if (Model.Level > 1 || (Model.Level == 1 && Model.Items.Count == 0))
     {
         useplaceholder = true;
     }
-}
+    bool isButton = false;
+    bool isRight = false;
+    string customcss = string.Empty;
 
-@if (useplaceholder)
-{
-    <li><a href="@Model.Href">@Model.Text</a></li>
+    var fpart = ((IContent)Model.Content.ContentItem).As<FoundationMenuItemPart>();
+    if (fpart != null)
+    {
+        isButton = fpart.DisplayAsButton;
+        isRight = fpart.RightSide;
+        customcss = fpart.CustomCss;
+    }
 }
-else
+@if (!isRight)
 {
-    <a href="@Model.Href">@Model.Text</a>
+    if (useplaceholder)
+    {
+        <li><a class="nav-text-link light@(isButton?" button":"")@(!string.IsNullOrWhiteSpace(customcss)?" "+customcss:"")" href="@Model.Href">@Model.Text</a></li>
+    }
+    else
+    {
+        <a class="nav-text-link light@(isButton?" button":"")@(!string.IsNullOrWhiteSpace(customcss)?" "+customcss:"")" href="@Model.Href">@Model.Text</a>
+    }
 }

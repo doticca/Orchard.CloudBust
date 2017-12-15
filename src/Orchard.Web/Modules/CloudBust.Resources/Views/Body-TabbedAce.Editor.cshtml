@@ -69,11 +69,10 @@ $(function () {
         theme: "ace/theme/grapto",
         mode: "ace/mode/html",
         showPrintMargin: false,
-        UseSoftTabs: false,
-        SelectionStyle: "text"
+        selectionStyle: "text"
     });
     BodyAceEditor.$blockScrolling = Infinity;
-
+    BodyAceEditor.getSession().setUseSoftTabs(false);
     var TextArea = $('.@txtid').hide();
     BodyAceEditor.getSession().setValue(TextArea.val());
 

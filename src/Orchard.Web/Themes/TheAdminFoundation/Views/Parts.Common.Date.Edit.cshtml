@@ -1,0 +1,9 @@
+﻿@model Orchard.Core.Common.DateEditor.DateEditorViewModel
+<fieldset class="createdutc-datetime row expanded">
+    <div class="small-12 columns">
+        <label for="@Html.FieldIdFor(m => Model.Editor.Date)">@T("Created On")</label>
+    </div>
+    <div class="small-12 columns">
+        @Html.EditorFor(m => Model.Editor)
+    </div>
+</fieldset>

@@ -1,9 +1,9 @@
 ﻿@using CloudBust.Foundation.ViewModels;
 @model FoundationSettingsViewModel
 
-<fieldset class="foundationsettings row">
+<fieldset class="foundationsettings row expanded">
     <legend>@T("ZURB Foundation")</legend>
-    <span class="hint">Your version of Foundation is 6.2.1 visit <a href="http://foundation.zurb.com/sites/docs">http://foundation.zurb.com/sites/docs</a> for Documentation and Examples</span>
+    <span class="hint">Your version of Foundation is 6.4.2 visit <a href="http://foundation.zurb.com/sites/docs">http://foundation.zurb.com/sites/docs</a> for Documentation and Examples</span>
 
     <div class="columns">
         <div>
@@ -40,6 +40,15 @@
             @Html.EditorFor(m => m.UseNicescroll)
             <label class="forcheckbox" for="FoundationSettings_UseNicescroll">@T("Include Nicescroll")</label>
             <span class="hint">@T("it enables nicescroll.js.")</span>
+        </div>
+        <div class="medium-3">
+            <label for="FoundationSettings_GridStyle">@T("FOundation Grid")</label>
+                <select id="FoundationSettings_GridStyle" name="FoundationSettings.GridStyle">
+                    @Html.SelectOption(Model.GridStyle, 0, "Float Grid (Legacy)")
+                    @Html.SelectOption(Model.GridStyle, 1, "Flex Grid (Legacy)")
+                    @Html.SelectOption(Model.GridStyle, 2, "XY Grid (New)")
+                </select>
+            <span class="hint">@T("Use the Grid Style of your choise")</span>
         </div>
     </div>
 </fieldset>

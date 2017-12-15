@@ -358,7 +358,8 @@ li.first article.blog-post {
         border-right: none;
     }
 
-    .detail-blog-post .row, .detail-blog-post .restrictor {
+    /*.detail-blog-post .row,*/ 
+    .detail-blog-post .restrictor {
         max-width: 100%;
     }
 
@@ -614,14 +615,14 @@ li.first article.blog-post {
 @media screen and (max-width: 639px) {
     .blog-post:not(.summary) .intro-image-screenshot {
         max-width: 76%;
-        top: -17rem;
+        top: -16rem;
     }
 }
 
 @media screen and (max-width: 479px) {
     .blog-post:not(.summary) .intro-image-screenshot {
         max-width: 86%;
-        top: -14rem;
+        top: -13rem;
     }
 
     .site-hero.home-large-hero {
@@ -636,7 +637,7 @@ li.first article.blog-post {
 
     .blog-post:not(.summary) .intro-image-screenshot {
         max-width: 90%;
-        top: -11rem;
+        top: -10rem;
     }
 }
 

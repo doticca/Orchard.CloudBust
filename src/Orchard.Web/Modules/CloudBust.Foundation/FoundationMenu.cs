@@ -28,6 +28,20 @@ namespace CloudBust.Foundation
 
             return 1;
         }
+
+        public int UpdateFrom1()
+        {
+            SchemaBuilder.AlterTable("FoundationMenuItemPartRecord",
+                table => table
+                    .AddColumn<bool>("RightSide", column => column.WithDefault(false))
+                );
+            SchemaBuilder.AlterTable("FoundationMenuItemPartRecord",
+                table => table
+                    .AddColumn<string>("CustomCss")
+                );
+
+            return 2;
+        }
     }
 
 

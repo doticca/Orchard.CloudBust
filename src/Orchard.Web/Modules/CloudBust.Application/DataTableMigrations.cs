@@ -26,9 +26,21 @@ namespace CloudBust.Application
                                         .Column<int>("Id", column => column.PrimaryKey().Identity())
                                         .Column<int>("Application_id")
                                         .Column<int>("ApplicationDataTable_id")
-                                        .Column<int>("ApplicationRecord_Id")
             );
 
+            SchemaBuilder.CreateTable(typeof(ApplicationDataTableFieldsRecord).Name,
+                        table => table
+                                        .Column<int>("Id", column => column.PrimaryKey().Identity())
+                                        .Column<int>("ApplicationDataTable_id")
+                                        .Column<int>("Field_id")
+            );
+
+            SchemaBuilder.CreateTable(typeof(ApplicationDataTableRowsRecord).Name,
+                        table => table
+                                        .Column<int>("Id", column => column.PrimaryKey().Identity())
+                                        .Column<int>("ApplicationDataTable_id")
+                                        .Column<int>("Row_id")
+            );
             return 1;
         }
     }

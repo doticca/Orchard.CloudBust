@@ -1,113 +1,120 @@
-﻿@functions {
-    // To support the layout classifaction below. Implementing as a razor function because we can, could otherwise be a Func<string[], string, string> in the code block following.
-    string CalcuClassify(string[] zoneNames, string classNamePrefix) {
-        var zoneCounter = 0;
-        var zoneNumsFilled = string.Join("", zoneNames.Select(zoneName => { ++zoneCounter; return Model[zoneName] != null ? zoneCounter.ToString() : "";}).ToArray());
-        return HasText(zoneNumsFilled) ? classNamePrefix + zoneNumsFilled : "";
-    }
-}
-@{
-    /* Global includes for the theme are set inside Document.cshtml to bypass Orchard lack of ordering css files
-    ***************************************************************/
+﻿@{
+    Func<dynamic, dynamic> Zone = x => Display(x); 
 
-
-
-    /* Some useful shortcuts or settings
-    ***************************************************************/
-
-    Func<dynamic, dynamic> Zone = x => Display(x); // Zone as an alias for Display to help make it obvious when we're displaying zones
-
-    /* Layout classification based on filled zones
-    ***************************************************************/
-
-    //Add classes to the wrapper div to toggle aside widget zones on and off
-    var asideClass = CalcuClassify(new [] {"AsideFirst", "AsideSecond"}, "aside-"); // for aside-1, aside-2 or aside-12 if any of the aside zones are filled
-    if (HasText(asideClass)) {
-        Model.Classes.Add(asideClass);
-    }
-
-    /* Inserting some ad hoc shapes
-    ***************************************************************/
-
-    WorkContext.Layout.Header.Add(New.Branding(), "5"); // Site name and link to the home page
-    WorkContext.Layout.Footer.Add(New.BadgeOfHonor(), "5"); // Powered by Orchard
+    WorkContext.Layout.Header.Add(New.Branding(), "5"); 
+    WorkContext.Layout.FooterLeft.Add(New.BadgeOfHonor(), "5");
     //WorkContext.Layout.Footer.Add(New.User(), "10");
 
-    /* Last bit of code to prep the layout wrapper
-    ***************************************************************/
 
     Model.Id = "off-canvas-wrapper";
-    var tag = Tag(Model, "div"); // using Tag so the layout div gets the classes, id and other attributes added to the Model
+    var tag = Tag(Model, "div");
 }
 @tag.StartElement
 <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
 
-<div class="off-canvas position-left" id="offCanvas" data-off-canvas data-position="left">
-  <!-- Your menu or Off-canvas content goes here -->
-</div>
-
-<div class="off-canvas-content" data-off-canvas-content>
-@if (Model.Header != null) {
-<header id="layout-header" class="group">
-    <div id="header">
-        @Zone(Model.Header)
+    <div class="off-canvas position-left" id="offCanvas" data-off-canvas data-position="left">
+        @if (Model.MobileNavigation != null)
+        {
+            @Zone(Model.MobileNavigation)
+        }
     </div>
-</header>
-}
 
-@if (Model.Navigation != null) {
-    @Zone(Model.Navigation)
-}
+    <div class="off-canvas-content" data-off-canvas-content>
+        @if (Model.Header != null)
+        {
+            <header id="layout-header" class="group">
+                <div id="header">
+                    @Zone(Model.Header)
+                </div>
+            </header>
+        }
 
-@if (Model.Featured != null) {
-    @Zone(Model.Featured)
-}
+        @if (Model.Navigation != null)
+        {
+            @Zone(Model.Navigation)
+        }
 
-@if (Model.BeforeMain != null) {
-    @Zone(Model.BeforeMain)
-}
+        @if (Model.BeforeMain != null)
+        {
+            @Zone(Model.BeforeMain)
+        }
 
-@if (Model.AsideFirst != null) {
-<aside id="aside-first" class="aside-first group">
-    @Zone(Model.AsideFirst)
-</aside>
-}
+        @if (Model.Featured != null)
+        {
+            @Zone(Model.Featured)
+        }
 
-    @if (Model.Messages != null) {
-        @Zone(Model.Messages)
-    }
-    @if (Model.BeforeContent != null) {
-        @Zone(Model.BeforeContent)
-    }
-<section id="main">
-@if (Model.Content != null) {
-    <div  id="content">
-    @Zone(Model.Content)
+        @if (Model.Messages != null)
+        {
+            @Zone(Model.Messages)
+        }
+
+        <section id="main">
+            @if (Model.BeforeContent != null)
+            {
+                @Zone(Model.BeforeContent)
+            }
+            @if (Model.Content != null)
+            {
+                <div id="content">
+                    @Zone(Model.Content)
+                </div>
+            }
+            @if (Model.AfterContent != null)
+            {
+                @Zone(Model.AfterContent)
+            }
+        </section>
+
+        @if (Model.AfterMain != null)
+        {
+            @Zone(Model.AfterMain)
+        }
+
+        <footer class="footer-nav row expanded collapse show-for-medium">
+            <div class="footer-nav-left">
+                @if (Model.FooterLeft != null)
+                {
+                    @Display(Model.FooterLeft)
+                }
+            </div>
+            <div class="footer-nav-center">
+                @if (Model.FooterCenter != null)
+                {
+                    @Display(Model.FooterCenter)
+                }
+            </div>
+            <div class="footer-nav-right">
+                @if (Model.FooterRight != null)
+                {
+                    @Display(Model.FooterRight)
+                }
+            </div>
+        </footer>
+        <footer class="footer-nav row align-center expanded collapse show-for-small-only">
+            <div class="columns small-12">
+                @if (Model.FooterLeft != null)
+                {
+                    @Display(Model.FooterLeft)
+                }
+            </div>
+            <div class="columns small-12 footer-nav-center">
+                @if (Model.FooterCenter != null)
+                {
+                    @Display(Model.FooterCenter)
+                }
+            </div>
+            <div class="columns small-12">
+                @if (Model.FooterRight != null)
+                {
+                    @Display(Model.FooterRight)
+                }
+            </div>
+        </footer>
+
+
+
     </div>
-}
-</section>
-    @if (Model.AfterContent != null) {
-        @Zone(Model.AfterContent)
-    }
-
-@if (Model.AsideSecond != null) {
-<aside id="aside-second" class="aside-second">
-    @Zone(Model.AsideSecond)
-</aside>
-}
-
-@if (Model.AfterMain != null) {
-    @Zone(Model.AfterMain)
-}
-
-<footer id="footer">
-    @if(Model.Footer != null) {
-        @Zone(Model.Footer)
-    }
-</footer>
-
-
-</div>
 </div>
 @tag.EndElement
 
@@ -120,32 +127,39 @@
         var subnav = $('.sub-nav-links');
         var distance = 0;
         var distancenav = nav.offset().top;
-        if(subnav.length>0)
+        if (subnav.length > 0)
             distance = $('.sub-nav-links').offset().top;
 
-        $window.on('scroll', function(){
+        $window.on('scroll', function () {
             var scrollTop = $window.scrollTop();
 
-            if(distancenav>0)
+            if (distancenav > 0)
                 nav.toggleClass('hidden', scrollTop > prev || scrollTop > distancenav - nav.height());
             else
                 nav.toggleClass('hidden', scrollTop > prev);
 
-            if (scrollTop > 0 ) {
+            if (scrollTop > 0) {
                 nav.addClass('change');
             }
-            else{
-	            nav.removeClass('change');
+            else {
+                nav.removeClass('change');
             }
 
-            if (scrollTop >= distance ) {
+            if (scrollTop >= distance) {
                 $('.sub-nav-links').addClass('fixed');
             }
-            else{
-	            $('.sub-nav-links').removeClass('fixed');
+            else {
+                $('.sub-nav-links').removeClass('fixed');
             }
             prev = scrollTop;
         });
     </script>
-}
 
+}
+@using (Script.Foot())
+{
+    if (Model.JavaScript != null)
+    {
+        @Display(Model.JavaScript)
+    }
+}

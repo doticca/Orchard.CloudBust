@@ -1,9 +1,7 @@
 ﻿@{ 
     var clock = WorkContext.Resolve<Orchard.Services.IClock>();
 }
-<div class="row">
-    <div class="credits column noselect">
-        <span class="poweredby">@T("Powered by <a href=\"{0}\" target=\"_blank\">Orchard</a>", "http://www.orchardproject.net")</span>     
-        <span class="copyright">@T(" - <a href=\"{0}\" target=\"_blank\">ZURB Foundation</a> -  <a href=\"{1}\" target=\"_blank\">CloudBust</a> &#169; Doticca {2}.", "https://foundation.zurb.com", "https://cloudbust.doticca.com", clock.UtcNow.Year)</span>
+
+    <div class="noselect">
+        <p class="footer-copyright">@T("<a href=\"{0}\" target=\"_blank\">Orchard</a>", "http://www.orchardproject.net")@T(" - <a href=\"{0}\" target=\"_blank\">ZURB Foundation</a> -  <a href=\"{1}\" target=\"_blank\">CloudBust</a>", "https://foundation.zurb.com", "https://cloudbust.doticca.com")</p>
     </div>
-</div>

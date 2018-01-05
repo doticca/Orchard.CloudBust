@@ -26,6 +26,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,6 +67,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\Facebook.dll</HintPath>
@@ -143,19 +147,27 @@
     <Compile Include="Controllers\loginController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\userController.cs" />
+    <Compile Include="FieldsValuesMigrations.cs" />
     <Compile Include="Handlers\BlogPartHandler.cs" />
     <Compile Include="Handlers\PartWatcherHandler.cs" />
     <Compile Include="Handlers\UserProfilePartHandler.cs" />
     <Compile Include="Helpers\FBHelper.cs" />
     <Compile Include="Invitations.cs" />
     <Compile Include="LoginsMigrations.cs" />
+    <Compile Include="Models\RowColumnsRecord.cs" />
+    <Compile Include="Models\ApplicationDataTableRowsRecord.cs" />
+    <Compile Include="Models\ApplicationDataTableFieldsRecord.cs" />
     <Compile Include="Models\ApplicationApplicationDataTablesRecord.cs" />
     <Compile Include="Models\ApplicationDataTableRecord.cs" />
+    <Compile Include="Models\ColumnRecord.cs" />
+    <Compile Include="Models\RowRecord.cs" />
+    <Compile Include="Models\FieldValueRecord.cs" />
     <Compile Include="Models\FriendRecord.cs" />
     <Compile Include="Models\InvitationRejectedRecord.cs" />
     <Compile Include="Models\InvitationPendingRecord.cs" />
     <Compile Include="Models\LoginsRecord.cs" />
     <Compile Include="Models\MediaFolder.cs" />
+    <Compile Include="Models\FieldRecord.cs" />
     <Compile Include="Models\UserApplicationRecord.cs" />
     <Compile Include="Models\UserProfilePart.cs" />
     <Compile Include="Models\UserProfilePartRecord.cs" />
@@ -171,6 +183,7 @@
     <Compile Include="OData\Server.cs" />
     <Compile Include="OData\Profile\uProfile.cs" />
     <Compile Include="OData\UserRole.cs" />
+    <Compile Include="FieldsMigrations.cs" />
     <Compile Include="Providers\FormsAuthenticationService.cs" />
     <Compile Include="EmailRoutes.cs" />
     <Compile Include="Security\BlogAuthorizationEventHandler.cs" />
@@ -192,6 +205,7 @@
     <Compile Include="Services\PartWatcher.cs" />
     <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="StartUp.cs" />
     <Compile Include="Tokens\ApplicationTokens.cs" />
     <Compile Include="UserProfileMigrations.cs" />
     <Compile Include="UserProfileRoutes.cs" />

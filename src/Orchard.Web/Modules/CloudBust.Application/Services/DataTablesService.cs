@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CloudBust.Application.Models;
 using Orchard;
@@ -17,6 +18,7 @@ namespace CloudBust.Application.Services
         private readonly IClock _clock;
 
         private readonly IRepository<ApplicationDataTableRecord> _datatablesRepository;
+        private readonly IRepository<FieldRecord> _fieldsRepository;
         private readonly IApplicationsService _applicationsService;
         private readonly IDataNotificationService _dataNotificationService;
 
@@ -24,6 +26,7 @@ namespace CloudBust.Application.Services
                                 IContentManager contentManager
                                 ,IOrchardServices orchardServices
                                 ,IRepository<ApplicationDataTableRecord> datatablesRepository
+                                ,IRepository<FieldRecord> fieldsRepository
                                 ,IApplicationsService applicationsService
                                 ,IDataNotificationService datanotificationService
                                 ,IClock clock
@@ -32,12 +35,13 @@ namespace CloudBust.Application.Services
             _orchardServices = orchardServices;
             _contentManager = contentManager;
             _datatablesRepository = datatablesRepository;
+            _fieldsRepository = fieldsRepository;
             _applicationsService = applicationsService;
             _dataNotificationService = datanotificationService;
             _clock = clock;
         }
-        // APPLICATION GAMES
-        #region Application Games
+        // Data Table
+        #region Data Table
 
         public ApplicationDataTableRecord GetDataTable(int Id)
         {
@@ -82,6 +86,28 @@ namespace CloudBust.Application.Services
             ApplicationRecord applicationRecord =  _applicationsService.GetApplication(applicationId);
             return GetApplicationDataTables(applicationRecord);
         }
+        public IEnumerable<ApplicationRecord> GetDataTableApplications(int dataTableId)
+        {
+            ApplicationDataTableRecord applicationDataTableRecord = GetDataTable(dataTableId);
+            return GetDataTableApplications(applicationDataTableRecord);
+        }
+        public IEnumerable<ApplicationRecord> GetDataTableApplications(ApplicationDataTableRecord applicationDataTableRecord)
+        {
+            var applications = new List<ApplicationRecord>();
+            if (applicationDataTableRecord == null) return applications;
+
+            var totalapplications = _applicationsService.GetApplications();
+            if (totalapplications == null) return null;
+
+            foreach(var app in totalapplications)
+            {
+                if (app.DataTables.FirstOrDefault(d => d.ApplicationDataTable.Id == applicationDataTableRecord.Id) != null)
+                    applications.Add(app);
+            }
+
+            return applications;
+        }
+
         public ApplicationDataTableRecord GetDataTableByName(string datatableName)
         {
             try
@@ -159,7 +185,6 @@ namespace CloudBust.Application.Services
             _dataNotificationService.ApplicationUpdated(moduleRecord);
             return true;
         }
-
         public IEnumerable<ApplicationDataTableRecord> GetNonApplicationDataTables(IUser user, ApplicationRecord applicationRecord)
         {
             if (applicationRecord == null)
@@ -188,6 +213,186 @@ namespace CloudBust.Application.Services
             }
             return newdatatables;
         }
+
         #endregion
+
+        // Fields
+        #region Fields
+
+        public FieldRecord GetField(int Id)
+        {
+            try
+            {
+                var fieldRecord = _fieldsRepository.Get(Id);
+                return fieldRecord;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public IEnumerable<FieldRecord> GetFieldsForDataTable(int Id)
+        {
+            var fields = new List<FieldRecord>();
+            ApplicationDataTableRecord applicationDataTableRecord = GetDataTable(Id);
+            foreach (ApplicationDataTableFieldsRecord field in applicationDataTableRecord.Fields)
+            {
+                fields.Add(GetField(field.Field.Id));
+            }
+            return fields;
+        }
+
+        public FieldRecord CreateField(string fieldName, string fieldDescription, string fieldType)
+        {
+            FieldRecord r = new FieldRecord();
+            r.Name = fieldName;
+            r.Description = fieldDescription;
+            r.NormalizedName = fieldName.ToLowerInvariant();
+            r.FieldType = fieldType;
+
+            _fieldsRepository.Create(r);
+
+            //TriggerSignal();
+
+            return r;
+        }
+        public bool UpdateField(int id, string Name, string Description, string FieldType)
+        {
+            FieldRecord r = GetField(id);
+            if (r == null) return false;
+
+            r.Name = Name;
+            r.Description = Description;
+            r.NormalizedName = Name.ToLowerInvariant();
+            r.FieldType = FieldType;
+
+            //_dataNotificationService.GameUpdated(datatableName, gameRecord);
+            return true;
+        }
+        public FieldRecord SetFieldType(int fieldId, string fieldType)
+        {
+            FieldRecord fieldRecord = GetField(fieldId);
+            if (fieldRecord == null) return null;
+
+            fieldRecord.FieldType = fieldType;
+            //TriggerSignal();
+
+            return fieldRecord;
+        }
+
+        public bool DeleteField(FieldRecord fieldRecord)
+        {
+            if (fieldRecord == null) return false;
+
+            _fieldsRepository.Delete(fieldRecord);
+
+            //TriggerSignal();
+            return true;
+        }
+        public bool DeleteField(int fieldId)
+        {
+            FieldRecord fieldRecord = GetField(fieldId);
+            return DeleteField(fieldRecord);
+        }
+        public FieldRecord CreateFieldForApplicationDataTable(int dataTableId, int fieldId)
+        {
+            ApplicationDataTableRecord applicationDatatTableRecord = GetDataTable(dataTableId);
+            if (applicationDatatTableRecord == null) return null;
+
+            FieldRecord fieldRecord = GetField(fieldId);
+            if (fieldRecord == null) return null;
+
+            applicationDatatTableRecord.Fields.Add(new ApplicationDataTableFieldsRecord { ApplicationDataTable = applicationDatatTableRecord, Field = fieldRecord });
+
+            //_dataNotificationService.ApplicationUpdated(moduleRecord);
+            return fieldRecord;
+        }
+        public bool RemoveFieldFromApplicationDataTable(int dataTableId, int fieldId)
+        {
+            ApplicationDataTableRecord applicationDatatTableRecord = GetDataTable(dataTableId);
+            if (applicationDatatTableRecord == null) return false;
+
+            foreach (ApplicationDataTableFieldsRecord fieldLinkRecord in applicationDatatTableRecord.Fields)
+            {
+                if (fieldLinkRecord.Field.Id == fieldId)
+                {
+                    applicationDatatTableRecord.Fields.Remove(fieldLinkRecord);
+                    break;
+                }
+            }
+
+            //_dataNotificationService.ApplicationUpdated(moduleRecord);
+            return true;
+        }
+
+        #endregion
+
+
+
+        //public dynamic GetFieldValue(FieldRecord fieldRecord)
+        //{
+        //    if (fieldRecord == null) return null;
+
+        //    CBType p = CBDataTypes.TypeFromString(fieldRecord.FieldType.ToLower());
+
+        //    switch (p)
+        //    {
+        //        case CBType.intSetting:
+        //            return fieldRecord.FieldValueInt;
+        //        case CBType.doubleSetting:
+        //            return fieldRecord.FieldValueDouble;
+        //        case CBType.boolSetting:
+        //            return fieldRecord.FieldValueBool;
+        //        case CBType.datetimeSetting:
+        //            return fieldRecord.FieldValueDateTime;
+        //        default:
+        //            return fieldRecord.FieldValueString;
+        //    }
+        //}
+        //public dynamic GetFieldValue(int fieldId)
+        //{
+        //    FieldRecord fieldRecord = GetField(fieldId);
+        //    return GetFieldValue(fieldRecord);
+        //}
+        //public void SetFieldValue(int fieldId, string fieldValue)
+        //{
+        //    FieldRecord fieldRecord = GetField(fieldId);
+        //    if (fieldRecord == null) return;
+
+        //    fieldRecord.FieldValueString = fieldValue;
+        //    //TriggerSignal();
+        //}
+        //public void SetFieldValue(int fieldId, int fieldValue)
+        //{
+        //    FieldRecord fieldRecord = GetField(fieldId);
+        //    if (fieldRecord == null) return;
+
+        //    fieldRecord.FieldValueInt = fieldValue;
+        //    //TriggerSignal();
+        //}
+        //public void SetFieldValue(int fieldId, double fieldValue)
+        //{
+        //    FieldRecord fieldRecord = GetField(fieldId);
+        //    if (fieldRecord == null) return;
+
+        //    fieldRecord.FieldValueDouble = fieldValue;
+        //    //TriggerSignal();
+        //}
+        //public void SetFieldValue(int fieldId, bool fieldValue)
+        //{
+        //    FieldRecord fieldRecord = GetField(fieldId);
+        //    if (fieldRecord == null) return;
+
+        //    fieldRecord.FieldValueBool = fieldValue;
+        //    //TriggerSignal();
+        //}
+        //public void SetFieldValue(int fieldId, DateTime fieldValue)
+        //{
+        //    FieldRecord fieldRecord = GetField(fieldId);
+        //    if (fieldRecord == null) return;
+
+        //    fieldRecord.FieldValueDateTime = fieldValue;
+        //    //TriggerSignal();
+        //}
     }
 }

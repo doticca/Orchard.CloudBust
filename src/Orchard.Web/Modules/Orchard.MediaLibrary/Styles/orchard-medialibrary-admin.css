@@ -178,7 +178,7 @@
 #media-library-main-editor {
     display: table-cell;
     vertical-align: top;
-    min-width: 190px; /*Width of right column - padding*/
+    min-width: 250px; /*Width of right column - padding*/
     height: 100%;
     padding: 10px 10px 0px 10px;
     background: #fafafa;
@@ -215,7 +215,7 @@
 
 #media-library-main-selection li {
     float: left;
-    margin: 0 3px 3px 0;
+    margin: 0 9px 0px 0;
     padding: 0;
     width: 120px;
     height: 120px;
@@ -225,6 +225,8 @@
     margin: 0;
     padding: 0;
     height: 120px;
+    /* border: none; */
+    box-shadow: none;
 }
 
 #media-library-main-selection .media-thumbnail > img {

@@ -12,7 +12,7 @@
 }
 @if (!Model.isWebApp)
 {
-<div class="row">
+<div class="row collapse">
     <div class="large-12 columns">
         <h2 class="subhead">
             To use CloudBust Blog extensions you have to set this application as your main Web Application.
@@ -26,7 +26,7 @@ else
     using (Html.BeginFormAntiForgeryPost())
     {
 <div id="doticcasettings">
-    <div class="row">
+    <div class="row collapse">
         <div class="large-4 columns end">
             <label>1-Blog per User</label>
             <div class="switch">
@@ -35,9 +35,9 @@ else
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row collapse">
         <div class="large-12 columns">
-            <div class="panel callout radius">
+            <div class="callout radius">
                 <h5>information</h5>
                 <div class="row">
                     <div class="large-12 columns">
@@ -51,7 +51,7 @@ else
     </div>
 </div>
 <div id="blogusersettings" style="display:none">
-    <div class="row">
+    <div class="row collapse">
         <div class="large-4 columns end">
             <label>Blogs Security</label>
             <div class="switch">
@@ -61,9 +61,9 @@ else
         </div>
     </div>
 
-    <div class="row">
+    <div class="row collapse">
         <div class="large-12 columns">
-            <div class="panel callout radius">
+            <div class="callout radius">
                 <h5>information</h5>
                 <div class="row">
                     <div class="large-12 columns">
@@ -75,7 +75,7 @@ else
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row collapse">
     <div class="large-12 columns">
         <button class="" type="submit" name="submit.Save" value="Save">Save</button>
     </div>

@@ -9,12 +9,11 @@
 }
 
 <div class="dashboardarea">
+    <div id="cbframecontent">
     <div class="row bump-25">
         <h1 class="header-tables subhead">
-
-
-            Add a Table
-            <div><small>Add a new CloudBust Table. Use the  CloudBust SDK to fetch and post new data to your CloudBust application.</small></div>
+            Create New Table
+            <div><small>Create a new CloudBust Table. Use the  CloudBust SDK to fetch and post new data to your CloudBust application.</small></div>
         </h1>
         <hr />
     </div>
@@ -22,9 +21,9 @@
     {
         if (!string.IsNullOrWhiteSpace(Model.ApplicationName))
         {
-            <div class="row">
+            <div class="row collapse">
                 <div class="large-9 columns end">
-                    <div class="panel callout radius">
+                    <div class="callout radius">
                         <h5>information</h5>
                         <div class="row">
                             <div class="large-12 columns">
@@ -35,7 +34,7 @@
                 </div>
             </div>
         }
-        <div class="row">
+        <div class="row collapse">
             <div class="large-3 columns end">
                 <label for="Name">
                     Name
@@ -44,8 +43,8 @@
                 </label>
             </div>
         </div>
-        <div class="row">
-            <div class="large-12 columns">
+        <div class="row collapse">
+            <div class="large-9 columns">
                 <label for="Description">
                     Description
                     <input id="Description" name="Description" type="text" placeholder="enter game description" value="@Model.Description" />
@@ -53,7 +52,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row collapse">
             <div class="large-12 columns">
                 <input type="submit" class="button" name="submit.Save" value="Save">
                 @if (string.IsNullOrWhiteSpace(Model.ApplicationName)){
@@ -61,12 +60,12 @@
                 }
                 else
                 {
-                    <a href="~/dashboard/applications/@Model.ApplicationKey/datatables/add" class="button secondary">Cancel</a>
+                    <a href="~/dashboard/applications/@Model.ApplicationKey/datatables" class="button secondary">Cancel</a>
                 }
             </div>
         </div>
-        <div class="row bump-25"></div>
     }
+    </div>
 
 </div>
 

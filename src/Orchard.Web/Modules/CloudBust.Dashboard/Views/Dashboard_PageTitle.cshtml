@@ -4,7 +4,7 @@
 
 @model CloudBust.Dashboard.ViewModels.ApplicationViewModel
        
-<div class="large-9 medium-8 columns bump-25">
+<div class="large-9 medium-8 columns bump-35">
 @if (Model.Page == 0)
 {
     <h1 class="subhead">
@@ -21,7 +21,7 @@
         <div><small>Everything you need to know about integrating the CloudBust framework in your application.</small></div>
     </h1>
     <hr />
-    <div class="row">
+    <div class="row collapse">
         <div class="large-12 columns">
             <h2 class="subhead">
                 Integrate App Token
@@ -38,7 +38,7 @@
         <div><small>Pair your cloudbast application using your facebook tokens to activate FB login.</small></div>
     </h1>
     <hr />
-    <div class="row">
+    <div class="row collapse">
         <div class="large-12 columns">
             <h2 class="subhead">
                 Tokens
@@ -55,7 +55,7 @@
         <div><small>Pair your cloudbast application using your Bundle Identifier to activate Game Center login.</small></div>
     </h1>
     <hr />
-    <div class="row">
+    <div class="row collapse">
         <div class="large-12 columns">
             <h2 class="subhead">
                 Bundle Identifier
@@ -81,7 +81,7 @@
         <div><small>Use the default cloudbust server or define your own smtp server and enable your Mail service.</small></div>
     </h1>
     <hr />
-    <div class="row">
+    <div class="row collapse">
         <div class="large-12 columns">
             <h2 class="subhead">
                 SMTP
@@ -107,7 +107,7 @@
         <div><small>Define your application's User Roles.</small></div>
     </h1>
     <hr />
-    <div class="row">
+    <div class="row collapse">
         <div class="large-12 columns">
             <h2 class="subhead">
                 Default Roles
@@ -119,7 +119,7 @@
                 </div>
             </h2>
         </div>
-        <div class="row">
+        <div class="row collapse">
             <div class="large-12 columns">
                 <h2 class="subhead">
                     Security Roles
@@ -147,7 +147,7 @@
 {
     <h1 class="subhead">
         @Model.Application.Name Settings
-        <div><small>Global application settings Table. Those values are application specific, accessible from all users and roles.</small></div>
+        <div><small>Global application settings Table. These values are application specific, accessible by all users and roles.</small></div>
     </h1>
     <hr />
     Html.RenderPartial("Dashboard_Page_Settings");
@@ -156,7 +156,7 @@
 {
     <h1 class="subhead">
         @Model.Application.Name Settings Categories
-        <div><small>Global application settings Categorization. Those categories are for grouping purposes only. Accesible from all users and roles.</small></div>
+        <div><small>Global application settings Categorization. These categories are for grouping purposes only. Accesible by all users and roles.</small></div>
     </h1>
     <hr />
     Html.RenderPartial("Dashboard_Page_SettingsCategories");
@@ -180,7 +180,7 @@
         <div><small>Define all the available games of @Model.Application.Name.</small></div>
     </h1>
     <hr />
-    <div class="row">
+    <div class="row collapse">
         <div class="large-12 columns">
             <h2 class="subhead">
                 CloudBust and Senseapi Games
@@ -192,7 +192,7 @@
             </h2>
         </div>
     </div>
-    <div class="row">
+    <div class="row collapse">
         <div class="large-12 columns">
             <h2 class="subhead">
                 Games
@@ -223,7 +223,7 @@
         <div><small>Blogs settings for automation and optimization of CloudBust enabled Web Apps.</small></div>
     </h1>
     <hr />
-    <div class="row">
+    <div class="row collapse">
         <div class="large-12 columns">
             <h2 class="subhead">
                 Automation

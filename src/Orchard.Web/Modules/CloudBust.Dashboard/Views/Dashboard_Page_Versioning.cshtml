@@ -6,7 +6,7 @@
 @model CloudBust.Dashboard.ViewModels.ApplicationViewModel
 @using (Html.BeginFormAntiForgeryPost())
 {
-<div class="row bump-15">
+<div class="row collapse">
     <div class="large-4 medium-4 columns">
         <label for="ServerBuild">
             Server Build
@@ -15,7 +15,7 @@
     </div>
     <div class="large-8 medium-8 columns"></div>
 </div>
-<div class="row bump-15">
+<div class="row collapse">
     <div class="large-4 medium-4 columns">
         <label for="MinimumClientBuild">
             Minimum Client Build
@@ -25,7 +25,7 @@
     <div class="large-8 medium-8 columns"></div>
 </div>
 <hr />
-<div class="row">
+<div class="row collapse">
     <div class="large-12 columns">
         <h2 class="subhead">
             Update URLs
@@ -33,7 +33,7 @@
         </h2>
     </div>
 </div>
-<div class="row bump-15">
+<div class="row collapse bump-15">
     <div class="large-12 columns">
         <ul class="tabs" data-tabs id="url-tabs">
             <li class="tabs-title is-active first"><a href="#updateios">iOS</a></li>
@@ -83,7 +83,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row collapse">
     <div class="large-12 columns">
         <button class="" type="submit" name="submit.Save" value="Save">Save</button>
     </div>

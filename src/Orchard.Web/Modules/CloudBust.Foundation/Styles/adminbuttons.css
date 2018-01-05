@@ -1,4 +1,21 @@
-﻿button[type="submit"], .widgets-actions a {
+button {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    font-family: inherit;
+    padding: 0.85em 1em;
+    -webkit-appearance: none;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    transition: background-color 0.25s ease-out, color 0.25s ease-out;
+    font-size: 0.9rem;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    background-color: #2ba6cb;
+    color: #fefefe;
+}
+button[type="submit"], .widgets-actions a {
     display: inline-block;
     text-align: center;
     line-height: 1;
@@ -89,4 +106,8 @@ button[type="submit"]:hover, button[type="submit"]:focus,
 .btn-group > .btn:last-child:not(:first-child), .btn-group > .dropdown-toggle:not(:first-child) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+.title-bar .menu-icon {
+    background-color: #0a0a0a;
+    padding: 0;
 }

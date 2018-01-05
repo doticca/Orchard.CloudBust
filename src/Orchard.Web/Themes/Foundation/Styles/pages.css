@@ -5,26 +5,21 @@
     /*position: relative;*/
 }
 
-    .homepage-section.hero {
-        padding-top: 10rem;
-    }
-    .homepage-section.grayed {
-        background-color: #f1f2f3;
-        color: #2A2E31;
-        padding-bottom: 0;
-    }
+.homepage-section.hero { padding-top: 10rem; }
 
-@media screen and (max-width: 39.9375em) {
-    .homepage-section.hero {
-        padding: 7rem 0 4.5rem;
-    }
+.homepage-section.grayed {
+    background-color: #f1f2f3;
+    color: #2A2E31;
+    padding-bottom: 0;
 }
 
 @media screen and (max-width: 39.9375em) {
-    .homepage-section {
-        padding: 4rem 0;
-    }
-} 
+    .homepage-section.hero { padding: 7rem 0 4.5rem; }
+}
+
+@media screen and (max-width: 39.9375em) {
+    .homepage-section { padding: 4rem 0; }
+}
 
 .homepage-section-subtitle {
     color: #2A2E31;
@@ -35,14 +30,10 @@
     text-transform: uppercase;
 }
 
-    .homepage-section-subtitle.light {
-        color: #8b959c;
-    }
+.homepage-section-subtitle.light { color: #8b959c; }
 
 @media screen and (max-width: 39.9375em) {
-    .homepage-section-subtitle {
-        font-size: 0.8rem;
-    }
+    .homepage-section-subtitle { font-size: 0.8rem; }
 }
 
 .homepage-section-subtitle-divider {
@@ -52,9 +43,7 @@
     width: 4rem;
 }
 
-    .homepage-section-subtitle-divider.light {
-        border-bottom: 2px solid #8b959c;
-    }
+.homepage-section-subtitle-divider.light { border-bottom: 2px solid #8b959c; }
 
 @media screen and (max-width: 39.9375em) {
     .homepage-section-subtitle-divider {
@@ -69,18 +58,12 @@
     z-index: 1;
 }
 
-    .homepage-section-desc.light {
-        color: #a7aeb3;
-    }
+.homepage-section-desc.light { color: #a7aeb3; }
 
-        .homepage-section-desc.light a {
-            color: #fefefe;
-        }
+.homepage-section-desc.light a { color: #fefefe; }
 
 @media screen and (max-width: 39.9375em) {
-    .homepage-section-desc {
-        margin-bottom: 1.5rem;
-    }
+    .homepage-section-desc { margin-bottom: 1.5rem; }
 }
 
 .homepage-section-build-img1 {
@@ -106,14 +89,14 @@
 @media screen and (max-width: 39.9375em) {
     .homepage-section-build-img1 {
         height: 12rem;
+        right: 0rem;
         top: -8rem;
         width: 12.37rem;
-        right: 0rem;
     }
 
     .homepage-section-build-img2 {
-        top: 26rem;
         right: 2rem;
+        top: 26rem;
         width: 9rem;
     }
 }
@@ -123,16 +106,15 @@
         bottom: 46rem;
     }
 }*/
+
 @media screen and (max-width: 374px) {
-    .homepage-section-build-img1, 
-    .homepage-section-build-img2 {
-        display: none;
-    }
+    .homepage-section-build-img1,
+    .homepage-section-build-img2 { display: none; }
 }
 
 .homepage-section-build-images {
-    position: relative;
     padding: 0;
+    position: relative;
 }
 
 .homepage-section-build-lists {
@@ -147,20 +129,16 @@
     }
 }
 
-.homepage-section-build-list {
-    margin-left: 0;
+.homepage-section-build-list { margin-left: 0; }
+
+.homepage-section-build-list li {
+    line-height: 1.2;
+    list-style: none;
+    margin-bottom: 1rem;
 }
 
-    .homepage-section-build-list li {
-        line-height: 1.2;
-        list-style: none;
-        margin-bottom: 1rem;
-    }
-
 @media screen and (max-width: 39.9375em) {
-    .homepage-section-build-list li {
-        margin-bottom: 0.5rem;
-    }
+    .homepage-section-build-list li { margin-bottom: 0.5rem; }
 }
 
 .homepage-section-thumbnails {
@@ -169,11 +147,11 @@
     display: flex;
 }
 
-    .homepage-section-thumbnails .column, 
-    .homepage-section-thumbnails .columns {
-        -ms-flex-item-align: end;
-        align-self: flex-end;
-    }
+.homepage-section-thumbnails .column,
+.homepage-section-thumbnails .columns {
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+}
 
 .homepage-section-thumbnails-tools {
     display: -webkit-box;
@@ -181,16 +159,16 @@
     display: flex;
 }
 
-    .homepage-section-thumbnails-tools .column, 
-    .homepage-section-thumbnails-tools .columns {
-        -ms-flex-item-align: center;
-        align-self: center;
-    }
+.homepage-section-thumbnails-tools .column,
+.homepage-section-thumbnails-tools .columns {
+    -ms-flex-item-align: center;
+    align-self: center;
+}
 
 .homepage-section-thumbnail:hover .home-cms-middle-img {
     -webkit-box-shadow: 0 4px 60px rgba(0, 0, 0, 0.4);
-    box-shadow: 0 4px 60px rgba(0, 0, 0, 0.4);
     -webkit-transition: -webkit-box-shadow 0.3s ease;
+    box-shadow: 0 4px 60px rgba(0, 0, 0, 0.4);
     transition: -webkit-box-shadow 0.3s ease;
     transition: box-shadow 0.3s ease;
     transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
@@ -211,15 +189,13 @@
 }
 
 @media screen and (max-width: 39.9375em) {
-    .homepage-section-thumbnail-title {
-        margin-bottom: 1rem;
-    }
+    .homepage-section-thumbnail-title { margin-bottom: 1rem; }
 }
 
 .home-cms-middle-img {
     -webkit-box-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
     -webkit-transition: -webkit-box-shadow 0.3s ease;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
     transition: -webkit-box-shadow 0.3s ease;
     transition: box-shadow 0.3s ease;
     transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
@@ -232,26 +208,17 @@
     }
 }
 
-.homepage-section-cms-content {
-    margin-bottom: 3rem;
-}
+.homepage-section-cms-content { margin-bottom: 3rem; }
 
 @media screen and (max-width: 39.9375em) {
-    .homepage-section-cms-content {
-        margin-bottom: 2rem;
-    }
-}
-.center-cms-admin {
-    z-index: 1;
+    .homepage-section-cms-content { margin-bottom: 2rem; }
 }
 
-.homepage-section-cms-logos {
-    position: relative;
-}
+.center-cms-admin { z-index: 1; }
 
-.homepage-section-cms-logo1, .homepage-section-cms-logo2, .homepage-section-cms-logo3, .homepage-section-cms-logo4, .homepage-section-cms-logo5, .homepage-section-cms-logo6, .homepage-section-cms-logo7 {
-    position: absolute;
-}
+.homepage-section-cms-logos { position: relative; }
+
+.homepage-section-cms-logo1, .homepage-section-cms-logo2, .homepage-section-cms-logo3, .homepage-section-cms-logo4, .homepage-section-cms-logo5, .homepage-section-cms-logo6, .homepage-section-cms-logo7 { position: absolute; }
 
 .homepage-section-cms-logo1 {
     left: 19rem;
@@ -351,23 +318,23 @@
         width: 1.8rem;
     }
 }
-.homepage-section-webapps-content{
-    margin-top:3rem;
-}
-.homepage-promo{
-    padding:0 3rem 2rem;
-}
+
+.homepage-section-webapps-content { margin-top: 3rem; }
+
+.homepage-promo { padding: 0 3rem 2rem; }
 
 .homepage-promo img {
     height: 48px;
     width: 48px;
 }
+
 /*.homepage-promo p{
     font-size: 16px;
     margin:0;
     padding:0;
 }*/
+
 .homepage-promo p.feature-block-header {
-    margin-top: 1rem;
     margin-bottom: 0;
+    margin-top: 1rem;
 }

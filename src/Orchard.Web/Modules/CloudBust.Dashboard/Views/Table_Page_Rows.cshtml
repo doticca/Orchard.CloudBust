@@ -1,0 +1,44 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+@using CloudBust.Application.Models
+
+@model CloudBust.Dashboard.ViewModels.TableViewModel
+@{
+    Script.Require("DataTables");
+    Style.Require("DataTables");
+
+    string create_url = Url.Content("~") + "dashboard/datatables/" + Model.DataTable.Id + "/rows/create";
+}
+<div class="large-9 medium-8 columns bump-25 end">
+
+    <table id="datatable" role="grid" class="display" cellspacing="0" width="100%">
+        <caption>@Model.DataTable.Description</caption>
+            <thead>
+                <tr>
+                    @foreach (FieldRecord field in Model.Fields)
+                    {
+                        <th>@field.Name</th>
+                    }
+                </tr>
+            </thead>
+        <tbody></tbody>
+    </table>
+    <div class="row collapsed">
+        <div class="large-12 columns">
+            <a class="maincbframecaller button" href="@create_url"><i class="fi-plus"></i>  Add new row</a>
+        </div>
+    </div>
+</div>
+@using (Script.Foot())
+{
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#datatable').DataTable(
+            {
+                responsive: true
+            }
+        );
+    } );
+</script>
+}

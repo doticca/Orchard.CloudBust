@@ -26,6 +26,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -116,6 +117,8 @@
     <Compile Include="ViewModels\ApplicationEditAppStoreViewModel.cs" />
     <Compile Include="ViewModels\ApplicationEditGCViewModel.cs" />
     <Compile Include="ViewModels\ApplicationEditBlogsViewModel.cs" />
+    <Compile Include="ViewModels\FieldEditViewModel.cs" />
+    <Compile Include="ViewModels\FieldCreateViewModel.cs" />
     <Compile Include="ViewModels\TableViewModel.cs" />
     <Compile Include="ViewModels\TablesViewModel.cs" />
     <Compile Include="ViewModels\TableCreateViewModel.cs" />
@@ -295,6 +298,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Table.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\TableFieldCreate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\TableFieldEdit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Table_Page_Rows.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

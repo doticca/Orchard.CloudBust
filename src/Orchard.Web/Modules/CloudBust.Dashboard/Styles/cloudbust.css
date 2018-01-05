@@ -1,7 +1,8 @@
-﻿.cloudbust-dashboard .dashboardarea{
+.cloudbust-dashboard .dashboardarea{
     background-image: none;
     /*background-color: rgb(254, 254, 254);*/
     /*margin:0 10px;*/
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .dashboardarea h1 small, 
 .dashboardarea h2 small, 
@@ -25,6 +26,7 @@
 .sidebar {
     padding: 32px 20px;
     border-right: 1px solid gainsboro;
+    min-height:  100%;
 }
 .side-nav li a:not(.button) {
     display: block;
@@ -435,7 +437,7 @@ background: transparent;
     margin-bottom: 0.5rem;
     font-weight: 700;
     color: #616161;
-    font-family: 'PT Sans Narrow', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .dashboardarea .breadcrumbs {
@@ -448,24 +450,24 @@ background: transparent;
 }
 
 .dashboardarea h1{
-    font-size: 20px;
+    font-size: 19px;
 }
 .dashboardarea h1 small {
     font-weight:normal;
     font-size: 14px;
 }
 .dashboardarea h2{
-    font-size: 20px;
+    font-size: 17px;
 }
 .dashboardarea h2 small {
     font-weight:normal;
-    font-size: 14px;
+    font-size: 12px;
 }
 .dashboardarea h5 {
 font-size: 14px;
 }
 .dashboardarea p{
-    font-family: 'PT Sans Narrow', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .dashboardarea label{
     font-weight: 700;
@@ -487,7 +489,7 @@ font-size: 14px;
     }
 
 .subhead {
-    line-height: 25px;
+    line-height: 20px;
     margin-bottom: 20px;
 }
 .header-apps {
@@ -512,7 +514,7 @@ font-size: 14px;
     background-image: url('img/ico-header-app.png');
     background-repeat: no-repeat;
     background-position: 5px top;
-    padding: 6px 0 5px 65px;
+    padding: 4px 0 5px 65px;
 }
 .header-role {
     background-image: url('img/ico-header-role.png');
@@ -599,7 +601,8 @@ font-size: 14px;
 }
 
 .row .gridcell{
-    padding-top:10px;
+    padding-top: 0px;
+    line-height: 16px;
 }
 
 .row.zebra-1 img,
@@ -648,7 +651,7 @@ font-size: 14px;
     -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
     line-height: 18px;
-    font-family: 'PT Sans Narrow', sans-serif;
+    font-family: font-family: 'Source Sans Pro', sans-serif;
     font-size: 14px;
     font-weight: normal;
 }
@@ -674,7 +677,7 @@ font-size: 14px;
 .label {
     padding: 1px 8px 0px;
     background-color: #d0b689;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: normal;
     line-height: 20px;

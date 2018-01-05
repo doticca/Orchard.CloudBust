@@ -12,22 +12,23 @@
 
 @using (Html.BeginFormAntiForgeryPost())
 {
-<div class="row bump-15">
-    <div class="large-3 columns">
+<div class="row collapse bump-15">
+    <div class="large-5 columns">
         <label for="fbAppKey">
             App ID
             <input id="fbAppKey" name="fbAppKey" type="text" placeholder="App ID" value="@Model.Application.fbAppKey" />
         </label>
     </div>
-    <div class="large-4 columns">
+</div>
+<div class="row collapse">
+    <div class="large-5 columns">
         <label for="fbAppSecret">
             App Secret
             <input id="fbAppSecret" name="fbAppSecret" type="text" placeholder="App Secret" value="@Model.Application.fbAppSecret" />
         </label>
     </div>
-    <div class="large-5 columns"></div>
 </div>
-<div class="row">
+<div class="row collapse">
     <div class="large-12 columns">
         <button class="" type="submit" name="submit.Save" value="Save">Save</button>
     </div>
@@ -35,7 +36,7 @@
 }
 @if (!string.IsNullOrWhiteSpace(fbappkey))
 {
-<div class="row" style="">
+<div class="row collapse" style="">
     <div class="large-12 columns">
         Follow these steps at
         <a href='https://developers.facebook.com/quickstarts/@fbappkey/?platform=ios'>
@@ -45,7 +46,7 @@
         to prepare your Xcode project for facebook login
     </div>
 </div>
-<div class="row" style="">
+<div class="row collapse" style="">
     <div class="large-12 columns">
         Download
         <a href='https://origincache.facebook.com/developers/resources/?id=facebook-ios-sdk-current.zip'>

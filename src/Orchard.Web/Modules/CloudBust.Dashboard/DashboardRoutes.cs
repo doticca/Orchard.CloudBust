@@ -752,6 +752,76 @@ namespace CloudBust.Dashboard
                                                                                   },
                                                          new MvcRouteHandler())
                                                  },
+                             new RouteDescriptor {
+                                                     Route = new Route(
+                                                         "dashboard/datatables/{datatableID}/fields",
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"},
+                                                                                      {"controller", "Dashboard"},
+                                                                                      {"action", "TableFields"}
+                                                                                  },
+                                                         new RouteValueDictionary(),
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"}
+                                                                                  },
+                                                         new MvcRouteHandler())
+                                                 },
+                             new RouteDescriptor {
+                                                     Route = new Route(
+                                                         "dashboard/datatables/{datatableID}/rows",
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"},
+                                                                                      {"controller", "Dashboard"},
+                                                                                      {"action", "TableRows"}
+                                                                                  },
+                                                         new RouteValueDictionary(),
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"}
+                                                                                  },
+                                                         new MvcRouteHandler())
+                                                 },
+                             new RouteDescriptor {
+                                                     Route = new Route(
+                                                         "dashboard/datatables/{datatableID}/rows/create",
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"},
+                                                                                      {"controller", "Dashboard"},
+                                                                                      {"action", "TableRowCreate"}
+                                                                                  },
+                                                         new RouteValueDictionary(),
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"}
+                                                                                  },
+                                                         new MvcRouteHandler())
+                                                 },
+                             new RouteDescriptor {
+                                                     Route = new Route(
+                                                         "dashboard/datatables/{datatableID}/fields/create",
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"},
+                                                                                      {"controller", "Dashboard"},
+                                                                                      {"action", "TableFieldCreate"}
+                                                                                  },
+                                                         new RouteValueDictionary(),
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"}
+                                                                                  },
+                                                         new MvcRouteHandler())
+                                                 },
+                             new RouteDescriptor {
+                                                     Route = new Route(
+                                                         "dashboard/datatables/{datatableID}/fields/{fieldID}/edit",
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"},
+                                                                                      {"controller", "Dashboard"},
+                                                                                      {"action", "TableFieldEdit"}
+                                                                                  },
+                                                         new RouteValueDictionary(),
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"}
+                                                                                  },
+                                                         new MvcRouteHandler())
+                                                 },
 
             };
         }

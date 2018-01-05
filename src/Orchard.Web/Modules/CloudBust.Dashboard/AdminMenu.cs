@@ -40,10 +40,12 @@ namespace CloudBust.Dashboard {
                 item => item.Action("applications", "Dashboard", new { area = "CloudBust.Dashboard" }).Permission(Permissions.ManageApps));
             menu.Add(T("Games"), "1.2",
                 item => item.Action("games", "Dashboard", new { area = "CloudBust.Dashboard" }).Permission(Permissions.ManageApps));
+            menu.Add(T("Tables"), "1.3",
+                item => item.Action("tables", "Dashboard", new { area = "CloudBust.Dashboard" }).Permission(Permissions.ManageApps));
 
-            if(app!=null)
+            if (app!=null)
 
-                menu.Add(T("Manage " + app.Name), "1.3",
+                menu.Add(T("Manage " + app.Name), "1.4",
                     item => item.Action("Application", "Dashboard", new { area = "CloudBust.Dashboard", appID = app.AppKey }).Permission(Permissions.ManageOwnApps));
 
             

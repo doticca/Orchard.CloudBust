@@ -4,7 +4,7 @@
 @using Orchard.Security
 
 @model CloudBust.Dashboard.ViewModels.ApplicationViewModel
-<div class="row">
+<div class="row collapse">
     <div class="large-12 columns">
         <table>
             <thead>
@@ -20,7 +20,7 @@
                 {
                     <tr>
                         <td>
-                            @datatable.Name
+                            <a href="~/dashboard/datatables/@datatable.Id" class="clickable-row">@datatable.Name</a>                            
                         </td>
                         <td>
                             @datatable.NormalizedTableName
@@ -38,8 +38,30 @@
         </table>
     </div>
 </div>
-<div class="row">
+<div class="row collapse">
     <div class="large-12 columns">
-        <a class="button" href="~/dashboard/applications/@Model.Application.AppKey/datatables/add"><i class="fi-plus"></i>  Add a Table</a>
+        <a id="maincbframecaller" class="button" href="~/dashboard/applications/@Model.Application.AppKey/datatables/add"><i class="fi-plus"></i>  Add a Table</a>
     </div>
 </div>
+<div class="row collapse">
+    <div class="large-12 columns">
+        <div id="maincbframe"></div>        
+    </div>
+</div>
+@using(Script.Foot()){
+<script type="text/javascript">
+    $(function () {  
+        $("#maincbframecaller").click(function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            $('#maincbframe').load(addressValue + ' #cbframecontent', function () {
+                $("#childcbframecaller").click(function (e) {
+                    e.preventDefault();
+                    var addressValue = $(this).attr("href");
+                    $('#childcbframe').load(addressValue + ' #cbframecontent');
+                });
+            });            
+        });
+    });
+</script>
+}

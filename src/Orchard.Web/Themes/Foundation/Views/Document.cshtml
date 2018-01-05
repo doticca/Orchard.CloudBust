@@ -12,8 +12,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
     <meta charset="utf-8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    @*<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />*@
     <title>@Html.Title(title, siteName)</title>
     <link href="https://fonts.googleapis.com/css?family=Monoton|Raleway:400,800" rel="stylesheet">
     @Display(Model.Head)
@@ -23,7 +23,7 @@
     <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script>
     <script>window.isRTL = @(isRtl.ToString().ToLowerInvariant());</script>
 </head>
-<body>
+<body class="body-bg-color">
     @Display(Model.Body)
     @Display(Model.Tail)
     <script>

@@ -1,4 +1,4 @@
-﻿.zone-hidden, .hidden{
+.zone-hidden, .hidden{
     display:none;
 }
 .bump-10 {
@@ -20,9 +20,11 @@
 .bump-25 {
     margin-top: 25px !important;
 }
-
 .bump-30 {
     margin-top: 30px !important;
+}
+.bump-35 {
+    margin-top: 35px !important;
 }
 
 .bump-60 {

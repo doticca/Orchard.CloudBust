@@ -11,7 +11,7 @@
 
 @using (Html.BeginFormAntiForgeryPost())
 {
-<div class="row">
+<div class="row collapse">
     <div class="large-3 columns">
         <label for="Name">
             Name
@@ -29,7 +29,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row collapse">
     <div class="large-12 columns">
         <label for="Description">
             Description
@@ -41,7 +41,7 @@
 }
 @if (!string.IsNullOrWhiteSpace(fbappkey))
 {
-<div class="row" style="margin-top:0px">
+<div class="row collaspe" style="margin-top:0px">
     <div class="large-12 columns">
         jump to
         <a href='https://developers.facebook.com/apps/@fbappkey/settings/' id="fbdashboard" class="">
@@ -52,17 +52,19 @@
     </div>
 </div>
 }
-<hr />
-<div class="large-12 columns">
-    <div class="alert alert-message block-message">
-        <h5>Remove Application</h5>
-        <div class="row">
-            <div class="large-7 medium-8 small-9 columns">
-                <span class="label warning">Warning</span> Removing this application will remove all associated tokens <em class="red">completely</em>! There is no way to undo this, so proceed with caution.
-            </div>
 
-            <div class="large-5 medium-4 small-3 text-center columns">
-                <a href="@deleteurl" class="primary btn delete wide pull-right small">Remove Application</a>
+<div class="row collapse bump-25">
+    <div class="large-12 columns">
+        <div class="alert alert-message block-message">
+            <h5>Remove Application</h5>
+            <div class="row collaspe">
+                <div class="large-7 medium-8 small-9 columns">
+                    <span class="label warning">Warning</span> Removing this application will remove all associated tokens <em class="red">completely</em>! There is no way to undo this, so proceed with caution.
+                </div>
+
+                <div class="large-5 medium-4 small-3 text-center columns">
+                    <a href="@deleteurl" class="primary btn delete wide pull-right small">Remove Application</a>
+                </div>
             </div>
         </div>
     </div>

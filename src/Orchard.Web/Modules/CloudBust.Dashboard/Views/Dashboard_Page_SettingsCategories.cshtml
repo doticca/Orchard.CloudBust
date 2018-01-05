@@ -5,7 +5,7 @@
 
 @model CloudBust.Dashboard.ViewModels.ApplicationViewModel
 
-<div class="row">
+<div class="row collapse">
     <div class="large-12 columns">
         <table>
             <thead>
@@ -20,7 +20,7 @@
                 {
                 <tr>
                     <td>
-                        @entry.Name
+                        <a href="~/dashboard/applications/@Model.Application.AppKey/ast/categories/@entry.NormalizedName/edit" class="clickable-row">@entry.Name</a>                        
                     </td>
                     <td>
                         @entry.Description
@@ -36,7 +36,7 @@
         </table>
     </div>
 </div>
-<div class="row">
+<div class="row collapse">
     <div class="large-12 columns">
         <a class="button" href="~/dashboard/applications/@Model.Application.AppKey/ast/categories/create"><i class="fi-plus"></i>  Add a Category</a>
     </div>

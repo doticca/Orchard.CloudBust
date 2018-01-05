@@ -1,0 +1,58 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+
+@using CloudBust.Application.Services
+
+@model CloudBust.Dashboard.ViewModels.FieldEditViewModel
+
+<div class="dashboardarea">
+    <div id="cbframecontent">
+    <div class="row collapse bump-15">
+        <h1 class="header-parameter subhead">
+            Edit Field
+            <div><small>Edit @Model.Name field for @Model.ApplicationDataTableName table</small></div>
+        </h1>
+        <hr />
+    </div>
+    @using (Html.BeginFormAntiForgeryPost())
+    {
+        <div class="row collapse">
+            <div class="medium-6 columns end">
+                <label for="Name">
+                    Name
+                    <input id="Name" name="Name" type="text" placeholder="field name" value="@Model.Name" />
+                </label>
+            </div>
+
+        </div>
+        <div class="row collapse">
+            <div class="medium-6 columns">
+                <label for="Description">
+                    Description
+                    <input id="Description" name="Description" type="text" placeholder="field description" value="@Model.Description" />
+                </label>
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="medium-6 columns">
+                <label for="FieldType">@T("Type")</label>
+                <select id="FieldType" name="FieldType">
+                    @Html.SelectOption(Model.FieldType, "string", T("String").ToString())
+                    @Html.SelectOption(Model.FieldType, "bool", T("Boolean").ToString())
+                    @Html.SelectOption(Model.FieldType, "double", T("Double").ToString())
+                    @Html.SelectOption(Model.FieldType, "int", T("Integer").ToString())
+                    @Html.SelectOption(Model.FieldType, "datetime", T("DateTime").ToString())
+                </select>
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="large-12 columns">
+                <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+                <a href="~/dashboard/datatables/@Model.ApplicationDataTableID/fields" class="secondary button">Cancel</a>
+            </div>
+        </div>
+    }
+    </div>
+    <div class="row bump-25"></div>
+</div>

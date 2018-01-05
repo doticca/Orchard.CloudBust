@@ -123,3 +123,9 @@ Features:
 		Description: A lightweight JavaScript library for creating particles.
 		Category: CloudBust Resources
 		Dependencies: CloudBust.Resources
+	CloudBust.Resources.DataTables:
+		Name: DataTables
+		Version: 1.10.16
+		Description: DataTables is a plug-in for the jQuery Javascript library.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources

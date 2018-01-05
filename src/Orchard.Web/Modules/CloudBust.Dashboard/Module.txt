@@ -7,5 +7,5 @@ Version: 1.10.0
 OrchardVersion: 1.10
 Description: A dashboard for CloudBust APIs.
 Category: Admin
-Dependencies: CloudBust.Application, CloudBust.Resources.Highlight, Orchard.Autoroute, Orchard.Users
+Dependencies: CloudBust.Application, CloudBust.Resources.Highlight, Orchard.Autoroute, Orchard.Users, CloudBust.Resources.DataTables
 

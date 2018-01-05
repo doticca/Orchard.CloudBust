@@ -245,7 +245,6 @@ img.icon {
         color: rgb(238, 238, 238);
         text-decoration: none;
         cursor: pointer;
-        cursor: auto;
         display: block;
         font-weight: normal;
         outline: none;
@@ -411,7 +410,8 @@ strong {
 
 select {
     font-size: 0.875rem;
-    padding-bottom: 0.6rem;
+    /* padding-bottom: 0.3rem; */
+    line-height: 25px;
 }
 
 hr {
@@ -419,6 +419,7 @@ hr {
     height: 1px;
     color: #e4e5e6;
     background-color: #e4e5e6;
+    margin: 0.5rem auto;
 }
 
 .manage {
@@ -605,7 +606,7 @@ html.dyn #submit-pager, html.dyn .apply-bulk-actions-auto { display:none; }
 }
 
 .tabs {
-    border: none;
+    border: 1px solid #dcdcdc;
 }
 
 .localmenu ~ #content {
@@ -747,11 +748,11 @@ html.dyn #submit-pager, html.dyn .apply-bulk-actions-auto { display:none; }
 /* Content
 ***************************************************************/
 #main #content h1 {
-    margin: 0 0 1em;
+    margin: 0 0 2rem;
 }
 
 #main h2, #main h3 {
-    margin: .5em 4em 0 0;
+    margin: .5em 0em 0 0;
 }
 
 #main .main.actions {
@@ -821,7 +822,7 @@ fieldset,
 ul.templates li, 
 fieldset.search-actions, 
 .audittrail-filter-section {
-    padding: 10px;
+    padding: 8px;
     margin: 0.2em 0 0.2em 0;
     width: 100%;
     float: left;
@@ -946,7 +947,7 @@ label span {
 }
 
 label input {
-    vertical-align: text-top;
+    /* vertical-align: text-top; */
 }
 
 .hint {
@@ -1021,9 +1022,9 @@ textarea {
 
     .dashboard .help-item {
         width: 100%;
-        min-height: 180px;
+        min-height: 300px;
         float: left;
-        margin: 0 20px 20px 0;
+        margin: 0 15px 15px 0;
     }
 
     .dashboard a:hover {
@@ -1319,6 +1320,17 @@ ul.contentItems > li:hover {
 .dashboardarea .row{
     margin: 0;
 }
+.tableheader {
+        background: #f8f8f8;
+        color: #0a0a0a;
+        border: 1px solid #f1f1f1;
+        vertical-align: middle;
+}
+.tableheader .columns{
+    padding: 0.5rem 0.625rem 0.625rem;
+    font-weight: bold;
+    text-align: left;
+}
     /*.dashboardarea .row .columns {
         padding: 0 15px 0 15px;
     }
@@ -1536,6 +1548,10 @@ body.child #media-library-main-editor {
 
 .tabs-content {
     margin-bottom: 10px;
+    border-top:none;
+    border-left: 1px solid #dcdcdc;
+    border-right: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
     /*overflow: scroll;
     height: 74vh;*/
 }
@@ -1812,6 +1828,11 @@ img.icon.settings {
     margin: 0 0 0.3rem 0;
     padding: 0.3rem;
 }
+@media screen and (min-width: 64em) {
+.row.collapse .panel{
+    margin-left: 1rem;
+}
+}
 @media screen and (max-width: 39.9375em) {
     .admincontent {
         margin-left: 0;
@@ -1820,11 +1841,13 @@ img.icon.settings {
 @media screen and (min-width: 40em) {
     .dashboard .help-item{
         width: 46%;
+        /* min-height: 300px; */
     }
 }
 @media screen and (min-width: 64em) {
     .dashboard .help-item{
         width: 30%;
+        /* min-height: 274px; */
     }
     .bulk-actions,
     fieldset.publish-later-datetime,
@@ -1901,27 +1924,33 @@ img.icon.settings {
 .zebra-1 .subhead,
 .zebra-0 .subhead,
 .zebra-1 .button,
-.zebra-1 .button {
+.zebra-1 .button,
+#main .zebra-1 .subhead,
+#main .zebra-0 .subhead,
+#main .zebra-1 .button,
+#main .zebra-1 .button {
     margin: 0;
+    line-height: 16px;
 }
 
 .row.zebra-1 {
-    border-bottom: rgba(0,0,0,0.05) 1px solid;
-    border-top: rgba(0,0,0,0.05) 1px solid;
     cursor: pointer;
     font-style: normal;
     font-weight: normal;
     padding-top: 5px;
     padding-bottom: 5px;
-    background-color: rgba(0,0,0,0.03);
+    background-color: #fefefe;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    vertical-align: middle;
 }
-
+.row.zebra-1 .columns{
+    height:100%;
+}
 .row.zebra-0 {
     border-bottom: none;
     border-top: none;
@@ -1930,11 +1959,15 @@ img.icon.settings {
     font-weight: normal;
     padding-top: 5px;
     padding-bottom: 5px;
-    background-color: rgba(0,0,0,0);
+    background-color: #f1f1f1;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    vertical-align: middle;
+}
+#media-library-main-editor {
+    min-width: 250px;
 }

@@ -38,6 +38,7 @@ namespace CloudBust.Application
             SchemaBuilder.CreateTable(typeof(ApplicationDataTableRowsRecord).Name,
                         table => table
                                         .Column<int>("Id", column => column.PrimaryKey().Identity())
+                                        .Column<bool>("IsNew")
                                         .Column<int>("ApplicationDataTable_id")
                                         .Column<int>("Row_id")
             );

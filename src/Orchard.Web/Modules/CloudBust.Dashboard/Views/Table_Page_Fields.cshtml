@@ -1,0 +1,74 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+@using CloudBust.Application.Models
+
+@model CloudBust.Dashboard.ViewModels.TableViewModel
+@{
+    string create_url = Url.Content("~") + "dashboard/datatables/" + Model.DataTable.Id + "/fields/create";
+}
+<div class="large-9 medium-8 columns bump-25 end">
+    <h1 class="subhead">
+        Table Fields
+        <div><small>Define your table's Fields.</small></div>
+    </h1>
+    <hr />
+    <div class="row collapse">
+        <div class="large-12 columns">
+            <h2 class="subhead">
+                Row Fields
+                <div>
+                    <small>
+                        Define all the fields of your Table and you can access/edit them through CloudBust SDK.
+                    </small>
+                </div>
+            </h2>
+        </div>
+    </div>
+
+    <div class="row collapse">
+        <div class="large-12 columns">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="150">Name</th>
+                        <th width="300">Description</th>
+                        <th width="100">Type</th>
+                        <th width="180">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (FieldRecord field in Model.Fields)
+                    {
+                        <tr>
+                            <td>
+                                <a href="~/dashboard/datatables/@Model.DataTable.Id/fields/@field.Id/edit" class="maincbframecaller clickable-row">@field.Name</a>
+                            </td>
+                            <td>
+                                @field.Description
+                            </td>
+                            <td>
+                                @field.FieldType
+                            </td>
+                            <td>
+                                <a href="~/dashboard/datatables/@Model.DataTable.Id/fields/@field.Id/edit" class="maincbframecaller tiny button">Edit</a>
+                                <a href="~/dashboard/games/@Model.DataTable.Id/fields/@field.Id/delete" class="tiny button alert">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row collapse">
+        <div class="large-12 columns">
+            <a class="maincbframecaller button" href="@create_url"><i class="fi-plus"></i>  Add a Field</a>
+        </div>
+    </div>
+    <div class="row bump-25"></div>
+    <div class="row collapse">
+        <div class="large-12 columns">
+            <div id="maincbframe"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@using CloudBust.Dashboard
+@using Orchard.Users.Models
+@using Orchard.Security
+@using CloudBust.Application.Models
+
+@model CloudBust.Dashboard.ViewModels.TableViewModel
+@{
+    string deleteurl = Url.Content("~") + "dashboard/applications/" + Model.DataTable.Id + "/delete";
+}
+<div class="large-9 medium-8 columns bump-25 end">
+    <h1 class="subhead">
+        Information
+        <div><small>Basic Table settings. Remember ClouBust tables can be attached to any Application/Game</small></div>
+    </h1>
+
+    <hr />
+
+    @using (Html.BeginFormAntiForgeryPost())
+    {
+        <div class="row collapse">
+            <div class="large-12 columns">
+                <label for="Name">
+                    Name
+                    @Html.TextBoxFor(m => m.DataTable.Name, new { })
+                </label>
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="large-12 columns">
+                <label for="Description">
+                    Description
+                    @Html.TextBoxFor(m => m.DataTable.Description, new { })
+                </label>
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="large-12 columns">
+                <button class="" type="submit" name="submit.Save" value="Save">Save</button>
+            </div>
+        </div>
+    }
+
+    <hr />
+
+    <div class="row collapse">
+        <div class="large-12 columns">
+            <div class="alert alert-message block-message">
+                <h5>Remove Table</h5>
+                <div class="row">
+                    <div class="large-7 medium-8 small-9 columns">
+                        <span class="label warning">Warning</span> Removing this table will remove all associated fields and data <em class="red">completely</em>! There is no way to undo this, so proceed with caution.
+                    </div>
+
+                    <div class="large-5 medium-4 small-3 text-center columns">
+                        <a href="@deleteurl" class="primary btn delete wide pull-right small">Remove Table</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row bump-25"></div>
+
+</div>

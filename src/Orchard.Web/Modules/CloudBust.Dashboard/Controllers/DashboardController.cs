@@ -19,6 +19,7 @@ using Orchard.Messaging.Services;
 using CloudBust.Application.Models;
 using Orchard.Users.Models;
 using Orchard.UI.Admin;
+using CloudBust.Dashboard.Models;
 
 namespace CloudBust.Dashboard.Controllers
 {
@@ -1498,6 +1499,16 @@ namespace CloudBust.Dashboard.Controllers
         {
             return TablePage(datatableId, 2);
         }
+        public ActionResult TableRowDelete(string datatableId, int rowID)
+        {
+            int datatableid;
+            if (!Int32.TryParse(datatableId, out datatableid))
+            {
+                return HttpNotFound();
+            }
+            _datatablesService.DeleteRow(datatableid, rowID);
+            return RedirectToAction("TableRows", "Dashboard", new { area = "CloudBust.Dashboard", datatableID = datatableId });
+        }
 
         public ActionResult Tables()
         {
@@ -1663,6 +1674,91 @@ namespace CloudBust.Dashboard.Controllers
             }
             return RedirectToAction("Tables", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
         }
+        public ActionResult TableRowCreate(string datatableId)
+        {
+            IUser user = _orchardServices.WorkContext.CurrentUser;
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            int datatableid;
+            if (!Int32.TryParse(datatableId, out datatableid))
+            {
+                return HttpNotFound();
+            }
+
+            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
+            if (table == null)
+            {
+                return HttpNotFound();
+            }
+
+            var model = new RowCreateViewModel();
+            model.ApplicationDataTableName = table.Name;
+            model.ApplicationDataTableID = datatableId;
+            model.User = user;
+            model.Fields = _datatablesService.GetFieldsForDataTable(datatableid);
+            model.Row = _datatablesService.CreateRowForTable(datatableid);
+            model.RowID = model.Row.Id;
+
+            //var fields = new List<Field>();
+            //foreach (var f in model.Fields)
+            //{
+            //    fields.Add(new Field(f.Name, CBDataTypes.SharpTypeFromString(f.FieldType)));
+            //}
+
+            //model.FieldValues = new DynamicClass(fields);
+            
+            return View(model);
+        }
+        [HttpPost, ActionName("TableRowCreate")]
+        [FormValueRequired("submit.Save")]
+        public ActionResult TableRowCreatePOST(string datatableId)
+        {
+
+            var viewModel = new RowCreateViewModel();
+
+
+            IUser user = _orchardServices.WorkContext.CurrentUser;
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                viewModel.User = user;
+            }
+            int datatableid;
+            if (!Int32.TryParse(datatableId, out datatableid))
+            {
+                return HttpNotFound();
+            }
+
+            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
+            if (table == null)
+            {
+                return HttpNotFound();
+            }
+            viewModel.ApplicationDataTableName = table.Name;
+            viewModel.ApplicationDataTableID = datatableId;
+            viewModel.User = user;
+            viewModel.Fields = _datatablesService.GetFieldsForDataTable(datatableid);
+
+            TryUpdateModel(viewModel);
+
+            if(string.IsNullOrWhiteSpace(viewModel.jsonResults))
+            {
+                return TableRowDelete(datatableId, viewModel.RowID);
+            }
+            viewModel.Row = _datatablesService.GetRow(viewModel.RowID);
+            if (viewModel.Row != null)
+            {
+                _datatablesService.SetValuesForRow(table, viewModel.Row, viewModel.Fields, viewModel.jsonResults);
+            }
+            return RedirectToAction("TableRows", "Dashboard", new { area = "CloudBust.Dashboard", datatableID = datatableId });
+        }
         public ActionResult TableFieldCreate(string datatableId)
         {
             IUser user = _orchardServices.WorkContext.CurrentUser;
@@ -1759,9 +1855,7 @@ namespace CloudBust.Dashboard.Controllers
             }
 
             _datatablesService.CreateFieldForApplicationDataTable(datatableid, field.Id);
-
-            //return RedirectToAction("AppSettings", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
-            return TablePage(datatableId, 1, true);
+            return RedirectToAction("TableFields", "Dashboard", new { area = "CloudBust.Dashboard", datatableID = datatableId });
         }
 
         public ActionResult TableFieldEdit(string datatableId, int fieldId)
@@ -1859,8 +1953,23 @@ namespace CloudBust.Dashboard.Controllers
 
             return TablePage(datatableId, 1, true);
         }
-        public ActionResult TableRowCreate(string datatableId)
+        public ActionResult TableFieldUp(string datatableID, int fieldID)
         {
+            int datatableid;
+            if (!Int32.TryParse(datatableID, out datatableid))
+            {
+                return HttpNotFound();
+            }
+            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
+            if (table == null)
+            {
+                return HttpNotFound();
+            }
+            FieldRecord field = _datatablesService.GetField(fieldID);
+            if (field == null)
+            {
+                return HttpNotFound();
+            }
             IUser user = _orchardServices.WorkContext.CurrentUser;
 
             if (user == null)
@@ -1868,30 +1977,37 @@ namespace CloudBust.Dashboard.Controllers
                 return HttpNotFound();
             }
 
-            //if (app.owner != user.UserName)
-            //{
-            //    return Application(appID);
-            //}
+            _datatablesService.FieldPositionUp(field.Id, datatableid);
+
+            return RedirectToAction("TableFields", "Dashboard", new { area = "CloudBust.Dashboard", datatableID = datatableID });
+        }
+        public ActionResult TableFieldDown(string datatableID, int fieldID)
+        {
             int datatableid;
-            if (!Int32.TryParse(datatableId, out datatableid))
+            if (!Int32.TryParse(datatableID, out datatableid))
             {
                 return HttpNotFound();
             }
-
             ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
             if (table == null)
             {
                 return HttpNotFound();
             }
+            FieldRecord field = _datatablesService.GetField(fieldID);
+            if (field == null)
+            {
+                return HttpNotFound();
+            }
+            IUser user = _orchardServices.WorkContext.CurrentUser;
 
-            var model = new FieldCreateViewModel();
-            model.ApplicationDataTableName = table.Name;
-            model.ApplicationDataTableID = datatableId;
-            model.User = user;
-            model.Name = string.Empty;
-            model.Description = string.Empty;
-            model.FieldType = "string";
-            return View(model);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            _datatablesService.FieldPositionDown(field.Id, datatableid);
+
+            return RedirectToAction("TableFields", "Dashboard", new { area = "CloudBust.Dashboard", datatableID = datatableID });
         }
         public ActionResult AppSettings(string appID, PagerParameters pagerParameters, bool afterPost = false)
         {

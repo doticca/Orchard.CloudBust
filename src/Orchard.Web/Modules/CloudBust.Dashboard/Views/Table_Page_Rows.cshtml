@@ -17,16 +17,24 @@
             <thead>
                 <tr>
                     @foreach (FieldRecord field in Model.Fields)
-                    {
+                    {                        
+                        if (field != null)
+                        {
                         <th>@field.Name</th>
+                        }
                     }
                 </tr>
             </thead>
         <tbody></tbody>
     </table>
     <div class="row collapsed">
-        <div class="large-12 columns">
+        @*<div class="large-12 columns">*@
             <a class="maincbframecaller button" href="@create_url"><i class="fi-plus"></i>  Add new row</a>
+        @*</div>*@
+    </div>
+    <div class="row collapse">
+        <div class="large-12 columns">
+            <div id="maincbframe"></div>        
         </div>
     </div>
 </div>

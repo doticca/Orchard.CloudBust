@@ -56,6 +56,24 @@ namespace CloudBust.Application.Services
                     return CBType.stringSetting;
             }
         }
+        public static Type SharpTypeFromString(string s)
+        {
+            switch (s)
+            {
+                case "string":
+                    return typeof(string);
+                case "bool":
+                    return typeof(bool);
+                case "double":
+                    return typeof(double);
+                case "int":
+                    return typeof(int);
+                case "datetime":
+                    return typeof(DateTime);
+                default:
+                    return typeof(string);
+            }
+        }
         public static string GenerateIdentifier(int length, bool useNumbers = false)
         {
             char[] identifier = new char[length];

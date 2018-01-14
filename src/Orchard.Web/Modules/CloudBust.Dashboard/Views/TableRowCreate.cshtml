@@ -1,0 +1,66 @@
+﻿@using CloudBust.Application.Models
+@using CloudBust.Dashboard.Models
+
+@model CloudBust.Dashboard.ViewModels.RowCreateViewModel
+
+<div class="dashboardarea">
+    <div id="cbframecontent">
+        <div class="row collapse bump-15">
+            <h1 class="header-parameter subhead">
+                Add a new Row
+                <div><small>Add a new Row for @Model.ApplicationDataTableName table</small></div>
+            </h1>
+            <hr />
+        </div>
+@using (Html.BeginFormAntiForgeryPost())
+{
+    @Html.HiddenFor(m => m.RowID)
+    @Html.HiddenFor(m => m.ApplicationDataTableID)
+    @Html.HiddenFor(m => m.ApplicationDataTableName)
+    @Html.HiddenFor(m => m.jsonResults)
+    foreach (CellRecord cell in Model.Row.Cells)
+    {
+        FieldRecord field = cell.Field;
+
+         <div class="row">
+            <div class="medium-text-right small-12 medium-4 columns"><label for="FieldValues.@field.Name" class="input-label">@field.Name:</label></div>
+            <div class="small-12 medium-8 columns">
+                @if (field.FieldType == "string")
+                {
+                    <input data-field="@field.Name" type="text" class="" name="FieldValues.@field.Name" id="FieldValues.@field.Name" placeholder="@field.Description" value="@field.StringFieldValueRecord.Where(x => x.Id == cell.ValueId).FirstOrDefault().Value"/>
+                }
+                @if (field.FieldType == "bool")
+                {
+                    <div class="switch">
+                        
+                        <input data-field="@field.Name" class="switch-input" type="checkbox" name="FieldValues.@field.Name" id="FieldValues.@field.Name" value="@field.BoolFieldValueRecord.Where(x => x.Id == cell.ValueId).FirstOrDefault().Value"/>
+                        <label class="switch-paddle" for="FieldValues.@field.Name">
+                            <span class="show-for-sr">@field.Description</span>
+                        </label>
+                    </div>
+                }
+                @if (field.FieldType == "double")
+                {
+
+                    <input data-field="@field.Name" type="number" step="0.01" class="" name="FieldValues.@field.Name" id="FieldValues.@field.Name" placeholder="@field.Description" value="@field.DoubleFieldValueRecord.Where(x => x.Id == cell.ValueId).FirstOrDefault().Value"/>
+                }
+                @if (field.FieldType == "int")
+                {
+
+                    <input data-field="@field.Name" type="number" step="1" class="" name="FieldValues.@field.Name" id="FieldValues.@field.Name" placeholder="@field.Description" value="@field.IntegerFieldValueRecord.Where(x => x.Id == cell.ValueId).FirstOrDefault().Value"/>
+                }
+            </div>
+        </div>
+    }
+
+
+            <div class="row collapse">
+                <div class="large-12 columns">
+                    <button data-action="jsonpost" class="" type="submit" name="submit.Save" value="Save">Save</button>
+                    <a href="~/dashboard/datatables/@Model.ApplicationDataTableID/rows/@Model.Row.Id/delete" class="secondary button">Cancel</a>
+                </div>
+            </div>
+}
+        </div>
+        <div class="row bump-25"></div>
+    </div>

@@ -8,6 +8,7 @@ namespace CloudBust.Application.Models
     public abstract class FieldValueRecord
     {
         public virtual int Id { get; set; }
+        public virtual FieldRecord FieldRecord { get; set; }
     }
 
     public class StringFieldValueRecord : FieldValueRecord
@@ -31,6 +32,6 @@ namespace CloudBust.Application.Models
     }
     public class DateTimeFieldValueRecord : FieldValueRecord
     {
-        public virtual bool? Value { get; set; }
+        public virtual DateTime? Value { get; set; }
     }
 }

@@ -11,12 +11,12 @@ namespace CloudBust.Application.Models
     {
         public RowRecord()
         {
-            Columns = new List<RowColumnsRecord>();
+            Cells = new List<CellRecord>();
         }
         public virtual int Id { get; set; }
         public virtual int Position { get; set; }
 
         [CascadeAllDeleteOrphan]
-        public virtual IList<RowColumnsRecord> Columns { get; set; }
+        public virtual IList<CellRecord> Cells { get; set; }
     }
 }

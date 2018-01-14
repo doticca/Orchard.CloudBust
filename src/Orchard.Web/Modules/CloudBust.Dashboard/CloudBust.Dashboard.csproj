@@ -117,6 +117,8 @@
     <Compile Include="ViewModels\ApplicationEditAppStoreViewModel.cs" />
     <Compile Include="ViewModels\ApplicationEditGCViewModel.cs" />
     <Compile Include="ViewModels\ApplicationEditBlogsViewModel.cs" />
+    <Compile Include="Models\DynamicClass.cs" />
+    <Compile Include="ViewModels\RowCreateViewModel.cs" />
     <Compile Include="ViewModels\FieldEditViewModel.cs" />
     <Compile Include="ViewModels\FieldCreateViewModel.cs" />
     <Compile Include="ViewModels\TableViewModel.cs" />
@@ -307,6 +309,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Table_Page_Rows.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\TableRowCreate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Table_Page_Fields.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Table_Page_Settings.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

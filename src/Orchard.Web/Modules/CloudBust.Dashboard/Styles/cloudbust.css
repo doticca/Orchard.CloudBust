@@ -472,6 +472,11 @@ font-size: 14px;
 .dashboardarea label{
     font-weight: 700;
 }
+.dashboardarea .input-label
+{
+    line-height: 1.5;
+    padding-top: 8px;
+}
 /*.dashboardarea input{
     margin-top:5px;
 }*/

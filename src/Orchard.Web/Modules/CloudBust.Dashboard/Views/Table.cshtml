@@ -5,39 +5,29 @@
 
 @model CloudBust.Dashboard.ViewModels.TableViewModel
 @{
-
-    string deleteurl = Url.Content("~") + "dashboard/applications/" + Model.DataTable.Id + "/delete";
-    string reseturl = Url.Content("~") + "dashboard/applications/" + Model.DataTable.Id + "/reset";
-
-    string codeurl = @"https://" + Model.Uri.Host.ToString();
-
     string[] a_page = { string.Empty, string.Empty, string.Empty };
     string[] b_page = { string.Empty, string.Empty, string.Empty };
     string[] a_url = {
-                         Url.Content("~") + "dashboard/datatables/" + Model.DataTable.Id,
-                         Url.Content("~") + "dashboard/datatables/" + Model.DataTable.Id + "/fields",
-                         Url.Content("~") + "dashboard/datatables/" + Model.DataTable.Id + "/rows",
-                     };
-    string create_url = Url.Content("~") + "dashboard/datatables/" + Model.DataTable.Id + "/fields/create";
+                 Url.Content("~") + "dashboard/datatables/" + Model.DataTable.Id,
+                 Url.Content("~") + "dashboard/datatables/" + Model.DataTable.Id + "/fields",
+                 Url.Content("~") + "dashboard/datatables/" + Model.DataTable.Id + "/rows",
+             };
 
     string[] a_title = {
-                           "Table Information",
-                           "Fields",
-                           "Rows",
-                       };
+                   "Table Information",
+                   "Fields",
+                   "Rows",
+               };
     string[] a_category = {
-                           "Settings",
-                           "Settings",
-                           "Data",
-                       };
+                   "Settings",
+                   "Settings",
+                   "Data",
+               };
 
 
     a_page[Model.Page] = "active";
     b_page[Model.Page] = "current";
-
-    IUser webUser = Model.User;
 }
-
 
 <div class="dashboardarea">
     <ul class="breadcrumbs hide-for-small">
@@ -69,9 +59,9 @@
                             <li class="divider"></li>
                             <li class="heading">Applications</li>
                             @foreach (var app in Model.Applications)
-                        {
-                            <li><a href="@(Url.Content("~") + "dashboard/applications/" + app.AppKey + "/datatables")">@app.Name</a></li>
-                    }
+                            {
+                                <li><a href="@(Url.Content("~") + "dashboard/applications/" + app.AppKey + "/datatables")">@app.Name</a></li>
+                            }
                         </ul>
                     </nav>
 
@@ -82,141 +72,24 @@
 
         @if (Model.Page == 0)
         {
-        <div class="large-9 medium-8 columns bump-25 end">
-            <h1 class="subhead">
-                Information
-                <div><small>Basic Table settings. Remember ClouBust tables can be attached to any Application/Game</small></div>
-            </h1>
-
-            <hr />
-
-            @using (Html.BeginFormAntiForgeryPost())
-        {
-            <div class="row collapse">
-                <div class="large-12 columns">
-                    <label for="Name">
-                        Name
-                        @Html.TextBoxFor(m => m.DataTable.Name, new { })
-                    </label>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="large-12 columns">
-                    <label for="Description">
-                        Description
-                        @Html.TextBoxFor(m => m.DataTable.Description, new { })
-                    </label>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="large-12 columns">
-                    <button class="" type="submit" name="submit.Save" value="Save">Save</button>
-                </div>
-            </div>
-    }
-
-            <hr />
-
-            <div class="row collapse">
-                <div class="large-12 columns">
-                    <div class="alert alert-message block-message">
-                        <h5>Remove Table</h5>
-                        <div class="row">
-                            <div class="large-7 medium-8 small-9 columns">
-                                <span class="label warning">Warning</span> Removing this table will remove all associated fields and data <em class="red">completely</em>! There is no way to undo this, so proceed with caution.
-                            </div>
-
-                            <div class="large-5 medium-4 small-3 text-center columns">
-                                <a href="@deleteurl" class="primary btn delete wide pull-right small">Remove Table</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row bump-25"></div>
-
-        </div>
+            Html.RenderPartial("Table_Page_Settings");
         }
 
         @if (Model.Page == 1)
         {
-        <div class="large-9 medium-8 columns bump-25 end">
-            <h1 class="subhead">
-                Table Fields
-                <div><small>Define your table's Fields.</small></div>
-            </h1>
-            <hr />
-            <div class="row collapse">
-                <div class="large-12 columns">
-                    <h2 class="subhead">
-                        Row Fields
-                        <div>
-                            <small>
-                                Define all the fields of your Table and you can access/edit them through CloudBust SDK.
-                            </small>
-                        </div>
-                    </h2>
-                </div>
-            </div>
-
-            <div class="row collapse">
-                <div class="large-12 columns">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th width="150">Name</th>
-                                <th width="300">Description</th>
-                                <th width="100">Type</th>
-                                <th width="180">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (FieldRecord field in Model.Fields)
-                        {
-                            <tr>
-                                <td>
-                                    <a href="~/dashboard/datatables/@Model.DataTable.Id/fields/@field.Id/edit" class="maincbframecaller clickable-row">@field.Name</a>
-                                </td>
-                                <td>
-                                    @field.Description
-                                </td>
-                                <td>
-                                    @field.FieldType
-                                </td>
-                                <td>
-                                    <a href="~/dashboard/datatables/@Model.DataTable.Id/fields/@field.Id/edit" class="maincbframecaller tiny button">Edit</a>
-                                    <a href="~/dashboard/games/@Model.DataTable.Id/fields/@field.Id/delete" class="tiny button alert">Delete</a>
-                                </td>
-                            </tr>
-                    }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="large-12 columns">
-                    <a class="maincbframecaller button" href="@create_url"><i class="fi-plus"></i>  Add a Field</a>
-                </div>
-            </div>
-            <div class="row bump-25"></div>
-            <div class="row collapse">
-                <div class="large-12 columns">
-                    <div id="maincbframe"></div>
-                </div>
-            </div>
-        </div>
+            Html.RenderPartial("Table_Page_Fields");
         }
         @if (Model.Page == 2)
         {
             Html.RenderPartial("Table_Page_Rows");
         }
-        </div>
     </div>
+</div>
 
-@using(Script.Foot()){
-<script type="text/javascript">
-    $(function () {  
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+    $(function () {
         $(".maincbframecaller").click(function (e) {
             e.preventDefault();
             var addressValue = $(this).attr("href");
@@ -226,8 +99,28 @@
                     var addressValue = $(this).attr("href");
                     $('#childcbframe').load(addressValue + ' #cbframecontent');
                 });
-            });            
+                $('form').submit(function (e) {
+                    var form = this;
+
+                    //e.preventDefault();
+
+                    var fields = new Object();
+                    $("[data-field]").each(function (index) {
+                        var varName = $(this).data('field');
+                        if ($(this).is(':checkbox'))
+                            fields[varName] = $(this).is(':checked');
+                        else
+                            fields[varName] = $(this).val();
+                    });
+                    var myString = JSON.stringify(fields);
+                    $('#jsonResults').val(myString);
+
+                    //$(form).unbind('submit').submit();
+                });
+            });
         });
+
+
     });
-</script>
+    </script>
 }

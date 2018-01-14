@@ -796,6 +796,20 @@ namespace CloudBust.Dashboard
                                                  },
                              new RouteDescriptor {
                                                      Route = new Route(
+                                                         "dashboard/datatables/{datatableID}/rows/{rowID}/delete",
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"},
+                                                                                      {"controller", "Dashboard"},
+                                                                                      {"action", "TableRowDelete"}
+                                                                                  },
+                                                         new RouteValueDictionary(),
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"}
+                                                                                  },
+                                                         new MvcRouteHandler())
+                                                 },
+                             new RouteDescriptor {
+                                                     Route = new Route(
                                                          "dashboard/datatables/{datatableID}/fields/create",
                                                          new RouteValueDictionary {
                                                                                       {"area", "CloudBust.Dashboard"},
@@ -815,6 +829,34 @@ namespace CloudBust.Dashboard
                                                                                       {"area", "CloudBust.Dashboard"},
                                                                                       {"controller", "Dashboard"},
                                                                                       {"action", "TableFieldEdit"}
+                                                                                  },
+                                                         new RouteValueDictionary(),
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"}
+                                                                                  },
+                                                         new MvcRouteHandler())
+                                                 },
+                            new RouteDescriptor {
+                                                     Route = new Route(
+                                                         "dashboard/datatables/{datatableID}/fields/{fieldID}/moveup",
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"},
+                                                                                      {"controller", "Dashboard"},
+                                                                                      {"action", "TableFieldUp"}
+                                                                                  },
+                                                         new RouteValueDictionary(),
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"}
+                                                                                  },
+                                                         new MvcRouteHandler())
+                                                 },
+                            new RouteDescriptor {
+                                                     Route = new Route(
+                                                         "dashboard/datatables/{datatableID}/fields/{fieldID}/movedown",
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "CloudBust.Dashboard"},
+                                                                                      {"controller", "Dashboard"},
+                                                                                      {"action", "TableFieldDown"}
                                                                                   },
                                                          new RouteValueDictionary(),
                                                          new RouteValueDictionary {

@@ -13,6 +13,7 @@ namespace CloudBust.Application.Services
     {
         // Tables
         ApplicationDataTableRecord GetDataTable(int Id);
+        ApplicationDataTableRecord GetDataTable(RowRecord row);
         IEnumerable<ApplicationDataTableRecord> GetDataTables();
         IEnumerable<ApplicationDataTableRecord> GetApplicationDataTables(ApplicationRecord applicationRecord);
         IEnumerable<ApplicationDataTableRecord> GetApplicationDataTables(int applicationId);
@@ -34,12 +35,19 @@ namespace CloudBust.Application.Services
         bool DeleteField(int fieldId);
         FieldRecord CreateFieldForApplicationDataTable(int dataTableId, int fieldId);
         bool RemoveFieldFromApplicationDataTable(int dataTableId, int fieldId);
-        //dynamic GetFieldValue(FieldRecord fieldRecord);
-        //dynamic GetFieldValue(int fieldId);
-        //void SetFieldValue(int fieldId, string fieldValue);
-        //void SetFieldValue(int fieldId, int fieldValue);
-        //void SetFieldValue(int fieldId, double fieldValue);
-        //void SetFieldValue(int fieldId, bool fieldValue);
-        //void SetFieldValue(int fieldId, DateTime fieldValue);    
+        int GetFieldLastPosition(FieldRecord fieldRecord, int dataTableId);
+        void FieldPositionUp(int Id, int dataTableId);
+        void FieldPositionDown(int Id, int dataTableId);
+        RowRecord CreateRowForTable(int dataTableId);
+        RowRecord GetRow(int RowId);
+        void DeleteRow(int datatableId, int rowId);
+        CellRecord GetCell(RowRecord row, FieldRecord col);
+        void CreateDefaultsForRow(RowRecord row);
+        void SetValuesForRow(RowRecord row, string jsonValues);
+        void SetValuesForRow(int dataTableId, RowRecord row, string jsonValues);
+        void SetValuesForRow(int dataTableId, RowRecord row, IEnumerable<FieldRecord> fields, string jsonValues);
+        void SetValuesForRow(ApplicationDataTableRecord table, RowRecord row, IEnumerable<FieldRecord> fields, string jsonValues);
+        void CreateDefaultForCell(RowRecord row, FieldRecord col);
+        void SetValueCell(RowRecord row, FieldRecord col, dynamic value);
     }
 }

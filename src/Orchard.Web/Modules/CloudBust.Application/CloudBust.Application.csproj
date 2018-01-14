@@ -154,12 +154,11 @@
     <Compile Include="Helpers\FBHelper.cs" />
     <Compile Include="Invitations.cs" />
     <Compile Include="LoginsMigrations.cs" />
-    <Compile Include="Models\RowColumnsRecord.cs" />
+    <Compile Include="Models\CellRecord.cs" />
     <Compile Include="Models\ApplicationDataTableRowsRecord.cs" />
     <Compile Include="Models\ApplicationDataTableFieldsRecord.cs" />
     <Compile Include="Models\ApplicationApplicationDataTablesRecord.cs" />
     <Compile Include="Models\ApplicationDataTableRecord.cs" />
-    <Compile Include="Models\ColumnRecord.cs" />
     <Compile Include="Models\RowRecord.cs" />
     <Compile Include="Models\FieldValueRecord.cs" />
     <Compile Include="Models\FriendRecord.cs" />

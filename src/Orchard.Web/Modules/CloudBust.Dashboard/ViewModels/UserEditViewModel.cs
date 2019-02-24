@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using CloudBust.Application.Models;
-using Orchard.Security.Permissions;
-using Orchard.Security;
+﻿using CloudBust.Application.Models;
 
 namespace CloudBust.Dashboard.ViewModels
 {
@@ -10,6 +6,7 @@ namespace CloudBust.Dashboard.ViewModels
         public UserProfilePart UserProfile { get; }
         public ApplicationRecord Application { get; }
 
+        public string HostUrl { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -17,11 +14,11 @@ namespace CloudBust.Dashboard.ViewModels
         public string Location { get; set; }
         public bool ShowEmail { get; set; }
 
-        public UserEditViewModel(ApplicationRecord app, UserProfilePart profile)
+        public UserEditViewModel(ApplicationRecord app, UserProfilePart profile, string hostUrl)
         {
             this.Application = app;
             this.UserProfile = profile;
-
+            HostUrl = hostUrl;
             FirstName = profile.FirstName;
             LastName = profile.LastName;
             Email = profile.Email;

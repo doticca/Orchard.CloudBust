@@ -6,6 +6,17 @@ namespace CloudBust.Resources {
         public void BuildManifests(ResourceManifestBuilder builder) {
             var manifest = builder.Add();
 
+            
+            manifest.DefineStyle("Pace")
+                    .SetUrl("pace.css", "pace.css")
+                    .SetVersion("1.0.0");
+
+            
+            manifest.DefineScript("Pace")
+                    .SetUrl("pace.min.js", "pace.min.js")
+                    .SetDependencies("jQuery")
+                    .SetVersion("1.0.0");
+
             manifest.DefineStyle("Animate")
                 .SetUrl("animate.min.css", "animate.css")
                 .SetVersion("1.0.0");
@@ -108,6 +119,11 @@ namespace CloudBust.Resources {
                 .SetUrl("jquery.slicknav.min.js", "jquery.slicknav.js")
                 .SetDependencies("jQuery")
                 .SetVersion("1.0.10");
+
+            manifest.DefineScript("DragScroll")
+                    .SetUrl("https://cloudbust.blob.core.windows.net/public/js/dragscroll.min.js", "dragscroll.js")
+                    .SetDependencies("jQuery")
+                    .SetVersion("0.0.8");
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿@{
-    Func<dynamic, dynamic> Zone = x => Display(x); 
+    Func<dynamic, dynamic> Zone = x => Display(x);
 
-    WorkContext.Layout.Header.Add(New.Branding(), "5"); 
-    WorkContext.Layout.FooterLeft.Add(New.BadgeOfHonor(), "5");
-    //WorkContext.Layout.Footer.Add(New.User(), "10");
-
+    WorkContext.Layout.Header.Add(New.Branding(), "5");
 
     Model.Id = "off-canvas-wrapper";
     var tag = Tag(Model, "div");
+
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + error.ErrorMessage);
+    TempData["ErrorMessage"] = errorMessage;    
 }
 @tag.StartElement
 <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
@@ -43,12 +43,13 @@
         {
             @Zone(Model.Featured)
         }
-
+        
+        <section id="section-messages">
         @if (Model.Messages != null)
         {
             @Zone(Model.Messages)
         }
-
+        </section>
         <section id="main">
             @if (Model.BeforeContent != null)
             {
@@ -117,7 +118,6 @@
     </div>
 </div>
 @tag.EndElement
-
 @using (Script.Foot())
 {
     <script type="text/javascript">
@@ -130,13 +130,18 @@
         if (subnav.length > 0)
             distance = $('.sub-nav-links').offset().top;
 
-        $window.on('scroll', function () {
+        $window.on('scroll', function () {         
             var scrollTop = $window.scrollTop();
 
-            if (distancenav > 0)
+            if (distancenav > 0) {
                 nav.toggleClass('hidden', scrollTop > prev || scrollTop > distancenav - nav.height());
-            else
+                }
+            else if (distance > 0) {
                 nav.toggleClass('hidden', scrollTop > prev);
+                }
+
+            if (scrollTop < nav.height())
+                nav.removeClass('hidden'); 
 
             if (scrollTop > 0) {
                 nav.addClass('change');
@@ -151,10 +156,43 @@
             else {
                 $('.sub-nav-links').removeClass('fixed');
             }
+
+            if (nav.hasClass('hidden')) {
+                $('.sub-nav-links').removeClass('pushed');
+            } else {
+                $('.sub-nav-links').addClass('pushed');
+            }
+
             prev = scrollTop;
         });
     </script>
+    <script>
+        $(document).ready(function(){
+            $("a").on('click', function(event) {
 
+                if (this.hash !== "") {
+                    event.preventDefault();
+
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function(){
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        var antiForgeryToken = '@Html.AntiForgeryTokenValueOrchard()';
+        $( "input[name='__RequestVerificationToken']" ).val(antiForgeryToken);
+    </script>
+    <script>
+        window.fcWidget.init({
+            token: "e44661f2-b305-4b61-a62b-3dcfb7532385",
+            host: "https://wchat.freshchat.com"
+        });
+    </script>
 }
 @using (Script.Foot())
 {

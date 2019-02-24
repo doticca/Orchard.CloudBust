@@ -9,13 +9,13 @@ namespace CloudBust.Resources {
 
             // defaults at common highlight
             manifest.DefineScript("Magnific")
-                .SetDependencies("jQuery", "jQueryMigrate")
-                .SetUrl("magnific.min.js", "magnific.js")                
-                .SetVersion("1.1.0");
+                    .SetDependencies("jQuery")
+                    .SetUrl("https://cloudbust.blob.core.windows.net/public/js/magnific.min.js", "magnific.js")
+                    .SetVersion("1.1.0");
 
             manifest.DefineStyle("Magnific")
-                .SetVersion("1.1.0")
-                .SetUrl("magnific.css", "magnific.css");
+                    .SetVersion("1.1.0")
+                    .SetUrl("https://cloudbust.blob.core.windows.net/public/css/magnific.min.css", "magnific.css");
         }
     }
 }

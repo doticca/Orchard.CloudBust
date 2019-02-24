@@ -1,11 +1,14 @@
-using System.Web.Mvc;
+using CloudBust.Application.Models;
+using CloudBust.Application.Services;
+using CloudBust.Application.ViewModels;
+using CloudBust.Common.Services;
+using Orchard;
+using Orchard.ContentManagement;
+using Orchard.Security;
 using Orchard.Themes;
 using Orchard.Users.Events;
-using CloudBust.Application.Services;
-using CloudBust.Common.Services;
-using CloudBust.Application.Models;
-using Orchard.Environment.Extensions;
-using CloudBust.Application.ViewModels;
+using System.Web.Mvc;
+using ISettingsService = CloudBust.Application.Services.ISettingsService;
 
 namespace CloudBust.Application.Controllers
 {
@@ -16,17 +19,25 @@ namespace CloudBust.Application.Controllers
         private readonly IUserEventHandler _userEventHandler;
         private readonly IDetectMobileService _detectMobileService;
         private readonly IApplicationsService _applicationsService;
+        private readonly IOrchardServices _orchardServices;
+        private readonly IAuthenticationService _authenticationService;
+        private readonly Services.ISettingsService _settingsService;
+        private readonly ILoginsService _loginsService;
+
         public EmailController(
             IUserEventHandler userEventHandler,
             IProfileService profileService,
             IDetectMobileService detectMobileService,
-            IApplicationsService applicationsService
-            )
+            IApplicationsService applicationsService, IOrchardServices orchardServices, IAuthenticationService authenticationService, ISettingsService settingsService, ILoginsService loginsService)
         {
             _userEventHandler = userEventHandler;
             _profileService = profileService;
             _detectMobileService = detectMobileService;
             _applicationsService = applicationsService;
+            _orchardServices = orchardServices;
+            _authenticationService = authenticationService;
+            _settingsService = settingsService;
+            _loginsService = loginsService;
         }
      
         public ActionResult ChallengeEmailSent(string email)
@@ -35,6 +46,22 @@ namespace CloudBust.Application.Controllers
         }
         public ActionResult ChallengeEmailSuccess(string email = null, string appkey = null)
         {
+            IUser user = _authenticationService.GetAuthenticatedUser();
+            ApplicationRecord apprecord = _settingsService.GetWebApplication();
+            if (user != null && apprecord!=null)
+            {
+                if (_profileService.IsUserInApplication(user.As<UserProfilePart>(), apprecord))
+                {
+                    _loginsService.SetSessionAppId(apprecord.Id);
+                    if (user.As<UserProfilePart>().ResetPassword)
+                    {
+                        return RedirectToAction("ResetPassword", "Account");
+                    }
+                }
+            }
+
+
+
             MobileDetectionViewModel viewModel = new MobileDetectionViewModel();
 
             viewModel.IsIOS = false;
@@ -84,6 +111,12 @@ namespace CloudBust.Application.Controllers
                 }
                 else
                 {
+                    var profilePart = user.As<UserProfilePart>();
+                    if (profilePart != null && profilePart.ResetPassword)
+                    {
+                        _authenticationService.SignIn(user, false);
+                        _userEventHandler.LoggedIn(user);
+                    }
                     return RedirectToAction("ChallengeEmailSuccess", new { email = user.Email, appkey = app.AppKey });
                 }
             }

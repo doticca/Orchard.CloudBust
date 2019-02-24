@@ -1,5 +1,6 @@
 ﻿@using Orchard.ContentManagement;
 @using CloudBust.Foundation.Models;
+@using Orchard.Core.Navigation.Models
 @{
     bool useplaceholder = false;
     if (Model.Level > 1 || (Model.Level == 1 && Model.Items.Count == 0))
@@ -8,6 +9,7 @@
     }
     bool isButton = false;
     bool isRight = false;
+    bool isActive = false;
     string customcss = string.Empty;
 
     var fpart = ((IContent)Model.Content.ContentItem).As<FoundationMenuItemPart>();
@@ -17,15 +19,23 @@
         isRight = fpart.RightSide;
         customcss = fpart.CustomCss;
     }
+    var menupart = ((IContent)Model.Content.ContentItem).As<MenuItemPart>();
+    if (menupart != null) {
+        var menuurl = menupart.Url.ToLower();
+        var url = "~" + Request.Url.AbsolutePath.ToLower();
+        if (url.Equals(menuurl)) {
+            isActive = true;
+        }
+    }
 }
 @if (!isRight)
 {
     if (useplaceholder)
     {
-        <li><a class="nav-text-link light@(isButton?" button":"")@(!string.IsNullOrWhiteSpace(customcss)?" "+customcss:"")" href="@Model.Href">@Model.Text</a></li>
+        <li><a class="nav-text-link@(isActive?" is-active":"") light@(isButton?" button":"")@(!string.IsNullOrWhiteSpace(customcss)?" "+customcss:"")" href="@Model.Href">@Model.Text</a></li>
     }
     else
     {
-        <a class="nav-text-link light@(isButton?" button":"")@(!string.IsNullOrWhiteSpace(customcss)?" "+customcss:"")" href="@Model.Href">@Model.Text</a>
+        <a class="nav-text-link@(isActive?" is-active":"") light@(isButton?" button":"")@(!string.IsNullOrWhiteSpace(customcss)?" "+customcss:"")" href="@Model.Href">@Model.Text</a>
     }
 }

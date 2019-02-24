@@ -1,0 +1,4 @@
+﻿@model Orchard.Environment.Configuration.ShellSettings
+@using CloudBust.Tenants.Extensions;
+
+@Html.ActionLink(T("Make Valid*").ToString(), "_setup", new {tenantName = Model.Name, area = "CloudBust.Tenants"}, new { @class= "hollow button small" })

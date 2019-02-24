@@ -15,7 +15,7 @@ namespace CloudBust.Resources.Drivers
     {
         private readonly ISignals _signals;
         private readonly IParticlesService _particlesService;
-
+        private const string signalstring = "CloudBust.Resources.Particles.Changed";
         public ParticlesSettingsPartDriver(ISignals signals, IParticlesService particlesService)
         {
             _signals = signals;
@@ -43,7 +43,7 @@ namespace CloudBust.Resources.Drivers
         protected override DriverResult Editor(ParticlesSettingsPart part, IUpdateModel updater, dynamic shapeHelper)
         {
             updater.TryUpdateModel(part.Record, Prefix, null, null);
-            _signals.Trigger("CloudBust.Resources.Particles.Changed");
+            _signals.Trigger(signalstring);
             return Editor(part, shapeHelper);
         }
 

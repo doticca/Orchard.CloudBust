@@ -45,7 +45,7 @@ namespace CloudBust.Dashboard {
 
             if (app!=null)
 
-                menu.Add(T("Manage " + app.Name), "1.4",
+                menu.Add(T("Manage " + app.Name), "2.0",
                     item => item.Action("Application", "Dashboard", new { area = "CloudBust.Dashboard", appID = app.AppKey }).Permission(Permissions.ManageOwnApps));
 
             

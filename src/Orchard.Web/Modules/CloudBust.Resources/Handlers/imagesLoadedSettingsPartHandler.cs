@@ -8,14 +8,14 @@ using Orchard.Localization;
 namespace CloudBust.Resources.Handlers
 {
     [OrchardFeature("CloudBust.Resources.ImagesLoaded")]
-    public class imagesLoadedSettingsPartHandler: ContentHandler {
-        public imagesLoadedSettingsPartHandler(IRepository<imagesLoadedSettingsPartRecord> repository)
+    public class ImagesLoadedSettingsPartHandler: ContentHandler {
+        public ImagesLoadedSettingsPartHandler(IRepository<ImagesLoadedSettingsPartRecord> repository)
         {
             T = NullLocalizer.Instance;
             Filters.Add(StorageFilter.For(repository));
-            Filters.Add(new ActivatingFilter<imagesLoadedSettingsPart>("Site"));
+            Filters.Add(new ActivatingFilter<ImagesLoadedSettingsPart>("Site"));
 
-            OnInitializing<imagesLoadedSettingsPart>((context, part) =>
+            OnInitializing<ImagesLoadedSettingsPart>((context, part) =>
             {
                 part.AutoEnable = true;
                 part.AutoEnableAdmin = true;
@@ -28,7 +28,7 @@ namespace CloudBust.Resources.Handlers
             if (context.ContentItem.ContentType != "Site")
                 return;
             base.GetItemMetadata(context);
-            context.Metadata.EditorGroupInfo.Add(new GroupInfo(T("imagesLoaded")));
+            context.Metadata.EditorGroupInfo.Add(new GroupInfo(T("ImagesLoaded")));
         }
     }
 }

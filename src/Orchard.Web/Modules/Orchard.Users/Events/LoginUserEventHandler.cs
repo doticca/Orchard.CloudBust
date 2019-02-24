@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Orchard.ContentManagement;
+﻿using Orchard.ContentManagement;
 using Orchard.Security;
 using Orchard.Services;
 using Orchard.Users.Models;
 
-namespace Orchard.Users.Events {
+namespace Orchard.Users.Events
+{
     public class LoginUserEventHandler : IUserEventHandler {
         private readonly IClock _clock;
 
@@ -26,6 +23,12 @@ namespace Orchard.Users.Events {
         public void LoggedOut(IUser user) {
             user.As<UserPart>().LastLogoutUtc = _clock.UtcNow;
         }
+
+        public void SendingSms(IUser user) { }
+
+        public void SmsSent(IUser user) { }
+
+        public void SmsError(IUser user, string message) { }
 
         public void AccessDenied(IUser user) { }
 

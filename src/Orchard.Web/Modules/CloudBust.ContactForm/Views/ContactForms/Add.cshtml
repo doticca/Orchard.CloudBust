@@ -1,0 +1,33 @@
+﻿@model CloudBust.ContactForm.ViewModels.ContactFormsAddViewModel
+
+@using (Html.BeginFormAntiForgeryPost(Url.Action("Add", "ContactForms"), FormMethod.Post, new { data_abide = "", novalidate = "", autocomplete = "off" }))
+{
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+            @Html.TextBoxFor(m => m.Name, new { @class = "userinput" })
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.Email, new { @class = "userinput" })
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+            @Html.TextBoxFor(m => m.Company, new { @class = "userinput" })
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+            @Html.TextBoxFor(m => m.Note, new { @class = "userinput" })
+        </div>
+    </div>
+
+    <div class="row expanded">
+        <div class="columns">
+            <input type="submit" class="button" name="submit.Save" value="@T("Save")">
+            <a href="@Url.Action("Index", "Admin")" class="button secondary">@T("Cancel")</a>
+        </div>
+    </div>
+    <div class="row margin-bottom-2"></div>
+}

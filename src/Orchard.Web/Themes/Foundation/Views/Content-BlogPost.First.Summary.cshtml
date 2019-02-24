@@ -19,6 +19,7 @@
     int g = int.Parse(color.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
     int b = int.Parse(color.Substring(5, 2), System.Globalization.NumberStyles.HexNumber);
     string tcolor = string.Format("rgba({0}, {1}, {2}, 0.1);", r, g, b);
+    string bcolor = string.Format("rgba({0}, {1}, {2}, 1);", r, g, b);
 }
 @tag.StartElement
 <header class="small-12 medium-8 columns">

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Orchard Security Rules" Description="This rule set contains all Microsoft security rules. Include this rule set to maximize the number of potential security issues that are reported." ToolsVersion="10.0">
+<RuleSet Name="Orchard Security Rules" Description="This rule set contains all Microsoft security rules. Include this rule set to maximize the number of potential security issues that are reported." ToolsVersion="15.0">
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA2100" Action="Warning" />
     <Rule Id="CA2102" Action="Warning" />
@@ -42,5 +42,9 @@
     <Rule Id="CA2146" Action="Warning" />
     <Rule Id="CA2147" Action="Warning" />
     <Rule Id="CA2149" Action="Warning" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <Rule Id="CS8019" Action="Error" />
+    <Rule Id="CS8020" Action="Error" />
   </Rules>
 </RuleSet>

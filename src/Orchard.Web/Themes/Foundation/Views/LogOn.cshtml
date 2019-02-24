@@ -2,6 +2,66 @@
 @{
     var userCanRegister = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().UsersCanRegister;
     var enableLostPassword = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().EnableLostPassword;
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+    var sitename = Convert.ToString(WorkContext.CurrentSite.SiteName);
+}
+<div class="usermenu">
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("LogOn", new {  Controller = "Account", Area = "CloudBust.Application",  ReturnUrl = Request.QueryString["ReturnUrl"] }), FormMethod.Post, new { data_abide = "", novalidate = ""}))
+    {
+        <div class="row noselect">
+            <div class="small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+                <h1 class="hero homelink">@sitename</h1>
+                <h2>@Html.TitleForPage(T("Log in").ToString())</h2>
+                <div class="hidden">@Html.ValidationSummary()</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+                <ul>
+                    <li>
+                        @if (enableLostPassword) {
+                            <a href="/terms">@Html.ActionLink(T("Reset Password").ToString(), "RequestLostPassword", new {Controller = "Account", Area = "CloudBust.Application"}, new {rel = "nofollow", id = "passwordreminder", @class = "hint"})</a>
+                        }
+                    </li>
+                    <li>
+                        @if (userCanRegister) {
+                            @Html.ActionLink(T("Sign up").ToString(), "Register", new {Controller = "Account", Area = "CloudBust.Application"}, new {rel = "nofollow"})
+                        }
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+                @Html.TextBox("email", "", new { @class = "userinput", @placeholder = "Email", required = "required", autofocus = "autofocus",  autocomplete = "on" })
+                <span class="floating-label">Email</span>
+                <span class="form-error">Your Email is required.</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+                @Html.Password("password", "", new { @class = "userinput", @placeholder = "Password", @autocomplete = "new-password", required = "required" })
+                <span class="floating-label">Password</span>
+                <span class="form-error">Please enter a password.</span>
+            </div>
+        </div>
+        <div class="row">
+            <fieldset class="small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+                <input id="remember-me" type="checkbox"><label for="remember-me">Remember Me</label>
+            </fieldset>
+        </div>
+        <div class="row">
+            <div class="text-center small-12 medium-offset-3 medium-6 large-offset-4 large-4 columns">
+                <button class="button" type="submit">@T("Log in")</button>
+            </div>
+        </div>
+    }
+</div>
+@*@using Orchard.ContentManagement
+@{
+    var userCanRegister = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().UsersCanRegister;
+    var enableLostPassword = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().EnableLostPassword;
 
     Script.Require("Notify");
 }
@@ -82,4 +142,4 @@
     });
     //]]>
     </script>
-}
+}*@

@@ -1,10 +1,13 @@
 ﻿@using Orchard.DisplayManagement.Shapes;
 @{
-    Model.ContentItems.Classes.Add("content-items");
-}
-
-@{
     var list = Model.ContentItems;
+    if (list == null) {
+        list = Model;
+    }
+    if (list == null)
+    {
+        return;
+    }
     var items = list.Items;
     var count = items.Count;
     var listTag = Tag(list, "ul");
@@ -20,14 +23,14 @@
         firstItem = null;
     }
 }
-<div class="blog-head">
+<div class="blog-head row">
     @if (firstItem != null)
     {
         ShapeMetadata metadata = firstItem.Metadata;
         string alternate = metadata.Type + "_" +
-                metadata.DisplayType + "__" +
-                firstItem.ContentItem.ContentType +
-                "_First";
+                           metadata.DisplayType + "__" +
+                           firstItem.ContentItem.ContentType +
+                           "_First";
         metadata.OnDisplaying(ctx =>
         {
             metadata.Alternates.Add(alternate);
@@ -36,46 +39,38 @@
         var itemTag = Tag(firstItem, "li");
         itemTag.AddCssClass("first blog-head");
         @itemTag.StartElement
-        @Display(firstItem)
+        @Display(firstItem) 
         @itemTag.EndElement
         @listTag.EndElement
     }
 </div>
-<div class="blog-details">
-@if (items.Count > 1)
-{
-    <div class="row">
+<div class="blog-details row">
+    @if (items.Count > 1)
+    {
         <div class="columns">
             <span class="recent icon"></span>
             <span class="recent label">MOST RECENT ARTICLES</span>
         </div>
-    </div>
-}
-    @listTag.StartElement
-    @foreach (var item in items)
-    {
-        var itemTag = Tag(item, "li");
-        if (index == count - 1)
-        {
-            itemTag.AddCssClass("last");
-        }
-        if (index > 0)
-        {
-            @itemTag.StartElement
-            @Display(item)
-            @itemTag.EndElement
-        }
-        ++index;
     }
-    @listTag.EndElement
+    <div class="columns">
+        @listTag.StartElement
+        @foreach (var item in items)
+        {
+            var itemTag = Tag(item, "li");
+            itemTag.AddCssClass("medium-4");
+            if (index == count - 1)
+            {
+                itemTag.AddCssClass("last");
+            }
+            if (index > 0)
+            {
+                @itemTag.StartElement
+                @Display(item)
+                @itemTag.EndElement
+            }
+            ++index;
+        }
+        @listTag.EndElement
+    </div>
 </div>
 
-@Display(Model.Pager)
-@*@using (Script.Head())
-{
-    <script>
-        var root = document.getElementsByTagName('html')[0]; // '0' to assign the first (and only `HTML` tag)
-
-        root.className += ' orchard-search';
-    </script>
-}*@

@@ -1,0 +1,41 @@
+﻿@model CloudBust.Localization.ViewModels.TranslationEditViewModel
+@{
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + "::" + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+
+    Layout.Title = T("Translation").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Edit Translation</h1>
+    <p class="">Changing a translation name will only change the information label for a culture pair. Changing the code will support a new culture pair.</p>
+</header>
+<div class="callout alert">
+    <p>When you change the code, all translations for existing culture pairs that use this code will become unavailable.</p>
+</div>
+<hr />
+@using (Html.BeginFormAntiForgeryPost(Url.Action("Edit", "Translations"), FormMethod.Post, new { data_abide = "", novalidate = "", autocomplete = "off" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.Name, new { @class = "userinput", @placeholder = "set the currency name", required = "required", autofocus = "autofocus", value=Model.Name })
+                <span class="floating-label">@T("Name")</span>
+                <span class="form-error">@T("The name of the translation is required.")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.TwoDigitCode, new { @class = "userinput", @placeholder = "set the two digit code", required = "required", value=Model.TwoDigitCode })
+                <span class="floating-label">@T("Two Digit Code")</span>
+                <span class="form-error">@T("The two digit code of the translation is required.")</span>
+        </div>
+    </div>
+
+    <div class="row expanded">
+        <div class="columns">
+            <input type="submit" class="button" name="submit.Save" value="@T("Save")">
+            <a href="@(Url.Action("Index", "Translations"))" class="button secondary">@T("Cancel")</a>
+        </div>
+    </div>
+    <div class="row margin-bottom-2"></div>
+}

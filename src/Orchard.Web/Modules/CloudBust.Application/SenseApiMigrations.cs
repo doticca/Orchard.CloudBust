@@ -17,7 +17,7 @@ namespace CloudBust.Application
                                             .Column<string>("Name")
                                             .Column<string>("NormalizedGameName")
                                             .Column<string>("Description")
-                                            .Column<string>("owner", column => column.WithDefault("admin"))
+                                            .Column<string>("Owner", column => column.WithDefault("admin"))
                                             .Column<DateTime>("CreatedUtc")
                                             .Column<DateTime>("ModifiedUtc")
                                             .Column<string>("AppKey")
@@ -76,6 +76,20 @@ namespace CloudBust.Application
             SchemaBuilder.AlterTable(typeof(ApplicationGameRecord).Name, table => table
                 .AddColumn<double>("latitude"));
             return 2;
+        }
+
+        public int UpdateFrom2()
+        {
+            SchemaBuilder.AlterTable(typeof(ApplicationGameRecord).Name, table => table
+               .AddColumn<string>("LogoImage"));
+            return 3;
+        }
+
+        public int UpdateFrom3()
+        {
+            SchemaBuilder.AlterTable(typeof(ApplicationGameRecord).Name, table => table
+               .AddColumn<string>("AppUrl"));
+            return 4;
         }
     }
 }

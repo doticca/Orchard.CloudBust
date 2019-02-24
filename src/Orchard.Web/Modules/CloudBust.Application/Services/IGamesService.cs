@@ -19,12 +19,15 @@ namespace CloudBust.Application.Services
         IEnumerable<ApplicationGameRecord> GetGames();
         IEnumerable<ApplicationGameRecord> GetApplicationGames(ApplicationRecord applicationRecord);
         IEnumerable<ApplicationGameRecord> GetApplicationGames(int applicationId);
+        string GetGameOwner(string gameKey);
         ApplicationGameRecord GetGameByName(string gameName);
         ApplicationGameRecord GetGameByKey(string key);
         ApplicationGameRecord CreateGame(string gameName, string gameDescription, string owner);
         bool UpdateGame(int id, string gameName, string gameDescription);
         bool UpdateGameLocation(int id, double latitude, double longitude);
-        IEnumerable<ApplicationGameRecord> GetUserGames(IUser user);
+        bool UpdateGameImage(int id, string logoImage);
+        bool UpdateGameUrl(int id, string appUrl);
+        IList<ApplicationGameRecord> GetUserGames(IUser user);
         bool CreateGameForApplication(string applicationName, int gameId);
         bool CreateKeysForGame(int id);
         IEnumerable<ApplicationGameRecord> GetNonApplicationGames(IUser user, ApplicationRecord applicationRecord);

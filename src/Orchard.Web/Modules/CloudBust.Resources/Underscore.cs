@@ -6,8 +6,8 @@ namespace CloudBust.Resources {
             var manifest = builder.Add();
 
             manifest.DefineScript("Underscore")
-                .SetUrl("underscore.min.js", "underscore.js")
-                .SetVersion("1.8.3");
+                .SetUrl("https://cloudbust.blob.core.windows.net/public/js/underscore.min.js", "underscore.js")
+                .SetVersion("1.9.1");
         }
     }
 }

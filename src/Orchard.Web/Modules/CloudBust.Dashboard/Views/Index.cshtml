@@ -4,30 +4,26 @@
 
 @model CloudBust.Dashboard.ViewModels.DashboardViewModel
 @{
-    IUser user = null;
-    
-    try{
-        user = Model.User;
-    }
-    catch {}
-
-    string FirstName = string.Empty;
-    string LastName = string.Empty;
+    var user = Model.User;
+   
+    string firstName;
+    var lastName = string.Empty;
 
     dynamic d = user;
     if (d.UserProfilePart != null)
     {
-        FirstName = d.UserProfilePart.FirstName;
-        LastName = d.UserProfilePart.LastName;
+        firstName = d.UserProfilePart.FirstName;
+        lastName = d.UserProfilePart.LastName;
     }
     else
     {
-        FirstName = user.UserName;
+        firstName = user.UserName;
     }
-    if(string.IsNullOrWhiteSpace(FirstName) && string.IsNullOrWhiteSpace(LastName)){
-        FirstName = user.UserName;
+    if(string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName)){
+        firstName = user.UserName;
     }
-    string Welcome = FirstName + (string.IsNullOrWhiteSpace(LastName) ? "" : " ") + LastName + " Dashboard";
+    var welcome = firstName + (string.IsNullOrWhiteSpace(lastName) ? "" : " ") + lastName + " Dashboard";
+    var baseUrl = Model.HostUrl.TrimEnd('/');
     
  }
 <div class="dashboardarea">
@@ -35,7 +31,7 @@
 
     <div class="row" >
         <div class="large-12 columns">
-            <h1 class="light smaller bump-25 bottom-add">@Welcome</h1>
+            <h1 class="light smaller bump-25 bottom-add">@welcome</h1>
             <hr />
         </div>
     </div>
@@ -44,10 +40,10 @@
             <div class="shadowboxpanel">
                 <div class="box text-center">
                     <h2>
-                        <a href="~/dashboard/applications/create/">Add an App</a>
+                        <a href="@(baseUrl + "/dashboard/applications/create")">Add an App</a>
                     </h2>
                     <p style="min-height:36px;">Start your CloudBust experience. Add an application and get your app token.</p>
-                    <a class="btn primary large wide" href="~/dashboard/applications/create/"><i class="fi-plus"></i>  Add an App</a>
+                    <a class="btn primary large wide" href="@(baseUrl + "/dashboard/applications/create")"><i class="fi-plus"></i>  Add an App</a>
                 </div>
             </div>
         </div>
@@ -55,10 +51,10 @@
             <div class="shadowboxpanel">
                 <div class="box text-center">
                     <h2>
-                        <a href="~/dashboard/games/create/">Add a Senseapi Game</a>
+                        <a href="@(baseUrl + "/dashboard/games/create")">Add a Senseapi Game</a>
                     </h2>
                     <p style="min-height:36px;">Time to create Gaming procedures inside your game and take advantage of senseapi's mechanics and calculations.</p>
-                    <a class="btn primary large wide" href="~/dashboard/games/create/"><i class="fi-plus"></i>  Add a Game</a>
+                    <a class="btn primary large wide" href="@(baseUrl + "/dashboard/games/create")"><i class="fi-plus"></i>  Add a Game</a>
                 </div>
             </div>
         </div>
@@ -66,10 +62,10 @@
             <div class="shadowboxpanel">
                 <div class="box text-center">
                     <h2>
-                        <a href="~/dashboard/datatables/create/">Add a Data Table</a>
+                        <a href="@(baseUrl + "/dashboard/datatables/create")">Add a Data Table</a>
                     </h2>
                     <p style="min-height:36px;">You need to store data for your application? Create a new data table.</p>
-                    <a class="btn primary large wide" href="~/dashboard/datatables/create/"><i class="fi-plus"></i>  Add a Table</a>
+                    <a class="btn primary large wide" href="@(baseUrl + "/dashboard/datatables/create")"><i class="fi-plus"></i>  Add a Table</a>
                 </div>
             </div>
         </div>

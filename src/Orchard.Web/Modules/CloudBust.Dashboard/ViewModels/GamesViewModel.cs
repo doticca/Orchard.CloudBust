@@ -11,6 +11,7 @@ namespace CloudBust.Dashboard.ViewModels
     {
         public ApplicationRecord Application { get; set; }
         public IUser User { get; set; }
+        public string HostUrl { get; set; }
         public IList<ApplicationGameRecord> Games { get; set; }
     }
 }

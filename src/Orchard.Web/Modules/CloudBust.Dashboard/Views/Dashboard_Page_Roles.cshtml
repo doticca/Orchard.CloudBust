@@ -4,7 +4,9 @@
 @using Orchard.Security
 
 @model CloudBust.Dashboard.ViewModels.ApplicationViewModel
-
+@{
+    var baseUrl = Model.HostUrl.TrimEnd('/');
+}
 <div class="row bump-15 collapse">
     <div class="large-12 columns">
         <table>
@@ -33,10 +35,10 @@
                             }
                     </td>
                     <td>
-                        <a href="~/dashboard/applications/@Model.Application.AppKey/userroles/@role.Id/edit" class="tiny button">Edit</a>
+                        <a href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/userroles/" + role.Id + "/edit")" class="tiny button">Edit</a>
                         @if (!role.IsDefaultRole)
                             {
-                            <a href="~/dashboard/applications/@Model.Application.AppKey/userroles/@role.Id/delete" class="tiny button alert">Delete</a>
+                            <a href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/userroles/" + role.Id + "/delete")" class="tiny button alert">Delete</a>
                             }
                     </td>
                 </tr>
@@ -47,6 +49,6 @@
 </div>
 <div class="row collapse">
     <div class="large-12 columns">
-        <a class="button" href="~/dashboard/applications/@Model.Application.AppKey/userroles/create"><i class="fi-plus"></i>  Add a Role</a>
+        <a class="button" href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/userroles/create")"><i class="fi-plus"></i>  Add a Role</a>
     </div>
 </div>

@@ -1,18 +1,18 @@
 ﻿<Placement>
   <Match DisplayType="Detail">
     <Place
-           Parts_Title_Summary="-"
-           Parts_Common_Metadata="-"
+      Parts_Title_Summary="-"
+      Parts_Common_Metadata="-"
            
-           />
+    />
   </Match>
   <Match DisplayType="Summary">
     <Place Parts_Tags_ShowTags="-"/>
   </Match>
   <Match ContentType="Blog">
     <Place
-           Parts_Common_Metadata="-"
-           />
+      Parts_Common_Metadata="-"
+    />
   </Match>
 
   <Match ContentType="RecentBlogPosts">
@@ -38,7 +38,8 @@
              Parts_Title_Summary="Content:2"
              Parts_Common_Metadata_Summary="Content:3"
              Parts_Viewers="-"
-             />
+             Parts_Tags_ShowTags="-"
+      />
     </Match>
     <Match DisplayType="Detail">
       <Place
@@ -48,8 +49,8 @@
         Parts_Title="Header:4"
         Parts_Common_Metadata="Header:5"
         Parts_Viewers="Header:1"
-        Parts_Tags_ShowTags="Content:10"
-       />
+        Parts_Tags_ShowTags="-"
+      />
     </Match>
   </Match>
 </Placement>

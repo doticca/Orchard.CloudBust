@@ -1,19 +1,19 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 
-namespace CloudBust.Resources.Models
-{
+namespace CloudBust.Resources.Models {
     [OrchardFeature("CloudBust.Resources.ImagesLoaded")]
-    public class imagesLoadedSettingsPart : ContentPart<imagesLoadedSettingsPartRecord> {    
+    public class ImagesLoadedSettingsPart : ContentPart<ImagesLoadedSettingsPartRecord> {
         public bool AutoEnable
         {
-            get { return Record.AutoEnable; }
-            set { Record.AutoEnable = value; }
+            get => Record.AutoEnable;
+            set => Record.AutoEnable = value;
         }
+
         public bool AutoEnableAdmin
         {
-            get { return Record.AutoEnableAdmin; }
-            set { Record.AutoEnableAdmin = value; }
+            get => Record.AutoEnableAdmin;
+            set => Record.AutoEnableAdmin = value;
         }
     }
 }

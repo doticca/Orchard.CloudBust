@@ -4,8 +4,11 @@ using Orchard.AuditTrail.Helpers;
 using Orchard.AuditTrail.Services;
 using Orchard.AuditTrail.Services.Models;
 using Orchard.ContentManagement;
+using Orchard.Environment.Extensions;
 
 namespace Orchard.AuditTrail.Providers.Content {
+    
+    [OrchardFeature("Orchard.AuditTrail.ContentItems")]
     public class ContentAuditTrailEventProvider : AuditTrailEventProviderBase {
         private readonly IContentManager _contentManager;
         public ContentAuditTrailEventProvider(IContentManager contentManager) {

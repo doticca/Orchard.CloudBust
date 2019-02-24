@@ -1,8 +1,8 @@
 ﻿@model dynamic
 <div class="row">
     <div class="columns">
-        <h1>@Html.TitleForPage(T("Challenge Email").ToString()) </h1>
-        <p>@T("Your email address has been validated and now you can login using your credentials") </p>
+        <h1>@Html.TitleForPage(T("Email confirmed").ToString()) </h1>
+        <p>@T("Thanks for validating your email address. You can now login using your credentials.") </p>
         <p>@Html.ActionLink(T("Sign In").ToString(), "LogOn", new { Controller = "Account", Area = "Orchard.Users" }, new { @class="button", rel = "nofollow" })</p>
     </div>
 </div>

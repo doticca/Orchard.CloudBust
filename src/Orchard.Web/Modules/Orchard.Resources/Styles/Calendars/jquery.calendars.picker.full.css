@@ -305,6 +305,7 @@ button.ui-datepicker-cmd {
 	height: 1.66em;
 	border: none;
 	font-weight: bold;
+	color: black;
 }
 .ui-datepicker th {
 	padding: 0.5em 0.3em;

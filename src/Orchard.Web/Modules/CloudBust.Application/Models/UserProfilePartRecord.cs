@@ -2,7 +2,7 @@
 using Orchard.Data.Conventions;
 using System.Collections.Generic;
 
-namespace  CloudBust.Application.Models
+namespace CloudBust.Application.Models
 {
     public class UserProfilePartRecord : ContentPartRecord
     {
@@ -14,9 +14,11 @@ namespace  CloudBust.Application.Models
             InvitationsRejected = new List<InvitationRejectedRecord>();
             Friends = new List<FriendRecord>();
         }
+
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
         public virtual bool ShowEmail { get; set; }
+        public virtual bool ResetPassword { get; set; }
         public virtual string WebSite { get; set; }
         public virtual string Location { get; set; }
         public virtual string Bio { get; set; }
@@ -35,12 +37,16 @@ namespace  CloudBust.Application.Models
 
         [CascadeAllDeleteOrphan]
         public virtual IList<UserApplicationRecord> Applications { get; set; }
+
         [CascadeAllDeleteOrphan]
         public virtual IList<FriendRecord> Friends { get; set; }
+
         [CascadeAllDeleteOrphan]
         public virtual IList<UserUserRoleRecord> Roles { get; set; }
+
         [CascadeAllDeleteOrphan]
         public virtual IList<InvitationRejectedRecord> InvitationsRejected { get; set; }
+
         [CascadeAllDeleteOrphan]
         public virtual IList<InvitationPendingRecord> InvitationsPending { get; set; }
     }

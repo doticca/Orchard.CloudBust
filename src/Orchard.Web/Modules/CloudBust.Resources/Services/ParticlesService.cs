@@ -25,7 +25,7 @@ namespace CloudBust.Resources.Services
         private readonly IMediaLibraryService _mediaService;
 
         private const string ParticlesMediaFolder = "particles";
-        private const string signalstring = "CloudBust.Resources.Particles.JsonUrl";
+        private const string signalstring = "CloudBust.Resources.Particles.Changed";
 
 
         public ParticlesService(IWorkContextAccessor wca, ICacheManager cacheManager, ISignals signals, IMediaLibraryService mediaService)

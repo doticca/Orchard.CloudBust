@@ -6,8 +6,10 @@ using Orchard.AuditTrail.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.ContentManagement.Records;
+using Orchard.Environment.Extensions;
 
 namespace Orchard.AuditTrail.Providers.Content {
+    [OrchardFeature("Orchard.AuditTrail.ContentItems")]
     public class GlobalContentHandler : ContentHandler {
         private readonly IAuditTrailManager _auditTrailManager;
         private readonly IWorkContextAccessor _wca;

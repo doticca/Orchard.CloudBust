@@ -1,10 +1,10 @@
-﻿using System;
-using System.Web.Mvc;
-using Orchard.ContentManagement;
+﻿using Orchard.ContentManagement;
 using Orchard.Localization;
 using Orchard.Tokens;
+using System;
 
-namespace CloudBust.Common.Tokens {
+namespace CloudBust.Common.Tokens
+{
 
     public class UrlTokens : ITokenProvider {
         private readonly IContentManager _contentManager;
@@ -30,7 +30,8 @@ namespace CloudBust.Common.Tokens {
         {
             context.For<ICommonUrlTokens>("CommonUrl", () => new CommonUrlTokens())
               .Token("Home", cloudbustTokens => cloudbustTokens.GetHome())
-              .Token("AbsoluteHome", cloudbustTokens => cloudbustTokens.GetAbsoluteHome());
+              .Token("AbsoluteHome", cloudbustTokens => cloudbustTokens.GetAbsoluteHome())
+              ;
         }
     }
 }

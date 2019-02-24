@@ -8,8 +8,10 @@
 }
 <h1>@Html.TitleForPage(T("Get Started").ToString())</h1>
 <div class="col-lg-10 col-md-10 col-sm-9">
-    @using (Html.BeginFormAntiForgeryPost(Url.Action("/index"), FormMethod.Post, new { @role = "form", @class = "bs-example form-horizontal" }))
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("Index", "Setup"), FormMethod.Post, new { @role = "form", @class = "bs-example form-horizontal" }))
     {
+        @Html.HiddenFor(m => m.Recipe);
+        @Html.HiddenFor(m => m.RecipeDescription);
         @Html.ValidationSummary(string.Empty, new { @class = "bs-callout bs-callout-danger" })
 
         <div class="form-group">

@@ -42,34 +42,40 @@ namespace CloudBust.Application.Services {
 
         public void Invite(int id, string url)
         {
-            if (!_profileService.IsPendingInvitationProcessed(id))
+            if (_profileService.IsPendingInvitationProcessed(id)) {
+                return;
+            }
+
+            var invitation = _profileService.GetPendingInvitation(id);
+            var userprofile = _profileService.Get(invitation.UserProfilePartRecord);
+            if (userprofile == null)
             {
-                var invitation = _profileService.GetPendingInvitation(id);
-                var userprofile = _profileService.Get(invitation.UserProfilePartRecord);
-                if (userprofile == null) return;
-                IUser user = userprofile.As<IUser>();
-                var app = invitation.ApplicationRecord;
+                return;
+            }
+
+            var user = userprofile.As<IUser>();
+            var app = invitation.ApplicationRecord;
               
-                var template = _shapeFactory.Create("Template_User_Invitation", Arguments.From(new
-                                    {
-                                        User = user,
-                                        Application = app,
-                                        Invitation = invitation,
-                                        Url = url
-                                    }));
+            var template = _shapeFactory.Create("Template_User_Invitation", Arguments.From(new
+            {
+                User = user,
+                Application = app,
+                Invitation = invitation,
+                Url = url
+            }));
+            var subject = "Join " + userprofile.FirstName + "'s care group on We+Care";
 
-                template.Metadata.Wrappers.Add("Template_User_Wrapper");
+            template.Metadata.Wrappers.Add("Template_User_Wrapper");
 
-                var parameters = new Dictionary<string, object> {
-                            {"Application", app.AppKey},
-                            {"Subject", "I'd like to add you as a babographer to my personal BaboGraphy Space"},
-                            {"Body", _shapeDisplay.Display(template)},
-                            {"Recipients", invitation.invitationEmail }
-                        };
+            var parameters = new Dictionary<string, object> {
+                {"Application", app.AppKey},
+                {"Subject", subject},
+                {"Body", _shapeDisplay.Display(template)},
+                {"Recipients", invitation.invitationEmail}
+            };
 
-                _messageService.Send("Email", parameters);
-                _profileService.PendingInvitationProcessed(id);
-            }            
+            _messageService.Send("Email", parameters);
+            _profileService.PendingInvitationProcessed(id);
         }
     }
 }

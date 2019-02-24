@@ -8,13 +8,14 @@ namespace CloudBust.Resources {
             var manifest = builder.Add();
 
             manifest.DefineScript("CookieCuttr")
-                .SetUrl("https://doticcacdn.blob.core.windows.net/public/cloudbust/cloudbust.resources/js/jquery.cookiecuttr.min.js", "jquery.cookiecuttr.js")
-                .SetDependencies("jQueryCookie", "jQuery")
-                .SetVersion("1.0.0");
+                    .SetUrl("https://cloudbust.blob.core.windows.net/public/js/jquery.cookiecuttr.min.js",
+                         "jquery.cookiecuttr.js")
+                    .SetDependencies("jQueryCookie", "jQuery")
+                    .SetVersion("1.0.0");
 
             manifest.DefineStyle("CookieCuttr")
-                .SetUrl("https://doticcacdn.blob.core.windows.net/public/cloudbust/cloudbust.resources/css/cookiecuttr.css", "cookiecuttr.css")
-                .SetVersion("1.0.0");
+                    .SetUrl("https://cloudbust.blob.core.windows.net/public/css/cookiecuttr.min.css", "cookiecuttr.css")
+                    .SetVersion("1.0.0");
         }
     }
 }

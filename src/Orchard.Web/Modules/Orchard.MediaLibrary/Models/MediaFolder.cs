@@ -8,7 +8,7 @@ namespace Orchard.MediaLibrary.Models {
         public DateTime LastUpdated { get; set; }
 
         private Lazy<long> _size;
-        internal Lazy<long> SizeField {
+        public Lazy<long> SizeField {
             get { return _size; }
             set { _size = value; }
         }

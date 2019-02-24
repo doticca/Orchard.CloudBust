@@ -1,7 +1,7 @@
 ﻿@using Orchard.ContentManagement;
 @using Orchard.Core.Title.Models;
 @{
-    Style.Include("featuredhead.css");
+    Style.Require("CloudBust_FeaturedHead");
     Model.Metadata.Wrappers.Remove("Widget_Wrapper");
     var showtitle = Model.ContentItem.WidgetPart.RenderTitle;
     var title = Model.ContentItem.WidgetPart.Title;
@@ -78,7 +78,7 @@
 
 <div class="site-hero home-large-hero">
         <div class="row homepage">
-            <div class="small-12 medium-8 medium-offset-2 end columns">
+            <div class="small-12 medium-10 medium-offset-1 end columns">
                 @if (showtitle)
                 {
                 <h1 class="hero-main-header">@title</h1>

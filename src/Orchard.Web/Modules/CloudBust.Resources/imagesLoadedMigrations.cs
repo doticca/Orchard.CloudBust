@@ -1,21 +1,19 @@
-﻿using Orchard.Data.Migration;
+﻿using CloudBust.Resources.Models;
+using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
 
-namespace CloudBust.Resources
-{
+namespace CloudBust.Resources {
     [OrchardFeature("CloudBust.Resources.ImagesLoaded")]
-    public class imagesLoadedMigrations : DataMigrationImpl {    
-        public int Create()
-        {
+    public class ImagesLoadedMigrations : DataMigrationImpl {
+        public int Create() {
             SchemaBuilder.CreateTable(
-                "imagesLoadedSettingsPartRecord",
+                nameof(ImagesLoadedSettingsPartRecord),
                 table => table
-                             .ContentPartRecord()
-                             .Column<bool>("AutoEnable", c => c.WithDefault(true))
-                             .Column<bool>("AutoEnableAdmin", c => c.WithDefault(false))
-                );
+                        .ContentPartRecord()
+                        .Column<bool>("AutoEnable", c => c.WithDefault(true))
+                        .Column<bool>("AutoEnableAdmin", c => c.WithDefault(false))
+            );
             return 1;
         }
-
     }
 }

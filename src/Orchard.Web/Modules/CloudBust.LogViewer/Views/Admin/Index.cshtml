@@ -1,0 +1,52 @@
+﻿@using CloudBust.LogViewer.CustomUtils
+@model CloudBust.LogViewer.ViewModels.LogFilesVm
+
+@{
+    Layout.Title = T("Orchard log files").ToString();
+
+    Script.Require("jQuery").AtHead();
+    Script.Require("LogViewer/Index").AtHead();
+}
+
+@if (Model.Files.Any())
+{
+    <fieldset>
+        <legend>@T("Choose file:")</legend>
+        <select id="FileName" size="1" style="width: 300px">
+            @foreach (var file in Model.Files) {
+                <option value="@file">
+                    @file
+                </option>
+            }
+        </select>
+    
+        <span style="padding-left: 40px;">
+            <a id="deleteLink" title="Delete selected file">
+                @Html.Image(LogConstants.ModuleContentPath + "delete.png", "Delete", new { style = "position: relative; top: 3px;" })
+
+                Delete
+            </a>
+
+            <a id="saveLink" target="_blank" title="Save selected file" style="position: relative; left: 15px;">
+                @Html.Image(LogConstants.ModuleContentPath + "save.png", "Save", new { style = "position: relative; top: 3px;" })
+
+                Save
+            </a>
+        </span>
+
+        <br />
+        <br />
+
+        @Html.TextArea("Content", Model.FileContent, new { style = "height: 400px;", @readonly = "readonly" })
+    </fieldset>
+}
+else
+{
+    <h2>@T("There are no files in the log directory")</h2>
+}
+
+<script type="text/javascript">
+    var indexUrl = '@Url.Action("Load", "Admin")';
+    var deleteUrl = '@Url.Action("Delete", "Admin", new { file = "x" })';
+    var saveUrl = '@Url.Action("Save", "Admin", new { file = "x" })';
+</script>

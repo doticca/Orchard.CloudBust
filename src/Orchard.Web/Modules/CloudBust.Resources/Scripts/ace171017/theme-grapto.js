@@ -3,7 +3,7 @@ ace.define('ace/theme/grapto', ['require', 'exports', 'module', 'ace/lib/dom'], 
 
     exports.isDark = false;
     exports.cssClass = "ace-grapto";
-    exports.cssText = ' .ace-grapto .ace_gutter {border-right: 1px solid #7C8891;color: #2baddb;background-color: #f4f4f4;}\
+    exports.cssText = ' .ace-grapto .ace_gutter {border-right: 1px solid #d1d3d4;color: #2baddb;background-color: #f7f7f7;}\
                         .ace-grapto .ace_print-margin {width: 1px;background: #ebebeb;}\
                         .ace-grapto .ace_scroller {background-color: white;-webkit-box-shadow: inset 1px 0px 6px rgba(255, 255, 255, 0.6);;-moz-box-shadow: inset 1px 0px 6px rgba(255, 255, 255, 0.6);;-o-box-shadow: inset 1px 0px 6px rgba(255, 255, 255, 0.6);box-shadow: inset 1px 0px 6px rgba(255, 255, 255, 0.6);;}\
                         .ace-grapto .ace_fold {background-color: rgb(60, 76, 114);}\
@@ -31,7 +31,7 @@ ace.define('ace/theme/grapto', ['require', 'exports', 'module', 'ace/lib/dom'], 
                         .ace-grapto .ace_meta.ace_tag {color:#0000ff;}\
                         .ace-grapto .ace_entity.ace_other.ace_attribute-name {color:rgb(127, 0, 127);}\
                         .ace-grapto .ace_marker-layer .ace_step {background: rgb(255, 255, 0);}\
-                        .ace-grapto .ace_marker-layer .ace_active-line {border: 2px solid #eaeaf2; background:none; margin-top: -2px;}\
+                        .ace-grapto .ace_marker-layer .ace_active-line {border: none; background:#cfe9f2; margin-top: 0;}\
                         .ace-grapto .ace_marker-layer .ace_selected-word {border: 1px solid rgb(181, 213, 255);}\
                         .ace-grapto .ace_indent-guide {background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWOQlJT8z1BeXv4fAA2KA6+h9Z+2AAAAAElFTkSuQmCC) right repeat-y}';
 

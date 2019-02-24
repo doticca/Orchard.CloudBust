@@ -5,12 +5,12 @@ namespace CloudBust.Application.OData.Profile
     [DataContract]
     public class RegisterConfirmation
     {
-        [DataMember]
-        public string nonce { get; private set; }
-
         public RegisterConfirmation()
         {
-            nonce = string.Empty;
+            Nonce = string.Empty;
         }
+
+        [DataMember]
+        public string Nonce { get; private set; }
     }
 }

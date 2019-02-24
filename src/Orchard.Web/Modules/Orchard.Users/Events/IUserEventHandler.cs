@@ -19,6 +19,21 @@ namespace Orchard.Users.Events {
         void LoggingIn(string userNameOrEmail, string password);
 
         /// <summary>
+        /// Called before a user sends an SMS
+        /// </summary>
+        void SendingSms(IUser user);
+
+        /// <summary>
+        /// Called when an error occurs while sending SMS
+        /// </summary>
+        void SmsError(IUser user, string message);
+
+        /// <summary>
+        /// Called after a user has sent an SMS
+        /// </summary>
+        void SmsSent(IUser user);
+
+        /// <summary>
         /// Called after a user has logged in
         /// </summary>
         void LoggedIn(IUser user);

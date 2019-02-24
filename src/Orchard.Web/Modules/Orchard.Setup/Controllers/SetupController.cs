@@ -10,6 +10,7 @@ using Orchard.Localization;
 using Orchard.Recipes.Services;
 using Orchard.Themes;
 using Orchard.UI.Notify;
+using Orchard.Security;
 
 namespace Orchard.Setup.Controllers {
     [ValidateInput(false), Themed]
@@ -19,6 +20,7 @@ namespace Orchard.Setup.Controllers {
         private readonly INotifier _notifier;
         private readonly ISetupService _setupService;
         private const string DefaultRecipe = "Default";
+
 
         public SetupController(
             INotifier notifier,
@@ -59,28 +61,35 @@ namespace Orchard.Setup.Controllers {
         public ActionResult Index() {
             var initialSettings = _setupService.Prime();
             var recipes = _setupService.Recipes().ToList();
-            string recipeDescription = null;
+
+            SetupViewModel setup = new SetupViewModel {
+                AdminUsername = "admin",
+                DatabaseIsPreconfigured = !String.IsNullOrEmpty(initialSettings.DataProvider),
+                Recipes = recipes,
+                startAzure = false
+            };
 
             if (recipes.Any()) {
-                recipeDescription = recipes[0].Description;
+                setup.RecipeDescription = recipes[0].Description;
             }
 
-            // On the first time installation of Orchard, the user gets to the setup screen, which
-            // will take a while to finish (user inputting data and the setup process itself).
-            // We use this opportunity to start a background task to "pre-compile" all the known
-            // views in the app folder, so that the application is more reponsive when the user
-            // hits the homepage and admin screens for the first time).
+            string tenantRecipe = _setupService.Prime().Recipe;
+
+            if (!string.IsNullOrWhiteSpace(tenantRecipe))
+            {
+                setup.isTenant = true;
+                if(recipes.Any(x=>x.Name == tenantRecipe && x.IsSetupRecipe))
+                {
+                    setup.Recipe = tenantRecipe;
+                    setup.RecipeDescription = recipes.Where(x => x.Name == tenantRecipe).First().Description;                   
+                }
+            }
+
             if (StringComparer.OrdinalIgnoreCase.Equals(initialSettings.Name, ShellSettings.DefaultName)) {
                 _viewsBackgroundCompilation.Start();
             }
 
-            return IndexViewResult(new SetupViewModel {
-                AdminUsername = "admin",
-                DatabaseIsPreconfigured = !String.IsNullOrEmpty(initialSettings.DataProvider),
-                Recipes = recipes,
-                RecipeDescription = recipeDescription,
-                startAzure = false
-            });
+            return IndexViewResult(setup);
         }
 
         [HttpPost, ActionName("Index")]

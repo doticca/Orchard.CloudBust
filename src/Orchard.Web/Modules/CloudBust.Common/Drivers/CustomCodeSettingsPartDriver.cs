@@ -1,11 +1,10 @@
 ﻿using CloudBust.Common.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Orchard.Localization;
 using Orchard.Environment.Extensions;
+using Orchard.Localization;
 
 namespace CloudBust.Common.Drivers {
-
     [OrchardFeature("CloudBust.Common.CustomCode")]
     public class CustomCodeSettingsPartDriver : ContentPartDriver<CustomCodeSettingsPart> {
         private const string TemplateName = "Parts/CustomCodeSettings";
@@ -16,7 +15,7 @@ namespace CloudBust.Common.Drivers {
 
         public Localizer T { get; set; }
 
-        protected override string Prefix { get { return "CustomCodeSettings"; } }
+        protected override string Prefix => "CustomCodeSettings";
 
         // GET
         protected override DriverResult Editor(CustomCodeSettingsPart part, dynamic shapeHelper) {
@@ -25,7 +24,7 @@ namespace CloudBust.Common.Drivers {
                     TemplateName: TemplateName,
                     Model: part,
                     Prefix: Prefix)
-                ).OnGroup("CustomCode");
+            ).OnGroup("CustomCode");
         }
 
         // POST

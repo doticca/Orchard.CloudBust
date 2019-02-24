@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using CloudBust.Application.Models;
-using Orchard.Security.Permissions;
-using Orchard.Security;
+﻿using Orchard.Security;
 
 namespace CloudBust.Dashboard.ViewModels
 {
@@ -12,10 +8,11 @@ namespace CloudBust.Dashboard.ViewModels
         public string AppKey { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public bool isDefault { get; set; }
-        public bool isDashboard { get; set; }
-        public bool isSettings { get; set; }
-        public bool isSecurity { get; set; }
-        public bool isData { get; set; }
+        public bool IsDefault { get; set; }
+        public bool IsDashboard { get; set; }
+        public bool IsSettings { get; set; }
+        public bool IsSecurity { get; set; }
+        public bool IsData { get; set; }
+        public string HostUrl { get; set; }
     }
 }

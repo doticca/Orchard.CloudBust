@@ -7,11 +7,9 @@ namespace CloudBust.Resources {
         public void BuildManifests(ResourceManifestBuilder builder) {
             var manifest = builder.Add();
 
-            // defaults at common highlight
             manifest.DefineScript("Particles")
-                .SetUrl("particles.min.js", "particles.js")                
-                .SetVersion("2.0");
-
+                    .SetUrl("https://cloudbust.blob.core.windows.net/public/js/particles.min.js", "particles.js")
+                    .SetVersion("2.0");
         }
     }
 }

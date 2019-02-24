@@ -5,8 +5,8 @@ using System.Security;
 [assembly: AssemblyTitle("CloudBust.Foundation")]
 [assembly: AssemblyDescription("Zurb Foundation for Orchard")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("CloudBust")]
-[assembly: AssemblyCopyright("Copyright © 2014-2017, Doticca SRL")]
+[assembly: AssemblyProduct("Doticca CloudBust")]
+[assembly: AssemblyCopyright("Copyright © 2014-2019, Doticca")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -16,5 +16,5 @@ using System.Security;
 
 [assembly: AssemblyVersion("1.10.2.0")]
 [assembly: AssemblyFileVersion("1.10.2.0")]
-[assembly: AssemblyCompany("Doticca SRL")]
+[assembly: AssemblyCompany("Doticca")]
 

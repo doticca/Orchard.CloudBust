@@ -65,6 +65,7 @@ namespace CloudBust.Application
                 .AddColumn<bool>("blogPerUser", column => column.WithDefault(false)));
             return 2;
         }
+
         public int UpdateFrom2()
         {
             SchemaBuilder.AlterTable(typeof(ApplicationRecord).Name, table => table

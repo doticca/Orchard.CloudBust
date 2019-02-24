@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("CloudBust.Blogs")]
 [assembly: AssemblyDescription("CloudBust Blogs Extensions")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Doticca SRL")]
-[assembly: AssemblyProduct("CloudBust")]
-[assembly: AssemblyCopyright("Copyright ©  2014-2017, Doticca SRL")]
+[assembly: AssemblyCompany("Doticca")]
+[assembly: AssemblyProduct("Doticca CloudBust")]
+[assembly: AssemblyCopyright("Copyright © 2014-2019, Doticca")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

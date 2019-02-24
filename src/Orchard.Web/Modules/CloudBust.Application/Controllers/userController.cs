@@ -43,6 +43,11 @@ namespace CloudBust.Application.Controllers
             T = NullLocalizer.Instance;
         }
 
+        private string HostUrl()
+        {
+            return _orchardServices.WorkContext.CurrentSite.BaseUrl;
+        }
+
         private HttpResponseMessage GetSecuredProfile(string username, out IUser user, out ApplicationRecord applicationRecord, out Profile profile)
         {
             user = null;
@@ -57,10 +62,12 @@ namespace CloudBust.Application.Controllers
             {
                 user = _membershipService.GetUser(username);
             }
+
             if (user == null)
             {
                 return Request.CreateResponse(HttpStatusCode.Unauthorized, new uError("User not authorized", 401));
             }
+
             int aid = _loginsService.GetSessionAppId(user);
             if (aid < 1) return Request.CreateResponse(HttpStatusCode.NotFound, new uError("Not Found", 404));
 
@@ -70,7 +77,7 @@ namespace CloudBust.Application.Controllers
             string h = _loginsService.GetHash(user.As<UserProfilePart>(), applicationRecord);
 
             bool publicu = !(cUser != null && (user.Id == cUser.Id || cUser.UserName.ToLowerInvariant() == "admin"));
-            profile = new Profile(user, Request, h, false, publicu, true);
+            profile = new Profile(user, HostUrl(), h, false, publicu, true);
 
             return Request.CreateResponse(HttpStatusCode.OK, profile);
         }
@@ -85,7 +92,7 @@ namespace CloudBust.Application.Controllers
         }
 
         [ActionName("Profile")]
-        public HttpResponseMessage PutProfile(uProfile profile)
+        public HttpResponseMessage PutProfile(UProfile profile)
         {
             if (profile == null || string.IsNullOrWhiteSpace(profile.Username) || profile.Id <= 0)
             {
@@ -110,7 +117,7 @@ namespace CloudBust.Application.Controllers
                 var userp = _orchardServices.ContentManager.Get<UserPart>(profile.Id);
                 if(userp.UserName == profile.Username)
                 {
-                    profile.updateProfile(userp.As<UserProfilePart>());
+                    profile.UpdateProfile(userp.As<UserProfilePart>());
                 }
                 return Request.CreateResponse(HttpStatusCode.NoContent);
             }
@@ -121,7 +128,7 @@ namespace CloudBust.Application.Controllers
         }
 
         [ActionName("Profile")]
-        public HttpResponseMessage PatchProfile(uProfile profile)
+        public HttpResponseMessage PatchProfile(UProfile profile)
         {
             if (profile == null || string.IsNullOrWhiteSpace(profile.Username) || profile.Id <= 0)
             {
@@ -145,7 +152,7 @@ namespace CloudBust.Application.Controllers
                 var userp = _orchardServices.ContentManager.Get<UserPart>(profile.Id);
                 if (userp.UserName == profile.Username)
                 {
-                    profile.patchProfile(userp.As<UserProfilePart>());
+                    profile.PatchProfile(userp.As<UserProfilePart>());
                 }
                 return Request.CreateResponse(HttpStatusCode.NoContent);
             }
@@ -182,7 +189,7 @@ namespace CloudBust.Application.Controllers
                     case "Location":
                         return Request.CreateResponse(HttpStatusCode.OK, profile.Location);
                     case "link":
-                        return Request.CreateResponse(HttpStatusCode.OK, profile.link);
+                        return Request.CreateResponse(HttpStatusCode.OK, profile.Link);
                     case "Type":
                         return Request.CreateResponse(HttpStatusCode.OK, profile.Type);
                     case "Id":
@@ -200,7 +207,7 @@ namespace CloudBust.Application.Controllers
         [ExtendedQueryable]
         [Orchard.Core.XmlRpc.Controllers.LiveWriterController.NoCache]
         [ActionName("Roles")]
-        public IQueryable<UserRole> GetRoles(string username = null, string Hash = null)
+        public IQueryable<UserRole> GetRoles(string username = null, string hash = null)
         {
             IUser user = null;
             ApplicationRecord app = null;
@@ -209,13 +216,12 @@ namespace CloudBust.Application.Controllers
             {
                 if (_orchardServices.WorkContext.CurrentUser == null)
                     return null;
-                else
-                    username = _orchardServices.WorkContext.CurrentUser.UserName;
-                Hash = null;
+                username = _orchardServices.WorkContext.CurrentUser.UserName;
+                hash = null;
             }
 
             // if hash is null then we can only return data for current user
-            if (Hash == null)
+            if (hash == null)
             {
                 try
                 {
@@ -235,14 +241,11 @@ namespace CloudBust.Application.Controllers
             }
 
             // get roles from service
-            IEnumerable<UserRoleRecord> roles = _profileService.GetUserRoles(user.As<UserProfilePart>(), app);
+            var userRoles = _profileService.GetUserRoles(user.As<UserProfilePart>(), app);
             // create a new list
-            List<UserRole> Roles = new List<UserRole>();
-            foreach (UserRoleRecord role in roles)
-            {
-                Roles.Add(new UserRole(user, role, Request));
-            }
-            return Roles.AsQueryable();
+            var roles = userRoles.Select(role => new UserRole(user, role, _orchardServices.WorkContext.CurrentSite.BaseUrl)).ToList();
+
+            return roles.AsQueryable();
         }
 
         [ActionName("Invite")]

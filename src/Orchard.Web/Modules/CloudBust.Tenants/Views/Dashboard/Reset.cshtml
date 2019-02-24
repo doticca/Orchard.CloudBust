@@ -1,0 +1,36 @@
+﻿@model CloudBust.Tenants.ViewModels.TenantResetViewModel
+
+@{
+    string errorMessage = string.Empty;
+    foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors))
+    {
+        errorMessage = errorMessage + "::" + error.ErrorMessage.ToString();
+    }
+    TempData["ErrorMessage"] = errorMessage;
+    Layout.Title = T("Reset Tenant").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Reset @Model.Name Tenant</h1>
+    <p class="docs-description lead">@T("This will reset the tenant <strong>{0}</strong> to its uninitialized state, allowing you to set it up again.", Model.Name)</p>
+</header>
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.ValidationSummary()
+
+
+    <fieldset>
+        @Html.CheckBoxFor(m => Model.DropDatabaseTables)
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.DropDatabaseTables)">@("Also delete tenant database tables:")</label>
+        <ul style="margin-left: 4em; margin-top: 1em; -webkit-column-width: 24em; -moz-column-width: 24em; column-width: 24em;">
+            @foreach (var tableName in Model.DatabaseTableNames) {
+                <li><span class="hint">@tableName</span></li>
+            }
+        </ul>
+    </fieldset>
+
+    <div class="row expanded">
+        <div class="columns">
+            <input type="submit" class="button" name="submit.Save" value="@T("Reset")">
+            <a href="@(Url.Action("Index", "Dashboard"))" class="button secondary">@T("Cancel")</a>
+        </div>
+    </div>
+}

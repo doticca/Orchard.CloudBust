@@ -1,0 +1,37 @@
+﻿@model CloudBust.Localization.ViewModels.TranslationAddViewModel
+@{
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + "::" + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+
+    Layout.Title = T("New Translation").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Add a new Translation</h1>
+    <p class="docs-description lead">Each country has a default translation. Reseller can select more than one translations for his store</p>
+</header>
+
+@using (Html.BeginFormAntiForgeryPost(Url.Action("Add", "Translations"), FormMethod.Post, new { data_abide = "", novalidate = "", autocomplete = "off" }))
+{
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.Name, new { @class = "userinput", @placeholder = "set the translation name", required = "required", autofocus = "autofocus" })
+                <span class="floating-label">@T("Name")</span>
+                <span class="form-error">@T("The name of the translation is required.")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.TwoDigitCode, new { @class = "userinput", @placeholder = "set the 2-digit code", required = "required" })
+                <span class="floating-label">@T("Two Digit Code")</span>
+                <span class="form-error">@T("The two digit code of the translation is required.")</span>
+        </div>
+    </div>
+
+    <div class="row expanded">
+        <div class="columns">
+            <input type="submit" class="button" name="submit.Save" value="@T("Save")">
+            <a href="@(Url.Action("Index", "Translations"))" class="button secondary">@T("Cancel")</a>
+        </div>
+    </div>
+    <div class="row margin-bottom-2"></div>
+}

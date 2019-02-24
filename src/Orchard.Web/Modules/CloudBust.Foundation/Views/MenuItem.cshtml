@@ -1,7 +1,7 @@
-﻿@using Orchard.ContentManagement;
-@using CloudBust.Foundation.Models;
+﻿@using CloudBust.Foundation.Models;
+@using System.Collections
 @{
-    var items = Enumerable.Cast<dynamic>((System.Collections.IEnumerable)Model);
+    var items = ((IEnumerable)Model).Cast<dynamic>();
 }
 @{
     if (!HasText(Model.Text))

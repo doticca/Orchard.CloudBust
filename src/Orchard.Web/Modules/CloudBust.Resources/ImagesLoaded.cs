@@ -3,15 +3,15 @@ using Orchard.UI.Resources;
 
 namespace CloudBust.Resources {
     [OrchardFeature("CloudBust.Resources.ImagesLoaded")]
-    public class imagesLoaded : IResourceManifestProvider {
+    public class ImagesLoaded : IResourceManifestProvider {
         public void BuildManifests(ResourceManifestBuilder builder) {
             var manifest = builder.Add();
 
             // defaults at common highlight
-            manifest.DefineScript("imagesLoaded")
-                .SetDependencies("jQuery")
-                .SetUrl("https://doticcacdn.blob.core.windows.net/public/cloudbust/cloudbust.resources/js/imagesloaded.pkgd.min.js", "imagesloaded.pkgd.js")                
-                .SetVersion("3.1.8");
+            manifest.DefineScript("ImagesLoaded")
+                    .SetDependencies("jQuery")
+                    .SetUrl("https://cloudbust.blob.core.windows.net/public/js/imagesloaded.pkgd.min.js", "imagesloaded.pkgd.js")
+                    .SetVersion("4.1.4");
         }
     }
 }

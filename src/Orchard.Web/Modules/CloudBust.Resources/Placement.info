@@ -5,6 +5,8 @@
   <Place Parts_Bootstrap_BootstrapSettings="Content:5"/>
   <Place Parts_Underscore_UnderscoreSettings="Content:5"/>
   <Place Parts_Notify_NotifySettings="Content:5"/>
+  <Place Parts_IziModal_IziModalSettings="Content:5"/>
+  <Place Parts_IziToast_IziToastSettings="Content:5"/>
   <Place Parts_GoogleMaps_GoogleMapsSettings="Content:5"/>
   <Place Parts_Highlight_HighlightSettings="Content:5"/>
   <Place Parts_Particles_ParticlesSettings="Content:5"/>
@@ -15,7 +17,7 @@
   <Place Parts_Niceselect_NiceselectSettings="Content:5"/>
   <Place Parts_Masonry_MasonrySettings="Content:5"/>
   <Place Parts_Magnific_MagnificSettings="Content:5"/>
-  <Place Parts_ImagesLoaded_imagesLoadedSettings="Content:5"/>
+  <Place Parts_ImagesLoaded_ΙmagesLoadedSettings="Content:5"/>
   <Place Parts_Css_Edit="Content:2"/>
   <Place Parts_Js_Edit="Content:3"/>
   <Match DisplayType="Detail">

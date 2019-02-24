@@ -10,20 +10,51 @@ using Orchard.Mvc.Extensions;
 
 namespace Orchard.Environment {
     public class WorkContextAccessor : ILogicalWorkContextAccessor {
-        readonly ILifetimeScope _lifetimeScope;
+        private readonly IHostEnvironment _hostEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILifetimeScope _lifetimeScope;
+
         // a different symbolic key is used for each tenant.
         // this guarantees the correct accessor is being resolved.
-        readonly object _workContextKey = new object();
+        private readonly object _workContextKey = new object();
         private readonly string _workContextSlot;
 
         public WorkContextAccessor(
             IHttpContextAccessor httpContextAccessor,
-            ILifetimeScope lifetimeScope) {
+            ILifetimeScope lifetimeScope, IHostEnvironment hostEnvironment) {
             _httpContextAccessor = httpContextAccessor;
             _lifetimeScope = lifetimeScope;
+            _hostEnvironment = hostEnvironment;
             _workContextSlot = "WorkContext." + Guid.NewGuid().ToString("n");
+        }
+
+        public WorkContext GetLogicalContext() {
+            var context = CallContext.LogicalGetData(_workContextSlot) as ObjectHandle;
+            return context?.Unwrap() as WorkContext;
+        }
+
+        public IWorkContextScope CreateWorkContextScope(HttpContextBase httpContext) {
+            try {
+                var workLifetime = _lifetimeScope.BeginLifetimeScope("work");
+
+                var events = workLifetime.Resolve<IEnumerable<IWorkContextEvents>>();
+                events.Invoke(e => e.Started(), NullLogger.Instance);
+
+                if (!httpContext.IsBackgroundContext())
+                    return new HttpContextScopeImplementation(events, workLifetime, httpContext, _workContextKey);
+
+                return new CallContextScopeImplementation(events, workLifetime, _workContextSlot);
+            }
+            catch (Exception) {
+                _hostEnvironment.RestartAppDomain();
+                return null;
+            }
+        }
+
+        public IWorkContextScope CreateWorkContextScope() {
+            var httpContext = _httpContextAccessor.Current();
+            return CreateWorkContextScope(httpContext);
         }
 
         public WorkContext GetContext(HttpContextBase httpContext) {
@@ -38,35 +69,12 @@ namespace Orchard.Environment {
             return GetContext(httpContext);
         }
 
-        public WorkContext GetLogicalContext() {
-            var context = CallContext.LogicalGetData(_workContextSlot) as ObjectHandle;
-            return context != null ? context.Unwrap() as WorkContext : null;
-        }
-
-        public IWorkContextScope CreateWorkContextScope(HttpContextBase httpContext) {
-            var workLifetime = _lifetimeScope.BeginLifetimeScope("work");
-
-            var events = workLifetime.Resolve<IEnumerable<IWorkContextEvents>>();
-            events.Invoke(e => e.Started(), NullLogger.Instance);
-
-            if (!httpContext.IsBackgroundContext())
-                return new HttpContextScopeImplementation(events, workLifetime, httpContext, _workContextKey);
-
-            return new CallContextScopeImplementation(events, workLifetime, _workContextSlot);
-        }
-
-        public IWorkContextScope CreateWorkContextScope() {
-            var httpContext = _httpContextAccessor.Current();
-            return CreateWorkContextScope(httpContext);
-        }
-
-        class HttpContextScopeImplementation : IWorkContextScope {
-            readonly WorkContext _workContext;
-            readonly Action _disposer;
+        private class HttpContextScopeImplementation : IWorkContextScope {
+            private readonly Action _disposer;
 
             public HttpContextScopeImplementation(IEnumerable<IWorkContextEvents> events, ILifetimeScope lifetimeScope, HttpContextBase httpContext, object workContextKey) {
-                _workContext = lifetimeScope.Resolve<WorkContext>();
-                httpContext.Items[workContextKey] = _workContext;
+                WorkContext = lifetimeScope.Resolve<WorkContext>();
+                httpContext.Items[workContextKey] = WorkContext;
 
                 _disposer = () => {
                     events.Invoke(e => e.Finished(), NullLogger.Instance);
@@ -79,10 +87,6 @@ namespace Orchard.Environment {
                 _disposer();
             }
 
-            public WorkContext WorkContext {
-                get { return _workContext; }
-            }
-
             public TService Resolve<TService>() {
                 return WorkContext.Resolve<TService>();
             }
@@ -90,21 +94,21 @@ namespace Orchard.Environment {
             public bool TryResolve<TService>(out TService service) {
                 return WorkContext.TryResolve(out service);
             }
+
+            public WorkContext WorkContext { get; }
         }
 
-        class CallContextScopeImplementation : IWorkContextScope {
-            readonly WorkContext _workContext;
-            readonly Action _disposer;
+        private class CallContextScopeImplementation : IWorkContextScope {
+            private readonly Action _disposer;
 
             public CallContextScopeImplementation(IEnumerable<IWorkContextEvents> events, ILifetimeScope lifetimeScope, string workContextSlot) {
-
                 CallContext.LogicalSetData(workContextSlot, null);
 
-                _workContext = lifetimeScope.Resolve<WorkContext>();
+                WorkContext = lifetimeScope.Resolve<WorkContext>();
                 var httpContext = lifetimeScope.Resolve<HttpContextBase>();
-                _workContext.HttpContext = httpContext;
+                WorkContext.HttpContext = httpContext;
 
-                CallContext.LogicalSetData(workContextSlot, new ObjectHandle(_workContext));
+                CallContext.LogicalSetData(workContextSlot, new ObjectHandle(WorkContext));
 
                 _disposer = () => {
                     events.Invoke(e => e.Finished(), NullLogger.Instance);
@@ -117,10 +121,6 @@ namespace Orchard.Environment {
                 _disposer();
             }
 
-            public WorkContext WorkContext {
-                get { return _workContext; }
-            }
-
             public TService Resolve<TService>() {
                 return WorkContext.Resolve<TService>();
             }
@@ -128,6 +128,8 @@ namespace Orchard.Environment {
             public bool TryResolve<TService>(out TService service) {
                 return WorkContext.TryResolve(out service);
             }
+
+            public WorkContext WorkContext { get; }
         }
     }
 }

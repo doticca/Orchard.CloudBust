@@ -1,0 +1,62 @@
+﻿@model CloudBust.Localization.ViewModels.TranslationsIndexViewModel
+@{
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + "::" + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+    Layout.Title = T("Translations").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Translations</h1>
+    <p class="docs-description lead">View available translations.@(Model.RunsOnDefaultTenant?" Define New Translations":" If your translation is missing, please contact your administrator")</p>
+</header>
+<div class="callout training-callout hidden">
+    <p>When you define a translation a new culture pair is available for each country.
+    For example if you add Belgium as a country with code BE and define a translation for English language with code EN, you may create the en-BE culture pair for your translations.
+    </p>
+</div>
+
+@if (Model.Translations == null || !Model.Translations.Any())
+{
+<div class="small-12 columns">
+    <p>@T("There are no translations in the database.")</p>
+</div>
+}
+else
+{
+<hr />
+<div class="small-12 columns">
+    <table class="hover stack">
+        <thead>
+            <tr>
+                <th width="250">Name</th>
+                <th width="150">Code</th>
+                <th width="300">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var translation in Model.Translations)
+        {
+            <tr>
+                <td class="namefield">
+                    @translation.Name
+                </td>
+                <td>
+                    @translation.TwoDigitCode
+                </td>
+                <td>
+                    <div class="form-inline">
+                        <a href="@Url.Action("Edit", "Translations", new { id = translation.Id })" class="tiny button">Edit</a>
+                    </div>
+                    @using (Html.BeginFormAntiForgeryPost(Url.Action("Delete", "Translations", new { id = translation.Id }), FormMethod.Post, new { @class = "form-inline", data_action = "delete" }))
+                    {
+                        <button type="submit" class="tiny button alert">@T("Delete")</button>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+}
+<div class="small-12 columns">
+    @Html.ActionLink(T("Add a Translation").ToString(), "Add", new { controller = "Translations" }, new { @class = "button" })
+</div>

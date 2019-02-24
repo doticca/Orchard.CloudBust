@@ -154,12 +154,12 @@ Detect when images have been loaded.
 
 A common location for imagesloaded.js and related script libraries for Orchard Project.
 
-This module defines a script manifest for imagesloaded Library with name "imagesLoaded".<br>
+This module defines a script manifest for imagesloaded Library with name "ImagesLoaded".<br>
 You can include imagesloaded script inside your Razor views using:<br>
-Script.Require("imagesLoaded")<br>
+Script.Require("ImagesLoaded")<br>
 
-imagesLoaded module will automatically insert your imagesloaded.js script in every page.<br>
-You can disable this bevavior and include imagesloaded on demand (using Script.Require("imagesLoaded) inside your theme/view) by unchecking Auto Enable at imagesloaded module settings.<br>
+ImagesLoaded module will automatically insert your imagesloaded.js script in every page.<br>
+You can disable this bevavior and include imagesloaded on demand (using Script.Require("ImagesLoaded) inside your theme/view) by unchecking Auto Enable at imagesloaded module settings.<br>
 
 http://imagesloaded.desandro.com/
 

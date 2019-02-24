@@ -1,24 +1,24 @@
-﻿using Orchard.Caching;
+﻿using CloudBust.Common.Models;
+using CloudBust.Common.Services;
+using CloudBust.Common.ViewModels;
+using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
-using CloudBust.Common.Models;
-using CloudBust.Common.Services;
-using CloudBust.Common.ViewModels;
 
 namespace CloudBust.Common.Drivers {
     [OrchardFeature("CloudBust.Common.FavIcon")]
     public class FaviconSettingsPartDriver : ContentPartDriver<FaviconSettingsPart> {
-        private readonly ISignals _signals;
         private readonly IFaviconService _faviconService;
+        private readonly ISignals _signals;
 
         public FaviconSettingsPartDriver(ISignals signals, IFaviconService faviconService) {
             _signals = signals;
             _faviconService = faviconService;
         }
 
-        protected override string Prefix { get { return "FaviconSettings"; } }
+        protected override string Prefix => "FaviconSettings";
 
         protected override DriverResult Editor(FaviconSettingsPart part, dynamic shapeHelper) {
             var faviconSuggestions = _faviconService.GetFaviconSuggestions();
@@ -29,25 +29,25 @@ namespace CloudBust.Common.Drivers {
             var safariSuggestions = _faviconService.GetSafariSuggestions();
 
             return ContentShape("Parts_Favicon_FaviconSettings",
-                               () => shapeHelper.EditorTemplate(
-                                   TemplateName: "Parts/Favicon.FaviconSettings",
-                                   Model: new FaviconSettingsViewModel {
-                                       FaviconUrl = part.FaviconUrl,
-                                       FaviconUrlSuggestions = faviconSuggestions,
-                                       AppleTouchIconUrlSuggestions = appleTouchIconUrlSuggestions,
-                                       AppleTouchIconUrl = part.AppleTouchIconUrl,
-                                       AndroidManifestUrl = part.AndroidManifestUrl,
-                                       AndroidManifestSuggestions = androidManifestSuggestions,
-                                       SafariPinnedUrl = part.SafariPinnedUrl,
-                                       SafariPinnedMask = part.SafariPinnedMask,
-                                       SafariSuggestions = safariSuggestions,
-                                       PngImageUrl = part.PngImageUrl,
-                                       PngImageSuggestions = pngimageSuggestions,
-                                       MSApplicationConfigUrl = part.MSApplicationConfigUrl,
-                                       MSApplicationConfigSuggestions = msApplicationConfigSuggestions,
-                                       ThemeColor = part.ThemeColor
-                                   },
-                                   Prefix: Prefix)).OnGroup("Favicon");
+                () => shapeHelper.EditorTemplate(
+                    TemplateName: "Parts/Favicon.FaviconSettings",
+                    Model: new FaviconSettingsViewModel {
+                        FaviconUrl = part.FaviconUrl,
+                        FaviconUrlSuggestions = faviconSuggestions,
+                        AppleTouchIconUrlSuggestions = appleTouchIconUrlSuggestions,
+                        AppleTouchIconUrl = part.AppleTouchIconUrl,
+                        AndroidManifestUrl = part.AndroidManifestUrl,
+                        AndroidManifestSuggestions = androidManifestSuggestions,
+                        SafariPinnedUrl = part.SafariPinnedUrl,
+                        SafariPinnedMask = part.SafariPinnedMask,
+                        SafariSuggestions = safariSuggestions,
+                        PngImageUrl = part.PngImageUrl,
+                        PngImageSuggestions = pngimageSuggestions,
+                        MSApplicationConfigUrl = part.MSApplicationConfigUrl,
+                        MSApplicationConfigSuggestions = msApplicationConfigSuggestions,
+                        ThemeColor = part.ThemeColor
+                    },
+                    Prefix: Prefix)).OnGroup("Favicon");
         }
 
         protected override DriverResult Editor(FaviconSettingsPart part, IUpdateModel updater, dynamic shapeHelper) {

@@ -854,6 +854,7 @@ padding: 13px 0 10px;
 
 .pager-footer{
     padding-bottom:25px;
+    float: left;
 }
 
 /*.tabs-content {

@@ -8,9 +8,9 @@
     Script.Require("Highlight");
     Style.Require("Highlight_dark");
 
-    string fbappkey = Model.Application.fbAppKey;
-    string reseturl = Url.Content("~") + "dashboard/applications/" + Model.Application.AppKey + "/reset";
-    string codeurl = Model.Uri.ToString();
+    var baseUrl = Model.HostUrl.TrimEnd('/');
+    var reseturl = baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/reset";
+    var codeurl = baseUrl;
 }
 
 <div class="row collapse bump-15">

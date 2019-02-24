@@ -10,6 +10,6 @@ namespace CloudBust.Dashboard.ViewModels
     public class DashboardViewModel
     {
         public IUser User { get; set; }
-
+        public string HostUrl { get; set; }
     }
 }

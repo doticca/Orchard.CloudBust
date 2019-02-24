@@ -1,36 +1,33 @@
-﻿using Orchard.ContentManagement.MetaData;
+﻿using CloudBust.Resources.Models;
+using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
 
-namespace CloudBust.Resources
-{
+namespace CloudBust.Resources {
     [OrchardFeature("CloudBust.Resources.Ace")]
-    public class AceCssMigrations : DataMigrationImpl
-    {
-
-        public int Create()
-        {
+    public class AceCssMigrations : DataMigrationImpl {
+        public int Create() {
             SchemaBuilder.CreateTable(
-                "CssPartRecord",
+                nameof(CssPartRecord),
                 table => table
-                            .ContentPartRecord()
-                            .Column<string>("Css", column => column.Unlimited())
-                            );
+                        .ContentPartRecord()
+                        .Column<string>("Css", column => column.Unlimited())
+            );
 
             ContentDefinitionManager.AlterPartDefinition("CssPart", builder => builder
-                .Attachable()
-                .WithDescription("Allows the inline editing of Css using Ace editor."));
+                                                                              .Attachable()
+                                                                              .WithDescription("Allows the inline editing of Css using Ace editor."));
 
-            ContentDefinitionManager.AlterTypeDefinition("HtmlWidget", 
+            ContentDefinitionManager.AlterTypeDefinition("HtmlWidget",
                 cfg => cfg
-                    .WithPart("CssPart")
-                );
+                   .WithPart("CssPart")
+            );
 
-            ContentDefinitionManager.AlterTypeDefinition("Page", 
+            ContentDefinitionManager.AlterTypeDefinition("Page",
                 cfg => cfg
-                    .WithPart("CssPart")
-                );
+                   .WithPart("CssPart")
+            );
 
             return 1;
         }

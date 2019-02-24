@@ -1,0 +1,7 @@
+﻿@model Orchard.Environment.Configuration.ShellSettings
+@using CloudBust.Tenants.Extensions;
+
+@using(Html.BeginFormAntiForgeryPost(Url.Action("Disable", new {area = "CloudBust.Tenants"}), FormMethod.Post, new { @class = "form-inline"  })) {
+    @Html.HiddenFor(ss => ss.Name)
+    <button type="submit" class = "hollow button warning small">@T("Suspend")</button>
+}

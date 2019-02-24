@@ -1,0 +1,98 @@
+﻿@model CloudBust.Tenants.ViewModels.TenantAddViewModel
+
+@{
+    string errorMessage = string.Empty;
+    foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors))
+    {
+        errorMessage = errorMessage + "::" + error.ErrorMessage.ToString();
+    }
+    TempData["ErrorMessage"] = errorMessage;
+    Layout.Title = T("Add New Tenant").ToString();
+}
+
+@using (Html.BeginFormAntiForgeryPost())
+{
+    @Html.ValidationSummary()
+
+    <div class="row">
+        <div class="columns">
+        <ul class="tabs" data-tabs id="tenant-tabs">
+            <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Information</a></li>
+            <li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">Database</a></li>
+        </ul>
+
+        <div class="tabs-content light" data-tabs-content="tenant-tabs">
+            <div class="tabs-panel is-active" id="panel1">
+
+                <div class="row">
+                    <div class="small-12 medium-6 columns">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "userinput", @placeholder = "set the tenant name", required = "required", autofocus = "autofocus" })
+                        <span class="floating-label">@T("Name")</span>
+                        <span class="form-error">@T("The name of the tenant is required.")</span>
+                    </div>
+                    <div class="small-12 medium-6 columns">
+                        <blockquote>
+                            <p>@T("The name of the tenant as it will be displayed in the admin dashboard.")</p>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="small-12 medium-6 columns">
+                        @Html.TextBoxFor(m => m.RequestUrlHost, new { @class = "userinput", @placeholder = "set the host domain" })
+                        <span class="floating-label">@T("Host")</span>
+                        <span class="form-error">@T("The name of the tenant is required.")</span>
+                    </div>
+                    <div class="small-12 medium-6 columns">
+                        <blockquote>
+                            <p>@T("Example: If host is \"connect24-7.com\", the tenant site URL is \"http://connect24-7.com/\"")</p>
+                            <p>@T("You may define multiple domains using the comma (,) as a separator. Use the '*.' prefix to map all subdomains.")</p>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="small-12 medium-6 columns">
+                        @Html.TextBoxFor(m => m.RequestUrlPrefix, new { @class = "userinput", @placeholder = "set the url prefix" })
+                        <span class="floating-label">@T("URL prefix")</span>
+                        <span class="form-error">@T("The name of the tenant is required.")</span>
+                    </div>
+                    <div class="small-12 medium-6 columns">
+                        <blockquote>
+                            <p>@T("(Optional)Example: If prefix is \"site1\", the tenant URL prefix is \"http://connect24-7.com/site1\"")</p>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tabs-panel" id="panel2">
+                <div>
+                    @Html.RadioButtonFor(svm => svm.DataProvider, "SqlCe", new { id = "builtinDatabaseOption" })
+                    <label for="builtinDatabaseOption" class="forcheckbox">@T("Use built-in data storage (SQL Server Compact)")</label>
+                </div>
+                <div>
+                    @Html.RadioButtonFor(svm => svm.DataProvider, "SqlServer", new { id = "sqlDatabaseOption" })
+                    <label for="sqlDatabaseOption" class="forcheckbox">@T("Use an existing SQL Server (or SQL Express) database")</label>
+                    <div class="options">
+                        <span data-controllerid="sqlDatabaseOption">
+                            <label for="DatabaseConnectionString">@T("Connection string")</label>
+                            @Html.TextBoxFor(svm => svm.DatabaseConnectionString, new { @class = "text large" })
+                            <span class="hint">@T("Example:") @T("Data Source=sqlServerName;Initial Catalog=dbName;User ID=userName;Password=password")</span>
+                        </span>
+                        <span data-controllerid="sqlDatabaseOption">
+                            <label for="DatabaseTablePrefix">@T("Database table prefix")</label>
+                            @Html.EditorFor(svm => svm.DatabaseTablePrefix)
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="row bump-25 pamp-30">
+        <div class="small-12 columns">
+            <button class="button primaryAction" type="submit">@T("Save")</button>
+        </div>
+    </div>
+}

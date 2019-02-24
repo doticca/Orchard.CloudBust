@@ -1,0 +1,40 @@
+﻿@using System.Globalization
+@using Q42.DbTranslations.ViewModels
+@model CultureIndexViewModel
+@{
+  Layout.Title = "Translations";
+}
+
+<h2>@T("Translations")</h2>
+
+<fieldset class="margin-top-2">
+    <table class="items">
+        <thead>
+        <tr>
+            <th scope="col" width="100">@T("Culture")</th>
+            <th scope="col" width="50">@T("Translated")</th>
+            <th width="200"></th>
+        </tr>
+        </thead>
+        @foreach (var translation in Model.TranslationStates.OrderBy(c => c.Key))
+        {
+            var culture = CultureInfo.GetCultureInfoByIetfLanguageTag(translation.Key);
+            <tr>
+                <td>
+                    @Html.ActionLink(
+                        culture.IetfLanguageTag + " - " + culture.DisplayName,
+                        "Culture",
+                        new { culture = culture.Name, Controller = "Dashboard" })
+                </td>
+                <td>@translation.Value.NumberOfTranslatedStrings</td>
+                <td></td>
+            </tr>
+        @*if (translation.Value.NumberOfTranslatedStrings < 10)
+        {
+          <tr><td></td><td colspan="3">
+          <a href="@Url.Action("ImportLiveOrchardPo", new { culture = culture })">@T("Click here to pre-fill {0} using a *.po.zip file from www.orchardproject.net.", culture)</a>
+          </td></tr>
+        }*@
+        }
+    </table>
+</fieldset>

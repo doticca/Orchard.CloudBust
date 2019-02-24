@@ -1,0 +1,8 @@
+﻿Name: CloudBust.Subscribers
+AntiForgery: enabled
+Author: Team Doticca @teamdoticca
+Website: http://www.doticca.com
+Version: 1.0
+OrchardVersion: 1.10.2
+Description: The CloudBust.Subscribers module
+Category: CloudBust

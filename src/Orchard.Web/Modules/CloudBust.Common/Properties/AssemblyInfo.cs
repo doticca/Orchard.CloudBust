@@ -8,8 +8,8 @@ using System.Security;
 [assembly: AssemblyTitle("CloudBust.Common")]
 [assembly: AssemblyDescription("Common Modules for CloudBust")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("CloudBust")]
-[assembly: AssemblyCopyright("Copyright © 2014-2017, Doticca SRL")]
+[assembly: AssemblyProduct("Doticca CloudBust")]
+[assembly: AssemblyCopyright("Copyright © 2014-2019, Doticca")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -28,6 +28,6 @@ using System.Security;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.10.2.0")]
 [assembly: AssemblyFileVersion("1.10.2.0")]
-[assembly: AssemblyCompany("Doticca SRL")]
+[assembly: AssemblyCompany("Doticca")]
 [assembly: Guid("B8DECE22-D077-4C16-8413-34D124785901")]
 

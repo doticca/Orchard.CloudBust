@@ -1,4 +1,6 @@
-﻿@using Orchard.Utility.Extensions;
+﻿@using System.Text.RegularExpressions
+@using Orchard.ContentManagement
+@using Orchard.Utility.Extensions;
 @{
     if (Model.Title != null) {
         Layout.Title = Model.Title;
@@ -8,26 +10,28 @@
 
     var contentTypeClassName = ((string)Model.ContentItem.ContentType).HtmlClassify();
     Model.Classes.Add(contentTypeClassName);
-    //Model.Classes.Add("row");
     var tag = Tag(Model, "article");
     dynamic colorval = Model.ContentItem.BlogPost.Color.Value;
+    SetMeta("og:title", Html.ItemDisplayText((IContent)Model.ContentItem).ToString());
+    SetMeta("og:type", "article");
+    SetMeta("twitter:card", "summary");
 }
 @tag.StartElement
 
-    <header>
-        @Display(Model.Header)
-        @if (Model.Meta != null) {
-            <div class="metadata">
-                @Display(Model.Meta)
-            </div>
-        }
-    </header>
-    @Display(Model.Content)
-    @if(Model.Footer != null) {
-        <footer>
-            @Display(Model.Footer)
-        </footer>
+<header>
+    @Display(Model.Header)
+    @if (Model.Meta != null) {
+        <div class="metadata">
+            @Display(Model.Meta)
+        </div>
     }
+</header>
+@Display(Model.Content)
+@if(Model.Footer != null) {
+    <footer>
+        @Display(Model.Footer)
+    </footer>
+}
 
 @tag.EndElement
 <style>

@@ -1,0 +1,18 @@
+﻿@using Orchard.Taxonomies.Models
+@{
+    IEnumerable<TermPart> terms = Model.Terms ?? new List<TermPart>();
+}
+<section class="page-section light">
+    <div class="row page-section-divider">
+        <div class="small-12 medium-7 column text-center small-centered">
+            <h2 class="page-section-title">@T("Topics")</h2>
+        </div>
+    </div>
+    <div class="row small-up-1 medium-up-3">
+        @foreach (var term in terms) {
+            <div class="columns">
+                <a href="@term.Slug" class="button secondary large hollow expanded">@term.Name</a>
+            </div>
+        }
+    </div>
+</section>

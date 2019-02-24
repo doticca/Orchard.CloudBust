@@ -1,0 +1,44 @@
+﻿@model CloudBust.Localization.ViewModels.CurrencyEditViewModel
+@{
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + "::" + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+
+    Layout.Title = T("New Currency").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Edit Currency</h1>
+    <p class="">Changing the currency Name or Code will immediately affect any countries using it.</p>
+</header>
+
+@using (Html.BeginFormAntiForgeryPost(Url.Action("Edit", "Currencies"), FormMethod.Post, new { data_abide = "", novalidate = "", autocomplete = "off" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.Name, new { @class = "userinput", @placeholder = "set the currency name", required = "required", autofocus = "autofocus", value=Model.Name })
+                <span class="floating-label">@T("Name")</span>
+                <span class="form-error">@T("The name of the currency is required.")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.ThreeDigitCode, new { @class = "userinput", @placeholder = "set the three digit code", required = "required", value=Model.ThreeDigitCode })
+                <span class="floating-label">@T("Three Digit Code")</span>
+                <span class="form-error">@T("The three digit code of the currency is required.")</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 medium-6 columns">
+            @Html.TextBoxFor(m => m.Sign, new { @class = "userinput", @placeholder = "currency sign", required = "required", value=Model.Sign })
+            <span class="floating-label">@T("HTML currency sign")</span>
+            <span class="form-error">@T("The Sign of the currency is required.")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="columns">
+            <input type="submit" class="button" name="submit.Save" value="@T("Save")">
+            <a href="@(Url.Action("Index", "Currencies"))" class="button secondary">@T("Cancel")</a>
+        </div>
+    </div>
+    <div class="row margin-bottom-2"></div>
+}

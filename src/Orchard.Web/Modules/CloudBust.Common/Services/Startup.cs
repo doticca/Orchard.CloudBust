@@ -2,7 +2,8 @@
 using System.Web.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
-using CloudBust.Common.Formatters;
+using CloudBust.Common.Handlers.Formatters;
+using System.Web.Http.OData.Extensions;
 
 namespace CloudBust.Common.Services
 {
@@ -20,6 +21,8 @@ namespace CloudBust.Common.Services
             config.Formatters.JsonFormatter.AddQueryStringMapping("$format", "json", new MediaTypeHeaderValue("application/json"));
             config.Formatters.XmlFormatter.AddQueryStringMapping("$format", "xml", new MediaTypeHeaderValue("application/xml"));
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+            config.AddODataQueryFilter();
         }
 
         void IOrchardShellEvents.Terminating()

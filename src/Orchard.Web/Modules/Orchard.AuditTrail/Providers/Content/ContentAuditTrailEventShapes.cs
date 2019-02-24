@@ -6,8 +6,10 @@ using Orchard.AuditTrail.Services;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement.Descriptors;
 using Orchard.Environment;
+using Orchard.Environment.Extensions;
 
 namespace Orchard.AuditTrail.Providers.Content {
+    [OrchardFeature("Orchard.AuditTrail.ContentItems")]
     public class ContentAuditTrailEventShapes : IShapeTableProvider {
         private readonly Work<IContentManager> _contentManager;
         private readonly IDiffGramAnalyzer _analyzer;

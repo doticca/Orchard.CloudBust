@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Net;
 using System.Net.Configuration;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Web.Mvc;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement;
@@ -83,6 +85,15 @@ namespace Orchard.Email.Services {
                     mailMessage.Body = oldMessage.Body;
                     mailMessage.IsBodyHtml = oldMessage.IsBodyHtml;
                 }
+            }
+
+            if (parameters.ContainsKey("Attachment")) {
+                var attachmentFile = (FileContentResult)parameters["Attachment"];
+                var ms = new MemoryStream(attachmentFile.FileContents);
+                var ct = new ContentType(attachmentFile.ContentType);
+                var a = new Attachment(ms, ct);
+
+                mailMessage.Attachments.Add(a);
             }
 
             try {

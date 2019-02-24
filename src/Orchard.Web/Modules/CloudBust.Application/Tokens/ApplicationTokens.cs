@@ -1,10 +1,10 @@
-﻿using System;
-using System.Web.Mvc;
-using Orchard.ContentManagement;
+﻿using Orchard.ContentManagement;
 using Orchard.Localization;
 using Orchard.Tokens;
+using System;
 
-namespace CloudBust.Application.Tokens {
+namespace CloudBust.Application.Tokens
+{
 
     public class ApplicationTokens : ITokenProvider {
         private readonly IContentManager _contentManager;

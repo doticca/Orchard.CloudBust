@@ -6,7 +6,14 @@
     var field = (MediaLibraryPickerField) Model.ContentField;
     string displayName = field.DisplayName;
     string name = field.Name;
-    var contents = field.MediaParts;
+    var contents = field.MediaParts.ToList();
+
+    
+    var firstContent = contents.FirstOrDefault();
+    if (firstContent != null) {
+        
+        SetMeta("og:image", firstContent.MediaUrl);
+    }
 }
 <section class="intro-image">
 @foreach (var content in contents)

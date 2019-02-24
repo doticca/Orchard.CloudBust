@@ -8,14 +8,10 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace CloudBust.Common.Formatters
+namespace CloudBust.Common.Handlers.Formatters
 {
-    /// <summary>
-    /// Handles JsonP requests when requests are fired with text/javascript
-    /// </summary>
     public class JsonpFormatter : JsonMediaTypeFormatter
     {
-
         public JsonpFormatter()
         {
             SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
@@ -34,7 +30,7 @@ namespace CloudBust.Common.Formatters
         /// Captured name of the Jsonp function that the JSON call
         /// is wrapped in. Set in GetPerRequestFormatter Instance
         /// </summary>
-        private string JsonpCallbackFunction;
+        private string _jsonpCallbackFunction;
 
 
         public override bool CanWriteType(Type type)
@@ -53,7 +49,7 @@ namespace CloudBust.Common.Formatters
         {
             var formatter = new JsonpFormatter()
             {
-                JsonpCallbackFunction = GetJsonCallbackFunction(request)
+                _jsonpCallbackFunction = GetJsonCallbackFunction(request)
             };
 
             // this doesn't work unfortunately
@@ -72,7 +68,7 @@ namespace CloudBust.Common.Formatters
                                         HttpContent content,
                                         TransportContext transportContext)
         {
-            if (string.IsNullOrEmpty(JsonpCallbackFunction))
+            if (string.IsNullOrEmpty(_jsonpCallbackFunction))
                 return base.WriteToStreamAsync(type, value, stream, content, transportContext);
 
             StreamWriter writer = null;
@@ -81,7 +77,7 @@ namespace CloudBust.Common.Formatters
             try
             {
                 writer = new StreamWriter(stream);
-                writer.Write(JsonpCallbackFunction + "(");
+                writer.Write(_jsonpCallbackFunction + "(");
                 writer.Flush();
             }
             catch (Exception ex)

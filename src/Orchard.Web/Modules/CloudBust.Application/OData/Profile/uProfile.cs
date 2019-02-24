@@ -1,10 +1,10 @@
-﻿using CloudBust.Application.Models;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+using CloudBust.Application.Models;
 
 namespace CloudBust.Application.OData.Profile
 {
     [DataContract]
-    public class uProfile
+    public class UProfile
     {
         [DataMember]
         public int Id { get; private set; }
@@ -30,7 +30,7 @@ namespace CloudBust.Application.OData.Profile
         [DataMember]
         public string Location { get; private set; }
 
-        public void updateProfile(UserProfilePart profile)
+        public void UpdateProfile(UserProfilePart profile)
         {
             profile.FirstName = string.IsNullOrWhiteSpace(FirstName) ? string.Empty : FirstName;
             profile.LastName = string.IsNullOrWhiteSpace(LastName) ? string.Empty : LastName;
@@ -40,7 +40,7 @@ namespace CloudBust.Application.OData.Profile
             profile.ShowEmail = ShowEmail;
         }
 
-        public void patchProfile(UserProfilePart profile)
+        public void PatchProfile(UserProfilePart profile)
         {
             profile.FirstName = string.IsNullOrWhiteSpace(FirstName) ? profile.FirstName : FirstName;
             profile.LastName = string.IsNullOrWhiteSpace(LastName) ? profile.LastName : LastName;
@@ -50,6 +50,4 @@ namespace CloudBust.Application.OData.Profile
             profile.ShowEmail = ShowEmail;
         }
     }
-
-
 }

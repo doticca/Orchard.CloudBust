@@ -1,0 +1,75 @@
+﻿@model CloudBust.Localization.ViewModels.CountriesIndexViewModel
+@{
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + "::" + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+
+    Layout.Title = T("Countries").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Countries</h1>
+    <p class="docs-description lead">View available countries.@(Model.RunsOnDefaultTenant?" Define New Countries":" If your country is missing, please contact your administrator")</p>
+</header>
+<div class="callout training-callout hidden">
+<p>Countries are mandatory not only for the marketplace translation but also for the pricing definition of your products. Each product has a different price for every country.</p>
+</div>
+@if (Model.Countries == null || !Model.Countries.Any())
+{
+<div class="small-12 columns">
+    <p>@T("There are no countries in the database.")</p>
+</div>
+}
+else
+{
+<div class="small-12 columns">
+    <table class="hover stack">
+        <thead>
+            <tr>
+                <th width="250">Name</th>
+                <th width="150">Tax</th>
+                <th width="150">2-Code</th>
+                <th width="150">3-Code</th>
+                <th width="200">Currency</th>
+                <th width="200">Translations</th>
+                <th width="300">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var country in Model.Countries)
+        {
+            <tr>
+                <td class="namefield">
+                    @country.Country.Name
+                </td>
+                <td>
+                    @country.Country.Taxation
+                </td>
+                <td>
+                    @country.Country.TwoDigitCode
+                </td>
+                <td>
+                    @country.Country.ThreeDigitCode
+                </td>
+                <td>
+                    @country.Country.Currency.Name
+                </td>
+                <td>
+                    @String.Join(", ", country.Translations.Select(t=>t.Name))
+                </td>
+                <td>
+                    <div class="form-inline">
+                        <a href="@Url.Action("Edit", "Countries", new { id=country.Country.Id })" class="tiny button">Edit</a>
+                    </div>
+                    @using (Html.BeginFormAntiForgeryPost(Url.Action("Delete", "Countries", new { id = country.Country.Id }), FormMethod.Post, new { @class = "form-inline", data_action="delete" }))
+                    {
+                        <button type="submit" class="tiny button alert">@T("Delete")</button>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+}
+<div class="small-12 columns">
+    @Html.ActionLink(T("Add a Country").ToString(), "Add", new { controller = "Countries" }, new { @class = "button" })
+</div>

@@ -1,0 +1,84 @@
+﻿@model CloudBust.Localization.ViewModels.CountryAddViewModel
+@{
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + "::" + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+
+    Layout.Title = T("Add Country").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Add a new Country</h1>
+    <p class="docs-description lead">To create a new country you have to first define a default <a href="/mitos/translations">translation</a> and <a href="/mitos/currencies">currency</a>.</p>
+</header>
+<p>Country name should be set at the country's Default translation localization.</p>
+
+<div class="callout training-callout hidden">
+<h4>ISO Alpha-2, Alpha-3, and Numeric Country Codes</h4>
+<p>The ISO country code are internationally recognized codes that designates for each country and most of the dependent areas a two letter combination or a three letter combination, its like an acronym, that stands for a country. </p>
+<p>Country 2-digit code combined with a translation 2-digit code will define a new culture pair.</p>
+<p>Please use ISO-Alpha 1 for the 2-digit codes and ISO-Alpha 2 for the 3-digit codes.</p>
+<a href="http://www.nationsonline.org/oneworld/country_code_list.htm" target="_blank">Country Codes List →</a>
+</div>
+
+<hr />
+@using (Html.BeginFormAntiForgeryPost(Url.Action("Add", "Countries"), FormMethod.Post, new { data_abide = "", novalidate = "", autocomplete = "off" }))
+{
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.Name, new { @class = "userinput", @placeholder = "set the country name", required = "required", autofocus = "autofocus" })
+                <span class="floating-label">@T("Name")</span>
+                <span class="form-error">@T("The name of the country is required.")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.TwoDigitCode, new { @class = "userinput", @placeholder = "set the 2-digit code", required = "required" })
+                <span class="floating-label">@T("Two Digit Code")</span>
+                <span class="form-error">@T("The two digit code of the country is required.")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.ThreeDigitCode, new { @class = "userinput", @placeholder = "set the 3-digit code", required = "required" })
+                <span class="floating-label">@T("Three Digit Code")</span>
+                <span class="form-error">@T("The three digit code of the country is required.")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+            <select required name="@Html.FieldNameFor(m => m.Currency)">
+                <option value="" disabled selected hidden>select the currency</option>
+                @foreach (var currency in Model.Currencies)
+                {
+                    @Html.SelectOption(Model.Currency, currency.Id, T(currency.Name).ToString())
+                }
+            </select>
+            <span class="floating-label">@T("Currency")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.Taxation, new { @class = "userinput", @placeholder = "set the taxation", required = "required", type = "number" })
+                <span class="floating-label">@T("Taxation VAT rate")</span>
+                <span class="form-error">@T("The vat rate of the country is required.")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+            <select required name="@Html.FieldNameFor(m => m.Translation)">
+                <option value="" disabled selected hidden>select the translation</option>
+                @foreach (var translation in Model.Translations)
+                {
+                    @Html.SelectOption(Model.Translation, translation.Id, T(translation.Name).ToString())
+                }
+            </select>
+            <span class="floating-label">@T("Translation")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="columns">
+            <input type="submit" class="button" name="submit.Save" value="@T("Save")">
+            <a href="@(Url.Action("Index", "Countries"))" class="button secondary">@T("Cancel")</a>
+        </div>
+    </div>
+    <div class="row expanded margin-bottom-2"></div>
+}

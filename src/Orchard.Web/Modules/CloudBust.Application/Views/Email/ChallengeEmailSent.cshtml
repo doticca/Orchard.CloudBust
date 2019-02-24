@@ -1,8 +1,9 @@
 ﻿@model dynamic
 <div class="row">
     <div class="columns">
-        <h1>@Html.TitleForPage(T("Challenge Email Sent").ToString()) </h1>
-        <p>@T("An email has been sent to you. Please click on the link it contains in order to have access on this site.") </p>
+        <h1>@Html.TitleForPage(T("Email Sent").ToString()) </h1>
+
+        <p>@T("Please check your email. Click the confirmation link you have just received to continue.") </p>
         @if (Url.IsLocalUrl(Request.QueryString["ReturnUrl"]))
         {
             <p>@Html.Link(T("Go back to where you were"), Url.Content(Request.QueryString["ReturnUrl"]))</p>

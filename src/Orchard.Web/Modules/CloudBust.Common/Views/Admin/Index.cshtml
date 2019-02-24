@@ -4,7 +4,7 @@
 
 <fieldset>
 @if (Model.ThemeSelectionSettings != null && Model.ThemeSelectionSettings.Count() != 0) {
-    using (Html.BeginFormAntiForgeryPost(Url.Action("Remove"))) {
+    using (Html.BeginFormAntiForgeryPost(Url.Action("Remove", "Admin"))) {
         @Html.ValidationSummary()
         <ul>
         @foreach (var de in Model.ThemeSelectionSettings) {
@@ -28,7 +28,7 @@
 
 <fieldset>
     <legend>@T("Add new theme selection criterion")</legend>
-    @using (Html.BeginFormAntiForgeryPost(Url.Action("Add"))) {
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("Add", "Admin"))) {
         <div>
             <label for="Name">@T("Name:")</label>
             @Html.TextBox("Name", "")

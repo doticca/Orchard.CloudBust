@@ -230,7 +230,6 @@ img.icon {
 
     .docs-nav.menu a {
         -webkit-background-clip: border-box;
-        -moz-background-clip: border-box;
         background-clip: border-box;
         -webkit-background-origin: padding-box;
         -webkit-font-smoothing: subpixel-antialiased;
@@ -251,7 +250,6 @@ img.icon {
         outline-width: 0;
         text-align: left;
         background-image: none;
-        -moz-background-origin: padding-box;
         background-origin: padding-box;
         background-size: auto;
         text-transform: none;
@@ -440,6 +438,9 @@ html.navigation .actions.manage {
     margin-left: 8px;
     display: none !important;
 }
+ul.action-links {
+    display: inline-flex;
+}
 /* Header - Branding, Login and Culture Selection
 ***************************************************************/
 #header, #footer, .tabs, .tabs-content, .tabs-panel, #main, #contentcol, section, .edit-item-content, #content > .info.message {
@@ -471,7 +472,7 @@ html.navigation .actions.manage {
 
 #culture-selection {
     float: right;
-    margin: 10px 20px 0 0;
+    margin: 0px 19px 0 0;
 }
 
 #brand #app {
@@ -526,7 +527,7 @@ html.navigation .actions.manage {
 }
 
 #login {
-    display: block;
+    display: inline-block;
     float: right;
     margin: 3px 15px 0 0;
     white-space: nowrap;
@@ -668,7 +669,7 @@ html.dyn #submit-pager, html.dyn .apply-bulk-actions-auto { display:none; }
     margin: 0;
     /*border-top: 1px solid #E4E5E6;
     border-bottom: 1px solid #E4E5E6;*/
-    /*clear: both;*/
+    /* clear: both; */
     /*border-left: none;
     border-right: none;*/
     float: left;
@@ -1912,7 +1913,7 @@ img.icon.settings {
     padding-right: 5px;
 }
 .manage-part h3, .manage-field h3 {
-    display: relative;
+    position: relative;
     line-height: 1.231em;
     padding-bottom: 0;
     padding-top: 0;
@@ -1970,4 +1971,14 @@ img.icon.settings {
 }
 #media-library-main-editor {
     min-width: 250px;
+}
+
+#culture-selection select {
+    height: 2.1em;
+    margin: 0;
+    padding: 0;
+}
+
+h1#page-title {
+    float: left;
 }

@@ -1,64 +1,55 @@
-﻿using Orchard;
+﻿using CloudBust.Resources.Models;
+using Orchard;
 using Orchard.Caching;
-using CloudBust.Resources.Models;
 using Orchard.Environment.Extensions;
 
-namespace CloudBust.Resources.Services
-{    
-    public interface IimagesLoadedService : IDependency
-    {
+namespace CloudBust.Resources.Services {
+    public interface IImagesLoadedService : IDependency {
         bool GetAutoEnable();
         bool GetAutoEnableAdmin();
     }
+
     [OrchardFeature("CloudBust.Resources.ImagesLoaded")]
-    public class imagesLoadedService : IimagesLoadedService
-    {
-        private readonly IWorkContextAccessor _wca;
+    public class ImagesLoadedService : IImagesLoadedService {
+        private const string ScriptsFolder = "scripts";
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
+        private readonly IWorkContextAccessor _wca;
 
-        private const string ScriptsFolder = "scripts";
-
-        public imagesLoadedService(IWorkContextAccessor wca, ICacheManager cacheManager, ISignals signals)
-        {
+        public ImagesLoadedService(IWorkContextAccessor wca, ICacheManager cacheManager, ISignals signals) {
             _wca = wca;
             _cacheManager = cacheManager;
             _signals = signals;
         }
 
-        public bool GetAutoEnable()
-        {
+        public bool GetAutoEnable() {
             return _cacheManager.Get(
                 "CloudBust.Resources.AutoEnable",
-                ctx =>
-                {
+                ctx => {
                     ctx.Monitor(_signals.When("CloudBust.Resources.Changed"));
-                    WorkContext workContext = _wca.GetContext();
+                    var workContext = _wca.GetContext();
                     var imagesLoadedSettings =
-                        (imagesLoadedSettingsPart)workContext
+                        (ImagesLoadedSettingsPart) workContext
                                                   .CurrentSite
                                                   .ContentItem
-                                                  .Get(typeof(imagesLoadedSettingsPart));
+                                                  .Get(typeof(ImagesLoadedSettingsPart));
                     return imagesLoadedSettings.AutoEnable;
                 });
         }
 
-        public bool GetAutoEnableAdmin()
-        {
+        public bool GetAutoEnableAdmin() {
             return _cacheManager.Get(
                 "CloudBust.Resources.AutoEnableAdmin",
-                ctx =>
-                {
+                ctx => {
                     ctx.Monitor(_signals.When("CloudBust.Resources.Changed"));
-                    WorkContext workContext = _wca.GetContext();
+                    var workContext = _wca.GetContext();
                     var imagesLoadedSettings =
-                        (imagesLoadedSettingsPart)workContext
+                        (ImagesLoadedSettingsPart) workContext
                                                   .CurrentSite
                                                   .ContentItem
-                                                  .Get(typeof(imagesLoadedSettingsPart));
+                                                  .Get(typeof(ImagesLoadedSettingsPart));
                     return imagesLoadedSettings.AutoEnableAdmin;
                 });
         }
-
     }
 }

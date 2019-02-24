@@ -4,6 +4,9 @@
 @using Orchard.Security
 
 @model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@{
+    var baseUrl = Model.HostUrl.TrimEnd('/');
+}
 <div class="row collapse">
     <div class="large-12 columns">
         <table>
@@ -29,8 +32,8 @@
                             @game.Description
                         </td>
                         <td>
-                            <a href="~/dashboard/games/@game.AppKey" class="tiny button">Edit</a>
-                            <a href="~/dashboard/applications/@Model.Application.AppKey/senseapi/games/@game.AppKey/remove" class="tiny button alert">Remove</a>
+                            <a href="@(baseUrl + "/dashboard/games/" + game.AppKey)" class="tiny button">Edit</a>
+                            <a href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/senseapi/games/" + game.AppKey + "/remove")" class="tiny button alert">Remove</a>
                         </td>
                     </tr>
                 }
@@ -40,6 +43,6 @@
 </div>
 <div class="row collapse">
     <div class="large-12 columns">
-        <a class="button" href="~/dashboard/applications/@Model.Application.AppKey/senseapi/games/add"><i class="fi-plus"></i>  Add a Game</a>
+        <a class="button" href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/senseapi/games/add")"><i class="fi-plus"></i>  Add a Game</a>
     </div>
 </div>

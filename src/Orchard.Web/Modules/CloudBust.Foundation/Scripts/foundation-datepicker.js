@@ -18,7 +18,7 @@
         var that = this;
 
         this.element = $(element);
-        this.autoShow = options.autoShow || true;
+        this.autoShow = (options.autoShow == undefined ? true : options.autoShow);
         this.appendTo = options.appendTo || 'body';
         this.closeButton = options.closeButton;
         this.language = options.language || this.element.data('date-language') || "en";
@@ -26,6 +26,7 @@
         this.language = this.language in dates ? this.language : "en";
         this.isRTL = dates[this.language].rtl || false;
         this.format = DPGlobal.parseFormat(options.format || this.element.data('date-format') || dates[this.language].format || 'mm/dd/yyyy');
+        this.formatText = options.format || this.element.data('date-format') || dates[this.language].format || 'mm/dd/yyyy';
         this.isInline = false;
         this.isInput = this.element.is('input');
         this.component = this.element.is('.date') ? this.element.find('.prefix, .postfix') : false;
@@ -39,9 +40,13 @@
         this.linkFormat = DPGlobal.parseFormat(options.linkFormat || this.element.data('link-format') || 'yyyy-mm-dd hh:ii:ss');
         this.minuteStep = options.minuteStep || this.element.data('minute-step') || 5;
         this.pickerPosition = options.pickerPosition || this.element.data('picker-position') || 'bottom-right';
+        this.initialDate = options.initialDate || null;
+        this.faCSSprefix = options.faCSSprefix || 'fa';
+        this.leftArrow = options.leftArrow || '<i class="' + this.faCSSprefix + ' ' + this.faCSSprefix + '-chevron-left fi-arrow-left"/>';
+        this.rightArrow = options.rightArrow || '<i class="' + this.faCSSprefix + ' ' + this.faCSSprefix + '-chevron-right fi-arrow-right"/>';
+        this.closeIcon = options.closeIcon || '<i class="' + this.faCSSprefix + ' ' + this.faCSSprefix + '-remove ' + this.faCSSprefix + '-times fi-x"></i>';
 
-        this._attachEvents();
-
+        
 
         this.minView = 0;
         if ('minView' in options) {
@@ -68,7 +73,7 @@
         this.startViewMode = DPGlobal.convertViewMode(this.startViewMode);
         this.viewMode = this.startViewMode;
 
-        if (!('minView' in options) && !('maxView' in options) && !(this.element.data('min-view') && !(this.element.data('max-view')))) {
+        if (!('minView' in options) && !('maxView' in options) && !(this.element.data('min-view')) && !(this.element.data('max-view'))) {
             this.pickTime = false;
             if ('pickTime' in options) {
                 this.pickTime = options.pickTime;
@@ -90,7 +95,7 @@
         }
 
 
-        this.picker = $(DPGlobal.template)
+        this.picker = $(DPGlobal.template(this.leftArrow, this.rightArrow, this.closeIcon))
             .appendTo(this.isInline ? this.element : this.appendTo)
             .on({
                 click: $.proxy(this.click, this),
@@ -109,10 +114,19 @@
         }
         if (this.isRTL) {
             this.picker.addClass('datepicker-rtl');
-            this.picker.find('.prev i, .next i')
-                .toggleClass('fa fa-chevron-left fa-chevron-right').toggleClass('fa-chevron-left fa-chevron-right');
+
+            this.picker.find('.date-switch').each(function(){
+              $(this).parent().prepend($(this).siblings('.next'));
+              $(this).parent().append($(this).siblings('.prev'));
+            })
+            this.picker.find('.prev, .next').toggleClass('prev next');
+
         }
         $(document).on('mousedown', function(e) {
+            if (that.isInput && e.target === that.element[0]) {
+                return;
+            }
+
             // Clicked outside the datepicker, hide it
             if ($(e.target).closest('.datepicker.datepicker-inline, .datepicker.datepicker-dropdown').length === 0) {
                 that.hide();
@@ -153,9 +167,16 @@
         this.startDate = -Infinity;
         this.endDate = Infinity;
         this.daysOfWeekDisabled = [];
+        this.datesDisabled = [];
         this.setStartDate(options.startDate || this.element.data('date-startdate'));
         this.setEndDate(options.endDate || this.element.data('date-enddate'));
         this.setDaysOfWeekDisabled(options.daysOfWeekDisabled || this.element.data('date-days-of-week-disabled'));
+        this.setDatesDisabled(options.datesDisabled || this.element.data('dates-disabled'));
+
+        if (this.initialDate != null) {
+            this.date = this.viewDate = DPGlobal.parseDate(this.initialDate, this.format, this.language);
+            this.setValue();
+        }
 
         this.fillDow();
         this.fillMonths();
@@ -166,6 +187,8 @@
         if (this.isInline) {
             this.show();
         }
+
+        this._attachEvents();
     };
 
     Datepicker.prototype = {
@@ -175,14 +198,24 @@
         _attachEvents: function() {
             this._detachEvents();
             if (this.isInput) { // single input
-                this._events = [
-                    [this.element, {
-                        focus: (this.autoShow) ? $.proxy(this.show, this) : function() {},
-                        keyup: $.proxy(this.update, this),
-                        keydown: $.proxy(this.keydown, this)
-                    }]
-                ];
-            } else if (this.component && this.hasInput) { // component: input + button
+                if (!this.keyboardNavigation) {
+                    this._events = [
+                        [this.element, {
+                            focus: (this.autoShow) ? $.proxy(this.show, this) : function() {}
+                        }]
+                    ];
+                } else {
+                    this._events = [
+                        [this.element, {
+                            focus: (this.autoShow) ? $.proxy(this.show, this) : function() {},
+                            keyup: $.proxy(this.update, this),
+                            keydown: $.proxy(this.keydown, this),
+                            click: (this.element.attr('readonly')) ? $.proxy(this.show, this) : function() {}
+                        }]
+                    ];
+                } 
+            }
+            else if (this.component && this.hasInput) { // component: input + button
                 this._events = [
                     // For components that are not readonly, allow keyboard nav
                     [this.element.find('input'), {
@@ -344,20 +377,46 @@
             this.updateNavArrows();
         },
 
+        setDatesDisabled: function(datesDisabled) {
+            this.datesDisabled = datesDisabled || [];
+            if (!$.isArray(this.datesDisabled)) {
+                this.datesDisabled = this.datesDisabled.split(/,\s*/);
+            }
+            this.datesDisabled = $.map(this.datesDisabled, function(d) {
+                return DPGlobal.parseDate(d, this.format, this.language).valueOf();
+            });
+            this.update();
+            this.updateNavArrows();
+        },
+
         place: function() {
             if (this.isInline) return;
-            var zIndex = parseInt(this.element.parents().filter(function() {
-                return $(this).css('z-index') != 'auto';
-            }).first().css('z-index')) + 10;
+            var zIndexes = [];
+            this.element.parents().map(function() {
+                if ($(this).css('z-index') != 'auto') {
+                    zIndexes.push(parseInt($(this).css('z-index')));
+                }
+            });
+            var zIndex = zIndexes.sort(function(a, b) { return a - b; }).pop() + 10;
             var textbox = this.component ? this.component : this.element;
             var offset = textbox.offset();
             var height = textbox.outerHeight() + parseInt(textbox.css('margin-top'));
             var width = textbox.outerWidth() + parseInt(textbox.css('margin-left'));
             var fullOffsetTop = offset.top + height;
             var offsetLeft = offset.left;
-            // if the datepicker is going to be below the window, show it on top of the input
-            if ((fullOffsetTop + this.picker.outerHeight()) >= $(window).scrollTop() + $(window).height()) {
+            this.picker.removeClass('datepicker-top datepicker-bottom');
+            // can we show it on top?
+            var canShowTop = ($(window).scrollTop() < offset.top - this.picker.outerHeight());
+            var canShowBottom = (fullOffsetTop + this.picker.outerHeight()) < $(window).scrollTop() + $(window).height();
+            // If the datepicker is going to be below the window, show it on top of the input if it fits
+            if (!canShowBottom && canShowTop) {
                 fullOffsetTop = offset.top - this.picker.outerHeight();
+                this.picker.addClass('datepicker-top');
+            }
+            else {
+                // Scroll up if we cannot show it on bottom or top (for mobile devices)
+                if (!canShowBottom) $(window).scrollTop(offset.top);
+                this.picker.addClass('datepicker-bottom');
             }
 
             // if the datepicker is going to go past the right side of the window, we want
@@ -374,16 +433,33 @@
 
         update: function() {
             var date, fromArgs = false;
+            var currentVal = this.isInput ? this.element.val() : this.element.data('date') || this.element.find('input').val();
             if (arguments && arguments.length && (typeof arguments[0] === 'string' || arguments[0] instanceof Date)) {
                 date = arguments[0];
                 fromArgs = true;
-            } else {
+            }
+            else {
                 date = this.isInput ? this.element.val() : this.element.data('date') || this.element.find('input').val();
             }
-
+            if (date && date.length > this.formatText.length) {
+                    $(this.picker).addClass('is-invalid')
+                    $(this.element).addClass('is-invalid-input')
+                    return;
+            } else {
+                $(this.picker).removeClass('is-invalid')
+                $(this.element).removeClass('is-invalid-input')
+            }
+        
             this.date = DPGlobal.parseDate(date, this.format, this.language);
 
-            if (fromArgs) this.setValue();
+            if (fromArgs) {
+                this.setValue();
+            } else if (currentVal == "") {
+                this.element.trigger({
+                    type: 'changeDate',
+                    date: null
+                });
+            }
 
             if (this.date < this.startDate) {
                 this.viewDate = new Date(this.startDate.valueOf());
@@ -434,11 +510,11 @@
                 startMonth = this.startDate !== -Infinity ? this.startDate.getUTCMonth() : -Infinity,
                 endYear = this.endDate !== Infinity ? this.endDate.getUTCFullYear() : Infinity,
                 endMonth = this.endDate !== Infinity ? this.endDate.getUTCMonth() : Infinity,
-                currentDate = this.date && this.date.valueOf(),
+                currentDate = this.date && UTCDate(this.date.getUTCFullYear(), this.date.getUTCMonth(), this.date.getUTCDate()).valueOf(),
                 today = new Date(),
                 titleFormat = dates[this.language].titleFormat || dates['en'].titleFormat;
             // this.picker.find('.datepicker-days thead th.date-switch')
-            // 			.text(DPGlobal.formatDate(new UTCDate(year, month), titleFormat, this.language));
+            //          .text(DPGlobal.formatDate(new UTCDate(year, month), titleFormat, this.language));
 
             this.picker.find('.datepicker-days thead th:eq(1)')
                 .text(dates[this.language].months[month] + ' ' + year);
@@ -490,7 +566,8 @@
                     clsName += ' active';
                 }
                 if (prevMonth.valueOf() < this.startDate || prevMonth.valueOf() > this.endDate ||
-                    $.inArray(prevMonth.getUTCDay(), this.daysOfWeekDisabled) !== -1) {
+                    $.inArray(prevMonth.getUTCDay(), this.daysOfWeekDisabled) !== -1 ||
+                    $.inArray(prevMonth.valueOf(), this.datesDisabled) !== -1) {
                     clsName += ' disabled';
                 }
                 html.push('<td class="day' + clsName + '">' + prevMonth.getUTCDate() + '</td>');
@@ -713,6 +790,15 @@
                     case 'span':
                         if (!target.is('.disabled')) {
                             if (target.is('.month')) {
+                              if (this.minView === 3) {
+                                var month = target.parent().find('span').index(target) || 0;
+                                var year = this.viewDate.getUTCFullYear(),
+                                    day = 1,
+                                    hours = this.viewDate.getUTCHours(),
+                                    minutes = this.viewDate.getUTCMinutes(),
+                                    seconds = this.viewDate.getUTCSeconds();
+                                this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
+                              } else {
                                 this.viewDate.setUTCDate(1);
                                 var month = target.parent().find('span').index(target);
                                 this.viewDate.setUTCMonth(month);
@@ -720,7 +806,17 @@
                                     type: 'changeMonth',
                                     date: this.viewDate
                                 });
+                              }
                             } else if (target.is('.year')) {
+                              if (this.minView === 4) {
+                                var year = parseInt(target.text(), 10) || 0;
+                                var month = 0,
+                                    day = 1,
+                                    hours = this.viewDate.getUTCHours(),
+                                    minutes = this.viewDate.getUTCMinutes(),
+                                    seconds = this.viewDate.getUTCSeconds();
+                                this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
+                              } else {
                                 this.viewDate.setUTCDate(1);
                                 var year = parseInt(target.text(), 10) || 0;
                                 this.viewDate.setUTCFullYear(year);
@@ -728,6 +824,7 @@
                                     type: 'changeYear',
                                     date: this.viewDate
                                 });
+                              }
                             } else if (target.is('.hour')) {
                                 var hours = parseInt(target.text(), 10) || 0;
                                 var year = this.viewDate.getUTCFullYear(),
@@ -909,6 +1006,9 @@
         },
 
         keydown: function(e) {
+            if (!this.keyboardNavigation) {
+                return true;
+            }
             if (this.picker.is(':not(:visible)')) {
                 if (e.keyCode == 27) // allow escape to hide and re-show picker
                     this.show();
@@ -1006,18 +1106,25 @@
                 }
             }
             /*
-            	vitalets: fixing bug of very special conditions:
-            	jquery 1.7.1 + webkit + show inline datepicker in bootstrap popover.
-            	Method show() does not set display css correctly and datepicker is not shown.
-            	Changed to .css('display', 'block') solve the problem.
-            	See https://github.com/vitalets/x-editable/issues/37
+                vitalets: fixing bug of very special conditions:
+                jquery 1.7.1 + webkit + show inline datepicker in bootstrap popover.
+                Method show() does not set display css correctly and datepicker is not shown.
+                Changed to .css('display', 'block') solve the problem.
+                See https://github.com/vitalets/x-editable/issues/37
 
-            	In jquery 1.7.2+ everything works fine.
+                In jquery 1.7.2+ everything works fine.
             */
             //this.picker.find('>div').hide().filter('.datepicker-'+DPGlobal.modes[this.viewMode].clsName).show();
             this.picker.find('>div').hide().filter('.datepicker-' + DPGlobal.modes[this.viewMode].clsName).css('display', 'block');
             this.updateNavArrows();
         },
+
+        changeViewDate: function(date) {
+            this.date = date;
+            this.viewDate = date;
+            this.fill();
+        },
+
         reset: function(e) {
             this._setDate(null, 'date');
         }
@@ -1095,6 +1202,7 @@
             if (!separators || !separators.length || !parts || parts.length === 0) {
                 throw new Error("Invalid date format.");
             }
+            this.formatText = format;
             return {
                 separators: separators,
                 parts: parts
@@ -1271,54 +1379,54 @@
 
             return viewMode;
         },
-        headTemplate: '<thead>' +
+        headTemplate: function(leftArrow, rightArrow) {return('<thead>' +
             '<tr>' +
-            '<th class="prev"><i class="fa fa-chevron-left fi-arrow-left"/></th>' +
+            '<th class="prev">' + leftArrow + '</th>' +
             '<th colspan="5" class="date-switch"></th>' +
-            '<th class="next"><i class="fa fa-chevron-right fi-arrow-right"/></th>' +
+            '<th class="next">' + rightArrow + '</th>' +
             '</tr>' +
-            '</thead>',
+            '</thead>')},
         contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
         footTemplate: '<tfoot><tr><th colspan="7" class="today"></th></tr></tfoot>'
     };
-    DPGlobal.template = '<div class="datepicker">' +
+    DPGlobal.template = function(leftArrow, rightArrow, closeIcon) {return( '<div class="datepicker">' +
         '<div class="datepicker-minutes">' +
         '<table class=" table-condensed">' +
-        DPGlobal.headTemplate +
+        DPGlobal.headTemplate(leftArrow, rightArrow) +
         DPGlobal.contTemplate +
         DPGlobal.footTemplate +
         '</table>' +
         '</div>' +
         '<div class="datepicker-hours">' +
         '<table class=" table-condensed">' +
-        DPGlobal.headTemplate +
+        DPGlobal.headTemplate(leftArrow, rightArrow) +
         DPGlobal.contTemplate +
         DPGlobal.footTemplate +
         '</table>' +
         '</div>' +
         '<div class="datepicker-days">' +
         '<table class=" table-condensed">' +
-        DPGlobal.headTemplate +
+        DPGlobal.headTemplate(leftArrow, rightArrow) +
         '<tbody></tbody>' +
         DPGlobal.footTemplate +
         '</table>' +
         '</div>' +
         '<div class="datepicker-months">' +
         '<table class="table-condensed">' +
-        DPGlobal.headTemplate +
+        DPGlobal.headTemplate(leftArrow, rightArrow) +
         DPGlobal.contTemplate +
         DPGlobal.footTemplate +
         '</table>' +
         '</div>' +
         '<div class="datepicker-years">' +
         '<table class="table-condensed">' +
-        DPGlobal.headTemplate +
+        DPGlobal.headTemplate(leftArrow, rightArrow) +
         DPGlobal.contTemplate +
         DPGlobal.footTemplate +
         '</table>' +
         '</div>' +
-        '<a class="button datepicker-close tiny alert right" style="width:auto;"><i class="fa fa-remove fa-times fi-x"></i></a>' +
-        '</div>';
+        '<a class="button datepicker-close tiny alert right" style="width:auto;">' + closeIcon + '</a>' +
+        '</div>')};
 
     $.fn.fdatepicker.DPGlobal = DPGlobal;
 

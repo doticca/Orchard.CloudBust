@@ -15,6 +15,28 @@ namespace Orchard.AuditTrail.Providers.Users {
             _wca = wca;
         }
 
+        public void SendingSms(IUser user) {
+            RecordAuditTrail(UserAuditTrailEventProvider.SendingSms, user);
+        }
+
+        public void SmsSent(IUser user) {
+            RecordAuditTrail(UserAuditTrailEventProvider.SmsSent, user);
+        }
+
+        public void SmsError(IUser user, string message)
+        {
+            var properties = new Dictionary<string, object> {
+                {"User", user}
+            };
+
+            var eventData = new Dictionary<string, object> {
+                {"UserId", user.Id},
+                {"UserName", user.UserName},
+                {"Message", message}
+            };
+            _auditTrailManager.CreateRecord<UserAuditTrailEventProvider>(UserAuditTrailEventProvider.SmsError, _wca.GetContext().CurrentUser, properties, eventData, eventFilterKey: "user", eventFilterData: user.UserName);
+        }
+
         public void LoggedIn(IUser user) {
             RecordAuditTrail(UserAuditTrailEventProvider.LoggedIn, user);
         }

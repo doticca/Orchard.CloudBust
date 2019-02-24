@@ -1,0 +1,63 @@
+﻿@model CloudBust.Localization.ViewModels.CurrenciesIndexViewModel
+@{
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + "::" + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+
+    Layout.Title = T("Currencies").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Currencies</h1>
+    <p class="docs-description lead">View available currencies.@(Model.RunsOnDefaultTenant?" Define New Currencies":" If your currency is missing, please contact your administrator")</p>
+</header>
+<div class="callout training-callout hidden">
+<p>Create all the different currencies that your store is going to support. You need to define a currency before you create a new country.</p>
+</div>
+@if (Model.Currencies == null || !Model.Currencies.Any())
+{
+<div class="small-12 columns">
+    <p>@T("There are no currencies in the database.")</p>
+</div>
+}
+else
+{
+<div class="small-12 columns">
+    <table class="hover stack">
+        <thead>
+            <tr>
+                <th width="250">Name</th>
+                <th width="150">Code</th>
+                <th width="150">Sign</th>
+                <th width="300">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var currency in Model.Currencies)
+        {
+            <tr>
+                <td class="namefield">
+                    @currency.Name
+                </td>
+                <td>
+                    @currency.ThreeDigitCode
+                </td>
+                <td>
+                    @Html.Raw(currency.Sign)
+                </td>
+                <td>
+                    <div class="form-inline">
+                        <a href="@Url.Action("Edit", "Currencies", new { id=currency.Id })" class="tiny button">Edit</a>
+                    </div>
+                    @using (Html.BeginFormAntiForgeryPost(Url.Action("Delete", "Currencies", new { id = currency.Id }), FormMethod.Post, new { @class = "form-inline", data_action="delete" }))
+                    {
+                        <button type="submit" class="tiny button alert">@T("Delete")</button>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+}
+<div class="small-12 columns">
+    @Html.ActionLink(T("Add a Currency").ToString(), "Add", new { controller = "Currencies" }, new { @class = "button" })
+</div>

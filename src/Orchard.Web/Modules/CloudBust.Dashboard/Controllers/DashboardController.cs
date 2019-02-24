@@ -1,56 +1,38 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using CloudBust.Application.Models;
+using CloudBust.Application.Services;
+using CloudBust.Dashboard.ViewModels;
 using Orchard;
+using Orchard.ContentManagement;
+using Orchard.DisplayManagement;
 using Orchard.Localization;
-using Orchard.Logging;
+using Orchard.Messaging.Services;
 using Orchard.Mvc;
 using Orchard.Mvc.Extensions;
-using Orchard.DisplayManagement;
-using System.Collections.Generic;
-using Orchard.UI.Navigation;
 using Orchard.Settings;
-using Orchard.ContentManagement;
-using Orchard.Security;
-using CloudBust.Dashboard.ViewModels;
-using CloudBust.Application.Services;
-using Orchard.UI.Notify;
-using Orchard.Messaging.Services;
-using CloudBust.Application.Models;
-using Orchard.Users.Models;
 using Orchard.UI.Admin;
-using CloudBust.Dashboard.Models;
+using Orchard.UI.Navigation;
+using Orchard.UI.Notify;
+using Orchard.Users.Models;
 
-namespace CloudBust.Dashboard.Controllers
-{
-
-    [ValidateInput(false), Admin]
-    public class DashboardController : Controller
-    {
-        private readonly IOrchardServices _orchardServices;
+namespace CloudBust.Dashboard.Controllers {
+    [ValidateInput(false)]
+    [Admin]
+    public class DashboardController : Controller {
         private readonly IApplicationsService _applicationsService;
-        private readonly IGamesService _gamesService;
         private readonly IDataTablesService _datatablesService;
-        private readonly IParametersService _parametersService;
-        private readonly ISessionsService _sessionsService;
-        private readonly ISiteService _siteService;
+        private readonly IGamesService _gamesService;
         private readonly IMessageService _messageService;
+        private readonly IOrchardServices _orchardServices;
+        private readonly IParametersService _parametersService;
         private readonly IProfileService _profileService;
+        private readonly ISessionsService _sessionsService;
         private readonly ISettingsService _settingsService;
+        private readonly ISiteService _siteService;
 
-        public DashboardController(
-            IOrchardServices services,
-            IApplicationsService applicationsService,
-            IGamesService gamesService,
-            IDataTablesService datatablesService,
-            IParametersService parametersService,
-            ISessionsService sessionsService,
-            IMessageService messageService,
-            IShapeFactory shapeFactory,
-            IProfileService profileService,
-            ISettingsService settingsService,
-            ISiteService siteService)
-        {
+        public DashboardController(IOrchardServices services, IApplicationsService applicationsService, IGamesService gamesService, IDataTablesService datatablesService, IParametersService parametersService, ISessionsService sessionsService, IMessageService messageService, IShapeFactory shapeFactory, IProfileService profileService, ISettingsService settingsService, ISiteService siteService) {
             _orchardServices = services;
             _applicationsService = applicationsService;
             _gamesService = gamesService;
@@ -66,47 +48,113 @@ namespace CloudBust.Dashboard.Controllers
         }
 
         public Localizer T { get; set; }
-        dynamic Shape { get; set; }
+        private dynamic Shape { get; }
 
         // dashboard main screen
-        public ActionResult Index()
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        public ActionResult Index() {
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-           
-            var model = new DashboardViewModel();
-            model.User = user;
+            if (user == null) return HttpNotFound();
+
+            var model = new DashboardViewModel {
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                User = user
+            };
+
 
             return View(model);
+        }
+
+        #region Feeds
+
+        public ActionResult Feeds() {
+            return View();
+        }
+
+        #endregion
+
+        private ActionResult ApplicationPage(string appId, int page, bool afterPost = false) {
+            var user = _orchardServices.WorkContext.CurrentUser;
+
+            if (user == null) return HttpNotFound();
+
+            var model = new ApplicationViewModel {
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                User = user,
+                Application = _applicationsService.GetApplicationByKey(appId),
+                Page = page,
+                AfterPost = afterPost
+            };
+
+
+            if (!_settingsService.IsWebApplication()) return View("Application", model);
+
+            if (_settingsService.GetWebApplicationKey() == _applicationsService.GetApplicationByKey(appId).AppKey)
+                model.IsWebApp = true;
+
+            return View("Application", model);
+        }
+
+        private ActionResult GamePage(string gameId, int page, bool afterPost = false) {
+            var user = _orchardServices.WorkContext.CurrentUser;
+
+            if (user == null) return HttpNotFound();
+
+            var applicationGameRecord = _gamesService.GetGameByKey(gameId);
+            var model = new GameViewModel {
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                User = user,
+                Game = applicationGameRecord,
+                Page = page,
+                afterPost = afterPost,
+                Uri = Request.Url,
+                Events = _gamesService.GetGameEvents(applicationGameRecord)
+            };
+
+            return View("Game", model);
+        }
+
+        private ActionResult TablePage(string datatableId, int page, bool afterPost = false) {
+            var user = _orchardServices.WorkContext.CurrentUser;
+
+            if (user == null) return HttpNotFound();
+            if (!int.TryParse(datatableId, out var datatableid)) return HttpNotFound();
+            var datatable = _datatablesService.GetDataTable(datatableid);
+            if (datatable == null)
+                return HttpNotFound();
+
+            var model = new TableViewModel {
+                User = user,
+                DataTable = datatable,
+                Page = page,
+                afterPost = afterPost,
+                Uri = Request.Url,
+                Fields = _datatablesService.GetFieldsForDataTable(datatableid),
+                Applications = _datatablesService.GetDataTableApplications(datatable)
+            };
+
+            return View("Table", model);
         }
 
         #region Games
 
         // App Information
-        public ActionResult Game(string gameID)
-        {
+        public ActionResult Game(string gameID) {
             return GamePage(gameID, 0);
         }
 
-        [HttpPost, ActionName("Game")]
+        [HttpPost]
+        [ActionName("Game")]
         [FormValueRequired("submit.Save")]
-        public ActionResult GamePOST(string gameID)
-        {
+        public ActionResult GamePOST(string gameID) {
             var game = _gamesService.GetGameByKey(gameID);
 
             if (game == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
             var viewModel = new GameViewModel();
             TryUpdateModel(viewModel);
@@ -114,17 +162,13 @@ namespace CloudBust.Dashboard.Controllers
             _gamesService.UpdateGame(game.Id, viewModel.Game.Name, viewModel.Game.Description);
             _gamesService.UpdateGameLocation(game.Id, viewModel.Game.Latitude, viewModel.Game.Longitude);
 
-            return RedirectToAction("Game", "Dashboard", new { area = "CloudBust.Dashboard" });
+            return RedirectToAction("Game", "Dashboard", new {area = "CloudBust.Dashboard"});
         }
 
-        public ActionResult Games()
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        public ActionResult Games() {
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
             var model = new GamesViewModel();
             model.User = user;
@@ -134,119 +178,87 @@ namespace CloudBust.Dashboard.Controllers
             model.Games = games;
 
             return View(model);
-        }        
+        }
 
-        public ActionResult GameCreate(string appID)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        public ActionResult GameCreate(string appID) {
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
+            if (user == null) return HttpNotFound();
 
 
             var model = new GameCreateViewModel();
-            if (!string.IsNullOrWhiteSpace(appID))
-            {
+            if (!string.IsNullOrWhiteSpace(appID)) {
                 var app = _applicationsService.GetApplicationByKey(appID);
-                if (app != null)
-                {
+                if (app != null) {
                     model.ApplicationName = app.Name;
                     model.ApplicationKey = app.AppKey;
                 }
             }
+
             model.User = user;
             model.owner = user.UserName;
 
             return View(model);
         }
 
-        [HttpPost, ActionName("GameCreate")]
+        [HttpPost]
+        [ActionName("GameCreate")]
         [FormValueRequired("submit.Save")]
-        public ActionResult GameCreatePOST()
-        {
+        public ActionResult GameCreatePOST() {
             var viewModel = new GameCreateViewModel();
             TryUpdateModel(viewModel);
 
-            if (string.IsNullOrWhiteSpace(viewModel.owner))
-            {
-                viewModel.owner = "admin";
-            }
-            if (String.IsNullOrEmpty(viewModel.Name))
-            {
-                ModelState.AddModelError("Name", T("Game name can't be empty"));
-            }
+            if (string.IsNullOrWhiteSpace(viewModel.owner)) viewModel.owner = "admin";
+            if (string.IsNullOrEmpty(viewModel.Name)) ModelState.AddModelError("Name", T("Game name can't be empty"));
 
             var group = _gamesService.GetGameByName(viewModel.Name);
-            if (group != null)
-            {
-                ModelState.AddModelError("Name", T("Game with same name already exists"));
-            }
+            if (group != null) ModelState.AddModelError("Name", T("Game with same name already exists"));
 
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (!ModelState.IsValid) return View(viewModel);
 
 
             var newGame = _gamesService.CreateGame(viewModel.Name, viewModel.Description, viewModel.owner);
-            if (newGame == null)
-            {
+            if (newGame == null) {
                 _orchardServices.Notifier.Information(T("An error occured while trying to create the Game."));
             }
-            else
-            {
+            else {
                 //_applicationsService.CreateKeysForApplication(newModule.Id);
                 newGame = _gamesService.GetGame(newGame.Id);
 
-                if (!string.IsNullOrWhiteSpace(viewModel.ApplicationName))
-                {
+                if (!string.IsNullOrWhiteSpace(viewModel.ApplicationName)) {
                     var module = _applicationsService.GetApplicationByName(viewModel.ApplicationName);
-                    if (module != null)
-                    {
+                    if (module != null) {
                         _gamesService.CreateGameForApplication(viewModel.ApplicationName, newGame.Id);
 
-                        return RedirectToAction("SenseapiGames", "Dashboard", new { area = "CloudBust.Dashboard", appID = module.AppKey });
+                        return RedirectToAction("SenseapiGames", "Dashboard", new {area = "CloudBust.Dashboard", appID = module.AppKey});
                     }
                 }
             }
 
-            return RedirectToAction("Games", "Dashboard", new { area = "CloudBust.Dashboard" });
+            return RedirectToAction("Games", "Dashboard", new {area = "CloudBust.Dashboard"});
         }
 
         // App Tokens
-        public ActionResult GameKeys(string gameID)
-        {
-
+        public ActionResult GameKeys(string gameID) {
             return GamePage(gameID, 1);
         }
 
         // Events
-        public ActionResult GameEvents(string gameID)
-        {
+        public ActionResult GameEvents(string gameID) {
             return GamePage(gameID, 2);
         }
 
-        public ActionResult GameEventCreate(string gameID)
-        {
+        public ActionResult GameEventCreate(string gameID) {
             var game = _gamesService.GetGameByKey(gameID);
 
             if (game == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (game.owner != user.UserName)
-            {
-                return GameEvents(gameID);
-            }
+            if (game.Owner != user.UserName) return GameEvents(gameID);
 
             var model = new GameEventCreateViewModel();
             model.GameName = game.Name;
@@ -260,88 +272,58 @@ namespace CloudBust.Dashboard.Controllers
             return View(model);
         }
 
-        [HttpPost, ActionName("GameEventCreate")]
+        [HttpPost]
+        [ActionName("GameEventCreate")]
         [FormValueRequired("submit.Save")]
-        public ActionResult GameEventCreatePOST(string gameID)
-        {
-
+        public ActionResult GameEventCreatePOST(string gameID) {
             var viewModel = new GameEventCreateViewModel();
             TryUpdateModel(viewModel);
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
             if (user == null)
-            {
                 return HttpNotFound();
-            }
-            else
-            {
-                viewModel.User = user;
-            }
+            viewModel.User = user;
 
             var game = _gamesService.GetGameByKey(gameID);
 
-            if (game == null)
-            {
+            if (game == null) {
                 ModelState.AddModelError("Game", T("Game can't be empty"));
             }
-            else
-            {
+            else {
                 // in case we have to return to this view
                 viewModel.GameName = game.Name;
                 viewModel.GameKey = game.AppKey;
             }
 
-            if (String.IsNullOrEmpty(viewModel.EventName))
-            {
-                ModelState.AddModelError("Name", T("Event name can't be empty"));
-            }
+            if (string.IsNullOrEmpty(viewModel.EventName)) ModelState.AddModelError("Name", T("Event name can't be empty"));
 
             var gameevent = _gamesService.GetGameEventByName(game, viewModel.EventName);
-            if (gameevent != null)
-            {
-                ModelState.AddModelError("Name", T("Event with same name already exists"));
-            }
+            if (gameevent != null) ModelState.AddModelError("Name", T("Event with same name already exists"));
 
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (!ModelState.IsValid) return View(viewModel);
 
             var newGameEvent = _gamesService.CreateGameEvent(game, viewModel.EventName, viewModel.EventDescription, viewModel.GameEventType);
-            if (newGameEvent == null)
-            {
-                _orchardServices.Notifier.Information(T("An error occured while trying to create the game event."));
-            }
+            if (newGameEvent == null) _orchardServices.Notifier.Information(T("An error occured while trying to create the game event."));
 
 
-            return RedirectToAction("GameEvents", "Dashboard", new { area = "CloudBust.Dashboard", gameID = gameID });
+            return RedirectToAction("GameEvents", "Dashboard", new {area = "CloudBust.Dashboard", gameID});
         }
 
-        public ActionResult GameEventEdit(string gameID, string eventID)
-        {
+        public ActionResult GameEventEdit(string gameID, string eventID) {
             var game = _gamesService.GetGameByKey(gameID);
 
             if (game == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (game.owner != user.UserName)
-            {
-                return GameEvents(gameID);
-            }
+            if (game.Owner != user.UserName) return GameEvents(gameID);
 
             int eventid;
-            if (!Int32.TryParse(eventID, out eventid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(eventID, out eventid)) return HttpNotFound();
             var ev = _gamesService.GetGameEvent(eventid);
 
             if (ev == null)
@@ -357,46 +339,37 @@ namespace CloudBust.Dashboard.Controllers
             model.User = user;
             model.EventName = ev.Name;
             model.EventDescription = ev.Description;
-            model.GameEventType = (GameEventType)ev.GameEventType;
+            model.GameEventType = (GameEventType) ev.GameEventType;
 
             return View(model);
         }
 
-        [HttpPost, ActionName("GameEventEdit")]
+        [HttpPost]
+        [ActionName("GameEventEdit")]
         [FormValueRequired("submit.Save")]
-        public ActionResult GameEventEditPOST(string gameID, string eventID)
-        {
+        public ActionResult GameEventEditPOST(string gameID, string eventID) {
             var viewModel = new GameEventEditViewModel();
             TryUpdateModel(viewModel);
 
             var game = _gamesService.GetGameByKey(gameID);
 
-            if (game == null)
-            {
+            if (game == null) {
                 ModelState.AddModelError("Game", T("Game can't be empty"));
             }
-            else
-            {
+            else {
                 // in case we have to reutnr to this view
                 viewModel.GameName = game.Name;
                 viewModel.GameKey = game.AppKey;
             }
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+
+            var user = _orchardServices.WorkContext.CurrentUser;
 
             if (user == null)
-            {
                 return HttpNotFound();
-            }
-            else
-            {
-                viewModel.User = user;
-            }
+            viewModel.User = user;
 
             int eventid;
-            if (!Int32.TryParse(eventID, out eventid))
-            {
-                ModelState.AddModelError("Event", T("Event Id can't be empty"));
-            }
+            if (!int.TryParse(eventID, out eventid)) ModelState.AddModelError("Event", T("Event Id can't be empty"));
             var ev = _gamesService.GetGameEvent(eventid);
 
             if (ev == null)
@@ -406,56 +379,35 @@ namespace CloudBust.Dashboard.Controllers
             if (ev == null)
                 return HttpNotFound();
 
-            if (String.IsNullOrEmpty(viewModel.EventName))
-            {
-                ModelState.AddModelError("Name", T("Event name can't be empty"));
-            }
+            if (string.IsNullOrEmpty(viewModel.EventName)) ModelState.AddModelError("Name", T("Event name can't be empty"));
 
-            if (viewModel.EventName != ev.Name)
-            {
+            if (viewModel.EventName != ev.Name) {
                 var group = _gamesService.GetGameEventByName(game, viewModel.EventName);
-                if (group != null)
-                {
-                    ModelState.AddModelError("Name", T("Event with same name already exists"));
-                }
-            }
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
+                if (group != null) ModelState.AddModelError("Name", T("Event with same name already exists"));
             }
 
-            bool updated = _gamesService.UpdateGameEvent(ev.Id, viewModel.EventName, viewModel.EventDescription, viewModel.GameEventType);
-            if (!updated)
-            {
-                _orchardServices.Notifier.Information(T("An error occured while trying to update the event."));
-            }
+            if (!ModelState.IsValid) return View(viewModel);
 
-            return RedirectToAction("GameEvents", "Dashboard", new { area = "CloudBust.Dashboard", gameID = gameID });
+            var updated = _gamesService.UpdateGameEvent(ev.Id, viewModel.EventName, viewModel.EventDescription, viewModel.GameEventType);
+            if (!updated) _orchardServices.Notifier.Information(T("An error occured while trying to update the event."));
+
+            return RedirectToAction("GameEvents", "Dashboard", new {area = "CloudBust.Dashboard", gameID});
         }
-        public ActionResult GameEventDelete(string gameID, string eventID)
-        {
+
+        public ActionResult GameEventDelete(string gameID, string eventID) {
             var game = _gamesService.GetGameByKey(gameID);
 
             if (game == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (game.owner != user.UserName)
-            {
-                return GameEvents(gameID);
-            }
+            if (game.Owner != user.UserName) return GameEvents(gameID);
 
             int eventid;
-            if (!Int32.TryParse(eventID, out eventid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(eventID, out eventid)) return HttpNotFound();
             var ev = _gamesService.GetGameEvent(eventid);
 
             if (ev == null)
@@ -475,32 +427,23 @@ namespace CloudBust.Dashboard.Controllers
             return View(model);
         }
 
-        [HttpPost, ActionName("GameEventDelete")]
+        [HttpPost]
+        [ActionName("GameEventDelete")]
         [FormValueRequired("submit.Delete")]
-        public ActionResult GameEventDeletePOST(string gameID, string eventID, string returnUrl)
-        {
+        public ActionResult GameEventDeletePOST(string gameID, string eventID, string returnUrl) {
             var game = _gamesService.GetGameByKey(gameID);
 
             if (game == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (game.owner != user.UserName)
-            {
-                return GameEvents(gameID);
-            }
+            if (game.Owner != user.UserName) return GameEvents(gameID);
 
             int eventid;
-            if (!Int32.TryParse(eventID, out eventid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(eventID, out eventid)) return HttpNotFound();
             var ev = _gamesService.GetGameEvent(eventid);
 
             if (ev == null)
@@ -512,33 +455,22 @@ namespace CloudBust.Dashboard.Controllers
 
             _gamesService.DeleteGameEvent(ev.Id);
 
-            return this.RedirectLocal(returnUrl, () =>
-                RedirectToAction("GameEvents", "Dashboard", new { area = "CloudBust.Dashboard", gameID = gameID }));
+            return this.RedirectLocal(returnUrl, () => RedirectToAction("GameEvents", "Dashboard", new {area = "CloudBust.Dashboard", gameID}));
         }
 
-        public ActionResult GameEventsUp(string gameID, string eventID)
-        {
+        public ActionResult GameEventsUp(string gameID, string eventID) {
             var game = _gamesService.GetGameByKey(gameID);
 
             if (game == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (game.owner != user.UserName)
-            {
-                return GameEvents(gameID);
-            }
+            if (game.Owner != user.UserName) return GameEvents(gameID);
             int eventid;
-            if (!Int32.TryParse(eventID, out eventid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(eventID, out eventid)) return HttpNotFound();
             var ev = _gamesService.GetGameEvent(eventid);
 
             if (ev == null)
@@ -553,29 +485,19 @@ namespace CloudBust.Dashboard.Controllers
             return GameEvents(gameID);
         }
 
-        public ActionResult GameEventsDown(string gameID, string eventID)
-        {
+        public ActionResult GameEventsDown(string gameID, string eventID) {
             var game = _gamesService.GetGameByKey(gameID);
 
             if (game == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (game.owner != user.UserName)
-            {
-                return GameEvents(gameID);
-            }
+            if (game.Owner != user.UserName) return GameEvents(gameID);
             int eventid;
-            if (!Int32.TryParse(eventID, out eventid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(eventID, out eventid)) return HttpNotFound();
             var ev = _gamesService.GetGameEvent(eventid);
 
             if (ev == null)
@@ -593,34 +515,26 @@ namespace CloudBust.Dashboard.Controllers
         #endregion
 
         #region Applications
+
         // list of applications
-        public ActionResult Applications()
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        public ActionResult Applications() {
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            var model = new ApplicationsViewModel();
-            model.User = user;
-
-
-            var apps = _applicationsService.GetUserApplications(user).OrderBy(r => r.Name).ToList();
-            model.Applications = apps;
+            var model = new ApplicationsViewModel {
+                User = user,
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                Applications = _applicationsService.GetUserApplications(user).OrderBy(r => r.Name).ToList()
+            };
 
             return View(model);
         }
 
-        public ActionResult ApplicationCreate()
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        public ActionResult ApplicationCreate() {
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
             var model = new ApplicationCreateViewModel();
             model.User = user;
@@ -629,66 +543,45 @@ namespace CloudBust.Dashboard.Controllers
             return View(model);
         }
 
-        [HttpPost, ActionName("ApplicationCreate")]
+        [HttpPost]
+        [ActionName("ApplicationCreate")]
         [FormValueRequired("submit.Save")]
-        public ActionResult ApplicationCreatePOST()
-        {
+        public ActionResult ApplicationCreatePOST() {
             var viewModel = new ApplicationCreateViewModel();
             TryUpdateModel(viewModel);
 
-            if (string.IsNullOrWhiteSpace(viewModel.owner))
-            {
-                viewModel.owner = "admin";
-            }
-            if (String.IsNullOrEmpty(viewModel.Name))
-            {
-                ModelState.AddModelError("Name", T("Application name can't be empty"));
-            }
+            if (string.IsNullOrWhiteSpace(viewModel.owner)) viewModel.owner = "admin";
+            if (string.IsNullOrEmpty(viewModel.Name)) ModelState.AddModelError("Name", T("Application name can't be empty"));
 
             var group = _applicationsService.GetApplicationByName(viewModel.Name);
-            if (group != null)
-            {
-                ModelState.AddModelError("Name", T("Application with same name already exists"));
-            }
+            if (group != null) ModelState.AddModelError("Name", T("Application with same name already exists"));
 
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (!ModelState.IsValid) return View(viewModel);
 
 
             var newModule = _applicationsService.CreateApplication(viewModel.Name, viewModel.Description, viewModel.owner);
-            if (newModule == null)
-            {
+            if (newModule == null) {
                 _orchardServices.Notifier.Information(T("An error occured while trying to create the Application."));
             }
-            else
-            {
+            else {
                 _applicationsService.CreateKeysForApplication(newModule.Id);
                 newModule = _applicationsService.GetApplication(newModule.Id);
             }
 
-            return RedirectToAction("ApplicationKeys", "Dashboard", new { area = "CloudBust.Dashboard", appID = newModule.AppKey });
+            return RedirectToAction("ApplicationKeys", "Dashboard", new {area = "CloudBust.Dashboard", appID = newModule.AppKey});
         }
 
-        public ActionResult ApplicationDelete(string appID)
-        {
+        public ActionResult ApplicationDelete(string appID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
             var model = new ApplicationDeleteViewModel();
             model.User = user;
@@ -698,10 +591,10 @@ namespace CloudBust.Dashboard.Controllers
         }
 
         // this method is ommited for security reasons
-        [HttpPost, ActionName("ApplicationDelete")]
+        [HttpPost]
+        [ActionName("ApplicationDelete")]
         [FormValueRequired("submit.Delete")]
-        public ActionResult ApplicationDeletePOST(string appID, string returnUrl)
-        {
+        public ActionResult ApplicationDeletePOST(string appID, string returnUrl) {
             var app = _applicationsService.GetApplicationByKey(appID);
             if (app == null)
                 return HttpNotFound();
@@ -712,237 +605,188 @@ namespace CloudBust.Dashboard.Controllers
         }
 
         // App Information
-        public ActionResult Application(string appID)
-        {
+        public ActionResult Application(string appID) {
             return ApplicationPage(appID, 0);
         }
 
-        [HttpPost, ActionName("Application")]
+        [HttpPost]
+        [ActionName("Application")]
         [FormValueRequired("submit.Save")]
-        public ActionResult ApplicationPOST(string appID)
-        {
+        public ActionResult ApplicationPOST(string appID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return new HttpUnauthorizedResult();
-            }
+            if (app.owner != user.UserName) return new HttpUnauthorizedResult();
 
             var viewModel = new ApplicationEditInfoViewModel();
             TryUpdateModel(viewModel);
 
             _applicationsService.UpdateApplication(app.Id, viewModel.Name, viewModel.Description);
 
-            return RedirectToAction("Application", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+            return RedirectToAction("Application", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
 
         // App Tokens
-        public ActionResult ApplicationKeys(string appID)
-        {
-
+        public ActionResult ApplicationKeys(string appID) {
             return ApplicationPage(appID, 1);
         }
 
         // Facebook Token
-        public ActionResult ApplicationFB(string appID)
-        {
-
+        public ActionResult ApplicationFB(string appID) {
             return ApplicationPage(appID, 2);
         }
 
-        [HttpPost, ActionName("ApplicationFB")]
+        [HttpPost]
+        [ActionName("ApplicationFB")]
         [FormValueRequired("submit.Save")]
-        public ActionResult ApplicationFBPOST(string appID)
-        {
-
+        public ActionResult ApplicationFBPOST(string appID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return new HttpUnauthorizedResult();
-            }
+            if (app.owner != user.UserName) return new HttpUnauthorizedResult();
 
             var viewModel = new ApplicationEditFBViewModel();
             TryUpdateModel(viewModel);
 
             _applicationsService.UpdateApplicationFacebook(app.Id, viewModel.fbAppKey, viewModel.fbAppSecret);
-            return RedirectToAction("ApplicationFB", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+            return RedirectToAction("ApplicationFB", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
 
         // Game Center Bundle Identifier
-        public ActionResult ApplicationGC(string appID)
-        {
-
+        public ActionResult ApplicationGC(string appID) {
             return ApplicationPage(appID, 3);
         }
-        [HttpPost, ActionName("ApplicationGC")]
-        [FormValueRequired("submit.Save")]
-        public ActionResult ApplicationGCPOST(string appID)
-        {
 
+        [HttpPost]
+        [ActionName("ApplicationGC")]
+        [FormValueRequired("submit.Save")]
+        public ActionResult ApplicationGCPOST(string appID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return new HttpUnauthorizedResult();
-            }
+            if (app.owner != user.UserName) return new HttpUnauthorizedResult();
 
             var viewModel = new ApplicationEditGCViewModel();
             TryUpdateModel(viewModel);
 
             _applicationsService.UpdateApplicationGameCenter(app.Id, viewModel.BundleIdentifier, viewModel.BundleIdentifierOSX, viewModel.BundleIdentifierTvOS, viewModel.BundleIdentifierWatch);
-            return RedirectToAction("ApplicationGC", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+            return RedirectToAction("ApplicationGC", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
-        // App Store
-        public ActionResult ApplicationAppStore(string appID)
-        {
 
+        // App Store
+        public ActionResult ApplicationAppStore(string appID) {
             return ApplicationPage(appID, 4);
         }
-        [HttpPost, ActionName("ApplicationAppStore")]
+
+        [HttpPost]
+        [ActionName("ApplicationAppStore")]
         [FormValueRequired("submit.Save")]
-        public ActionResult ApplicationAppStorePOST(string appID)
-        {
+        public ActionResult ApplicationAppStorePOST(string appID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return new HttpUnauthorizedResult();
-            }
+            if (app.owner != user.UserName) return new HttpUnauthorizedResult();
 
             var viewModel = new ApplicationEditAppStoreViewModel();
             TryUpdateModel(viewModel);
 
             _applicationsService.UpdateApplicationAppStore(app.Id, viewModel.ServerBuild, viewModel.MinimumClientBuild, viewModel.UpdateUrl, viewModel.UpdateUrlOSX, viewModel.UpdateUrlTvOS, viewModel.UpdateUrlWatch, viewModel.UpdateUrlDeveloper);
-            return RedirectToAction("ApplicationAppStore", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+            return RedirectToAction("ApplicationAppStore", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
+
         #endregion
 
         #region SMTP
+
         // SMTP Settings
-        public ActionResult ApplicationSmtp(string appID, bool afterPost=false)
-        {
+        public ActionResult ApplicationSmtp(string appID, bool afterPost = false) {
             return ApplicationPage(appID, 5, afterPost);
         }
-        [HttpPost, ActionName("ApplicationSmtp")]
-        [FormValueRequired("submit.Save")]
-        public ActionResult ApplicationSmtpPOST(string appID)
-        {
 
+        [HttpPost]
+        [ActionName("ApplicationSmtp")]
+        [FormValueRequired("submit.Save")]
+        public ActionResult ApplicationSmtpPOST(string appID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return new HttpUnauthorizedResult();
-            }
+            if (app.owner != user.UserName) return new HttpUnauthorizedResult();
 
             var viewModel = new ApplicationEditSmtpViewModel();
             TryUpdateModel(viewModel);
 
             foreach (string key in Request.Form.Keys)
-            {
-                if (key.StartsWith("internalEmail"))// && Request.Form[key] == "true")
-                {
-                    // the user checked the internal server
+                if (key.StartsWith("internalEmail")) // && Request.Form[key] == "true")
                     viewModel.internalEmail = true;
-                }
-            }
 
-            _applicationsService.UpdateApplicationSmtp(app.Id, viewModel.internalEmail, viewModel.senderEmail, viewModel.mailServer,viewModel.mailPort,viewModel.mailUsername, viewModel.mailPassword);
-            return RedirectToAction("ApplicationSmtp", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID, afterPost = true });
+            _applicationsService.UpdateApplicationSmtp(app.Id, viewModel.internalEmail, viewModel.senderEmail, viewModel.mailServer, viewModel.mailPort, viewModel.mailUsername, viewModel.mailPassword);
+            return RedirectToAction("ApplicationSmtp", "Dashboard", new {area = "CloudBust.Dashboard", appID, afterPost = true});
             //return ApplicationSmtp(appID, true);
         }
 
-        public ActionResult ApplicationTestMail(string appID)
-        {
+        public ActionResult ApplicationTestMail(string appID) {
             return ApplicationPage(appID, 6);
         }
 
-        public ActionResult ApplicationSendMail(string appID)
-        {
+        public ActionResult ApplicationSendMail(string appID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
-            var model = new ApplicationViewModel();
-            model.User = user;
-            model.Application = app;
+            var model = new ApplicationViewModel {
+                User = user,
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                Application = app
+            };
             SendTestMail(app);
             return View(model);
         }
 
-        private bool SendTestMail(ApplicationRecord app)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        private bool SendTestMail(ApplicationRecord app) {
+            var user = _orchardServices.WorkContext.CurrentUser;
             var parameters = new Dictionary<string, object> {
-                        {"Application", app.AppKey},
-                        {"Subject", T("CloudBust Test mail").Text},
-                        {"Body", "You received this email because you requested a Test from your CloudBust application " + app.Name},
-                        {"Recipients", user.Email }
-                    };
+                {"Application", app.AppKey},
+                {"Subject", T("CloudBust Test mail").Text},
+                {"Body", "You received this email because you requested a Test from your CloudBust application " + app.Name},
+                {"Recipients", user.Email}
+            };
 
             _messageService.Send("Email", parameters);
             return true;
@@ -952,352 +796,254 @@ namespace CloudBust.Dashboard.Controllers
 
         #region Blogs
 
-        public ActionResult ApplicationBlogs(string appID, bool afterPost = false)
-        {
+        public ActionResult ApplicationBlogs(string appID, bool afterPost = false) {
             return ApplicationPage(appID, 15, afterPost);
         }
-        [HttpPost, ActionName("ApplicationBlogs")]
-        [FormValueRequired("submit.Save")]
-        public ActionResult ApplicationBlogsPOST(string appID)
-        {
 
+        [HttpPost]
+        [ActionName("ApplicationBlogs")]
+        [FormValueRequired("submit.Save")]
+        public ActionResult ApplicationBlogsPOST(string appID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return new HttpUnauthorizedResult();
-            }
+            if (app.owner != user.UserName) return new HttpUnauthorizedResult();
 
             var viewModel = new ApplicationEditBlogsViewModel();
             TryUpdateModel(viewModel);
 
-            foreach (string key in Request.Form.Keys)
-            {
-                if (key.StartsWith("blogPerUser"))
-                {
-                    viewModel.blogPerUser = true;
-                }
-                if (key.StartsWith("blogSecurity"))
-                {
-                    viewModel.blogSecurity = true;
-                }
+            foreach (string key in Request.Form.Keys) {
+                if (key.StartsWith("blogPerUser")) viewModel.blogPerUser = true;
+                if (key.StartsWith("blogSecurity")) viewModel.blogSecurity = true;
             }
 
             _applicationsService.UpdateApplicationBlogs(app.Id, viewModel.blogPerUser, viewModel.blogSecurity);
-            return RedirectToAction("ApplicationBlogs", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID, afterPost = true });
+            return RedirectToAction("ApplicationBlogs", "Dashboard", new {area = "CloudBust.Dashboard", appID, afterPost = true});
         }
+
         #endregion
 
         #region Users
+
         // Users
-        public ActionResult ApplicationUserRoles(string appID, bool afterPost = false)
-        {
+        public ActionResult ApplicationUserRoles(string appID, bool afterPost = false) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
-            var model = new ApplicationViewModel();
-            model.User = user;
-
-            model.Application = app;
-            model.DefaultRole = _applicationsService.GetDefaultRole(app);
-            model.Roles = _applicationsService.GetUserRoles(app);
-            model.Page = 7;
-            model.afterPost = afterPost;
-            model.Uri = Request.Url;
+            var model = new ApplicationViewModel {
+                User = user,
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                Application = app,
+                DefaultRole = _applicationsService.GetDefaultRole(app),
+                Roles = _applicationsService.GetUserRoles(app),
+                Page = 7,
+                AfterPost = afterPost
+                //Uri = Request.Url
+            };
             return View("Application", model);
-
         }
 
-        public ActionResult ApplicationUsers(string appID, PagerParameters pagerParameters, bool afterPost = false)
-        {
+        public ActionResult ApplicationUsers(string appID, PagerParameters pagerParameters, bool afterPost = false) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
             var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
 
 
-            IEnumerable<int> profilesIDs = _profileService.GetUserIDsForApplication(app);
+            var profilesIDs = _profileService.GetUserIDsForApplication(app);
 
-            var users = _orchardServices.ContentManager
-                .Query<UserProfilePart, UserProfilePartRecord>().Where(x => profilesIDs.Contains(x.Id));
+            var users = _orchardServices.ContentManager.Query<UserProfilePart, UserProfilePartRecord>().Where(x => profilesIDs.Contains(x.Id));
 
             var pagerShape = Shape.Pager(pager).TotalItemCount(users.Count());
 
-            var results = users
-                .Slice(pager.GetStartIndex(), pager.PageSize)
-                .ToList();
+            var results = users.Slice(pager.GetStartIndex(), pager.PageSize).ToList();
 
 
-            var model = new ApplicationViewModel
-            {
-                Users = results
-                    .Select(x => new UserProfileEntry { User = x.As<UserPart>().Record, Profile = x.As<UserProfilePart>().Record })
-                    .ToList(),
-                Pager = pagerShape
+            var model = new ApplicationViewModel {
+                Users = results.Select(x => new UserProfileEntry {User = x.As<UserPart>().Record, Profile = x.As<UserProfilePart>().Record}).ToList(),
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                Pager = pagerShape,
+                Application = app,
+                DefaultRole = _applicationsService.GetDefaultRole(app),
+                Roles = _applicationsService.GetUserRoles(app),
+                Page = 8,
+                AfterPost = afterPost
+                //Uri = Request.Url
             };
 
-            model.Application = app;
-            model.DefaultRole = _applicationsService.GetDefaultRole(app);
-            model.Roles = _applicationsService.GetUserRoles(app);
-            model.Page = 8;
-            model.afterPost = afterPost;
-            model.Uri = Request.Url;
             return View("Application", model);
 
 
             //return ApplicationPage(appID, 6, afterPost);
         }
-        public ActionResult ApplicationUserEdit(string appID, int profileID)
-        {
+
+        public ActionResult ApplicationUserEdit(string appID, int profileID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return ApplicationUserRoles(appID);
-            }
+            if (app.owner != user.UserName) return ApplicationUserRoles(appID);
 
-            UserProfilePart profilePart = _profileService.Get(profileID);
-            if (profilePart == null)
-            {
-                return HttpNotFound();
-            }
+            var profilePart = _profileService.Get(profileID);
+            if (profilePart == null) return HttpNotFound();
 
 
-            
-
-            var model = new UserEditViewModel(app,profilePart);
+            var model = new UserEditViewModel(app, profilePart, _orchardServices.WorkContext.CurrentSite.BaseUrl);
 
             return View(model);
         }
-        public ActionResult ApplicationUserInvites(string appID, int profileID)
-        {
+
+        public ActionResult ApplicationUserInvites(string appID, int profileID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return ApplicationUsers(appID, null);
-            }
+            if (app.owner != user.UserName) return ApplicationUsers(appID, null);
 
-            UserProfilePart profilePart = _profileService.Get(profileID);
-            if (profilePart == null)
-            {
-                return HttpNotFound();
-            }
+            var profilePart = _profileService.Get(profileID);
+            if (profilePart == null) return HttpNotFound();
 
             var model = new UserInvitesViewModel(app, profilePart);
             model.Invitations = _profileService.GetPendingInvitations(profilePart, null);
             return View(model);
         }
 
-        public ActionResult ApplicationUserFriends(string appID, int profileID)
-        {
+        public ActionResult ApplicationUserFriends(string appID, int profileID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return ApplicationUsers(appID, null);
-            }
+            if (app.owner != user.UserName) return ApplicationUsers(appID, null);
 
-            UserProfilePart profilePart = _profileService.Get(profileID);
-            if (profilePart == null)
-            {
-                return HttpNotFound();
-            }
+            var profilePart = _profileService.Get(profileID);
+            if (profilePart == null) return HttpNotFound();
 
             var model = new UserFriendsViewModel(app, profilePart);
             model.Friends = profilePart.Friends; //_profileService.GetFriendsOfUser(profilePart,app);
             return View(model);
         }
 
-        public ActionResult UserRoleCreate(string appID)
-        {
-            var app = _applicationsService.GetApplicationByKey(appID);
+        public ActionResult UserRoleCreate(string appId) {
+            var app = _applicationsService.GetApplicationByKey(appId);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return ApplicationUserRoles(appID);
-            }
+            if (app.owner != user.UserName) return ApplicationUserRoles(appId);
 
-            var model = new UserRoleCreateViewModel();
-            model.ApplicationName = app.Name;
-            model.AppKey = app.AppKey;
-            model.User = user;
-            model.Name = string.Empty;
-            model.Description = string.Empty;
-            model.isDefault = false;
+            var model = new UserRoleCreateViewModel {
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                ApplicationName = app.Name,
+                AppKey = app.AppKey,
+                User = user,
+                Name = string.Empty,
+                Description = string.Empty,
+                isDefault = false
+            };
 
             return View(model);
         }
 
-        [HttpPost, ActionName("UserRoleCreate")]
+        [HttpPost]
+        [ActionName("UserRoleCreate")]
         [FormValueRequired("submit.Save")]
-        public ActionResult UserRoleCreatePOST(string appID)
-        {
-
+        public ActionResult UserRoleCreatePOST(string appID) {
             var viewModel = new UserRoleCreateViewModel();
             TryUpdateModel(viewModel);
 
             foreach (string key in Request.Form.Keys)
-            {
-                if (key.StartsWith("isDefault"))// && Request.Form[key] == "true")
-                {
-                    // the user checked the internal server
+                if (key.StartsWith("isDefault")) // && Request.Form[key] == "true")
                     viewModel.isDefault = true;
-                }
-            }
 
             var app = _applicationsService.GetApplicationByKey(appID);
 
-            if (app == null)
-            {
+            if (app == null) {
                 ModelState.AddModelError("Application", T("Application can't be empty"));
             }
-            else
-            {
+            else {
                 // in case we have to reutnr to this view
                 viewModel.ApplicationName = app.Name;
                 viewModel.AppKey = app.AppKey;
             }
 
-            if (String.IsNullOrEmpty(viewModel.Name))
-            {
-                ModelState.AddModelError("Name", T("User role name can't be empty"));
-            }
+            if (string.IsNullOrEmpty(viewModel.Name)) ModelState.AddModelError("Name", T("User role name can't be empty"));
 
-            var group = _applicationsService.GetUserRoleByName(app,viewModel.Name);
-            if (group != null)
-            {
-                ModelState.AddModelError("Name", T("User role with same name already exists"));
-            }
+            var group = _applicationsService.GetUserRoleByName(app, viewModel.Name);
+            if (group != null) ModelState.AddModelError("Name", T("User role with same name already exists"));
 
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (!ModelState.IsValid) return View(viewModel);
 
 
             var newUserRole = _applicationsService.CreateUserRole(app, viewModel.Name, viewModel.Description);
-            if (newUserRole == null)
-            {
+            if (newUserRole == null) {
                 _orchardServices.Notifier.Information(T("An error occured while trying to create the user role."));
             }
-            else
-            {
-                if (viewModel.isDefault)
-                {
-                    _applicationsService.SetDefaultRole(app, newUserRole.Id);
-                }
+            else {
+                if (viewModel.isDefault) _applicationsService.SetDefaultRole(app, newUserRole.Id);
                 newUserRole = _applicationsService.GetUserRole(newUserRole.Id);
             }
 
-            return RedirectToAction("ApplicationUserRoles", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+            return RedirectToAction("ApplicationUserRoles", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
 
-        public ActionResult UserRoleEdit(string appID, string roleID)
-        {
+        public ActionResult UserRoleEdit(string appID, string roleID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return ApplicationUserRoles(appID);
-            }
+            if (app.owner != user.UserName) return ApplicationUserRoles(appID);
             int roleid;
-            if(!Int32.TryParse(roleID, out roleid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(roleID, out roleid)) return HttpNotFound();
             var role = _applicationsService.GetUserRole(roleid);
 
             if (role == null)
@@ -1307,54 +1053,47 @@ namespace CloudBust.Dashboard.Controllers
             if (role == null)
                 return HttpNotFound();
 
-            var model = new UserRoleEditViewModel();
-            model.ApplicationName = app.Name;
-            model.AppKey = app.AppKey;
-            model.User = user;
-            model.Name = role.Name;
-            model.Description = role.Description;
-            model.isDefault = role.IsDefaultRole;
-            model.isDashboard = role.IsDashboardRole;
-            model.isData = role.IsData;
-            model.isSecurity = role.IsSecurity;
-            model.isSettings = role.IsSettings;
+            var model = new UserRoleEditViewModel {
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                ApplicationName = app.Name,
+                AppKey = app.AppKey,
+                User = user,
+                Name = role.Name,
+                Description = role.Description,
+                IsDefault = role.IsDefaultRole,
+                IsDashboard = role.IsDashboardRole,
+                IsData = role.IsData,
+                IsSecurity = role.IsSecurity,
+                IsSettings = role.IsSettings
+            };
 
             return View(model);
         }
 
-        [HttpPost, ActionName("UserRoleEdit")]
+        [HttpPost]
+        [ActionName("UserRoleEdit")]
         [FormValueRequired("submit.Save")]
-        public ActionResult UserRoleEditPOST(string appID, string roleID)
-        {
-            var viewModel = new UserRoleEditViewModel();
+        public ActionResult UserRoleEditPOST(string appID, string roleID) {
+            var viewModel = new UserRoleEditViewModel {HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl};
             TryUpdateModel(viewModel);
 
             foreach (string key in Request.Form.Keys)
-            {
-                if (key.StartsWith("isDefault"))// && Request.Form[key] == "true")
-                {
-                    // the user checked the internal server
-                    viewModel.isDefault = true;
-                }
-            }
+                if (key.StartsWith("isDefault")) // && Request.Form[key] == "true")
+                    viewModel.IsDefault = true;
 
             var app = _applicationsService.GetApplicationByKey(appID);
 
-            if (app == null)
-            {
+            if (app == null) {
                 ModelState.AddModelError("Application", T("Application can't be empty"));
             }
-            else
-            {
+            else {
                 // in case we have to reutnr to this view
                 viewModel.ApplicationName = app.Name;
                 viewModel.AppKey = app.AppKey;
             }
-            int roleid;
-            if (!Int32.TryParse(roleID, out roleid))
-            {
-                ModelState.AddModelError("Role", T("Role Id can't be empty"));
-            }
+
+            if (!int.TryParse(roleID, out var roleid)) ModelState.AddModelError("Role", T("Role Id can't be empty"));
+
             var role = _applicationsService.GetUserRole(roleid);
 
             if (role == null)
@@ -1364,64 +1103,40 @@ namespace CloudBust.Dashboard.Controllers
             if (role == null)
                 return HttpNotFound();
 
-            if (String.IsNullOrEmpty(viewModel.Name))
-            {
-                ModelState.AddModelError("Name", T("User role name can't be empty"));
-            }
+            if (string.IsNullOrEmpty(viewModel.Name)) ModelState.AddModelError("Name", T("User role name can't be empty"));
 
-            if (viewModel.Name != role.Name)
-            {
+            if (viewModel.Name != role.Name) {
                 var group = _applicationsService.GetUserRoleByName(app, viewModel.Name);
-                if (group != null)
-                {
-                    ModelState.AddModelError("Name", T("User role with same name already exists"));
-                }
-            }
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
+                if (group != null) ModelState.AddModelError("Name", T("User role with same name already exists"));
             }
 
-            bool updated = _applicationsService.UpdateUserRole(role.Id, viewModel.Name, viewModel.Description);
-            if (!updated)
-            {
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var updated = _applicationsService.UpdateUserRole(role.Id, viewModel.Name, viewModel.Description);
+            if (!updated) {
                 _orchardServices.Notifier.Information(T("An error occured while trying to update the user role."));
             }
-            else
-            {
-                if (viewModel.isDefault)
-                {
-                    _applicationsService.SetDefaultRole(app, role.Id);
-                }
+            else {
+                if (viewModel.IsDefault) _applicationsService.SetDefaultRole(app, role.Id);
             }
 
-            return RedirectToAction("ApplicationUserRoles", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+            return RedirectToAction("ApplicationUserRoles", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
 
-        public ActionResult UserRoleDelete(string appID, string roleID)
-        {
+        public ActionResult UserRoleDelete(string appID, string roleID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return ApplicationUserRoles(appID);
-            }
+            if (app.owner != user.UserName) return ApplicationUserRoles(appID);
             int roleid;
-            if (!Int32.TryParse(roleID, out roleid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(roleID, out roleid)) return HttpNotFound();
             var role = _applicationsService.GetUserRole(roleid);
 
             if (role == null)
@@ -1442,82 +1157,61 @@ namespace CloudBust.Dashboard.Controllers
             return View(model);
         }
 
-        [HttpPost, ActionName("UserRoleDelete")]
+        [HttpPost]
+        [ActionName("UserRoleDelete")]
         [FormValueRequired("submit.Delete")]
-        public ActionResult UserRoleDeletePOST(string appID, string roleID)
-        {
-
+        public ActionResult UserRoleDeletePOST(string appID, string roleID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
-            if (app == null)
-            {
-                ModelState.AddModelError("Application", T("Application can't be empty"));
-            }
+            if (app == null) ModelState.AddModelError("Application", T("Application can't be empty"));
 
             int roleid;
-            if (!Int32.TryParse(roleID, out roleid))
-            {
-                ModelState.AddModelError("Role", T("Role Id can't be empty"));
-            }
+            if (!int.TryParse(roleID, out roleid)) ModelState.AddModelError("Role", T("Role Id can't be empty"));
             var role = _applicationsService.GetUserRole(roleid);
 
             if (role == null)
                 ModelState.AddModelError("Role", T("Role can't be empty"));
 
-            if (!ModelState.IsValid)
-            {
-                return HttpNotFound();
-            }
+            if (!ModelState.IsValid) return HttpNotFound();
             // double check to see if this role id belongs to this application
             role = _applicationsService.GetUserRoleByName(app, role.Name);
             if (role == null)
                 return HttpNotFound();
 
-            bool updated = _applicationsService.DeleteUserRole(role.Id);
-            if (!updated)
-            {
-                _orchardServices.Notifier.Information(T("An error occured while trying to update the user role."));
-            }
+            var updated = _applicationsService.DeleteUserRole(role.Id);
+            if (!updated) _orchardServices.Notifier.Information(T("An error occured while trying to update the user role."));
 
-            return RedirectToAction("ApplicationUserRoles", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+            return RedirectToAction("ApplicationUserRoles", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
 
         #endregion
 
         #region Data
+
         // Data
-        public ActionResult Table(string datatableID)
-        {
+        public ActionResult Table(string datatableID) {
             return TablePage(datatableID, 0);
         }
 
-        public ActionResult TableFields(string datatableId)
-        {
+        public ActionResult TableFields(string datatableId) {
             return TablePage(datatableId, 1);
         }
-        public ActionResult TableRows(string datatableId)
-        {
+
+        public ActionResult TableRows(string datatableId) {
             return TablePage(datatableId, 2);
         }
-        public ActionResult TableRowDelete(string datatableId, int rowID)
-        {
+
+        public ActionResult TableRowDelete(string datatableId, int rowID) {
             int datatableid;
-            if (!Int32.TryParse(datatableId, out datatableid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(datatableId, out datatableid)) return HttpNotFound();
             _datatablesService.DeleteRow(datatableid, rowID);
-            return RedirectToAction("TableRows", "Dashboard", new { area = "CloudBust.Dashboard", datatableID = datatableId });
+            return RedirectToAction("TableRows", "Dashboard", new {area = "CloudBust.Dashboard", datatableID = datatableId});
         }
 
-        public ActionResult Tables()
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        public ActionResult Tables() {
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
             var model = new TablesViewModel();
             model.User = user;
@@ -1529,132 +1223,100 @@ namespace CloudBust.Dashboard.Controllers
             return View(model);
         }
 
-        public ActionResult TableCreate(string appID)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        public ActionResult TableCreate(string appID) {
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
+            if (user == null) return HttpNotFound();
 
 
             var model = new TableCreateViewModel();
-            if (!string.IsNullOrWhiteSpace(appID))
-            {
+            if (!string.IsNullOrWhiteSpace(appID)) {
                 var app = _applicationsService.GetApplicationByKey(appID);
-                if (app != null)
-                {
+                if (app != null) {
                     model.ApplicationName = app.Name;
                     model.ApplicationKey = app.AppKey;
                 }
             }
+
             model.User = user;
 
             return View(model);
         }
 
-        [HttpPost, ActionName("TableCreate")]
+        [HttpPost]
+        [ActionName("TableCreate")]
         [FormValueRequired("submit.Save")]
-        public ActionResult TableCreatePOST()
-        {
+        public ActionResult TableCreatePOST() {
             var viewModel = new TableCreateViewModel();
             TryUpdateModel(viewModel);
 
-            if (String.IsNullOrEmpty(viewModel.Name))
-            {
-                ModelState.AddModelError("Name", T("Table name can't be empty"));
-            }
+            if (string.IsNullOrEmpty(viewModel.Name)) ModelState.AddModelError("Name", T("Table name can't be empty"));
 
             var group = _datatablesService.GetDataTableByName(viewModel.Name);
-            if (group != null)
-            {
-                ModelState.AddModelError("Name", T("Table with same name already exists"));
-            }
+            if (group != null) ModelState.AddModelError("Name", T("Table with same name already exists"));
 
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (!ModelState.IsValid) return View(viewModel);
 
 
             var newTable = _datatablesService.CreateDataTable(viewModel.Name, viewModel.Description);
-            if (newTable == null)
-            {
+            if (newTable == null) {
                 _orchardServices.Notifier.Information(T("An error occured while trying to create the Table."));
             }
-            else
-            {
+            else {
                 //_applicationsService.CreateKeysForApplication(newModule.Id);
                 newTable = _datatablesService.GetDataTable(newTable.Id);
 
-                if (!string.IsNullOrWhiteSpace(viewModel.ApplicationName))
-                {
+                if (!string.IsNullOrWhiteSpace(viewModel.ApplicationName)) {
                     var module = _applicationsService.GetApplicationByName(viewModel.ApplicationName);
-                    if (module != null)
-                    {
+                    if (module != null) {
                         _datatablesService.CreateDataTableForApplication(viewModel.ApplicationName, newTable.Id);
 
-                        return RedirectToAction("Tables", "Dashboard", new { area = "CloudBust.Dashboard", appID = module.AppKey });
+                        return RedirectToAction("Tables", "Dashboard", new {area = "CloudBust.Dashboard", appID = module.AppKey});
                     }
                 }
             }
-            return RedirectToAction("Tables", "Dashboard", new { area = "CloudBust.Dashboard" });
 
+            return RedirectToAction("Tables", "Dashboard", new {area = "CloudBust.Dashboard"});
         }
 
-        public ActionResult ApplicationTables(string appID, bool afterPost = false)
-        {
+        public ActionResult ApplicationTables(string appID, bool afterPost = false) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
-            var model = new ApplicationViewModel();
+            var model = new ApplicationViewModel {
+                Application = app,
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                DataTables = _datatablesService.GetApplicationDataTables(app),
+                Page = 11,
+                AfterPost = afterPost
+                //Uri = Request.Url
+            };
 
-            model.Application = app;
-            model.DataTables = _datatablesService.GetApplicationDataTables(app);
-            model.Page = 11;
-            model.afterPost = afterPost;
-            model.Uri = Request.Url;
 
             return View("Application", model);
         }
 
-        public ActionResult ApplicationTablesAdd(string appID, int datatableID = 0)
-        {
+        public ActionResult ApplicationTablesAdd(string appID, int datatableID = 0) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return new HttpUnauthorizedResult();
-            }
+            if (app.owner != user.UserName) return new HttpUnauthorizedResult();
 
-            if (datatableID == 0)
-            {
+            if (datatableID == 0) {
                 var model = new DataTablesViewModel();
                 model.User = user;
                 model.Application = app;
@@ -1663,36 +1325,22 @@ namespace CloudBust.Dashboard.Controllers
 
                 return View(model);
             }
-            else
-            {
-                var datatable = _datatablesService.GetDataTable(datatableID);
 
-                if (datatable != null)
-                {
-                    _datatablesService.CreateDataTableForApplication(app.Name, datatable.Id);
-                }
-            }
-            return RedirectToAction("Tables", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+            var datatable = _datatablesService.GetDataTable(datatableID);
+
+            if (datatable != null) _datatablesService.CreateDataTableForApplication(app.Name, datatable.Id);
+            return RedirectToAction("Tables", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
-        public ActionResult TableRowCreate(string datatableId)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+        public ActionResult TableRowCreate(string datatableId) {
+            var user = _orchardServices.WorkContext.CurrentUser;
+
+            if (user == null) return HttpNotFound();
             int datatableid;
-            if (!Int32.TryParse(datatableId, out datatableid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(datatableId, out datatableid)) return HttpNotFound();
 
-            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
-            if (table == null)
-            {
-                return HttpNotFound();
-            }
+            var table = _datatablesService.GetDataTable(datatableid);
+            if (table == null) return HttpNotFound();
 
             var model = new RowCreateViewModel();
             model.ApplicationDataTableName = table.Name;
@@ -1709,38 +1357,27 @@ namespace CloudBust.Dashboard.Controllers
             //}
 
             //model.FieldValues = new DynamicClass(fields);
-            
+
             return View(model);
         }
-        [HttpPost, ActionName("TableRowCreate")]
-        [FormValueRequired("submit.Save")]
-        public ActionResult TableRowCreatePOST(string datatableId)
-        {
 
+        [HttpPost]
+        [ActionName("TableRowCreate")]
+        [FormValueRequired("submit.Save")]
+        public ActionResult TableRowCreatePOST(string datatableId) {
             var viewModel = new RowCreateViewModel();
 
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
             if (user == null)
-            {
                 return HttpNotFound();
-            }
-            else
-            {
-                viewModel.User = user;
-            }
+            viewModel.User = user;
             int datatableid;
-            if (!Int32.TryParse(datatableId, out datatableid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(datatableId, out datatableid)) return HttpNotFound();
 
-            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
-            if (table == null)
-            {
-                return HttpNotFound();
-            }
+            var table = _datatablesService.GetDataTable(datatableid);
+            if (table == null) return HttpNotFound();
             viewModel.ApplicationDataTableName = table.Name;
             viewModel.ApplicationDataTableID = datatableId;
             viewModel.User = user;
@@ -1748,41 +1385,26 @@ namespace CloudBust.Dashboard.Controllers
 
             TryUpdateModel(viewModel);
 
-            if(string.IsNullOrWhiteSpace(viewModel.jsonResults))
-            {
-                return TableRowDelete(datatableId, viewModel.RowID);
-            }
+            if (string.IsNullOrWhiteSpace(viewModel.jsonResults)) return TableRowDelete(datatableId, viewModel.RowID);
             viewModel.Row = _datatablesService.GetRow(viewModel.RowID);
-            if (viewModel.Row != null)
-            {
-                _datatablesService.SetValuesForRow(table, viewModel.Row, viewModel.Fields, viewModel.jsonResults);
-            }
-            return RedirectToAction("TableRows", "Dashboard", new { area = "CloudBust.Dashboard", datatableID = datatableId });
+            if (viewModel.Row != null) _datatablesService.SetValuesForRow(table, viewModel.Row, viewModel.Fields, viewModel.jsonResults);
+            return RedirectToAction("TableRows", "Dashboard", new {area = "CloudBust.Dashboard", datatableID = datatableId});
         }
-        public ActionResult TableFieldCreate(string datatableId)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+        public ActionResult TableFieldCreate(string datatableId) {
+            var user = _orchardServices.WorkContext.CurrentUser;
+
+            if (user == null) return HttpNotFound();
 
             //if (app.owner != user.UserName)
             //{
             //    return Application(appID);
             //}
             int datatableid;
-            if (!Int32.TryParse(datatableId, out datatableid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(datatableId, out datatableid)) return HttpNotFound();
 
-            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
-            if (table == null)
-            {
-                return HttpNotFound();
-            }
+            var table = _datatablesService.GetDataTable(datatableid);
+            if (table == null) return HttpNotFound();
 
             var model = new FieldCreateViewModel();
             model.ApplicationDataTableName = table.Name;
@@ -1793,100 +1415,58 @@ namespace CloudBust.Dashboard.Controllers
             model.FieldType = "string";
             return View(model);
         }
-        [HttpPost, ActionName("TableFieldCreate")]
-        [FormValueRequired("submit.Save")]
-        public ActionResult TableFieldCreatePOST(string datatableId)
-        {
 
+        [HttpPost]
+        [ActionName("TableFieldCreate")]
+        [FormValueRequired("submit.Save")]
+        public ActionResult TableFieldCreatePOST(string datatableId) {
             var viewModel = new FieldCreateViewModel();
             TryUpdateModel(viewModel);
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
             if (user == null)
-            {
                 return HttpNotFound();
-            }
-            else
-            {
-                viewModel.User = user;
-            }
+            viewModel.User = user;
             int datatableid;
-            if (!Int32.TryParse(datatableId, out datatableid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(datatableId, out datatableid)) return HttpNotFound();
 
-            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
-            if (table == null)
-            {
-                return HttpNotFound();
-            }
+            var table = _datatablesService.GetDataTable(datatableid);
+            if (table == null) return HttpNotFound();
             viewModel.ApplicationDataTableName = table.Name;
             viewModel.ApplicationDataTableID = datatableId;
             viewModel.User = user;
 
-            if (string.IsNullOrWhiteSpace(viewModel.Name))
-            {
-                ModelState.AddModelError("Name", "You have to enter a name for the new field");
-            }
-            if (string.IsNullOrWhiteSpace(viewModel.Description))
-            {
-                ModelState.AddModelError("Name", "You have to enter a description for the new field");
-            }
-            if (string.IsNullOrWhiteSpace(viewModel.FieldType))
-            {
-                ModelState.AddModelError("Name", "You have to set the field type");
-            }
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (string.IsNullOrWhiteSpace(viewModel.Name)) ModelState.AddModelError("Name", "You have to enter a name for the new field");
+            if (string.IsNullOrWhiteSpace(viewModel.Description)) ModelState.AddModelError("Name", "You have to enter a description for the new field");
+            if (string.IsNullOrWhiteSpace(viewModel.FieldType)) ModelState.AddModelError("Name", "You have to set the field type");
+            if (!ModelState.IsValid) return View(viewModel);
 
             var field = _datatablesService.CreateField(viewModel.Name, viewModel.Description, viewModel.FieldType);
-            if (field == null)
-            {
-                ModelState.AddModelError("_FORM","Error while creating field");
-            }
+            if (field == null) ModelState.AddModelError("_FORM", "Error while creating field");
 
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (!ModelState.IsValid) return View(viewModel);
 
             _datatablesService.CreateFieldForApplicationDataTable(datatableid, field.Id);
-            return RedirectToAction("TableFields", "Dashboard", new { area = "CloudBust.Dashboard", datatableID = datatableId });
+            return RedirectToAction("TableFields", "Dashboard", new {area = "CloudBust.Dashboard", datatableID = datatableId});
         }
 
-        public ActionResult TableFieldEdit(string datatableId, int fieldId)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        public ActionResult TableFieldEdit(string datatableId, int fieldId) {
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
             //if (app.owner != user.UserName)
             //{
             //    return Application(appID);
             //}
             int datatableid;
-            if (!Int32.TryParse(datatableId, out datatableid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(datatableId, out datatableid)) return HttpNotFound();
 
-            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
-            if (table == null)
-            {
-                return HttpNotFound();
-            }
-            FieldRecord field = _datatablesService.GetField(fieldId);
-            if (field == null)
-            {
-                return HttpNotFound();
-            }
+            var table = _datatablesService.GetDataTable(datatableid);
+            if (table == null) return HttpNotFound();
+            var field = _datatablesService.GetField(fieldId);
+            if (field == null) return HttpNotFound();
 
             var model = new FieldEditViewModel();
             model.ApplicationDataTableName = table.Name;
@@ -1898,201 +1478,132 @@ namespace CloudBust.Dashboard.Controllers
             return View(model);
         }
 
-        [HttpPost, ActionName("TableFieldEdit")]
+        [HttpPost]
+        [ActionName("TableFieldEdit")]
         [FormValueRequired("submit.Save")]
-        public ActionResult TableFieldEditPOST(string datatableId, int fieldId)
-        {
-
+        public ActionResult TableFieldEditPOST(string datatableId, int fieldId) {
             var viewModel = new FieldEditViewModel();
             TryUpdateModel(viewModel);
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
             int datatableid;
-            if (!Int32.TryParse(datatableId, out datatableid))
-            {
-                return HttpNotFound();
-            }
+            if (!int.TryParse(datatableId, out datatableid)) return HttpNotFound();
 
-            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
-            if (table == null)
-            {
-                return HttpNotFound();
-            }
-            FieldRecord field = _datatablesService.GetField(fieldId);
-            if (field == null)
-            {
-                return HttpNotFound();
-            }
+            var table = _datatablesService.GetDataTable(datatableid);
+            if (table == null) return HttpNotFound();
+            var field = _datatablesService.GetField(fieldId);
+            if (field == null) return HttpNotFound();
             viewModel.ApplicationDataTableName = table.Name;
             viewModel.ApplicationDataTableID = datatableId;
 
-            if (string.IsNullOrWhiteSpace(viewModel.Name))
-            {
-                ModelState.AddModelError("Name", "You have to enter a name for the new field");
-            }
-            if (string.IsNullOrWhiteSpace(viewModel.Description))
-            {
-                ModelState.AddModelError("Name", "You have to enter a description for the new field");
-            }
-            if (string.IsNullOrWhiteSpace(viewModel.FieldType))
-            {
-                ModelState.AddModelError("Name", "You have to set the field type");
-            }
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (string.IsNullOrWhiteSpace(viewModel.Name)) ModelState.AddModelError("Name", "You have to enter a name for the new field");
+            if (string.IsNullOrWhiteSpace(viewModel.Description)) ModelState.AddModelError("Name", "You have to enter a description for the new field");
+            if (string.IsNullOrWhiteSpace(viewModel.FieldType)) ModelState.AddModelError("Name", "You have to set the field type");
+            if (!ModelState.IsValid) return View(viewModel);
 
             _datatablesService.UpdateField(field.Id, viewModel.Name, viewModel.Description, viewModel.FieldType);
 
             return TablePage(datatableId, 1, true);
         }
-        public ActionResult TableFieldUp(string datatableID, int fieldID)
-        {
-            int datatableid;
-            if (!Int32.TryParse(datatableID, out datatableid))
-            {
-                return HttpNotFound();
-            }
-            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
-            if (table == null)
-            {
-                return HttpNotFound();
-            }
-            FieldRecord field = _datatablesService.GetField(fieldID);
-            if (field == null)
-            {
-                return HttpNotFound();
-            }
-            IUser user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+        public ActionResult TableFieldUp(string datatableID, int fieldID) {
+            int datatableid;
+            if (!int.TryParse(datatableID, out datatableid)) return HttpNotFound();
+            var table = _datatablesService.GetDataTable(datatableid);
+            if (table == null) return HttpNotFound();
+            var field = _datatablesService.GetField(fieldID);
+            if (field == null) return HttpNotFound();
+            var user = _orchardServices.WorkContext.CurrentUser;
+
+            if (user == null) return HttpNotFound();
 
             _datatablesService.FieldPositionUp(field.Id, datatableid);
 
-            return RedirectToAction("TableFields", "Dashboard", new { area = "CloudBust.Dashboard", datatableID = datatableID });
+            return RedirectToAction("TableFields", "Dashboard", new {area = "CloudBust.Dashboard", datatableID});
         }
-        public ActionResult TableFieldDown(string datatableID, int fieldID)
-        {
-            int datatableid;
-            if (!Int32.TryParse(datatableID, out datatableid))
-            {
-                return HttpNotFound();
-            }
-            ApplicationDataTableRecord table = _datatablesService.GetDataTable(datatableid);
-            if (table == null)
-            {
-                return HttpNotFound();
-            }
-            FieldRecord field = _datatablesService.GetField(fieldID);
-            if (field == null)
-            {
-                return HttpNotFound();
-            }
-            IUser user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+        public ActionResult TableFieldDown(string datatableID, int fieldID) {
+            int datatableid;
+            if (!int.TryParse(datatableID, out datatableid)) return HttpNotFound();
+            var table = _datatablesService.GetDataTable(datatableid);
+            if (table == null) return HttpNotFound();
+            var field = _datatablesService.GetField(fieldID);
+            if (field == null) return HttpNotFound();
+            var user = _orchardServices.WorkContext.CurrentUser;
+
+            if (user == null) return HttpNotFound();
 
             _datatablesService.FieldPositionDown(field.Id, datatableid);
 
-            return RedirectToAction("TableFields", "Dashboard", new { area = "CloudBust.Dashboard", datatableID = datatableID });
+            return RedirectToAction("TableFields", "Dashboard", new {area = "CloudBust.Dashboard", datatableID});
         }
-        public ActionResult AppSettings(string appID, PagerParameters pagerParameters, bool afterPost = false)
-        {
+
+        public ActionResult AppSettings(string appID, PagerParameters pagerParameters, bool afterPost = false) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
-
+            if (app.owner != user.UserName) return Application(appID);
 
 
             var settings = _parametersService.GetParametersForApplication(app.Id).OrderBy(r => r.Name).ToList();
 
-            var model = new ApplicationViewModel
-            {
-                Settings = settings
+            var model = new ApplicationViewModel {
+                Settings = settings,
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                Application = app,
+                Page = 9,
+                AfterPost = afterPost
+                //Uri = Request.Url
             };
 
-            model.Application = app;
-            model.Page = 9;
-            model.afterPost = afterPost;
-            model.Uri = Request.Url;
             return View("Application", model);
         }
 
-        public ActionResult AppSettingsCategories(string appID, bool afterPost = false)
-        {
+        public ActionResult AppSettingsCategories(string appID, bool afterPost = false) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
-            var model = new ApplicationViewModel();
-            model.User = user;
+            var model = new ApplicationViewModel {
+                User = user,
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                Application = app,
+                Page = 10,
+                AfterPost = afterPost,
+                //Uri = Request.Url,
+                SettingsCategories = _parametersService.GetParameterCategoriesForApplication(app.Id).OrderBy(r => r.Name).ToList()
+            };
 
-            model.Application = app;
-            model.Page = 10;
-            model.afterPost = afterPost;
-            model.Uri = Request.Url;
-            model.SettingsCategories = _parametersService.GetParameterCategoriesForApplication(app.Id).OrderBy(r => r.Name).ToList();
             return View("Application", model);
-
         }
 
-        public ActionResult AppSettingsCategoriesCreate(string appID)
-        {
+        public ActionResult AppSettingsCategoriesCreate(string appID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
             var model = new AppSettingsCategoriesCreateViewModel();
             model.ApplicationName = app.Name;
@@ -2104,24 +1615,18 @@ namespace CloudBust.Dashboard.Controllers
             return View(model);
         }
 
-        [HttpPost, ActionName("AppSettingsCategoriesCreate")]
+        [HttpPost]
+        [ActionName("AppSettingsCategoriesCreate")]
         [FormValueRequired("submit.Save")]
-        public ActionResult AppSettingsCategoriesCreatePOST(string appID)
-        {
-
+        public ActionResult AppSettingsCategoriesCreatePOST(string appID) {
             var viewModel = new AppSettingsCategoriesCreateViewModel();
             TryUpdateModel(viewModel);
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
             if (user == null)
-            {
                 return HttpNotFound();
-            }
-            else
-            {
-                viewModel.User = user;
-            }
+            viewModel.User = user;
 
             var app = _applicationsService.GetApplicationByKey(appID);
             if (app == null)
@@ -2132,27 +1637,20 @@ namespace CloudBust.Dashboard.Controllers
 
             var parameterCategory = _parametersService.CreateParameterCategoryForApplication(app.Id, viewModel.Name, viewModel.Description);
 
-            return RedirectToAction("AppSettingsCategories", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+            return RedirectToAction("AppSettingsCategories", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
 
-        public ActionResult AppSettingsCreate(string appID)
-        {
+        public ActionResult AppSettingsCreate(string appID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
             var model = new AppSettingsCreateViewModel();
             model.ApplicationName = app.Name;
@@ -2165,26 +1663,20 @@ namespace CloudBust.Dashboard.Controllers
             return View(model);
         }
 
-        [HttpPost, ActionName("AppSettingsCreate")]
+        [HttpPost]
+        [ActionName("AppSettingsCreate")]
         [FormValueRequired("submit.Save")]
-        public ActionResult AppSettingsCreatePOST(string appID)
-        {
-
+        public ActionResult AppSettingsCreatePOST(string appID) {
             var viewModel = new AppSettingsCreateViewModel();
             TryUpdateModel(viewModel);
 
             viewModel.ParameterTypeI = CBDataTypes.TypeFromString(viewModel.ParameterType);
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
             if (user == null)
-            {
                 return HttpNotFound();
-            }
-            else
-            {
-                viewModel.User = user;
-            }
+            viewModel.User = user;
 
             var app = _applicationsService.GetApplicationByKey(appID);
             if (app == null)
@@ -2195,8 +1687,7 @@ namespace CloudBust.Dashboard.Controllers
             var parameter = _parametersService.CreateParameterForApplication(app.Id, viewModel.Name, viewModel.Description);
             _parametersService.SetParameterType(parameter.Id, viewModel.ParameterType);
 
-            switch (viewModel.ParameterTypeI)
-            {
+            switch (viewModel.ParameterTypeI) {
                 case CBType.boolSetting:
                     _parametersService.SetParameterValue(parameter.Id, viewModel.ParameterValueBool);
                     break;
@@ -2215,213 +1706,164 @@ namespace CloudBust.Dashboard.Controllers
                     break;
             }
 
-            return RedirectToAction("AppSettings", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+            return RedirectToAction("AppSettings", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
 
         #endregion
 
         #region Senseapi
-        public ActionResult Senseapi(string appID, bool afterPost = false)
-        {
+
+        public ActionResult Senseapi(string appID, bool afterPost = false) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
-            var model = new ApplicationViewModel();
-            model.User = user;
+            var model = new ApplicationViewModel {
+                User = user,
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                Application = app,
+                Page = 12,
+                AfterPost = afterPost
+                //Uri = Request.Url
+            };
 
-            model.Application = app;
-            model.Page = 12;
-            model.afterPost = afterPost;
-            model.Uri = Request.Url;
             return View("Application", model);
         }
 
-        public ActionResult SenseapiGames(string appID, bool afterPost = false)
-        {
+        public ActionResult SenseapiGames(string appID, bool afterPost = false) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
-            var model = new ApplicationViewModel();
-            model.User = user;
+            var model = new ApplicationViewModel {
+                User = user,
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                Application = app,
+                Games = _gamesService.GetApplicationGames(app),
+                Page = 13,
+                AfterPost = afterPost
+                //Uri = Request.Url
+            };
 
-            model.Application = app;
-            model.Games = _gamesService.GetApplicationGames(app);
-            model.Page = 13;
-            model.afterPost = afterPost;
-            model.Uri = Request.Url;
             return View("Application", model);
         }
 
-        public ActionResult SenseapiGamesAdd(string appID, string gameID)
-        {
+        public ActionResult SenseapiGamesAdd(string appID, string gameID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return SenseapiGames(appID);
-            }
+            if (app.owner != user.UserName) return SenseapiGames(appID);
 
-            if(string.IsNullOrWhiteSpace(gameID))
-            {
-                var model = new GamesViewModel();
-                model.User = user;
-                model.Application = app;
+            if (string.IsNullOrWhiteSpace(gameID)) {
+                var model = new GamesViewModel {
+                    HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                    User = user,
+                    Application = app
+                };
 
                 var games = _gamesService.GetNonApplicationGames(user, app).OrderBy(r => r.Name).ToList();
                 model.Games = games;
 
                 return View(model);
             }
-            else
-            {
-                var game = _gamesService.GetGameByKey(gameID);
 
-                if (game != null)
-                {
-                    _gamesService.CreateGameForApplication(app.Name, game.Id);
-                }
-            }
-            return RedirectToAction("SenseapiGames", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });            
+            var game = _gamesService.GetGameByKey(gameID);
+
+            if (game != null) _gamesService.CreateGameForApplication(app.Name, game.Id);
+            return RedirectToAction("SenseapiGames", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
 
-        public ActionResult SenseapiGamesRemove(string appID, string gameID)
-        {
+        public ActionResult SenseapiGamesRemove(string appID, string gameID) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return SenseapiGames(appID);
-            }
+            if (app.owner != user.UserName) return SenseapiGames(appID);
 
-            if (!string.IsNullOrWhiteSpace(gameID))
-            {
+            if (!string.IsNullOrWhiteSpace(gameID)) {
                 var game = _gamesService.GetGameByKey(gameID);
 
-                if (game != null)
-                {
-                    _gamesService.RemoveGameFromApplication(app.Name, game.Id);
-                }
+                if (game != null) _gamesService.RemoveGameFromApplication(app.Name, game.Id);
             }
-            return RedirectToAction("SenseapiGames", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID });
+
+            return RedirectToAction("SenseapiGames", "Dashboard", new {area = "CloudBust.Dashboard", appID});
         }
 
-        public ActionResult SenseapiUsers(string appID, PagerParameters pagerParameters, bool afterPost = false)
-        {
+        public ActionResult SenseapiUsers(string appID, PagerParameters pagerParameters, bool afterPost = false) {
             var app = _applicationsService.GetApplicationByKey(appID);
 
             if (app == null)
                 return HttpNotFound();
 
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return Application(appID);
-            }
+            if (app.owner != user.UserName) return Application(appID);
 
             var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
 
 
-            IEnumerable<int> profilesIDs = _profileService.GetUserIDsForApplication(app);
+            var profilesIDs = _profileService.GetUserIDsForApplication(app);
 
-            var users = _orchardServices.ContentManager
-                .Query<UserProfilePart, UserProfilePartRecord>().Where(x => profilesIDs.Contains(x.Id));
+            var users = _orchardServices.ContentManager.Query<UserProfilePart, UserProfilePartRecord>().Where(x => profilesIDs.Contains(x.Id));
 
             var pagerShape = Shape.Pager(pager).TotalItemCount(users.Count());
 
-            var results = users
-                .Slice(pager.GetStartIndex(), pager.PageSize)
-                .ToList();
+            var results = users.Slice(pager.GetStartIndex(), pager.PageSize).ToList();
 
 
-            var model = new ApplicationViewModel
-            {
-                Users = results
-                    .Select(x => new UserProfileEntry { User = x.As<UserPart>().Record, Profile = x.As<UserProfilePart>().Record })
-                    .ToList(),
-                Pager = pagerShape
+            var model = new ApplicationViewModel {
+                HostUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl,
+                Users = results.Select(x => new UserProfileEntry {User = x.As<UserPart>().Record, Profile = x.As<UserProfilePart>().Record}).ToList(),
+                Pager = pagerShape,
+                Application = app,
+                DefaultRole = _applicationsService.GetDefaultRole(app),
+                Roles = _applicationsService.GetUserRoles(app),
+                Page = 14,
+                AfterPost = afterPost
+                //Uri = Request.Url
             };
 
-            model.Application = app;
-            model.DefaultRole = _applicationsService.GetDefaultRole(app);
-            model.Roles = _applicationsService.GetUserRoles(app);
-            model.Page = 14;
-            model.afterPost = afterPost;
-            model.Uri = Request.Url;
             return View("Application", model);
         }
 
-        public ActionResult SenseapiUsersSessions(string appID, string UserName)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        public ActionResult SenseapiUsersSessions(string appId, string userName) {
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            var app = _applicationsService.GetApplicationByKey(appID);
+            var app = _applicationsService.GetApplicationByKey(appId);
 
             if (app == null)
                 return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return SenseapiGames(appID);
-            }
+            if (app.owner != user.UserName) return SenseapiGames(appId);
 
             var model = new SessionsViewModel();
             model.User = user;
@@ -2429,62 +1871,52 @@ namespace CloudBust.Dashboard.Controllers
             model.Page = 14;
 
             var games = _gamesService.GetApplicationGames(app).OrderBy(r => r.Name).ToList();
-            if (games.Count() > 1)
-            {
+            if (games.Count() > 1) {
                 model.Games = games;
 
                 return View(model);
             }
-            else
-            {
-                try
-                {
-                    var game = games[0];
-                    return RedirectToAction("SenseapiUsersSessionsGame", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID, gameID = game.AppKey, UserName = UserName });
-                }
-                catch { }
-                return Application(appID);
+
+            try {
+                var game = games[0];
+                return RedirectToAction("SenseapiUsersSessionsGame", "Dashboard", new {appID = appId, gameID = game.AppKey, UserName = userName});
             }
+            catch {
+                // ignored
+            }
+
+            return Application(appId);
         }
 
-        public ActionResult SenseapiUsersSessionsGame(string appID, string gameID, string UserName)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
+        public ActionResult SenseapiUsersSessionsGame(string appId, string gameId, string userName) {
+            var user = _orchardServices.WorkContext.CurrentUser;
 
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            var app = _applicationsService.GetApplicationByKey(appID);
+            if (user == null) return HttpNotFound();
+            var app = _applicationsService.GetApplicationByKey(appId);
 
             if (app == null)
                 return HttpNotFound();
 
-            if (app.owner != user.UserName)
-            {
-                return SenseapiGames(appID);
-            }
+            if (app.owner != user.UserName) return SenseapiGames(appId);
 
-            if (!string.IsNullOrWhiteSpace(gameID))
-            {
-                var game = _gamesService.GetGameByKey(gameID);
+            if (!string.IsNullOrWhiteSpace(gameId)) {
+                var game = _gamesService.GetGameByKey(gameId);
 
-                if (game != null)
-                {
+                if (game != null) {
                     var model = new SessionsViewModel();
                     model.User = user;
                     model.Application = app;
                     model.Game = game;
-                    model.UserName = UserName;
+                    model.UserName = userName;
                     model.Page = 14;
-                    var sessions = _sessionsService.GetSessionsForUserInApplication(app.Name, game.Name, UserName).OrderByDescending(r => r.EndDate).ToList();
+                    var sessions = _sessionsService.GetSessionsForUserInApplication(app.Name, game.Name, userName).OrderByDescending(r => r.EndDate).ToList();
                     model.Sessions = sessions;
 
                     return View(model);
                 }
             }
 
-            return SenseapiGames(appID);
+            return SenseapiGames(appId);
         }
 
         //public ActionResult SenseapiUsersResults(string appID, string UserName)
@@ -2521,7 +1953,7 @@ namespace CloudBust.Dashboard.Controllers
         //    else
         //    {
         //        var game = games[0];
-                
+
         //        return RedirectToAction("SenseapiUsersResultsGame", "Dashboard", new { area = "CloudBust.Dashboard", appID = appID, gameID = game.AppKey, UserName = UserName });
         //    }
         //}
@@ -2567,101 +1999,5 @@ namespace CloudBust.Dashboard.Controllers
         //}
 
         #endregion
-
-        #region Feeds
-        public ActionResult Feeds()
-        {
-            return View();
-        }
-
-        #endregion
-
-        private ActionResult ApplicationPage(string appID, int page, bool afterPost = false)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
-
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = new ApplicationViewModel();
-            model.User = user;
-
-
-            var app = _applicationsService.GetApplicationByKey(appID);
-            model.Application = app;
-            model.Page = page;
-            model.afterPost = afterPost;
-
-            if (_settingsService.IsWebApplication())
-            {
-                if(_settingsService.GetWebApplicationKey() == app.AppKey)
-                {
-                    model.isWebApp = true;
-                }
-            }
-
-            string appPath = Request.ApplicationPath;
-            string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority) + appPath;
-            UriBuilder b = new UriBuilder(baseUrl);
-
-            model.Uri = b.Uri;
-            return View("Application", model);
-        }
-        private ActionResult GamePage(string gameID, int page, bool afterPost = false)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
-
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = new GameViewModel();
-            model.User = user;
-
-
-            var game = _gamesService.GetGameByKey(gameID);
-            model.Game = game;
-
-            model.Page = page;
-            model.afterPost = afterPost;
-            model.Uri = Request.Url;
-            model.Events = _gamesService.GetGameEvents(game);
-            return View("Game", model);
-        }
-        private ActionResult TablePage(string datatableID, int page, bool afterPost = false)
-        {
-            IUser user = _orchardServices.WorkContext.CurrentUser;
-
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = new TableViewModel();
-            model.User = user;
-
-            int datatableid;
-            if (!Int32.TryParse(datatableID, out datatableid))
-            {
-                return HttpNotFound();
-            }
-            var datatable = _datatablesService.GetDataTable(datatableid);
-            if(datatable == null)
-                return HttpNotFound();
-
-            model.DataTable = datatable;
-
-            model.Page = page;
-            model.afterPost = afterPost;
-            model.Uri = Request.Url;
-            model.Fields = _datatablesService.GetFieldsForDataTable(datatableid);
-
-            model.Applications = _datatablesService.GetDataTableApplications(datatable);
-
-            return View("Table", model);
-        }
     }
 }

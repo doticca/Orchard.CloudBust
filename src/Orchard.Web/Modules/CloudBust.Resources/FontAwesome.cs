@@ -8,8 +8,8 @@ namespace CloudBust.Resources {
             var manifest = builder.Add();
 
             manifest.DefineStyle("FontAwesome")
-                .SetUrl("font-awesome.min.css", "font-awesome.css")
-                .SetVersion("1.0");
+                .SetUrl("https://cloudbust.blob.core.windows.net/public/css/font-awesome.min.css", "font-awesome.css")
+                .SetVersion("4.4.1");
         }
     }
 }

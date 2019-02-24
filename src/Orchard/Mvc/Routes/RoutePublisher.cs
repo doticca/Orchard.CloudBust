@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.SessionState;
 using Castle.Core.Internal;
+using NHibernate.Util;
 using Orchard.Environment;
 using Orchard.Environment.Configuration;
 ﻿using Orchard.Environment.Extensions;

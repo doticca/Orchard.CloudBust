@@ -3,13 +3,13 @@
   <Recipe>
     <Name>CloudBust</Name>
     <Description>The default recipe to activate the full features of the cloudBUST platform.</Description>
-    <Author>Team Grapto @teamgrapto</Author>
+    <Author>Team Doticca @teamdoticca</Author>
     <WebSite>http://www.grapto.com</WebSite>
     <Tags>cloudbust</Tags>
     <Version>1.0</Version>
   </Recipe>
 
-  <Feature enable="js.Ias, js.imagesLoaded, js.Modernizr, js.Underscore, js.Slick, js.Highlight,
+  <Feature enable="js.Ias, js.ImagesLoaded, js.Modernizr, js.Underscore, js.Slick, js.Highlight,
                    Contrib.Ace, Contrib.CookieCuttr, Contrib.Gravatar, Contrib.Stripe,               
                    CloudBust.Foundation.Common, CloudBust.Foundation.Common.ThemePicker, CloudBust.Foundation,
                    CloudBust.Foundation.Application, CloudBust.Foundation.UserProfile, CloudBust.Foundation.Email,
@@ -49,7 +49,7 @@
     <FaviconSettingsPart FaviconUrl="" />
     <ModernizrSettingsPart AutoEnable="true" AutoEnableAdmin="true" />
     <FoundationSettingsPart AutoEnableAdmin="true" DoNotEnableFrontEnd="false"/>
-    <imagesLoadedSettingsPart AutoEnable="true" AutoEnableAdmin="true" />
+    <ImagesLoadedSettingsPart AutoEnable="true" AutoEnableAdmin="true" />
     <HighlightSettingsPart Style="xcode" AutoEnable="true" AutoEnableAdmin="false" FullBundle="false" />
     <SlickSettingsPart AutoEnable="false" AutoEnableAdmin="false" />
   </Settings>

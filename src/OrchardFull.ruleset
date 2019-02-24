@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="OrchardFull" ToolsVersion="15.0">
+  <Include Path="orchardbasiccorrectness.ruleset" Action="Default" />
+  <Include Path="orchardsecurity.ruleset" Action="Default" />
+</RuleSet>

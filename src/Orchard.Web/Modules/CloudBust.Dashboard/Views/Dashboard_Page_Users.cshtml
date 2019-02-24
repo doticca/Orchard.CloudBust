@@ -4,6 +4,9 @@
 @using Orchard.Security
 
 @model CloudBust.Dashboard.ViewModels.ApplicationViewModel
+@{
+    var baseUrl = Model.HostUrl.TrimEnd('/');
+}
 
 <div class="row collapse bump-15">
     <div class="large-12 columns">
@@ -41,10 +44,10 @@
                             }
                     </td>
                     <td>
-                        <a href="~/dashboard/applications/@Model.Application.AppKey/users/@entry.Profile.Id/edit" class="tiny button">Details</a>
-                        <a href="~/dashboard/applications/@Model.Application.AppKey/users/@entry.Profile.Id/friends" class="tiny button">Friends</a>
-                        <a href="~/dashboard/applications/@Model.Application.AppKey/users/@entry.Profile.Id/invites" class="tiny button">Invites</a>
-                        <a href="~/dashboard/applications/@Model.Application.AppKey/users/@entry.Profile.Id/delete" class="tiny button alert">Delete</a>
+                        <a href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/users/" + entry.Profile.Id + "/edit")" class="tiny button">Details</a>
+                        <a href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/users/" + entry.Profile.Id + "/friends")" class="tiny button">Friends</a>
+                        <a href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/users/" + entry.Profile.Id + "/invites")" class="tiny button">Invites</a>
+                        <a href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/users/" + entry.Profile.Id + "/delete")" class="tiny button alert">Delete</a>
                     </td>
                 </tr>
                 }

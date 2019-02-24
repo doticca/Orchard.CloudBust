@@ -1,15 +1,18 @@
 ﻿@using Orchard.Utility.Extensions;
 @{
     var terms = (IEnumerable<Orchard.Taxonomies.Models.TermPart>)Model.Terms;
-    //string name = Model.ContentField.DisplayName;
-    //var d = new HtmlString(string.Join(", ", terms.Select(t => t.Name).ToArray()));
-    //var c = new HtmlString(string.Join(", ", terms.Select(t => t.Slug.Substring(t.Slug.LastIndexOf('/') + 1)).ToArray()));
+    dynamic colorval = Model.ContentItem.BlogPost.Color.Value;
+    string color = colorval;
+    int r = int.Parse(color.Substring(1, 2), System.Globalization.NumberStyles.HexNumber);
+    int g = int.Parse(color.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
+    int b = int.Parse(color.Substring(5, 2), System.Globalization.NumberStyles.HexNumber);
+    string bcolor = string.Format("rgba({0}, {1}, {2}, 1);", r, g, b);
 }
 @if (Model.Terms.Count > 0)
 {
     foreach (var t in terms)
     {
-        <p class="taxonomy-field @(t.Slug.Substring(t.Slug.LastIndexOf('/') + 1)) round">
+        <p class="taxonomy-field @(t.Slug.Substring(t.Slug.LastIndexOf('/') + 1)) round" style="background-color:@bcolor">
             @Html.ItemDisplayLink(t.Name, t.ContentItem)
         </p>
     }

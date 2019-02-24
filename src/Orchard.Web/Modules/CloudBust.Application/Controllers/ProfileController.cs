@@ -54,7 +54,7 @@ namespace CloudBust.Application.Controllers
         {
             get
             {
-                return _membershipService.GetSettings().MinRequiredPasswordLength;
+                return _membershipService.GetSettings().MinimumPasswordLength;
             }
         }
         public ActionResult Index()

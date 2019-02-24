@@ -38,3 +38,47 @@
         </ul>
     </div>
 </nav>
+
+@*@using (Script.Foot())
+{
+    <script type="text/javascript">
+        var prev = 0;
+        var $window = $(window);
+        var nav = $('.scrollhide-nav');
+        var subnav = $('.sub-nav-links');
+        var distance = 0;
+        var distancenav = nav.offset().top;
+        if (subnav.length > 0)
+            distance = $('.sub-nav-links').offset().top;
+
+        $window.on('scroll', function () {
+            var scrollTop = $window.scrollTop();
+
+
+            if (scrollTop > prev) {
+                if(!nav.hasClass('hidden'))
+                    nav.addClass('hidden');
+            }
+            else {
+                if (scrollTop < nav.height())
+                    nav.removeClass('hidden'); 
+            }
+
+            if (scrollTop > 0) {
+                nav.addClass('change');
+            }
+            else {
+                nav.removeClass('change');
+            }
+
+            if (scrollTop >= distance) {
+                $('.sub-nav-links').addClass('fixed');
+            }
+            else {
+                $('.sub-nav-links').removeClass('fixed');
+            }
+            prev = scrollTop;
+        });
+    </script>
+
+}*@

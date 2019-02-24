@@ -5,8 +5,9 @@
 @model CloudBust.Dashboard.ViewModels.UserRoleCreateViewModel
 @{
 
-    bool idchecked = Model.isDefault;
-    string checkedid = idchecked ? "checked" : "";
+    var idchecked = Model.isDefault;
+    var checkedid = idchecked ? "checked" : "";
+    var baseUrl = Model.HostUrl.TrimEnd('/');
 }
 
 
@@ -60,7 +61,7 @@
         </div>
         <div class="row">
             <div class="large-12 columns">
-                <a href="~/dashboard/applications/@Model.AppKey/userroles" class="secondary button">Cancel</a>
+                <a href="@(baseUrl + "/dashboard/applications/" + Model.AppKey + "/userroles/")" class="secondary button">Cancel</a>
                 <button class="" type="submit" name="submit.Save" value="Save">Save</button>
             </div>
         </div>

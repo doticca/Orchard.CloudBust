@@ -40,3 +40,8 @@ Features:
         Description: Adds a Recycle Bin menu item to the Audit Trail menu, enabling you to recycle removed content items.
         Category: Content
         Dependencies: Orchard.AuditTrail
+    Orchard.AuditTrail.ContentItems:
+        Name: Audit Content Items
+        Description: Support for Content Items Events.
+        Category: Security
+        Dependencies: Orchard.AuditTrail

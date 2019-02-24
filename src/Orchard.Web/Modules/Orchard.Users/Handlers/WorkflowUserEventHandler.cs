@@ -30,6 +30,28 @@ namespace Orchard.Users.Handlers {
                                          });
         }
 
+        public void SendingSms(Security.IUser user) {
+            _workflowManager.TriggerEvent("UserSendingSms",
+                user,
+                () => new Dictionary<string, object> {{"User", user}});
+        }
+
+        public void SmsSent(Security.IUser user) {
+            _workflowManager.TriggerEvent("UserSmsSent",
+                user,
+                () => new Dictionary<string, object> {{"User", user}});
+        }
+
+        public void SmsError(Security.IUser user, string message)
+        {
+            _workflowManager.TriggerEvent("UserSmsError",
+                user,
+                () => new Dictionary<string, object> {
+                    {"User", user},
+                    {"Message", message}
+                });
+        }
+
         public void LoggingIn(string userNameOrEmail, string password) {
             _workflowManager.TriggerEvent("UserLoggingIn",
                                          null,

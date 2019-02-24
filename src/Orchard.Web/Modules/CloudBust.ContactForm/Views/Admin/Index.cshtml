@@ -1,0 +1,61 @@
+﻿@model CloudBust.ContactForm.ViewModels.ContactFormsIndexViewModel
+@{
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + "::" + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+
+    Layout.Title = T("Contact Forms").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Contact Forms</h1>
+    <p class="docs-description lead">View/Edit available contact forms.</p>
+</header>
+
+@if (Model.ContactForms == null || !Model.ContactForms.Any())
+{
+<div class="small-12 columns">
+    <p>@T("There are no contact forms in the database.")</p>
+</div>
+}
+else
+{
+<div class="small-12 columns">
+    <table class="hover stack">
+        <thead>
+            <tr>
+                <th width="250">Name</th>
+                <th width="250">Email</th>
+                <th width="250">Comapny</th>
+                <th width="300">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var subscriberRecord in Model.ContactForms)
+        {
+            <tr>
+                <td class="namefield">
+                    @subscriberRecord.Name
+                </td>
+                <td class="namefield">
+                    @subscriberRecord.Email
+                </td>
+                <td class="namefield">
+                    @subscriberRecord.Company
+                </td>
+                <td>
+                    <div class="form-inline">
+                        <a href="@Url.Action("Edit", "Admin", new { id=subscriberRecord.Id })" class="tiny button">Edit</a>
+                    </div>
+                    @using (Html.BeginFormAntiForgeryPost(Url.Action("Delete", "Admin", new { id = subscriberRecord.Id }), FormMethod.Post, new { @class = "form-inline", data_action="delete" }))
+                    {
+                        <button type="submit" class="tiny button alert">@T("Delete")</button>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+}
+<div class="small-12 columns">
+    @Html.ActionLink(T("Add a Contact Form").ToString(), "Add", new { controller = "Admin" }, new { @class = "button" })
+</div>

@@ -1,0 +1,10 @@
+﻿Name: CloudBust.Tenants
+AntiForgery: enabled
+Author: Team Doticca @teamdoticca
+Website: http://www.cloudbust.net
+Version: 1.0
+OrchardVersion: 1.10.2
+Description: The CloudBust.Tenants module enables multiple webapp sites to run in isolation inside of a single web application.
+FeatureDescription: Configure multiple webapp tenants.
+Category: CloudBust
+Dependencies: Orchard.Resources, CloudBust.Resources, CloudBust.Application

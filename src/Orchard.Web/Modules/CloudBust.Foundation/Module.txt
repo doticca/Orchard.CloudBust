@@ -2,7 +2,7 @@
 Path: CloudBust.Foundation
 AntiForgery: enabled
 Author: Team Doticca @teamdoticca
-Website: http://www.doticca.com
+Website: http://www.cloudbust.net
 Version: 1.10.2
 OrchardVersion: 1.10.2
 Description: The base Foundation code, settings, menus and shapes for CloudBust applications.

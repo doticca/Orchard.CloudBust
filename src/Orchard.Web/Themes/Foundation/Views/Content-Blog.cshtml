@@ -12,18 +12,18 @@
     var tag = Tag(Model, "article");
 }
 @tag.StartElement
-    <header>
-        @Display(Model.Header)
-        @if (Model.Meta != null) {
-            <div class="metadata">
-                @Display(Model.Meta)
-            </div>
-        }
-    </header>
-    @Display(Model.Content)
-    @if(Model.Footer != null) {
-        <footer>
-            @Display(Model.Footer)
-        </footer>
+<header>
+    @Display(Model.Header)
+    @if (Model.Meta != null) {
+        <div class="metadata">
+            @Display(Model.Meta)
+        </div>
     }
+</header>
+@Display(Model.Content)
+@if(Model.Footer != null) {
+    <footer>
+        @Display(Model.Footer)
+    </footer>
+}
 @tag.EndElement

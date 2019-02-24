@@ -28,9 +28,9 @@
     {
         ShapeMetadata metadata = firstItem.Metadata;
         string alternate = metadata.Type + "_" +
-                metadata.DisplayType + "__" +
-                firstItem.ContentItem.ContentType +
-                "_First";
+                           metadata.DisplayType + "__" +
+                           firstItem.ContentItem.ContentType +
+                           "_First";
         metadata.OnDisplaying(ctx =>
         {
             metadata.Alternates.Add(alternate);
@@ -45,13 +45,13 @@
     }
 </div>
 <div class="blog-details row">
-@if (items.Count > 1)
-{
-    <div class="columns">
-        <span class="recent icon"></span>
-        <span class="recent label">MOST RECENT ARTICLES</span>
-    </div>
-}
+    @if (items.Count > 1)
+    {
+        <div class="columns">
+            <span class="recent icon"></span>
+            <span class="recent label">MOST RECENT ARTICLES</span>
+        </div>
+    }
     <div class="columns">
         @listTag.StartElement
         @foreach (var item in items)

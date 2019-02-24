@@ -1,0 +1,61 @@
+﻿@model CloudBust.Tenants.ViewModels.TenantsIndexViewModel
+@using Orchard.Environment.Configuration
+@using CloudBust.Tenants.Extensions;
+
+@{
+    Layout.Title = T("List of Site's Tenants").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Tenants</h1>
+    <p class="docs-description lead">View available tenants.</p>
+</header>
+
+<div class="row expanded">
+    <ul class="contentItems tenants">
+        @foreach (var tenant in Model.TenantSettings.Where(x=>x.Name.ToLowerInvariant()!="default")) {
+            <li class="tenant @tenant.State small-12 medium-6 large-4 column  ">
+                <div class="summary callout secondary">
+                    <div class="properties">
+                        <h4>@tenant.Name
+                                @if (!String.IsNullOrEmpty(tenant.RequestUrlHost)) {
+                                var tenantClone = new ShellSettings(tenant);
+                                foreach (var t in tenant.RequestUrlHost.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)) {
+                                    tenantClone.RequestUrlHost = t;
+                                    var url = Url.Tenant(tenantClone);
+                                    <span class="tenantHost"> - @Html.Link(url, url)</span>
+                                }
+                            }
+                        </h4>
+                        <p class="small"><strong>Database:</strong> @tenant.DataProvider</p>
+                    </div>
+                    <div class="related">
+                        @if (!String.Equals(tenant.Name, "default", StringComparison.OrdinalIgnoreCase)) { //todo: (heskew) base this off the view model so logic on what can be removed and have its state changed stays in the controller
+                        var t = tenant;
+                            @Html.DisplayFor(m => t, String.Format("ActionsFor{0}", tenant.State.ToString()), "")
+                        }
+
+                        @Html.ActionLink(T("Edit").ToString(), "Edit", "Dashboard", new { name = tenant.Name, area = "CloudBust.Tenants" }, new { @class = "hollow button small" })
+                    </div>
+                </div>
+            </li>
+        }
+        <li class="small-12 medium-4 column"></li>
+    </ul>
+</div>
+@using (Script.Foot())
+{
+<script language="javascript" type="text/javascript">
+    function filter(element) {
+        var value = $(element).val();
+
+        $(".tenants > li").each(function() {
+            if ($(this).text().search(value) > -1) {
+                $(this).show();
+            }
+            else {
+                $(this).hide();
+            }
+        });
+    }
+</script>
+}

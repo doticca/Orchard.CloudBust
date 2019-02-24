@@ -11,14 +11,14 @@
         <IsSetupRecipe>true</IsSetupRecipe>
     </Recipe>
 
-    <Feature enable="Orchard.Blogs,Orchard.Comments,Orchard.Tags,Orchard.Alias,Orchard.Autoroute,
+    <Feature enable="Orchard.Tags,Orchard.Alias,Orchard.Autoroute,
                    TinyMce,Orchard.MediaLibrary,Orchard.ContentPicker,Orchard.PublishLater,
                    Orchard.Resources,Orchard.Widgets,Orchard.ContentTypes,
                    Orchard.Scripting,Orchard.Scripting.Lightweight,PackagingServices,Orchard.Packaging,
-                   Orchard.Projections,Orchard.Fields,Orchard.OutputCache,Orchard.Taxonomies,Orchard.Workflows,
+                   Orchard.Fields,Orchard.OutputCache,Orchard.Workflows,
                    CloudBust.Common, CloudBust.Common.ThemePicker, CloudBust.Common.FavIcon,
                    CloudBust.Foundation, CloudBust.Resources, CloudBust.Resources.Ace, CloudBust.Resources.Emmet,
-                   CloudBust.Resources.Highlight, CloudBust.Resources.ImagesLoaded, CloudBust.Resources.Magnific, CloudBust.Resources.Underscore,
+                   CloudBust.Resources.Highlight, CloudBust.Resources.Underscore,
                    Foundation,
                    TheAdminFoundation" />
 
@@ -67,7 +67,7 @@
       <RegistrationSettingsPart UsersCanRegister="false" UsersMustValidateEmail="false" UsersAreModerated="false" NotifyModeration="false" EnableLostPassword="false" />
       <CacheSettingsPart DefaultCacheDuration="300" DefaultCacheGraceTime="60" DefaultMaxAge="0" IgnoreNoCache="false" VaryByCulture="false" CacheAuthenticatedRequests="false" VaryByAuthenticationState="false" DebugMode="false" />
       <HighlightSettingsPart AutoEnable="false" AutoEnableAdmin="false" FullBundle="false" />
-      <imagesLoadedSettingsPart AutoEnable="true" AutoEnableAdmin="false" />
+      <ImagesLoadedSettingsPart AutoEnable="true" AutoEnableAdmin="false" />
       <MagnificSettingsPart AutoEnable="false" AutoEnableAdmin="false" />
     </Settings>
 

@@ -1,0 +1,88 @@
+﻿@model CloudBust.Localization.ViewModels.CountryEditViewModel
+@{
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + "::" + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+
+    Layout.Title = T("Add Country").ToString();
+}
+    <header>
+        <h1 class="docs-page-title">Edit Country</h1>
+        <p class="">Please take extreme caution when changing properties of active countries.</p>
+    </header>
+
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("Edit", "Countries"), FormMethod.Post, new { data_abide = "", novalidate = "", autocomplete = "off" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+        <div class="row expanded">
+            <div class="small-12 medium-6 columns">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "userinput", @placeholder = "set the currency name", required = "required", autofocus = "autofocus", value = Model.Name })
+                    <span class="floating-label">@T("Name")</span>
+                    <span class="form-error">@T("The name of the country is required.")</span>
+            </div>
+        </div>
+        <div class="row expanded">
+            <div class="small-12 medium-6 columns">
+                    @Html.TextBoxFor(m => m.TwoDigitCode, new { @class = "userinput", @placeholder = "set the two digit code", required = "required", value = Model.TwoDigitCode })
+                    <span class="floating-label">@T("Two Digit Code")</span>
+                    <span class="form-error">@T("The two digit code of the country is required.")</span>
+            </div>
+        </div>
+        <div class="row expanded">
+            <div class="small-12 medium-6 columns">
+                    @Html.TextBoxFor(m => m.ThreeDigitCode, new { @class = "userinput", @placeholder = "set the three digit code", required = "required", value = Model.ThreeDigitCode })
+                    <span class="floating-label">@T("Three Digit Code")</span>
+                    <span class="form-error">@T("The three digit code of the country is required.")</span>
+            </div>
+        </div>
+        <div class="row expanded">
+            <div class="small-12 medium-6 columns">
+                <select required name="@Html.FieldNameFor(m => m.Currency)">
+                    @foreach (var currency in Model.Currencies)
+                    {
+                        if (Model.Currency == currency.Id)
+                        {
+                            <option value="@currency.Id" selected>@currency.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@currency.Id">@currency.Name</option>
+                        }
+                    }
+                </select>
+                <span class="floating-label">@T("Currency")</span>
+            </div>
+        </div>
+        <div class="row expanded">
+            <div class="small-12 medium-6 columns">
+                    @Html.TextBoxFor(m => m.Taxation, new { @class = "userinput", @placeholder = "set the taxation", required = "required", type = "number", value = Model.Taxation })
+                    <span class="floating-label">@T("Taxation VAT rate")</span>
+                    <span class="form-error">@T("The vat rate of the country is required.")</span>
+            </div>
+        </div>
+        <div class="row expanded">
+            <div class="small-12 medium-6 columns">
+                <select required name="@Html.FieldNameFor(m => m.Translation)">
+                    <option value="" disabled selected hidden>select the translation</option>
+                    @foreach (var translation in Model.Translations)
+                    {
+                        if (Model.Translation == translation.Id)
+                        {
+                            <option value="@translation.Id" selected>@translation.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@translation.Id">@translation.Name</option>
+                        }
+                    }
+                </select>
+                <span class="floating-label">@T("Translation")</span>
+            </div>
+        </div>
+        <div class="row expanded">
+            <div class="columns">
+                <input type="submit" class="button" name="submit.Save" value="@T("Save")">
+                <a href="@(Url.Action("Index", "Countries"))" class="button secondary">@T("Cancel")</a>
+            </div>
+        </div>
+        <div class="row margin-bottom-2"></div>
+    }

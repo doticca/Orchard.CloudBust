@@ -4,8 +4,8 @@
 
 @model CloudBust.Dashboard.ViewModels.GamesViewModel
 @{
-    int rowcounter = 0;
-    string zebra = string.Empty;
+    var rowcounter = 0;
+    var baseUrl = Model.HostUrl.TrimEnd('/');
 }
        
 <div class="dashboardarea">
@@ -32,8 +32,8 @@
     @foreach (var row in Model.Games)
     {
         rowcounter = rowcounter + 1;
-        zebra = "zebra-" + rowcounter % 2;
-        var request = Url.Content("~") + "dashboard/games/" + row.AppKey;
+        var zebra = "zebra-" + rowcounter % 2;
+        var request = baseUrl + "/dashboard/games/" + row.AppKey;
 
         <div class="row app @zebra" data-url="@request">
             <div class="text-left small-6 large-3 medium-3 columns">
@@ -45,7 +45,7 @@
             <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns">@row.CreatedUtc</div>
             <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns">@row.ModifiedUtc</div>
             <div class="gridcell text-left large-1 hide-for-small-only medium-1 small-12 columns">
-                <a href="~/dashboard/applications/@Model.Application.AppKey/senseapi/games/@row.AppKey/add" class="tiny button">Select</a>
+                <a href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/senseapi/games/" + row.AppKey + "/add")" class="tiny button">Select</a>
             </div>            
             <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns"></div>           
         </div>
@@ -59,8 +59,8 @@
     </div>
     <div class="row">
         <div class="large-12 columns">
-            <a class="button" href="~/dashboard/games/create?appID=@Model.Application.AppKey"><i class="fi-plus"></i>  Create new Game</a>
-            <a href="~/dashboard/applications/@Model.Application.AppKey/senseapi/games" class="secondary button">Cancel</a>
+            <a class="button" href="@(baseUrl + "/dashboard/games/create?appID=" + Model.Application.AppKey)"><i class="fi-plus"></i>  Create new Game</a>
+            <a href="@(baseUrl + "/dashboard/applications/" + Model.Application.AppKey + "/senseapi/games")" class="secondary button">Cancel</a>
         </div>
     </div>
     <div class="bump-60"></div>

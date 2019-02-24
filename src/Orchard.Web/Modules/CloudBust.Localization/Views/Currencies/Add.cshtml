@@ -1,0 +1,38 @@
+﻿@model CloudBust.Localization.ViewModels.CurrencyAddViewModel
+@{
+    var errorMessage = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors).Aggregate(string.Empty, (current, error) => current + "::" + error.ErrorMessage.ToString());
+    TempData["ErrorMessage"] = errorMessage;
+
+    Layout.Title = T("New Currency").ToString();
+}
+<header>
+    <h1 class="docs-page-title">Add a new Currency</h1>
+    <p class="docs-description lead">Each country has only one currency.</p>
+</header>
+
+<p>The currency code is the ISO 4217 three digit code standard used in banking and businesses globally while the currency name is used as a description and it is only informative for the end users.</p>
+@using (Html.BeginFormAntiForgeryPost(Url.Action("Add", "Currencies"), FormMethod.Post, new { data_abide = "", novalidate = "", autocomplete = "off" }))
+{
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.Name, new { @class = "userinput", @placeholder = "set the currency name", required = "required", autofocus = "autofocus" })
+                <span class="floating-label">@T("Name")</span>
+                <span class="form-error">@T("The name of the currency is required.")</span>
+        </div>
+    </div>
+    <div class="row expanded">
+        <div class="small-12 medium-6 columns">
+                @Html.TextBoxFor(m => m.ThreeDigitCode, new { @class = "userinput", @placeholder = "set the three digit code", required = "required" })
+                <span class="floating-label">@T("Three Digit Code")</span>
+                <span class="form-error">@T("The three digit code of the currency is required.")</span>
+        </div>
+    </div>
+
+    <div class="row expanded">
+        <div class="columns">
+            <input type="submit" class="button" name="submit.Save" value="@T("Save")">
+            <a href="@(Url.Action("Index", "Currencies"))" class="button secondary">@T("Cancel")</a>
+        </div>
+    </div>
+    <div class="row margin-bottom-2"></div>
+}

@@ -6,6 +6,7 @@
 @{
     int rowcounter = 0;
     string zebra = string.Empty;
+    var baseUrl = Model.HostUrl.TrimEnd('/');
 }
        
 <div class="dashboardarea">
@@ -34,7 +35,7 @@
     {
         rowcounter = rowcounter + 1;
         zebra = "zebra-" + rowcounter % 2;
-        var request = Url.Content("~") + "dashboard/games/" + row.AppKey;
+        var request = baseUrl + "dashboard/games/" + row.AppKey;
 
         <div class="row app @zebra" data-url="@request">
             <div class="text-left small-6 large-3 medium-3 columns">
@@ -45,8 +46,8 @@
             <div class="small-6 show-for-small-only columns"><a href="#" class="button tiny">Select</a></div>
             <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns">@row.CreatedUtc</div>
             <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns">@row.ModifiedUtc</div>
-            <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns">@row.owner</div>
-            <div class="gridcell small-12 show-for-small-only columns">owner: @row.owner</div>
+            <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns">@row.Owner</div>
+            <div class="gridcell small-12 show-for-small-only columns">owner: @row.Owner</div>
             <div class="gridcell text-left large-1 hide-for-small-only medium-1 columns"></div>           
         </div>
     }

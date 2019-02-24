@@ -1,8 +1,8 @@
 ﻿Name: CloudBust Resources
 Path: CloudBust.Resources
 AntiForgery: enabled
-Author: Team Grapto (tweet: @teamgrapto)
-Website: https://github.com/grapto/CloudBust.Resources
+Author: Team Doticca @teamdoticca
+Website: http://www.cloudbust.net
 Version: 1.10.0
 OrchardVersion: 1.10
 Description: The CloudBust.Resources module contains al the js and styles for various components required for CloudBust applications.
@@ -64,7 +64,7 @@ Features:
 		Category: CloudBust Resources
 		Dependencies: CloudBust.Resources
 	CloudBust.Resources.ImagesLoaded:
-		Name: imagesLoaded
+		Name: ImagesLoaded
 		Version: 3.1.8
 		Description: Detect when images have been loaded.
 		Category: CloudBust Resources
@@ -127,5 +127,23 @@ Features:
 		Name: DataTables
 		Version: 1.10.16
 		Description: DataTables is a plug-in for the jQuery Javascript library.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.IziModal:
+		Name: IziModal
+		Version: 1.5.1
+		Description: Elegant, responsive, flexible and lightweight modal plugin with jQuery.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.IziToast:
+		Name: IziToast
+		Version: 1.1.5
+		Description: Elegant, responsive, flexible and lightweight notification plugin with no dependencies.
+		Category: CloudBust Resources
+		Dependencies: CloudBust.Resources
+	CloudBust.Resources.jQuery3:
+		Name: jQuery3
+		Version: 3.3.1
+		Description: jQuery version 3.3.1
 		Category: CloudBust Resources
 		Dependencies: CloudBust.Resources

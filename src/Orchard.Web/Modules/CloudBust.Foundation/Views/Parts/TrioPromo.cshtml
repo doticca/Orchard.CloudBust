@@ -1,70 +1,63 @@
-﻿@using Orchard.ContentManagement;
-@using Orchard.Core.Title.Models;
-@{
-    //Model.Metadata.Wrappers.Remove("Widget_Wrapper");
+﻿@{
     var title = Model.ContentItem.WidgetPart.Title;
     var showtitle = Model.ContentItem.WidgetPart.RenderTitle;
     var body = Model.ContentPart.Text;
 }
 
-<style type="text/css" >
-    .trio-promo a.click-block h3 {
-        font-size: 1.8em;
-    }
-    .trio-promo a.click-block, .trio-promo div.text-center  {
-        display: block;
+<style type="text/css">
+    .trio-promo a.click-block h3 { font-size: 1.8em; }
+
+    .trio-promo a.click-block, .trio-promo div.text-center {
         color: #333;
+        display: block;
         font-weight: normal;
     }
-    .trio-promo a.click-block span strong {
-        display: block;
-    }
+
+    .trio-promo a.click-block span strong { display: block; }
+
     .trio-promo a.click-block span.normal-text, .trio-promo div.text-center span.normal-text {
         display: block;
         font-size: 0.875em;
-        margin-bottom: 30px;
         line-height: 21px;
+        margin-bottom: 30px;
     }
+
     .trio-promo img {
         display: inline-block;
         vertical-align: middle;
     }
-    .trio-promo a img {
-        border: none;
-    }
+
+    .trio-promo a img { border: none; }
+
     .trio-promo img, .trio-promo object, .trio-promo embed {
-        max-width: 100%;
         height: auto;
+        max-width: 100%;
     }
-    .trio-promo .promolink.first {
-        @if (!string.IsNullOrWhiteSpace(Model.ContentPart.FirstLinkColor))
-        {
-            @Html.Raw("color: " + @Model.ContentPart.FirstLinkColor + ";");
-        }
-    }
-    .trio-promo .promolink.second {
-        @if (!string.IsNullOrWhiteSpace(Model.ContentPart.SecondLinkColor))
-        {
-            @Html.Raw("color: " + @Model.ContentPart.SecondLinkColor + ";");
-        }
-    }
-    .trio-promo .promolink.third {
-        @if (!string.IsNullOrWhiteSpace(Model.ContentPart.ThirdLinkColor))
-        {
-            @Html.Raw("color: " + @Model.ContentPart.ThirdLinkColor + ";");
-        }
-    }
-    }
+
+    .trio-promo .promolink.first { @if (!string.IsNullOrWhiteSpace(Model.ContentPart.FirstLinkColor))
+                                   {
+                                       @Html.Raw("color: " + Model.ContentPart.FirstLinkColor + ";")
+                                   } }
+
+    .trio-promo .promolink.second { @if (!string.IsNullOrWhiteSpace(Model.ContentPart.SecondLinkColor))
+                                    {
+                                        @Html.Raw("color: " + Model.ContentPart.SecondLinkColor + ";")
+                                    } }
+
+    .trio-promo .promolink.third { @if (!string.IsNullOrWhiteSpace(Model.ContentPart.ThirdLinkColor))
+                                   {
+                                       @Html.Raw("color: " + Model.ContentPart.ThirdLinkColor + ";")
+                                   } }
 </style>
 
 <div class="trio-promo">
 
     <div class="row">
         <div class="large-12 columns">
-@if (showtitle)
-{
-            <h2 class="centered-text light smaller bump-60 bottom-add">@title</h2>
-}
+            @if (showtitle)
+            {
+                <h2 class="centered-text light smaller bump-60 bottom-add">@title</h2>
+            }
             <div class="centered-text">
                 @Html.Raw(body)
             </div>
@@ -79,7 +72,9 @@
                     <img src="@Model.ContentPart.FirstImage">
                     <h3 class="title light">@Html.Raw(Model.ContentPart.FirstTitle)</h3>
                     <span class="normal-text">@Html.Raw(Model.ContentPart.FirstPromoText)</span>
-                    <span class="normal-text"><strong class="promolink first">@Html.Raw(Model.ContentPart.FirstLinkText)</strong></span>
+                    <span class="normal-text">
+                        <strong class="promolink first">@Html.Raw(Model.ContentPart.FirstLinkText)</strong>
+                    </span>
                 </div>
             }
             else
@@ -88,7 +83,9 @@
                     <img src="@Model.ContentPart.FirstImage">
                     <h3 class="title light">@Html.Raw(Model.ContentPart.FirstTitle)</h3>
                     <span class="normal-text">@Html.Raw(Model.ContentPart.FirstPromoText)</span>
-                    <span class="normal-text"><strong class="promolink first">@Html.Raw(Model.ContentPart.FirstLinkText)</strong></span>
+                    <span class="normal-text">
+                        <strong class="promolink first">@Html.Raw(Model.ContentPart.FirstLinkText)</strong>
+                    </span>
                 </a>
             }
         </div>
@@ -99,7 +96,9 @@
                     <img src="@Model.ContentPart.SecondImage">
                     <h3 class="title light">@Html.Raw(Model.ContentPart.SecondTitle)</h3>
                     <span class="normal-text">@Html.Raw(Model.ContentPart.SecondPromoText)</span>
-                    <span class="normal-text"><strong class="promolink second">@Html.Raw(Model.ContentPart.SecondLinkText)</strong></span>
+                    <span class="normal-text">
+                        <strong class="promolink second">@Html.Raw(Model.ContentPart.SecondLinkText)</strong>
+                    </span>
                 </div>
             }
             else
@@ -108,7 +107,9 @@
                     <img src="@Model.ContentPart.SecondImage">
                     <h3 class="title light">@Html.Raw(Model.ContentPart.SecondTitle)</h3>
                     <span class="normal-text">@Html.Raw(Model.ContentPart.SecondPromoText)</span>
-                    <span class="normal-text"><strong class="promolink second">@Html.Raw(Model.ContentPart.SecondLinkText)</strong></span>
+                    <span class="normal-text">
+                        <strong class="promolink second">@Html.Raw(Model.ContentPart.SecondLinkText)</strong>
+                    </span>
                 </a>
             }
         </div>
@@ -119,7 +120,9 @@
                     <img src="@Model.ContentPart.ThirdImage">
                     <h3 class="title light">@Html.Raw(Model.ContentPart.ThirdTitle)</h3>
                     <span class="normal-text">@Html.Raw(Model.ContentPart.ThirdPromoText)</span>
-                    <span class="normal-text"><strong class="promolink third">@Html.Raw(Model.ContentPart.ThirdLinkText)</strong></span>
+                    <span class="normal-text">
+                        <strong class="promolink third">@Html.Raw(Model.ContentPart.ThirdLinkText)</strong>
+                    </span>
                 </div>
             }
             else
@@ -128,7 +131,9 @@
                     <img src="@Model.ContentPart.ThirdImage">
                     <h3 class="title light">@Html.Raw(Model.ContentPart.ThirdTitle)</h3>
                     <span class="normal-text">@Html.Raw(Model.ContentPart.ThirdPromoText)</span>
-                    <span class="normal-text"><strong class="promolink third">@Html.Raw(Model.ContentPart.ThirdLinkText)</strong></span>
+                    <span class="normal-text">
+                        <strong class="promolink third">@Html.Raw(Model.ContentPart.ThirdLinkText)</strong>
+                    </span>
                 </a>
             }
         </div>

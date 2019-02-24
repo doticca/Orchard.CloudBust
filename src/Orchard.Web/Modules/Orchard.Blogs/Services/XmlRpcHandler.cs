@@ -325,7 +325,7 @@ namespace Orchard.Blogs.Services {
             string password,
             IEnumerable<IXmlRpcDriver> drivers) {
 
-            IUser user = ValidateUser(userName, password);
+            var user = ValidateUser(userName, password);
             var blogPost = _blogPostService.Get(Convert.ToInt32(postId), VersionOptions.Latest);
             if (blogPost == null)
                 throw new ArgumentException();
@@ -340,7 +340,8 @@ namespace Orchard.Blogs.Services {
         }
 
         private IUser ValidateUser(string userName, string password) {
-            IUser user = _membershipService.ValidateUser(userName, password);
+            List<LocalizedString> validationErrors;
+            var user = _membershipService.ValidateUser(userName, password, out validationErrors);
             if (user == null) {
                 throw new OrchardCoreException(T("The username or e-mail or password provided is incorrect."));
             }

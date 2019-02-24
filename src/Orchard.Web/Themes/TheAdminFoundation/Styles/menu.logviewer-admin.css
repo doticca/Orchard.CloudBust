@@ -1,0 +1,6 @@
+﻿.navicon-log-viewer {
+    background-image:url('images/menu.log-viewer.png') !important;
+}
+.navicon-log-viewer:hover {
+    background-position:0 -30px !important;
+}

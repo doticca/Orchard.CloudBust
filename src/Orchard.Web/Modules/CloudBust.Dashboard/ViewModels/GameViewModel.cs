@@ -8,6 +8,7 @@ namespace CloudBust.Dashboard.ViewModels
     public class GameViewModel
     {
         public IUser User { get; set; }
+        public string HostUrl { get; set; }
         public ApplicationGameRecord Game { get; set; }
         public IEnumerable<GameEventRecord> Events { get; set; }
         public int Page { get; set; }

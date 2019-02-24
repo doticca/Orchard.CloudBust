@@ -5,34 +5,8 @@ namespace CloudBust.Application.OData.Profile
     [DataContract]
     public class LoginGC
     {
-        [DataMember]
-        public string Username { get; private set; }
-        [DataMember]
-        public string PublicKeyUrl { get; private set; }
-        [DataMember]
-        public string Signature { get; private set; }
-        [DataMember]
-        public string Salt { get; private set; }
-        [DataMember]
-        public string Name { get; private set; }
-        [DataMember]
-        public ulong Timestamp { get; private set; }
-        [DataMember]
-        public string ApiKey { get; private set; }
-        [DataMember]
-        public string Platform { get; private set; }
-        [DataMember]
-        public int Build { get; private set; }
-        [DataMember]
-        public string VendorID { get; private set; }
-        [DataMember]
-        public string Model { get; private set; }
-        [DataMember]
-        public string SystemName { get; private set; }
-        [DataMember]
-        public string SystemVersion { get; private set; }
+        public static string[] Platforms = {"ios", "osx", "tvos", "watch"};
 
-        public static string[] Platforms = { "ios", "osx", "tvos", "watch" };
         public LoginGC()
         {
             Username = string.Empty;
@@ -41,7 +15,7 @@ namespace CloudBust.Application.OData.Profile
             Salt = string.Empty;
             Name = string.Empty;
             ApiKey = string.Empty;
-            VendorID = string.Empty;
+            VendorId = string.Empty;
             Model = string.Empty;
             SystemName = string.Empty;
             SystemVersion = string.Empty;
@@ -49,5 +23,44 @@ namespace CloudBust.Application.OData.Profile
             Build = 0;
             Timestamp = 0;
         }
+
+        [DataMember]
+        public string Username { get; private set; }
+
+        [DataMember]
+        public string PublicKeyUrl { get; private set; }
+
+        [DataMember]
+        public string Signature { get; private set; }
+
+        [DataMember]
+        public string Salt { get; private set; }
+
+        [DataMember]
+        public string Name { get; private set; }
+
+        [DataMember]
+        public ulong Timestamp { get; private set; }
+
+        [DataMember]
+        public string ApiKey { get; private set; }
+
+        [DataMember]
+        public string Platform { get; private set; }
+
+        [DataMember]
+        public int Build { get; private set; }
+
+        [DataMember]
+        public string VendorId { get; private set; }
+
+        [DataMember]
+        public string Model { get; private set; }
+
+        [DataMember]
+        public string SystemName { get; private set; }
+
+        [DataMember]
+        public string SystemVersion { get; private set; }
     }
 }

@@ -1,41 +1,57 @@
 using System;
-using System.Runtime.Serialization;
-using System.Web.Security;
-using Orchard.ContentManagement.Records;
-using CloudBust.Application.Models;
 using System.Net.Http;
+using System.Runtime.Serialization;
+using CloudBust.Application.Models;
 
 namespace CloudBust.Application.OData
 {
     [DataContract]
     public class ApplicationGame
     {
-        [DataMember]
-        public int Id { get; set; }
+        private const string OType = "WeApp";
+
+        public ApplicationGame(ApplicationGameRecord p, string serverUrl, bool showOwner = false, bool showKey = false)
+        {
+            Type = OType;
+
+            if (p == null) return;
+
+            Id = p.Id;            
+            Name = p.Name;
+            Description = p.Description;
+            LogoImage = p.LogoImage;
+            ApplicationUrl = p.AppUrl;
+            if (showOwner) {
+                Owner = new ApplicationGameOwner(p, serverUrl);
+            }
+
+            if (showKey) {
+                ApplicationKey = p.AppKey;
+            }
+        }
+
         [DataMember]
         public string Type { get; private set; }
+
+        [DataMember]
+        public int Id { get; set; }
+
         [DataMember]
         public string Name { get; set; }
+
         [DataMember]
         public string Description { get; set; }
-        [DataMember]
-        public string AppKey { get; set; }
-        [DataMember]
-        public double Longitude { get; set; }
-        [DataMember]
-        public double Latitude { get; set; }
 
-        private const string OType = "Game";
+        [DataMember]
+        public string LogoImage { get; set; }
 
-        public ApplicationGame(ApplicationGameRecord p, HttpRequestMessage m)
-        {
-            this.Id = p.Id;
-            this.Type = OType;
-            this.Name = p.Name;
-            this.Description = p.Description;
-            this.AppKey = p.AppKey;
-            this.Longitude = p.Longitude;
-            this.Latitude = p.Latitude;
-        }
+        [DataMember]
+        public string ApplicationUrl { get; set; }
+
+        [DataMember]
+        public ApplicationGameOwner Owner { get; set; }
+
+        [DataMember]
+        public string ApplicationKey { get; set; }
     }
 }

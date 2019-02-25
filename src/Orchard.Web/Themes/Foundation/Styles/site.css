@@ -375,7 +375,7 @@ ul.decorated-list li{
 .menu a.site-logo {
     color: #feedee;
     opacity: 1;
-    background-image: url('https://doticca.blob.core.windows.net/public/img/logoinverse.png');
+    background-image: url('/media/orchardlogo.png');
     background-position: left center;
     background-size: contain;
     background-repeat: no-repeat;

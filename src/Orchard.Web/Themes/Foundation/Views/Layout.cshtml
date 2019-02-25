@@ -187,12 +187,6 @@
         var antiForgeryToken = '@Html.AntiForgeryTokenValueOrchard()';
         $( "input[name='__RequestVerificationToken']" ).val(antiForgeryToken);
     </script>
-    <script>
-        window.fcWidget.init({
-            token: "e44661f2-b305-4b61-a62b-3dcfb7532385",
-            host: "https://wchat.freshchat.com"
-        });
-    </script>
 }
 @using (Script.Foot())
 {

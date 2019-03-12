@@ -148,10 +148,6 @@
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\Orchard.Core.csproj">
-      <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
-      <Name>Orchard.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CloudBust.Application\CloudBust.Application.csproj">
       <Project>{cc6f1696-54e1-42ea-b2ee-db581bf54c02}</Project>
       <Name>CloudBust.Application</Name>
@@ -159,10 +155,6 @@
     <ProjectReference Include="..\CloudBust.Common\CloudBust.Common.csproj">
       <Project>{30758001-cc5e-4c90-a464-300773909a18}</Project>
       <Name>CloudBust.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Orchard.Autoroute\Orchard.Autoroute.csproj">
-      <Project>{66fccd76-2761-47e3-8d11-b45d0001ddaa}</Project>
-      <Name>Orchard.Autoroute</Name>
     </ProjectReference>
     <ProjectReference Include="..\Orchard.Modules\Orchard.Modules.csproj">
       <Project>{17f86780-9a1f-4aa1-86f1-875eec2730c7}</Project>

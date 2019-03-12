@@ -1,12 +1,8 @@
-﻿using System.Linq;
-using Orchard;
+﻿using Orchard;
 using Orchard.DisplayManagement.Descriptors;
 using Orchard.UI.Resources;
 using Orchard.UI.Admin;
 using Orchard.Environment;
-using Orchard.DisplayManagement;
-using System.Web;
-using System;
 using Orchard.Localization;
 using Orchard.Modules.Services;
 

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Orchard.Blogs.Models;
 using Orchard.Blogs.Services;
-using Orchard.Blogs.ViewModels;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
-using Orchard.Core.Common.Models;
 using Orchard.DisplayManagement.Shapes;
 using Orchard.Environment.Extensions;
 using CloudBust.Blogs.Models;
 using CloudBust.Blogs.ViewModels;
 using Contrib.Voting.Services;
-using Contrib.Voting.Models;
 using System.Collections.Generic;
-using Orchard.Autoroute.Models;
 using Orchard.Taxonomies.Services;
 using Orchard.Taxonomies.Models;
 

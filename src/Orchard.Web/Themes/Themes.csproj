@@ -273,22 +273,6 @@
       <Name>Orchard.Framework</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\CloudBust.Application\CloudBust.Application.csproj">
-      <Project>{cc6f1696-54e1-42ea-b2ee-db581bf54c02}</Project>
-      <Name>CloudBust.Application</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Modules\Orchard.Taxonomies\Orchard.Taxonomies.csproj">
-      <Project>{e649ea64-d213-461b-87f7-d67035801443}</Project>
-      <Name>Orchard.Taxonomies</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Modules\Orchard.Users\Orchard.Users.csproj">
-      <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
-      <Name>Orchard.Users</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Modules\Orchard.Widgets\Orchard.Widgets.csproj">
-      <Project>{194d3ccc-1153-474d-8176-fde8d7d0d0bd}</Project>
-      <Name>Orchard.Widgets</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="TheThemeMachine\Views\Pager.cshtml" />

@@ -7,8 +7,6 @@ using Orchard.Environment.Extensions;
 using Orchard.Environment.Extensions.Models;
 using Orchard.Themes.Services;
 using CloudBust.Common.Services;
-
-using Orchard.Themes.Models;
 using System.Collections.Generic;
 
 namespace Orchard.Themes.Commands {

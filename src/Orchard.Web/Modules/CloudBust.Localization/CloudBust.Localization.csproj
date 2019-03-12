@@ -132,17 +132,6 @@
     <Content Include="Module.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
-      <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
-      <Name>Orchard.Framework</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Orchard.Core.csproj">
-      <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
-      <Name>Orchard.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -160,6 +149,12 @@
     <Content Include="Views\Translations\Add.cshtml" />
     <Content Include="Views\Translations\Edit.cshtml" />
     <Content Include="Views\Translations\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
+      <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

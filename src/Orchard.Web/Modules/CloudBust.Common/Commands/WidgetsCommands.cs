@@ -2,16 +2,13 @@
 using System.Linq;
 using Orchard.Commands;
 using Orchard.ContentManagement;
-using Orchard.ContentManagement.Aspects;
-using Orchard.Core.Common.Models;
-using Orchard.Core.Navigation.Models;
-using Orchard.Core.Navigation.Services;
 using Orchard.Security;
 using Orchard.Settings;
 using Orchard.Widgets.Models;
 using Orchard.Widgets.Services;
 
-namespace Orchard.Widgets.Commands {
+namespace Orchard.Widgets.Commands
+{
     public class FoundationWidgetCommands : DefaultOrchardCommandHandler {
         private readonly IWidgetsService _widgetsService;
         private readonly ISiteService _siteService;

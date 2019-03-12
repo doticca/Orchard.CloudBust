@@ -23,6 +23,7 @@ CloudBust features for Orchard CMS:
 * **[Ace editor](https://ace.c9.io/)** for your content
 * Based on **[Foundation 6](https://foundation.zurb.com/)** front-end theming
 * New resources (Foundation, FontAwesome, ElegantIcon, Masonry, DropZone, FineUploader, Highlight, Magnific, Underscore, Ace, CookieCutr)
+* All project references updated to latest versions with 4.7 target
 
 CloudBust features for Webapp/Backend Server:
 

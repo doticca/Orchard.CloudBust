@@ -286,6 +286,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.ArchiveLater", "Orc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Markdown", "Orchard.Web\Modules\Markdown\Markdown.csproj", "{3158C928-888C-4A84-8BC1-4A8257489538}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Tests", "Tools\Orchard.Tests\Orchard.Tests.csproj", "{0DFA2E10-96C8-4E05-BC10-B710B97ECCDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Dashboards", "Orchard.Web\Modules\Orchard.Dashboards\Orchard.Dashboards.csproj", "{BAC82DB9-F4C4-4DD1-ABDB-F70E6229E6B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -990,6 +994,22 @@ Global
 		{3158C928-888C-4A84-8BC1-4A8257489538}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3158C928-888C-4A84-8BC1-4A8257489538}.Release|x64.ActiveCfg = Release|Any CPU
 		{3158C928-888C-4A84-8BC1-4A8257489538}.Release|x64.Build.0 = Release|Any CPU
+		{0DFA2E10-96C8-4E05-BC10-B710B97ECCDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DFA2E10-96C8-4E05-BC10-B710B97ECCDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DFA2E10-96C8-4E05-BC10-B710B97ECCDE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0DFA2E10-96C8-4E05-BC10-B710B97ECCDE}.Debug|x64.Build.0 = Debug|Any CPU
+		{0DFA2E10-96C8-4E05-BC10-B710B97ECCDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DFA2E10-96C8-4E05-BC10-B710B97ECCDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DFA2E10-96C8-4E05-BC10-B710B97ECCDE}.Release|x64.ActiveCfg = Release|Any CPU
+		{0DFA2E10-96C8-4E05-BC10-B710B97ECCDE}.Release|x64.Build.0 = Release|Any CPU
+		{BAC82DB9-F4C4-4DD1-ABDB-F70E6229E6B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAC82DB9-F4C4-4DD1-ABDB-F70E6229E6B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAC82DB9-F4C4-4DD1-ABDB-F70E6229E6B0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BAC82DB9-F4C4-4DD1-ABDB-F70E6229E6B0}.Debug|x64.Build.0 = Debug|Any CPU
+		{BAC82DB9-F4C4-4DD1-ABDB-F70E6229E6B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAC82DB9-F4C4-4DD1-ABDB-F70E6229E6B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAC82DB9-F4C4-4DD1-ABDB-F70E6229E6B0}.Release|x64.ActiveCfg = Release|Any CPU
+		{BAC82DB9-F4C4-4DD1-ABDB-F70E6229E6B0}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1079,9 +1099,11 @@ Global
 		{C0C45321-B51D-4D8D-9B7B-AA4C2E0B2962} = {E9C9F120-07BA-4DFB-B9C3-3AFB9D44C9D5}
 		{1C981BB3-26F7-494C-9005-CC27A5144233} = {E9C9F120-07BA-4DFB-B9C3-3AFB9D44C9D5}
 		{3158C928-888C-4A84-8BC1-4A8257489538} = {E9C9F120-07BA-4DFB-B9C3-3AFB9D44C9D5}
+		{0DFA2E10-96C8-4E05-BC10-B710B97ECCDE} = {383DBA32-4A3E-48D1-AAC3-75377A694452}
+		{BAC82DB9-F4C4-4DD1-ABDB-F70E6229E6B0} = {E9C9F120-07BA-4DFB-B9C3-3AFB9D44C9D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {59DD0ADC-F895-42E4-8662-94E59BDCA523}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4
+		SolutionGuid = {59DD0ADC-F895-42E4-8662-94E59BDCA523}
 	EndGlobalSection
 EndGlobal

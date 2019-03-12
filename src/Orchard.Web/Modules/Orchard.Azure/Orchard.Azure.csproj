@@ -136,10 +136,10 @@
     <Compile Include="Services\Environment\Configuration\IPlatformConfigurationAccessor.cs" />
     <Compile Include="Services\Environment\AzureApplicationEnvironment.cs" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Microsoft.WindowsAzure.Caching\PerformanceCounters.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -174,7 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

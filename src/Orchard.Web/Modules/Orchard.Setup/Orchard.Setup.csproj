@@ -144,10 +144,6 @@
       <Project>{fc1d74e8-7a4d-48f4-83de-95c6173780c4}</Project>
       <Name>Orchard.Recipes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Orchard.Themes\Orchard.Themes.csproj">
-      <Project>{CDE24A24-01D3-403C-84B9-37722E18DFB7}</Project>
-      <Name>Orchard.Themes</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Orchard.Users\Orchard.Users.csproj">
       <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
       <Name>Orchard.Users</Name>

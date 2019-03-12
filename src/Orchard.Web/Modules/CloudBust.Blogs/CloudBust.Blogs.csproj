@@ -213,12 +213,8 @@
       <Name>Orchard.Blogs</Name>
     </ProjectReference>
     <ProjectReference Include="..\Orchard.Taxonomies\Orchard.Taxonomies.csproj">
-      <Project>{E649EA64-D213-461B-87F7-D67035801443}</Project>
+      <Project>{e649ea64-d213-461b-87f7-d67035801443}</Project>
       <Name>Orchard.Taxonomies</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Orchard.Users\Orchard.Users.csproj">
-      <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
-      <Name>Orchard.Users</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
